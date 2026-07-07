@@ -108,7 +108,8 @@ addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight);
 });
 
-scene.add(new THREE.HemisphereLight(0xe8eef5, 0x77776a, 0.55));
+const hemiLight = new THREE.HemisphereLight(0xe8eef5, 0x77776a, 0.55);
+scene.add(hemiLight);
 const sun = new THREE.DirectionalLight(0xfff4dd, 0.85);
 sun.position.set(300, 500, 200);
 scene.add(sun);
@@ -337,6 +338,7 @@ function groundInfoAt(x, z) {
 }
 
 // ---------- water ----------
+let waterMat = null;
 // strömmande vatten-textur (offset animeras i renderloopen → flöde)
 const waterTex = (() => {
   const cv = document.createElement('canvas'); cv.width = 64; cv.height = 256;
@@ -373,8 +375,8 @@ const waterTex = (() => {
     ribbonGeoms.push(ribbonGeom(pts, 9, 0, cCalm, { heightFn: surfFn, uv: true, colorFn }));
   }
   if (ribbonGeoms.length) {
-    const m = new THREE.Mesh(mergeGeoms(ribbonGeoms),
-      new THREE.MeshBasicMaterial({ map: waterTex, vertexColors: true, transparent: true, opacity: 0.88, depthWrite: false }));
+    waterMat = new THREE.MeshBasicMaterial({ map: waterTex, vertexColors: true, transparent: true, opacity: 0.88, depthWrite: false });
+    const m = new THREE.Mesh(mergeGeoms(ribbonGeoms), waterMat);
     m.renderOrder = 2;
     scene.add(m);
   }
@@ -397,10 +399,10 @@ const waterTex = (() => {
 
 // ---------- buildings: windowed walls + real roof colors from the orthophoto ----------
 const bldPolys = []; // {poly, minX,maxX,minZ,maxZ, topY}
-let buildingMesh, roofMesh;
+let buildingMesh, buildingMeshWood, roofMesh;
 
 // procedural facade textures: one tile = 3 m × 3 m of wall with a window
-function makeFacadeTex(style) {
+function makeFacadeTex(style, night) {
   const cv = document.createElement('canvas'); cv.width = 128; cv.height = 128;
   const c = cv.getContext('2d');
   c.fillStyle = '#f1eee6'; c.fillRect(0, 0, 128, 128);
@@ -421,8 +423,15 @@ function makeFacadeTex(style) {
     }
   }
   c.fillStyle = '#c9c4b8'; c.fillRect(38, 34, 52, 66);      // frame
-  c.fillStyle = '#2e3a44'; c.fillRect(42, 38, 44, 58);      // glass
-  c.fillStyle = 'rgba(180,200,215,0.5)'; c.fillRect(44, 40, 18, 24); // sky reflection
+  if (night) {
+    const grad = c.createLinearGradient(0, 38, 0, 96);      // varmt lyst fönster
+    grad.addColorStop(0, '#ffe4a0'); grad.addColorStop(1, '#e8b45e');
+    c.fillStyle = grad; c.fillRect(42, 38, 44, 58);
+    c.fillStyle = 'rgba(120,70,20,0.35)'; c.fillRect(42, 76, 44, 20);
+  } else {
+    c.fillStyle = '#2e3a44'; c.fillRect(42, 38, 44, 58);    // glass
+    c.fillStyle = 'rgba(180,200,215,0.5)'; c.fillRect(44, 40, 18, 24); // sky reflection
+  }
   c.fillStyle = '#c9c4b8'; c.fillRect(62, 38, 4, 58); c.fillRect(42, 64, 44, 4); // mullions
   c.fillStyle = 'rgba(0,0,0,0.16)'; c.fillRect(38, 98, 52, 5); // sill shadow
   const tex = new THREE.CanvasTexture(cv);
@@ -619,7 +628,7 @@ function minAreaRect(poly) {
 
   buildingMesh = new THREE.Mesh(mergeWithUV(wallGeomsPlaster),
     new THREE.MeshLambertMaterial({ vertexColors: true, map: facadeTexPlaster, side: THREE.DoubleSide }));
-  const buildingMeshWood = new THREE.Mesh(mergeWithUV(wallGeomsWood),
+  buildingMeshWood = new THREE.Mesh(mergeWithUV(wallGeomsWood),
     new THREE.MeshLambertMaterial({ vertexColors: true, map: facadeTexWood, side: THREE.DoubleSide }));
   roofMesh = new THREE.Mesh(mergeGeoms(roofGeoms),
     new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide }));
@@ -856,6 +865,7 @@ function collideWalls(pos3, radius, footY) {
 }
 
 // ---------- gatlyktor & parkerade bilar ----------
+const lampPoints = []; // [x, markY, z] — används av kvällsläget
 function insideAnyBuilding(x, z) {
   const arr = bldHash.get(Math.floor(x / CELL) + ':' + Math.floor(z / CELL));
   if (!arr) return false;
@@ -910,6 +920,7 @@ function insideAnyBuilding(x, z) {
     mat.makeTranslation(lx, y + 2.2, lz); poles.setMatrixAt(i, mat);
     mat.makeTranslation(lx, y + 4.5, lz); heads.setMatrixAt(i, mat);
     sandbagObstacles.push({ x: lx, z: lz, r: 0.28, top: y + 4.4 });
+    lampPoints.push([lx, y, lz]);
   });
   scene.add(poles); scene.add(heads);
   // parkerade bilar (instansierade, slumpade kulörer) — funkar som cover
@@ -2147,8 +2158,68 @@ window.__keys = keys;
 window.__fire = () => playerShoot();
 window.__look = (yaw, pitch) => { player.yaw = yaw; player.pitch = pitch; };
 
+// ---------- kvällsläge ----------
+function applyNightMode() {
+  scene.background = new THREE.Color(0x121a2c);
+  scene.fog.color.set(0x121a2c); scene.fog.density = 0.0009;
+  hemiLight.color.set(0x36425e); hemiLight.groundColor.set(0x1a1d18); hemiLight.intensity = 0.5;
+  sun.color.set(0x93a7cf); sun.intensity = 0.28; // månljus
+  terrainMesh.material.color.set(0x55607a);      // mörk mark (Basic-material × textur)
+  buildingMesh.material.map = makeFacadeTex('plaster', true);
+  buildingMeshWood.material.map = makeFacadeTex('wood', true);
+  if (waterMat) waterMat.color.set(0x6b7c96);
+
+  // stjärnhimmel
+  const N = 700, sPos = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) {
+    const a = Math.random() * Math.PI * 2, e = Math.random() * Math.PI * 0.45 + 0.06;
+    sPos[i * 3] = Math.cos(a) * Math.cos(e) * 1800;
+    sPos[i * 3 + 1] = Math.sin(e) * 1800;
+    sPos[i * 3 + 2] = Math.sin(a) * Math.cos(e) * 1800;
+  }
+  const sg = new THREE.BufferGeometry();
+  sg.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+  scene.add(new THREE.Points(sg, new THREE.PointsMaterial({
+    color: 0xcdd8ee, size: 1.6, sizeAttenuation: false, transparent: true, opacity: 0.85, fog: false })));
+
+  // lyktglöd (ett enda Points-anrop) + ljusgölar på marken (en sammanslagen mesh)
+  const glowTex = (() => {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 64;
+    const c = cv.getContext('2d');
+    const g = c.createRadialGradient(32, 32, 2, 32, 32, 32);
+    g.addColorStop(0, 'rgba(255,220,150,1)'); g.addColorStop(1, 'rgba(255,220,150,0)');
+    c.fillStyle = g; c.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(cv);
+  })();
+  const gPos = new Float32Array(lampPoints.length * 3);
+  lampPoints.forEach(([lx, ly, lz], i) => {
+    gPos[i * 3] = lx; gPos[i * 3 + 1] = ly + 4.5; gPos[i * 3 + 2] = lz;
+  });
+  const gg = new THREE.BufferGeometry();
+  gg.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
+  scene.add(new THREE.Points(gg, new THREE.PointsMaterial({
+    map: glowTex, size: 4, sizeAttenuation: true, transparent: true, opacity: 0.85,
+    depthWrite: false, blending: THREE.AdditiveBlending, color: 0xffd9a0 })));
+  const poolGeoms = [];
+  const cPool = new THREE.Color(0xffd9a0);
+  for (const [lx, ly, lz] of lampPoints) {
+    const geo = new THREE.CircleGeometry(4.2, 12);
+    geo.rotateX(-Math.PI / 2);
+    geo.translate(lx, ly + 0.08, lz);
+    paintGeom(geo, cPool);
+    poolGeoms.push(geo);
+  }
+  const pools = new THREE.Mesh(mergeGeoms(poolGeoms), new THREE.MeshBasicMaterial({
+    vertexColors: true, transparent: true, opacity: 0.13, depthWrite: false, blending: THREE.AdditiveBlending }));
+  pools.renderOrder = 3;
+  scene.add(pools);
+}
+
 // ---------- start ----------
 const overlay = document.getElementById('overlay');
+const nightChk = document.getElementById('nightchk');
+nightChk.checked = localStorage.getItem('kvarnbyn-night') === '1';
+document.getElementById('nightopt').addEventListener('click', e => e.stopPropagation());
 overlay.addEventListener('click', () => {
   if (game.over) return;
   overlay.classList.add('hidden');
@@ -2157,6 +2228,8 @@ overlay.addEventListener('click', () => {
   canvas.requestPointerLock();
   if (!game.started) {
     game.started = true;
+    localStorage.setItem('kvarnbyn-night', nightChk.checked ? '1' : '0');
+    if (nightChk.checked) applyNightMode();
     msg('⚠ Gamla Torget har fallit — fienden är på väg uppför backarna. Mota ner dem!');
   }
 });
