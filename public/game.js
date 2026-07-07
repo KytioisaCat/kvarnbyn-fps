@@ -1256,9 +1256,26 @@ function makeSoldier(color, helmetColor) {
 const enemies = [];
 const allies = [];
 
-function spawnEnemy() {
-  const e = D.enemyEntry;
-  const jx = (Math.random() - 0.5) * 30, jz = (Math.random() - 0.5) * 30;
+// förstärkningar väller in från tre håll — Forsebron, söderifrån och österifrån
+const ENTRY_POINTS = [D.enemyEntry, [-100, 350], [850, 300]].map(p => {
+  const n = graph.nodes[nearestNode(p[0], p[1])];
+  return [n[0], n[1]];
+});
+
+// slumpad vägnod, minst `minDist` från spelarens bas
+function randomOccupationPos(minDist) {
+  for (let tries = 0; tries < 60; tries++) {
+    const n = graph.nodes[Math.floor(Math.random() * graph.nodes.length)];
+    if (!inBounds(n[0], n[1], -30)) continue;
+    if (Math.hypot(n[0] - D.spawn[0], n[1] - D.spawn[1]) < minDist) continue;
+    return [n[0] + (Math.random() - 0.5) * 10, n[1] + (Math.random() - 0.5) * 10];
+  }
+  return [D.enemyEntry[0], D.enemyEntry[1]];
+}
+
+function spawnEnemy(at) {
+  const e = at || ENTRY_POINTS[Math.floor(Math.random() * ENTRY_POINTS.length)];
+  const jx = (Math.random() - 0.5) * 24, jz = (Math.random() - 0.5) * 24;
   const mesh = makeSoldier(0x6e2f2a, 0x3a3f35);
   const pos = new THREE.Vector3(e[0] + jx, 0, e[1] + jz);
   pos.y = heightAt(pos.x, pos.z);
@@ -1378,13 +1395,19 @@ const capPills = capState.map(cap => {
   game.wave = 1; game.toSpawn = 5; game.spawnT = 3; game.betweenT = 9;
   document.getElementById('wavenum').textContent = 'Våg 1/8';
   // förtruppen är redan på väg uppför backarna mot B och C
-  // två infiltratörer har redan smugit förbi C, på väg upp mot basen — omedelbar kontakt
-  for (const [from, to, n, tBase, tSpan] of [[A.pos, B.pos, 4, 0.25, 0.6], [B.pos, C.pos, 4, 0.15, 0.45], [C.pos, D.spawn, 2, 0.3, 0.25]]) {
+  // ockupationen: fienden håller hela kartan utom området närmast basen
+  for (let i = 0; i < 18; i++) {
+    const p = randomOccupationPos(170);
+    const en = spawnEnemy(p);
+    en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
+    en.mesh.position.copy(en.pos);
+  }
+  // ...plus förtrupp på väg upp och två infiltratörer nära basen — omedelbar kontakt
+  for (const [from, to, n, tBase, tSpan] of [[A.pos, B.pos, 3, 0.25, 0.6], [B.pos, C.pos, 3, 0.15, 0.45], [C.pos, D.spawn, 2, 0.3, 0.25]]) {
     for (let i = 0; i < n; i++) {
       const t = tBase + tSpan * (i / n) + Math.random() * 0.08;
-      const en = spawnEnemy();
-      en.pos.set(lerp(from[0], to[0], t) + (Math.random() - 0.5) * 16, 0,
-                 lerp(from[1], to[1], t) + (Math.random() - 0.5) * 16);
+      const en = spawnEnemy([lerp(from[0], to[0], t) + (Math.random() - 0.5) * 16,
+                             lerp(from[1], to[1], t) + (Math.random() - 0.5) * 16]);
       en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
       en.mesh.position.copy(en.pos);
     }
@@ -1543,9 +1566,17 @@ function updateEnemy(en, dt) {
   }
 
   if (!inCapZone && en.path) {
-    // avancera mot målet — även under beskjutning (långsammare), håll bara vid närkontakt
+    // avancera mot målet — även under beskjutning (långsammare), strafe:a i närkontakt
     let speedMul = 1;
     if (engaging) speedMul = distToPlayer < 22 ? 0 : 0.65;
+    if (speedMul === 0) {
+      // sidledsrörelse i eldstrid — stå aldrig blick stilla
+      const pdx = player.pos.x - en.pos.x, pdz = player.pos.z - en.pos.z;
+      const pd = Math.hypot(pdx, pdz) || 1;
+      const s = Math.sin(clock.elapsedTime * 1.7 + en.wobble * 3) * 1.6 * dt;
+      en.pos.x += (-pdz / pd) * s;
+      en.pos.z += (pdx / pd) * s;
+    }
     if (speedMul > 0) {
       let wp = en.path[Math.min(en.pathI, en.path.length - 1)];
       let dx = wp[0] + en.lateral - en.pos.x, dz = wp[1] + en.lateral * 0.5 - en.pos.z;
@@ -1736,11 +1767,11 @@ function updateWaves(dt) {
     if (game.betweenT <= 0) {
       if (game.wave >= game.maxWave) { endGame(true); return; }
       game.wave++;
-      game.toSpawn = 4 + game.wave * 2;
+      game.toSpawn = 6 + game.wave * 2;
       game.spawnT = 0.5;
       game.betweenT = 9;
       document.getElementById('wavenum').textContent = 'Våg ' + game.wave + '/' + game.maxWave;
-      msg('🔴 Våg ' + game.wave + ' — fienden rycker fram över Forsebron!');
+      msg('🔴 Våg ' + game.wave + ' — fienden rycker fram från flera håll!');
       playTone(440, 0.2, 0.15); setTimeout(() => playTone(550, 0.25, 0.15), 220);
       // stupade försvarare ersätts av förstärkningar från basen — de springer ner till fronten
       let reinforced = false;

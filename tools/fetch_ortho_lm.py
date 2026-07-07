@@ -41,22 +41,41 @@ with urllib.request.urlopen(req, timeout=30) as f:
 urls = [it["assets"]["data"]["href"] for it in items]
 print(f"{len(urls)} COG-rutor täcker området")
 
-# ---- 2. läs rutorna (rasterio läser COG:ar effektivt över HTTP med auth) ----
-env = rasterio.Env(GDAL_HTTP_USERPWD=f"{USER}:{PASS}",
-                   GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",
-                   CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif")
-datasets = []
-with env:
-    for u in urls:
-        ds = rasterio.open("/vsicurl/" + u)
-        print("  öppnade", u.rsplit("/", 1)[-1], ds.width, "x", ds.height, ds.crs)
-        datasets.append(ds)
+# ---- 2. ladda ner rutorna med Basic-auth (robustare än GDAL:s vsicurl) ----
+import base64
+os.makedirs("cache", exist_ok=True)
+auth = base64.b64encode(f"{USER}:{PASS}".encode()).decode()
+paths = []
+for u in urls:
+    name = u.rsplit("/", 1)[-1]
+    path = os.path.join("cache", name)
+    paths.append(path)
+    if os.path.exists(path) and os.path.getsize(path) > 1e6:
+        print("  cachad:", name)
+        continue
+    print("  hämtar", name, "…", flush=True)
+    r = urllib.request.Request(u, headers={"Authorization": "Basic " + auth})
+    try:
+        with urllib.request.urlopen(r, timeout=600) as f, open(path, "wb") as out:
+            while True:
+                chunk = f.read(1 << 20)
+                if not chunk:
+                    break
+                out.write(chunk)
+    except urllib.error.HTTPError as e:
+        if e.code == 401:
+            sys.exit("401 Unauthorized — kontot saknar nedladdningsrätt eller fel uppgifter.\n"
+                     "Logga in på geotorget.lantmateriet.se och gör en (gratis) beställning av\n"
+                     "'Ortofoto Nedladdning' — det aktiverar nedladdningsrättigheten på kontot.")
+        raise
+    print("   ", os.path.getsize(path) // (1 << 20), "MB")
 
-    # mosaik i källans CRS (SWEREF99 TM), nedsamplad till ~0,3 m via COG-overviews
-    mosaic, src_transform = merge(datasets, res=(0.32, 0.32))
-    src_crs = datasets[0].crs
-    for ds in datasets:
-        ds.close()
+datasets = [rasterio.open(p) for p in paths]
+print("mosaikar (nedsamplat till 0,32 m via COG-overviews)…", flush=True)
+mosaic, src_transform = merge(datasets, res=(0.32, 0.32))
+src_crs = datasets[0].crs
+for ds in datasets:
+    ds.close()
 print("mosaik:", mosaic.shape)
 
 # ---- 3. omprojicera till lat/lon-linjärt rutnät (EPSG:4326) ----
