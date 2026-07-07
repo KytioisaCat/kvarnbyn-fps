@@ -1378,7 +1378,8 @@ const capPills = capState.map(cap => {
   game.wave = 1; game.toSpawn = 5; game.spawnT = 3; game.betweenT = 9;
   document.getElementById('wavenum').textContent = 'Våg 1/8';
   // förtruppen är redan på väg uppför backarna mot B och C
-  for (const [from, to, n, tBase, tSpan] of [[A.pos, B.pos, 4, 0.25, 0.6], [B.pos, C.pos, 4, 0.15, 0.45]]) {
+  // två infiltratörer har redan smugit förbi C, på väg upp mot basen — omedelbar kontakt
+  for (const [from, to, n, tBase, tSpan] of [[A.pos, B.pos, 4, 0.25, 0.6], [B.pos, C.pos, 4, 0.15, 0.45], [C.pos, D.spawn, 2, 0.3, 0.25]]) {
     for (let i = 0; i < n; i++) {
       const t = tBase + tSpan * (i / n) + Math.random() * 0.08;
       const en = spawnEnemy();
@@ -1587,7 +1588,7 @@ function updateEnemy(en, dt) {
   // enemies can hurt nearby allies
   for (const al of allies) {
     if (al.dead) continue;
-    if (en.pos.distanceTo(al.pos) < 35 && Math.random() < dt * 0.15) {
+    if (en.pos.distanceTo(al.pos) < 28 && Math.random() < dt * 0.06) {
       al.hp -= 25;
       if (al.hp <= 0) { al.dead = true; al.deadT = 0; msg('En försvarare stupade vid ' + (frontlineCap()?.name || 'fronten')); }
     }
@@ -1619,21 +1620,22 @@ function updateAlly(al, dt) {
     if (hasLOS(from, to)) {
       addTracer(from, to, 0x88bbff);
       playShot(0.07, 700);
-      if (Math.random() < 0.42) damageEnemy(best, 25);
+      if (Math.random() < 0.5) damageEnemy(best, 34);
     }
   }
 
-  // försvara närmaste egna punkt (fiendekontakt inom 28 m = håll position och skjut)
+  // försvara närmaste egna punkt — men förstärk hotade punkter i närheten
   let fc = null, fcd = Infinity;
   for (const c of capState) {
     if (c.owner === 'enemy') continue;
-    const dc = Math.hypot(al.pos.x - c.pos[0], al.pos.z - c.pos[1]);
+    let dc = Math.hypot(al.pos.x - c.pos[0], al.pos.z - c.pos[1]);
+    if (c.progress > 0.1) dc -= 100; // punkt under attack → dit!
     if (dc < fcd) { fcd = dc; fc = c; }
   }
   if (!fc) fc = capState[capState.length - 1];
   const holdAt = [fc.pos[0] + al.holdX, fc.pos[1] + al.holdZ];
   const distHold = Math.hypot(al.pos.x - holdAt[0], al.pos.z - holdAt[1]);
-  if (distHold > 6 && !(best && bd < 28)) {
+  if (distHold > 6 && !(best && bd < 18)) {
     if (!al.path || al.target !== fc.id) {
       al.target = fc.id;
       al.path = findPath(nearestNode(al.pos.x, al.pos.z), nearestNode(fc.pos[0], fc.pos[1])) || [holdAt];

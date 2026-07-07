@@ -26,6 +26,10 @@ Tre capture points på riktiga platser, i stigande ordning upp mot din bas:
 | B | Roten M | 35 m |
 | C | Royens trappor | 44 m |
 
+**Uppdraget börjar mitt i invasionen**: Gamla Torget har redan fallit, förtruppen är
+på väg uppför backarna mot B och C, och två infiltratörer har smugit sig förbi — du
+har kontakt inom sekunder. Tryck ner dem hela vägen och ta tillbaka torget.
+
 Fienden erövrar punkterna nerifrån och upp — faller **C** är slaget förlorat.
 Stå själv i en förlorad zon (utan fiender i närheten) för att ta tillbaka den och
 flytta frontlinjen nedåt igen. Blåa AI-försvarare hjälper till vid varje punkt och
