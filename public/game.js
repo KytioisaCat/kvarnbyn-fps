@@ -1236,21 +1236,102 @@ function addTracer(from, to, color) {
 // ---------- soldiers (enemies + allies) ----------
 function makeSoldier(color, helmetColor) {
   const grp = new THREE.Group();
-  const mat = new THREE.MeshLambertMaterial({ color });
-  const body = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.36, 1.05, 8), mat);
-  body.position.y = 0.9;
-  const head = new THREE.Mesh(new THREE.SphereGeometry(0.21, 8, 8), new THREE.MeshLambertMaterial({ color: 0xc9a186 }));
-  head.position.y = 1.62;
-  const helmet = new THREE.Mesh(new THREE.SphereGeometry(0.24, 8, 6, 0, Math.PI * 2, 0, Math.PI * 0.55), new THREE.MeshLambertMaterial({ color: helmetColor }));
-  helmet.position.y = 1.65;
-  const rifle = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.07, 0.85), new THREE.MeshLambertMaterial({ color: 0x22262a }));
-  rifle.position.set(0.28, 1.15, -0.3);
-  const legL = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.75, 6), new THREE.MeshLambertMaterial({ color: 0x33363a }));
-  legL.position.set(-0.14, 0.37, 0);
-  const legR = legL.clone(); legR.position.x = 0.14;
-  grp.add(body, head, helmet, rifle, legL, legR);
-  grp.userData.bodyMat = mat;
+  const uniform = new THREE.MeshLambertMaterial({ color });
+  const dark = new THREE.MeshLambertMaterial({ color: new THREE.Color(color).multiplyScalar(0.55) });
+  const gear = new THREE.MeshLambertMaterial({ color: 0x26292c });
+  const skin = new THREE.MeshLambertMaterial({ color: 0xc9a186 });
+  const helm = new THREE.MeshLambertMaterial({ color: helmetColor });
+
+  // torso: bål + stridsväst + bälte
+  const torso = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.62, 0.28), uniform);
+  torso.position.y = 1.12;
+  const vest = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.42, 0.34), gear);
+  vest.position.y = 1.18;
+  const belt = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.09, 0.3), dark);
+  belt.position.y = 0.83;
+  const pack = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.42, 0.16), dark);
+  pack.position.set(0, 1.16, 0.24);
+
+  // huvud + hjälm med brätte
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.26, 0.24), skin);
+  head.position.y = 1.58;
+  const helmet = new THREE.Mesh(new THREE.SphereGeometry(0.19, 10, 6, 0, Math.PI * 2, 0, Math.PI * 0.6), helm);
+  helmet.scale.set(1, 0.85, 1.1);
+  helmet.position.y = 1.66;
+  const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.22, 0.035, 10), helm);
+  brim.position.y = 1.62;
+
+  // ben med knä-antydan (animeras i update)
+  const mkLeg = x => {
+    const leg = new THREE.Group();
+    const thigh = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.44, 0.18), uniform);
+    thigh.position.y = -0.22;
+    const shin = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.42, 0.15), dark);
+    shin.position.y = -0.63;
+    const boot = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.1, 0.26), gear);
+    boot.position.set(0, -0.86, -0.04);
+    leg.add(thigh, shin, boot);
+    leg.position.set(x, 0.86, 0);
+    return leg;
+  };
+  const legL = mkLeg(-0.13), legR = mkLeg(0.13);
+
+  // armar som håller geväret framför kroppen (aim-grupp, vrids mot målet)
+  const aim = new THREE.Group();
+  aim.position.set(0, 1.34, 0);
+  const armR = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.13, 0.5), uniform);
+  armR.position.set(0.2, -0.05, -0.22);
+  armR.rotation.y = 0.35;
+  const armL = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.13, 0.44), uniform);
+  armL.position.set(-0.12, -0.06, -0.3);
+  armL.rotation.y = -0.5;
+  const rifle = new THREE.Group();
+  const rBody = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.12, 0.62), gear);
+  const rBarrel = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.035, 0.42), gear);
+  rBarrel.position.set(0, 0.035, -0.5);
+  const rMag = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.16, 0.09), dark);
+  rMag.position.set(0, -0.12, -0.06);
+  const rStock = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.1, 0.2), dark);
+  rStock.position.set(0, -0.02, 0.36);
+  rifle.add(rBody, rBarrel, rMag, rStock);
+  rifle.position.set(0.04, -0.1, -0.42);
+  // mynningseld (tänds vid skott)
+  const flashSpr = new THREE.Sprite(new THREE.SpriteMaterial({ color: 0xffd27f, transparent: true, opacity: 0 }));
+  flashSpr.scale.set(0.5, 0.5, 1);
+  flashSpr.position.set(0.04, -0.06, -1.16);
+  aim.add(armR, armL, rifle, flashSpr);
+
+  grp.add(torso, vest, belt, pack, head, helmet, brim, legL, legR, aim);
+  grp.userData = { bodyMat: uniform, legL, legR, aim, flashSpr, flashT: 0 };
   return grp;
+}
+
+// benanimation + mynningseld — anropas varje frame för levande soldater
+function animateSoldier(mesh, moving, dt, speedFactor = 1) {
+  const u = mesh.userData;
+  if (!u.legL) return;
+  if (moving) {
+    u.phase = (u.phase || 0) + dt * 7 * speedFactor;
+    u.legL.rotation.x = Math.sin(u.phase) * 0.55;
+    u.legR.rotation.x = -Math.sin(u.phase) * 0.55;
+  } else {
+    u.legL.rotation.x *= 0.8; u.legR.rotation.x *= 0.8;
+  }
+  if (u.flashT > 0) {
+    u.flashT -= dt;
+    u.flashSpr.material.opacity = Math.max(0, u.flashT / 0.06);
+  }
+}
+function soldierMuzzle(mesh) {
+  const u = mesh.userData;
+  if (u.flashSpr) { u.flashT = 0.06; u.flashSpr.material.opacity = 1; u.flashSpr.material.rotation = Math.random() * 6.28; }
+}
+// vrid överkroppen/vapnet mot ett mål i höjdled
+function soldierAimAt(mesh, fromPos, target) {
+  const u = mesh.userData;
+  if (!u.aim) return;
+  const d = Math.hypot(target.x - fromPos.x, target.z - fromPos.z) || 1;
+  u.aim.rotation.x = Math.max(-0.7, Math.min(0.7, Math.atan2(target.y - (fromPos.y + 1.34), d)));
 }
 
 const enemies = [];
@@ -1548,6 +1629,7 @@ function updateEnemy(en, dt) {
 
   const inCapZone = Math.hypot(en.pos.x - targetCap.pos[0], en.pos.z - targetCap.pos[1]) < targetCap.r;
   const engaging = en.canSee && distToPlayer < 70;
+  const preX = en.pos.x, preZ = en.pos.z;
 
   // eld under framryckning — de stannar bara i närstrid
   if (engaging) {
@@ -1559,6 +1641,8 @@ function updateEnemy(en, dt) {
       const to = player.pos.clone(); to.y += 1.4;
       addTracer(from, to.clone().add(new THREE.Vector3((Math.random() - .5) * 2, (Math.random() - .5) * 2, (Math.random() - .5) * 2)), 0xff6644);
       playShot(0.12, 500);
+      soldierMuzzle(en.mesh);
+      soldierAimAt(en.mesh, en.pos, { x: player.pos.x, y: player.pos.y + 1.4, z: player.pos.z });
       const moving = !inCapZone && distToPlayer > 22;
       const hitChance = Math.max(0.07, (0.42 - distToPlayer / 150) * (moving ? 0.65 : 1));
       if (Math.random() < hitChance) damagePlayer(6 + Math.random() * 5);
@@ -1614,7 +1698,7 @@ function updateEnemy(en, dt) {
   en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
   en.wobble += dt * 8;
   en.mesh.position.copy(en.pos);
-  en.mesh.position.y += Math.abs(Math.sin(en.wobble)) * 0.05;
+  animateSoldier(en.mesh, Math.hypot(en.pos.x - preX, en.pos.z - preZ) > 0.15 * dt, dt, en.speed / 3);
 
   // enemies can hurt nearby allies
   for (const al of allies) {
@@ -1651,6 +1735,8 @@ function updateAlly(al, dt) {
     if (hasLOS(from, to)) {
       addTracer(from, to, 0x88bbff);
       playShot(0.07, 700);
+      soldierMuzzle(al.mesh);
+      soldierAimAt(al.mesh, al.pos, { x: best.pos.x, y: best.pos.y + 1.2, z: best.pos.z });
       if (Math.random() < 0.5) damageEnemy(best, 34);
     }
   }
@@ -1692,7 +1778,10 @@ function updateAlly(al, dt) {
     collideWalls(al.pos, 0.45, al.pos.y);
     al.pos.y = groundInfoAt(al.pos.x, al.pos.z).y;
     al.mesh.position.copy(al.pos);
+    animateSoldier(al.mesh, d > 0.1, dt, 0.95);
+    return;
   }
+  animateSoldier(al.mesh, false, dt);
 }
 
 // ---------- capture logic ----------
