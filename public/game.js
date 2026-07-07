@@ -2004,6 +2004,58 @@ function drawMinimap() {
   ctx.restore();
 }
 
+// ---------- taktisk fullskärmskarta (M) ----------
+const bigmapEl = document.getElementById('bigmap');
+const bmCanvas = document.getElementById('bm');
+let bigmapOpen = false, bmT = 0;
+function drawBigmap() {
+  const W = mapCanvas.width, H = mapCanvas.height;
+  bmCanvas.width = W; bmCanvas.height = H;
+  const c = bmCanvas.getContext('2d');
+  c.drawImage(mapCanvas, 0, 0);
+  const toX = x => x - T.x0, toZ = z => z - T.z1;
+  // fiender
+  c.fillStyle = '#ff5a5a';
+  for (const en of enemies) {
+    if (en.dead) continue;
+    c.beginPath(); c.arc(toX(en.pos.x), toZ(en.pos.z), 5, 0, 7); c.fill();
+  }
+  // medhjälpare
+  c.fillStyle = '#6db2ff';
+  for (const al of allies) {
+    if (al.dead) continue;
+    c.beginPath(); c.arc(toX(al.pos.x), toZ(al.pos.z), 5, 0, 7); c.fill();
+  }
+  // capture points
+  for (const cap of capState) {
+    const x = toX(cap.pos[0]), z = toZ(cap.pos[1]);
+    c.strokeStyle = cap.owner === 'enemy' ? '#ff5a5a' : '#4f9dff';
+    c.lineWidth = 3;
+    c.beginPath(); c.arc(x, z, cap.r, 0, 7); c.stroke();
+    c.fillStyle = cap.owner === 'enemy' ? 'rgba(255,90,90,.25)' : 'rgba(79,157,255,.25)';
+    c.beginPath(); c.arc(x, z, cap.r, 0, 7); c.fill();
+    c.fillStyle = '#fff'; c.font = 'bold 22px Arial'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(cap.id, x, z);
+    c.font = '12px Arial'; c.fillText(cap.name, x, z + cap.r + 12);
+  }
+  // basen + spelaren
+  c.fillStyle = '#ffd76a'; c.font = '12px Arial'; c.textAlign = 'center';
+  c.fillText('⌂ BASEN', toX(D.spawn[0]), toZ(D.spawn[1]) - 10);
+  c.save();
+  c.translate(toX(player.pos.x), toZ(player.pos.z));
+  c.rotate(-player.yaw + Math.PI);
+  c.fillStyle = '#ffd76a';
+  c.beginPath(); c.moveTo(0, -11); c.lineTo(7, 8); c.lineTo(-7, 8); c.closePath(); c.fill();
+  c.restore();
+}
+addEventListener('keydown', e => {
+  if (e.code === 'KeyM' && game.started && !game.over) {
+    bigmapOpen = !bigmapOpen;
+    bigmapEl.style.display = bigmapOpen ? 'flex' : 'none';
+    if (bigmapOpen) drawBigmap();
+  }
+});
+
 // ---------- player update ----------
 function updatePlayer(dt) {
   if (player.dead) {
@@ -2149,6 +2201,10 @@ function frame(dt) {
     updateCaps(dt);
     updateWaves(dt);
     updateHUD();
+    if (bigmapOpen) {
+      bmT -= dt;
+      if (bmT <= 0) { bmT = 0.5; drawBigmap(); }
+    }
     mmT -= dt;
     if (mmT <= 0) {
       mmT = 0.08;

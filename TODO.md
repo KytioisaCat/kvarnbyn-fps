@@ -20,17 +20,12 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 - [ ] **Ljudlandskap** — fotsteg (asfalt/gräs olika), vapenljudsvarianter, avlägset
   stridsmuller när AI strider utom synhåll, vind i träden
-- [ ] **Kvällsläge** — skymningshimmel, tända gatlyktor (ljuskäglor/glow-sprites),
-  varmgula fönster, växlingsbart på startskärmen
 - [ ] **Vapenpaket** — ADS på högerklick (zoom + lägre spridning), prickskyttegevär,
   hagelgevär, vapenväxling 1/2/3
 - [ ] **Granater** — kast med G, kastbåge, explosion med splash-skada
 - [ ] **Förnödenheter** — ammo-/förbandslådor vid egna capture points, respawn mellan vågor
 - [ ] **Fiendevariation** — rusare (snabb/svag), tungt infanteri (3× HP, långsam),
   prickskytt (håller avstånd, siktvarning); vågorna blandar typerna
-- [ ] **Träd från satellitbilden** — sampla gröna pixlar ur ortofotot, placera träd
-  på riktiga positioner med riktiga kronfärger (i stället för slump i grönområden)
-- [ ] **Full karta på M** — helskärmskarta med frontlinje och styrkor
 - [ ] **Poäng & highscore** — kills/headshots/återtag ger poäng, slutstatistik,
   localStorage-highscore
 - [ ] **Launch-polish** — OG-metataggar + delningsbild, favicon, mute-knapp,
@@ -56,3 +51,12 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 - [x] 2026-07-07 — Aggressiv AI (eld under framryckning, närmaste-mål, fastna-detektor),
   mobila medhjälpare med förstärkningar, start mitt i invasionen, fastna-fix
 - [x] 2026-07-07 — GitHub + Pages-deploy: https://kytioisacat.github.io/kvarnbyn-fps/
+- [x] 2026-07-08 (natt) — Ockupationsläge: 18 fiender håller kartan från start (fri zon
+  170 m kring basen), förstärkningar från tre håll, strafe i närstrid, större vågor
+- [x] 2026-07-08 (natt) — Riktiga soldatmodeller: väst/ryggsäck/hjälm, tvåhandsfattat
+  vapen, benanimation, mynningseld, siktar i höjdled mot målet
+- [x] 2026-07-08 (natt) — Kvällsläge (checkbox på startskärmen): stjärnhimmel, månljus,
+  tända lyktor med glöd + ljusgölar, varmlysta fönster
+- [x] 2026-07-08 (natt) — Träd från ortofotots pixlar: riktiga positioner + kronfärger,
+  ~2 400 st, stamkollision
+- [x] 2026-07-08 (natt) — Taktisk fullskärmskarta på M: ortofoto, frontläge, alla styrkor
