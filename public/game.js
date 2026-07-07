@@ -958,34 +958,68 @@ for (let i = 0; i < sandbagObstacles.length; i++) {
     }
 }
 
-// ---------- trees ----------
-{
-  const trunkG = new THREE.CylinderGeometry(0.18, 0.28, 2.2, 5);
-  const crownG = new THREE.ConeGeometry(1.6, 3.6, 7);
-  const trunkM = new THREE.MeshLambertMaterial({ color: 0x5a4632 });
-  const crownM = new THREE.MeshLambertMaterial({ color: 0x3d5c33 });
-  const N = 350;
-  const trunks = new THREE.InstancedMesh(trunkG, trunkM, N);
-  const crowns = new THREE.InstancedMesh(crownG, crownM, N);
-  const mat = new THREE.Matrix4();
-  let placed = 0, guard = 0;
-  const polys = D.green.filter(g => g.p.length >= 3);
-  while (placed < N && guard++ < 6000 && polys.length) {
-    const g = polys[Math.floor(Math.random() * polys.length)];
-    let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
-    for (const p of g.p) { minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minZ = Math.min(minZ, p[1]); maxZ = Math.max(maxZ, p[1]); }
-    const x = lerp(minX, maxX, Math.random()), z = lerp(minZ, maxZ, Math.random());
-    if (!inBounds(x, z) || !pointInPoly(x, z, g.p)) continue;
-    const y = heightAt(x, z);
-    const s = 0.7 + Math.random() * 0.9;
-    mat.makeScale(s, s, s); mat.setPosition(x, y + 1.1 * s, z);
-    trunks.setMatrixAt(placed, mat);
-    mat.makeScale(s, s, s); mat.setPosition(x, y + 2.2 * s + 1.6 * s, z);
-    crowns.setMatrixAt(placed, mat);
-    placed++;
+// ---------- träd: planteras där satellitbilden visar trädkronor ----------
+// (anropas när ortofotot laddats — se minimap-blocket)
+let treesPlanted = false;
+function plantTreesFromOrtho(mc, W, H) {
+  if (treesPlanted) return;
+  treesPlanted = true;
+  const img = mc.getImageData(0, 0, W, H).data; // 1 px = 1 m
+  // samla ALLA kandidater först, glesa sedan ut jämnt över hela kartan
+  const cand = [];
+  for (let z = T.z1 + 12; z < T.z0 - 12; z += 6) {
+    for (let x = T.x0 + 12; x < T.x1 - 12; x += 6) {
+      const px = Math.round(x - T.x0 + (Math.random() - 0.5) * 4);
+      const pz = Math.round(z - T.z1 + (Math.random() - 0.5) * 4);
+      if (px < 0 || pz < 0 || px >= W || pz >= H) continue;
+      const i = (pz * W + px) * 4;
+      const r = img[i], g = img[i + 1], b = img[i + 2];
+      // trädkrona: grönt dominerar och mörkt (gräsmattor är ljusare)
+      if (!(g > r + 6 && g > b + 12 && (r + g + b) / 3 < 100)) continue;
+      cand.push([T.x0 + px, T.z1 + pz, r, g, b]);
+    }
   }
-  trunks.count = placed; crowns.count = placed;
+  const MAX = 2400;
+  const keep = Math.min(1, MAX / (cand.length || 1));
+  const spots = [];
+  for (const c of cand) {
+    if (Math.random() > keep) continue;
+    const [wx, wz] = c;
+    if (insideAnyBuilding(wx, wz)) continue;
+    if (groundInfoAt(wx, wz).road) continue;
+    const nr = nearestRiver(wx, wz);
+    if (nr && nr.d < 6) continue;
+    spots.push(c);
+  }
+  const trunkG = new THREE.CylinderGeometry(0.16, 0.26, 2.4, 5);
+  const crownG = new THREE.SphereGeometry(1.7, 7, 6);
+  const trunkM = new THREE.MeshLambertMaterial({ color: 0x54422e });
+  const crownM = new THREE.MeshLambertMaterial();
+  const trunks = new THREE.InstancedMesh(trunkG, trunkM, spots.length);
+  const crowns = new THREE.InstancedMesh(crownG, crownM, spots.length);
+  const mat = new THREE.Matrix4();
+  const col = new THREE.Color();
+  spots.forEach(([x, z, r, g, b], i) => {
+    const y = heightAt(x, z);
+    const s = 0.8 + Math.random() * 0.8;
+    mat.makeScale(s, s, s); mat.setPosition(x, y + 1.2 * s, z);
+    trunks.setMatrixAt(i, mat);
+    mat.makeScale(s, s * (0.9 + Math.random() * 0.4), s);
+    mat.setPosition(x, y + 2.4 * s + 1.1 * s, z);
+    crowns.setMatrixAt(i, mat);
+    col.setRGB(Math.min(1, r / 255 * 1.5 + 0.04), Math.min(1, g / 255 * 1.55 + 0.06), Math.min(1, b / 255 * 1.35));
+    crowns.setColorAt(i, col);
+    // trädstammar stoppar rörelse och kulor
+    const o = { x, z, r: 0.3, top: y + 2.4 * s };
+    const oi = sandbagObstacles.length;
+    sandbagObstacles.push(o);
+    const k = Math.floor(x / CELL) + ':' + Math.floor(z / CELL);
+    if (!obstHash.has(k)) obstHash.set(k, []);
+    obstHash.get(k).push(oi);
+  });
+  if (crowns.instanceColor) crowns.instanceColor.needsUpdate = true;
   scene.add(trunks); scene.add(crowns);
+  console.log('planterade', spots.length, 'träd från ortofotot');
 }
 
 // ---------- capture point markers ----------
@@ -1917,6 +1951,7 @@ const mapCanvas = document.createElement('canvas');
   const mapImg = new Image();
   mapImg.onload = () => {
     mc.drawImage(mapImg, 0, 0, w, h);
+    plantTreesFromOrtho(mc, w, h); // träden läser pixlarna innan vägöverlägget ritas
     // thin road overlay for readability
     mc.strokeStyle = 'rgba(255,255,255,0.35)'; mc.lineWidth = 1;
     for (const rd of D.roads) {
