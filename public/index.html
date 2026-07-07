@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<title>Försvara Kvarnbyn</title>
+<style>
+  html,body{margin:0;padding:0;overflow:hidden;background:#0b0f14;font-family:"Helvetica Neue",Arial,sans-serif;user-select:none}
+  #c{display:block;width:100vw;height:100vh}
+  .hud{position:fixed;color:#eef3f8;text-shadow:0 1px 3px rgba(0,0,0,.8);z-index:10;pointer-events:none}
+
+  #crosshair{left:50%;top:50%;transform:translate(-50%,-50%);width:22px;height:22px}
+  #crosshair::before,#crosshair::after{content:"";position:absolute;background:#fff;box-shadow:0 0 3px #000}
+  #crosshair::before{left:50%;top:0;width:2px;height:100%;transform:translateX(-50%)}
+  #crosshair::after{top:50%;left:0;height:2px;width:100%;transform:translateY(-50%)}
+
+  #hp{left:24px;bottom:24px;width:240px}
+  #hpbar{height:14px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.4);border-radius:3px;overflow:hidden}
+  #hpfill{height:100%;width:100%;background:linear-gradient(90deg,#3fae5a,#7fd77f);transition:width .15s}
+  #hplabel{font-size:12px;letter-spacing:1px;margin-bottom:4px;opacity:.9}
+
+  #ammo{right:28px;bottom:22px;font-size:34px;font-weight:700;text-align:right}
+  #ammo small{font-size:15px;font-weight:400;opacity:.8}
+  #reloadmsg{right:28px;bottom:64px;font-size:13px;color:#ffd27f;display:none}
+
+  #caps{top:18px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
+  .cap{padding:6px 12px;border-radius:4px;background:rgba(10,20,30,.65);border:1px solid rgba(255,255,255,.25);font-size:13px;min-width:120px;text-align:center}
+  .cap b{display:block;font-size:15px}
+  .cap .bar{height:4px;background:rgba(255,255,255,.15);margin-top:4px;border-radius:2px;overflow:hidden}
+  .cap .bar i{display:block;height:100%;width:0%}
+  .cap.friendly{border-color:#5aa8ff}
+  .cap.enemy{border-color:#ff5a5a;background:rgba(60,10,10,.7)}
+  .cap.contested{border-color:#ffb14f;animation:pulse 1s infinite}
+  @keyframes pulse{50%{background:rgba(80,50,10,.8)}}
+
+  #wave{top:18px;left:22px;font-size:14px;background:rgba(10,20,30,.6);padding:8px 12px;border-radius:4px;border:1px solid rgba(255,255,255,.2)}
+  #wave b{font-size:18px}
+  #kills{margin-top:2px;font-size:12px;opacity:.85}
+
+  #minimap{position:fixed;top:18px;right:18px;width:220px;height:220px;border-radius:50%;border:2px solid rgba(255,255,255,.35);z-index:10;background:#111;overflow:hidden}
+  #minimap canvas{width:100%;height:100%}
+
+  #feed{left:22px;top:96px;font-size:13px;max-width:340px}
+  #feed div{background:rgba(0,0,0,.45);margin-bottom:4px;padding:3px 8px;border-radius:3px;opacity:.95}
+
+  #vignette{left:0;top:0;width:100vw;height:100vh;background:radial-gradient(ellipse at center,transparent 55%,rgba(180,0,0,.55) 100%);opacity:0;transition:opacity .1s}
+  #hitmarker{left:50%;top:50%;transform:translate(-50%,-50%) rotate(45deg);width:26px;height:26px;opacity:0;color:#fff;font-size:26px;font-weight:900}
+  #hitmarker::before{content:"✚";position:absolute}
+
+  #overlay{position:fixed;inset:0;background:rgba(6,10,16,.88);z-index:50;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#eef3f8;text-align:center;cursor:pointer}
+  #overlay h1{font-size:52px;margin:0 0 6px;letter-spacing:3px;color:#ffd76a;text-shadow:0 2px 12px rgba(0,0,0,.9)}
+  #overlay h2{font-weight:400;font-size:17px;margin:0 0 26px;color:#a8c4dd}
+  #overlay .panel{background:rgba(20,32,46,.8);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:22px 34px;max-width:560px;font-size:14px;line-height:1.75;text-align:left}
+  #overlay .panel b{color:#ffd76a}
+  #overlay .go{margin-top:26px;font-size:20px;padding:12px 44px;border:2px solid #ffd76a;border-radius:6px;color:#ffd76a;animation:pulse2 1.6s infinite}
+  @keyframes pulse2{50%{background:rgba(255,215,106,.15)}}
+  #overlay.hidden{display:none}
+  #endtitle{display:none}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="overlay">
+  <h1 id="title">FÖRSVARA KVARNBYN</h1>
+  <h2>Mölndals Kvarnby · byggd på riktig kartdata</h2>
+  <div class="panel">
+    En fientlig invasionsstyrka har gått över <b>Forsebron</b> och tränger upp genom Kvarnbyn.
+    Du spawnar högst upp på <b>Görjelycksgatan</b>. Håll ställningarna!<br><br>
+    <b>A – Gamla Torget</b> · <b>B – Roten M</b> · <b>C – Royens trappor</b><br>
+    Fienden erövrar punkterna nerifrån och upp. Faller <b>C</b> är slaget förlorat.
+    Stå själv i en förlorad zon (utan fiender i närheten) för att ta tillbaka den.<br><br>
+    <b>WASD</b> springa · <b>Shift</b> sprinta · <b>Space</b> hoppa ·
+    <b>Vänsterklick</b> skjut · <b>R</b> ladda om<br>
+    Överlev alla <b>8 anfallsvågor</b> för att rädda Kvarnbyn.
+  </div>
+  <div class="go" id="gobtn">KLICKA FÖR ATT STRIDA</div>
+</div>
+
+<div class="hud" id="crosshair"></div>
+<div class="hud" id="hp"><div id="hplabel">HÄLSA</div><div id="hpbar"><div id="hpfill"></div></div></div>
+<div class="hud" id="ammo"><span id="mag">30</span> <small>/ ∞</small></div>
+<div class="hud" id="reloadmsg">LADDAR OM…</div>
+<div class="hud" id="caps"></div>
+<div class="hud" id="wave"><b id="wavenum">Våg 0/8</b><div id="kills">0 fiender nedkämpade</div></div>
+<div class="hud" id="feed"></div>
+<div class="hud" id="vignette"></div>
+<div class="hud" id="hitmarker"></div>
+<div id="minimap"><canvas id="mm" width="440" height="440"></canvas></div>
+<div class="hud" id="attrib" style="right:10px;bottom:4px;font-size:10px;opacity:.55">Kartdata © OpenStreetMap · Flygbild © Esri, Maxar, Earthstar Geographics · Höjddata © Copernicus EU-DEM</div>
+
+<script src="data.js?v=6"></script>
+<script type="module" src="game.js?v=6"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Python-pipeline: mellanfiler och miljö (genereras om via tools/, se README)
+tools/venv/
+tools/__pycache__/
+tools/*.npy
+tools/osm_raw.json
+tools/ortho_full.png
+tools/ortho_meta.json
+tools/ortho.jpg
+tools/data.js
+
+# macOS
+.DS_Store
+
+# Lokala Claude-inställningar
+.claude/settings.local.json
