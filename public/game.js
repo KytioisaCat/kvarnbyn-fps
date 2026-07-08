@@ -989,11 +989,24 @@ for (let i = 0; i < sandbagObstacles.length; i++) {
 
 // ---------- träd: planteras där satellitbilden visar trädkronor ----------
 // (anropas när ortofotot laddats — se minimap-blocket)
+// skogsraster (6 m-celler ur ortofotots gröna pixlar) — blockerar sikt & saktar rörelse
+const F_CELL = 6;
+let forestGrid = null, F_COLS = 0, F_ROWS = 0;
+function forestAt(x, z) {
+  if (!forestGrid) return false;
+  const c = Math.floor((x - T.x0) / F_CELL), r = Math.floor((z - T.z1) / F_CELL);
+  if (c < 0 || r < 0 || c >= F_COLS || r >= F_ROWS) return false;
+  return forestGrid[r * F_COLS + c] === 1;
+}
+
 let treesPlanted = false;
 function plantTreesFromOrtho(mc, W, H) {
   if (treesPlanted) return;
   treesPlanted = true;
   const img = mc.getImageData(0, 0, W, H).data; // 1 px = 1 m
+  F_COLS = Math.ceil((T.x1 - T.x0) / F_CELL);
+  F_ROWS = Math.ceil((T.z0 - T.z1) / F_CELL);
+  const marked = new Uint8Array(F_COLS * F_ROWS);
   // samla ALLA kandidater först, glesa sedan ut jämnt över hela kartan
   const cand = [];
   for (let z = T.z1 + 12; z < T.z0 - 12; z += 6) {
@@ -1006,19 +1019,63 @@ function plantTreesFromOrtho(mc, W, H) {
       // trädkrona: grönt dominerar och mörkt (gräsmattor är ljusare)
       if (!(g > r + 6 && g > b + 12 && (r + g + b) / 3 < 100)) continue;
       cand.push([T.x0 + px, T.z1 + pz, r, g, b]);
+      marked[Math.floor((z - T.z1) / F_CELL) * F_COLS + Math.floor((x - T.x0) / F_CELL)] = 1;
     }
   }
-  const MAX = 2400;
-  const keep = Math.min(1, MAX / (cand.length || 1));
+  forestGrid = new Uint8Array(F_COLS * F_ROWS);
+  // 1) OSM:s skogspolygoner (natural=wood / landuse=forest) är facit
+  for (const gp of D.green) {
+    if (gp.k !== 'forest') continue;
+    let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+    for (const p of gp.p) { minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minZ = Math.min(minZ, p[1]); maxZ = Math.max(maxZ, p[1]); }
+    const c1 = Math.max(0, Math.floor((minX - T.x0) / F_CELL)), c2 = Math.min(F_COLS - 1, Math.ceil((maxX - T.x0) / F_CELL));
+    const r1 = Math.max(0, Math.floor((minZ - T.z1) / F_CELL)), r2 = Math.min(F_ROWS - 1, Math.ceil((maxZ - T.z1) / F_CELL));
+    for (let r = r1; r <= r2; r++) {
+      for (let c = c1; c <= c2; c++) {
+        const cx = T.x0 + (c + 0.5) * F_CELL, cz = T.z1 + (r + 0.5) * F_CELL;
+        if (pointInPoly(cx, cz, gp.p)) forestGrid[r * F_COLS + c] = 1;
+      }
+    }
+  }
+  // 2) + täta pixelkluster (fångar okartlagda dungar): cell + ≥4 grannar markerade
+  for (let r = 1; r < F_ROWS - 1; r++) {
+    for (let c = 1; c < F_COLS - 1; c++) {
+      if (!marked[r * F_COLS + c] || forestGrid[r * F_COLS + c]) continue;
+      let n = 0;
+      for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+        if ((dr || dc) && marked[(r + dr) * F_COLS + c + dc]) n++;
+      }
+      if (n >= 4) forestGrid[r * F_COLS + c] = 1;
+    }
+  }
+  // träd: tätt i varje skogscell (färg ur fotot, tryckt mot grönt), glest för solitärer
+  const candF = [], candG = [];
+  for (let r = 0; r < F_ROWS; r++) {
+    for (let c = 0; c < F_COLS; c++) {
+      if (!forestGrid[r * F_COLS + c]) continue;
+      const wx = T.x0 + (c + 0.5) * F_CELL + (Math.random() - 0.5) * 4;
+      const wz = T.z1 + (r + 0.5) * F_CELL + (Math.random() - 0.5) * 4;
+      const px = Math.max(0, Math.min(W - 1, Math.round(wx - T.x0)));
+      const pz = Math.max(0, Math.min(H - 1, Math.round(wz - T.z1)));
+      const i = (pz * W + px) * 4;
+      candF.push([wx, wz, img[i], Math.max(img[i + 1], img[i] + 18), img[i + 2]]);
+    }
+  }
+  for (const c of cand) if (!forestAt(c[0], c[1])) candG.push(c);
+  const keepF = Math.min(1, 3800 / (candF.length || 1));
+  const keepG = Math.min(1, 800 / (candG.length || 1));
   const spots = [];
-  for (const c of cand) {
-    if (Math.random() > keep) continue;
-    const [wx, wz] = c;
-    if (insideAnyBuilding(wx, wz)) continue;
-    if (groundInfoAt(wx, wz).road) continue;
-    const nr = nearestRiver(wx, wz);
-    if (nr && nr.d < 6) continue;
-    spots.push(c);
+  for (const [list, keep, forest] of [[candF, keepF, true], [candG, keepG, false]]) {
+    for (const c of list) {
+      if (Math.random() > keep) continue;
+      const [wx, wz] = c;
+      if (insideAnyBuilding(wx, wz)) continue;
+      if (groundInfoAt(wx, wz).road) continue;
+      const nr = nearestRiver(wx, wz);
+      if (nr && nr.d < 6) continue;
+      c.push(forest);
+      spots.push(c);
+    }
   }
   const trunkG = new THREE.CylinderGeometry(0.16, 0.26, 2.4, 5);
   const crownG = new THREE.SphereGeometry(1.7, 7, 6);
@@ -1028,9 +1085,9 @@ function plantTreesFromOrtho(mc, W, H) {
   const crowns = new THREE.InstancedMesh(crownG, crownM, spots.length);
   const mat = new THREE.Matrix4();
   const col = new THREE.Color();
-  spots.forEach(([x, z, r, g, b], i) => {
+  spots.forEach(([x, z, r, g, b, forest], i) => {
     const y = heightAt(x, z);
-    const s = 0.8 + Math.random() * 0.8;
+    const s = forest ? 1.0 + Math.random() * 0.9 : 0.8 + Math.random() * 0.8;
     mat.makeScale(s, s, s); mat.setPosition(x, y + 1.2 * s, z);
     trunks.setMatrixAt(i, mat);
     mat.makeScale(s, s * (0.9 + Math.random() * 0.4), s);
@@ -1508,9 +1565,14 @@ function pointBlocked(x, y, z) {
 // returns { distance } of first blocked point, or null
 function raycastWorld(origin, dir, maxDist) {
   const step = 0.8;
+  let foliage = 0; // ackumulerat skogsdjup — man ser några meter in, aldrig igenom
   for (let t = step; t <= maxDist; t += step) {
     const x = origin.x + dir.x * t, y = origin.y + dir.y * t, z = origin.z + dir.z * t;
     if (pointBlocked(x, y, z)) return { distance: t };
+    if (forestGrid && forestAt(x, z) && y < heightAt(x, z) + 7) {
+      foliage += step;
+      if (foliage > 14) return { distance: t };
+    }
   }
   return null;
 }
@@ -2128,7 +2190,10 @@ function updatePlayer(dt) {
   let speed = (keys['ShiftLeft'] || keys['ShiftRight']) && !player.crouch ? 8.2 : 5.2;
   if (player.crouch) speed *= 0.5;            // hukad = långsam men låg
   if (player.inWater) speed *= 0.35;          // vada i strömmen
-  else if (!gInfo.road) speed *= 0.8;         // gräs/terräng är segare än asfalt
+  else if (!gInfo.road) {
+    speed *= 0.8;                             // gräs/terräng är segare än asfalt
+    if (forestAt(player.pos.x, player.pos.z)) speed *= 0.6; // tät skog — nästan ogenomtränglig
+  }
   let mx = 0, mz = 0;
   if (keys['KeyW']) mz -= 1;
   if (keys['KeyS']) mz += 1;
@@ -2293,7 +2358,7 @@ animate();
 
 // debug hooks (used by automated playtesting; harmless in normal play)
 window.__frame = (dt) => { clock.elapsedTime += dt; frame(dt); };
-window.__game = { game, player, enemies, allies, capState, spawnEnemy, D, heightAt, scene, terrainMesh, orthoTex, renderer, camera, wallSegs };
+window.__game = { game, player, enemies, allies, capState, spawnEnemy, D, heightAt, scene, terrainMesh, orthoTex, renderer, camera, wallSegs, forestAt: (x, z) => forestAt(x, z), hasLOS };
 window.__keys = keys;
 window.__fire = () => playerShoot();
 window.__look = (yaw, pitch) => { player.yaw = yaw; player.pitch = pitch; };

@@ -102,9 +102,12 @@ for w in ways:
 green = []
 for w in ways:
     t = w.get('tags',{})
-    if t.get('landuse') in ('grass','forest','meadow','recreation_ground','cemetery') or t.get('leisure') in ('park','pitch','playground','garden'):
+    forest = t.get('landuse') == 'forest' or t.get('natural') in ('wood','scrub')
+    other = t.get('landuse') in ('grass','meadow','recreation_ground','cemetery') or t.get('leisure') in ('park','pitch','playground','garden')
+    if forest or other:
         pts = way_coords(w)
-        if len(pts)>=3: green.append({'p':rnd(pts)})
+        if len(pts)>=3: green.append({'p':rnd(pts),'k':'forest' if forest else 'green'})
+print('skogspolygoner:', sum(1 for g in green if g['k']=='forest'))
 
 def street_pts(name):
     out=[]

@@ -3,22 +3,6 @@
 Idébacklogg. En punkt i taget, ~30 min styck. Bocka av med `[x]` och flytta till
 Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md).
 
-## Pågående sprint (Joels feedback 2026-07-08, en commit per färdig punkt)
-
-- [ ] **Minimap-fixar** — vänd spelarpilen rätt (pekar 180° fel), större/tydligare
-  fiendeprickar, något större synradie (gäller även pilen på taktiska kartan)
-- [ ] **Flytta Roten M (B)** — punkten står halvt i ett hus; snappa till närmsta
-  gatunod så ringen ligger på gatan
-- [ ] **Croucha på C** — toggle: lägre ögonhöjd, halverad fart, svårare att träffa,
-  bryter fiendens siktlinje bakom sandsäckar/murar
-- [ ] **Gå på tak** — platta tak blir gångbara: hoppa ner från höjder, landa och
-  spring längs taket (sadeltak förblir solida)
-- [ ] **Fler fiender** — ockupationen ~30 man, större och tätare vågor, nästa våg
-  triggar redan vid ≤6 kvar eller på timer (konstant tryck), tak på ~55 samtidiga
-- [ ] **Skog där ortofotot visar skog** — tätareträdplantering i skogspartierna,
-  skogen blockerar siktlinjer/kulor efter ~14 m djup, långsammare att röra sig i
-  (stigarna genom = fria korridorer). Joel pekar ut hemliga stigar senare
-
 ## Backlogg (~30 min styck)
 
 - [ ] **Ljudlandskap** — fotsteg (asfalt/gräs olika), vapenljudsvarianter, avlägset
@@ -45,6 +29,13 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-07-08 (kväll, sprint från speltest): minimap-pil rättvänd + tydligare prickar;
+  Roten M snappad till gatan; croucha på C; gå på platta tak (med fallskada över kanten);
+  fler fiender (30 ockupanter, vågor 10+3n, konstant tryck, tak 55); skog från OSM-polygoner
+  + pixelkluster — blockerar sikt efter 14 m, långsam off-road, stigar fria (obs: LM-fotot
+  är vårtaget/gråblått → pixelklassning sekundär, OSM natural=wood är facit).
+  Joel ska peka ut hemliga stigar i skogen senare.
 
 - [x] 2026-07-07 — Spel v1: kartdata, terräng, FPS-kärna, vågor, capture points
 - [x] 2026-07-07 — Satellitmark + riktiga takfärger + landmärken + 1,5× branthet
