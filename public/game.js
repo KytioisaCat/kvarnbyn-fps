@@ -339,7 +339,7 @@ function roofSupportAt(x, z, refY) {
   let best = -Infinity;
   for (const i of arr) {
     const b = bldPolys[i];
-    if (!b.flat || b.topY > refY + 0.45 || b.topY <= best) continue;
+    if (!b.flat || b.topY > refY + 0.6 || b.topY <= best) continue;
     if (x >= b.minX && x <= b.maxX && z >= b.minZ && z <= b.maxZ && pointInPoly(x, z, b.poly)) best = b.topY;
   }
   return best;
@@ -685,7 +685,7 @@ function collideBuildings(pos, radius, footY) {
   }
   for (const i of near) {
     const b = bldPolys[i];
-    if (b.flat && footY !== undefined && footY > b.topY - 0.35) continue; // uppe på platta taket
+    if (b.flat && footY !== undefined && footY > b.topY - 0.6) continue; // uppe på/vid platta takkanten (step-up)
     if (pos.x < b.minX - radius || pos.x > b.maxX + radius || pos.z < b.minZ - radius || pos.z > b.maxZ + radius) continue;
     const poly = b.poly;
     const inside = pointInPoly(pos.x, pos.z, poly);
@@ -1304,6 +1304,7 @@ const player = {
   hp: 100, maxHp: 100,
   onGround: true,
   crouch: false, eyeY: 1.7,
+  airBoosted: false, dashX: 0, dashZ: 0,
   lastHurt: -99,
   dead: false, deadTimer: 0,
   mag: 30, magSize: 30, reloading: false, reloadT: 0,
@@ -1319,7 +1320,15 @@ const keys = {};
 addEventListener('keydown', e => {
   keys[e.code] = true;
   if (e.code === 'KeyR') startReload();
-  if (e.code === 'KeyC' && !e.repeat) player.crouch = !player.crouch; // toggla hukning
+  // raketdubbelhopp: Space i luften → kanonad framåt/uppåt (en gång per lufttur)
+  if (e.code === 'Space' && !e.repeat && game.started && !game.over && !player.dead &&
+      !player.onGround && !player.airBoosted) {
+    player.airBoosted = true;
+    player.vel.y = Math.max(player.vel.y + 7, 11);
+    player.dashX = -Math.sin(player.yaw) * 15;
+    player.dashZ = -Math.cos(player.yaw) * 15;
+    playShot(0.18, 300);
+  }
 });
 addEventListener('keyup', e => { keys[e.code] = false; });
 
@@ -2187,6 +2196,7 @@ function updatePlayer(dt) {
   const nr = nearestRiver(player.pos.x, player.pos.z);
   player.inWater = !!(nr && nr.d < 4.6 && player.pos.y < origHeightAt(player.pos.x, player.pos.z) - 0.8);
 
+  player.crouch = !!keys['KeyC']; // håll C för att huka
   let speed = (keys['ShiftLeft'] || keys['ShiftRight']) && !player.crouch ? 8.2 : 5.2;
   if (player.crouch) speed *= 0.5;            // hukad = långsam men låg
   if (player.inWater) speed *= 0.35;          // vada i strömmen
@@ -2212,8 +2222,9 @@ function updatePlayer(dt) {
   player.vel.y -= 14 * dt;
   player.pos.y += player.vel.y * dt;
   if (player.pos.y <= groundY && player.vel.y <= 0) {
-    if (player.vel.y < -11) damagePlayer(Math.min(45, (-player.vel.y - 11) * 8)); // fallskada
+    if (player.vel.y < -12) damagePlayer(Math.min(45, (-player.vel.y - 12) * 8)); // fallskada
     player.pos.y = groundY; player.vel.y = 0; player.onGround = true;
+    player.airBoosted = false; player.dashX = 0; player.dashZ = 0; // landad — raketen laddas om
   }
 
   // axelvis förflyttning med branthetsspärr — branta sluttningar går inte att klättra,
@@ -2236,6 +2247,14 @@ function updatePlayer(dt) {
   };
   tryMove(vx * dt, 0);
   tryMove(0, vz * dt);
+  // raketdubbelhoppets framåtfart (avtar i luften)
+  if (player.dashX || player.dashZ) {
+    tryMove(player.dashX * dt, 0);
+    tryMove(0, player.dashZ * dt);
+    const dk = Math.max(0, 1 - 1.5 * dt);
+    player.dashX *= dk; player.dashZ *= dk;
+    if (Math.abs(player.dashX) + Math.abs(player.dashZ) < 0.3) player.dashX = player.dashZ = 0;
+  }
   // strömmen i forsen drar dig med nedströms
   if (player.inWater && nr) {
     player.pos.x += nr.seg.fx * 2.4 * dt;
