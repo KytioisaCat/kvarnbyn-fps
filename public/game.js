@@ -208,20 +208,86 @@ const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=13');
 orthoTex.colorSpace = THREE.SRGBColorSpace;
 orthoTex.anisotropy = 16;
 
-// detaljbrus som bryter suddigheten på nära håll (multipliceras in i markshadern)
-const detailTex = (() => {
+// ---------- splatmap + detaljtexturer: nära marken visas riktig asfalt/gräs/skogsbotten ----------
+function makeDetailTex(kind) {
   const cv = document.createElement('canvas'); cv.width = cv.height = 256;
   const c = cv.getContext('2d');
-  c.fillStyle = '#808080'; c.fillRect(0, 0, 256, 256);
-  for (let i = 0; i < 9000; i++) {
-    const v = 108 + Math.random() * 40;
-    c.fillStyle = `rgba(${v},${v},${v},0.5)`;
-    c.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1 + Math.random() * 2);
+  if (kind === 'asphalt') {
+    c.fillStyle = '#969696'; c.fillRect(0, 0, 256, 256);
+    for (let i = 0; i < 14000; i++) { // kornighet
+      const v = 110 + Math.random() * 60;
+      c.fillStyle = `rgba(${v},${v},${v},0.6)`;
+      c.fillRect(Math.random() * 256, Math.random() * 256, 1, 1);
+    }
+    for (let i = 0; i < 5; i++) { // sprickor
+      c.strokeStyle = 'rgba(60,60,60,0.5)'; c.lineWidth = 1;
+      c.beginPath();
+      let x = Math.random() * 256, y = Math.random() * 256;
+      c.moveTo(x, y);
+      for (let s = 0; s < 6; s++) { x += (Math.random() - 0.5) * 40; y += (Math.random() - 0.5) * 40; c.lineTo(x, y); }
+      c.stroke();
+    }
+  } else if (kind === 'grass') {
+    c.fillStyle = '#75885c'; c.fillRect(0, 0, 256, 256);
+    for (let i = 0; i < 9000; i++) { // strån i riktning
+      const g = 110 + Math.random() * 70, r = g * (0.72 + Math.random() * 0.2), b = g * 0.6;
+      c.strokeStyle = `rgba(${r | 0},${g | 0},${b | 0},0.55)`;
+      c.lineWidth = 1;
+      const x = Math.random() * 256, y = Math.random() * 256;
+      c.beginPath(); c.moveTo(x, y); c.lineTo(x + (Math.random() - 0.5) * 3, y - 3 - Math.random() * 4); c.stroke();
+    }
+    for (let i = 0; i < 25; i++) { // jordfläckar
+      c.fillStyle = 'rgba(96,84,60,0.25)';
+      c.beginPath(); c.arc(Math.random() * 256, Math.random() * 256, 4 + Math.random() * 10, 0, 7); c.fill();
+    }
+  } else { // skogsbotten
+    c.fillStyle = '#5f5644'; c.fillRect(0, 0, 256, 256);
+    for (let i = 0; i < 8000; i++) {
+      const v = 60 + Math.random() * 70;
+      c.fillStyle = `rgba(${v | 0},${(v * 0.9) | 0},${(v * 0.65) | 0},0.55)`;
+      c.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1);
+    }
+    for (let i = 0; i < 40; i++) { // kvistar/löv
+      c.strokeStyle = `rgba(${70 + Math.random() * 60},${55 + Math.random() * 40},30,0.5)`;
+      c.lineWidth = 1;
+      const x = Math.random() * 256, y = Math.random() * 256, a = Math.random() * 6.28;
+      c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * 9, y + Math.sin(a) * 9); c.stroke();
+    }
   }
   const t = new THREE.CanvasTexture(cv);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
   return t;
-})();
+}
+const detAsphalt = makeDetailTex('asphalt'), detGrass = makeDetailTex('grass'), detForest = makeDetailTex('forest');
+
+// splatkarta (1 px = 2 m): R = asfalt/väg, G = gräs, B = skogsbotten — fylls när ortofotot laddats
+const splatCanvas = document.createElement('canvas');
+splatCanvas.width = Math.ceil((T.x1 - T.x0) / 2);
+splatCanvas.height = Math.ceil((T.z0 - T.z1) / 2);
+splatCanvas.getContext('2d').fillStyle = '#00ff00';
+splatCanvas.getContext('2d').fillRect(0, 0, splatCanvas.width, splatCanvas.height);
+const splatTex = new THREE.CanvasTexture(splatCanvas);
+
+function buildSplatmap() {
+  const c = splatCanvas.getContext('2d');
+  const S = 0.5; // världsmeter → splatpixel
+  c.fillStyle = '#00ff00'; c.fillRect(0, 0, splatCanvas.width, splatCanvas.height);
+  // skogsbotten
+  c.fillStyle = '#0000ff';
+  for (let r = 0; r < F_ROWS; r++) for (let cc = 0; cc < F_COLS; cc++) {
+    if (forestGrid[r * F_COLS + cc]) c.fillRect(cc * F_CELL * S, r * F_CELL * S, F_CELL * S + 1, F_CELL * S + 1);
+  }
+  // vägar & stigar överst
+  c.strokeStyle = '#ff0000'; c.lineCap = 'round'; c.lineJoin = 'round';
+  for (const rd of D.roads) {
+    c.lineWidth = Math.max(1.5, (rd.w + 1) * S);
+    c.beginPath();
+    rd.p.forEach((p, i) => { const x = (p[0] - T.x0) * S, y = (p[1] - T.z1) * S; i ? c.lineTo(x, y) : c.moveTo(x, y); });
+    c.stroke();
+  }
+  splatTex.needsUpdate = true;
+}
 
 const terrainGeom = new THREE.BufferGeometry();
 {
@@ -248,14 +314,38 @@ const terrainGeom = new THREE.BufferGeometry();
   terrainGeom.computeVertexNormals();
 }
 // Basic material: the aerial photo has real-world lighting baked in already.
-// Detaljbruset tilar var ~2,7 m och döljer fototexturens pixlar på nära håll.
+// Nära kameran blandas splat-styrda detaljtexturer in (färgsatta av fotot),
+// på håll rent ortofoto — det döljer fotopixlarnas suddighet i FPS-avstånd.
 const terrainMat = new THREE.MeshBasicMaterial({ map: orthoTex });
 terrainMat.onBeforeCompile = shader => {
-  shader.uniforms.detailMap = { value: detailTex };
-  shader.fragmentShader = ('uniform sampler2D detailMap;\n' + shader.fragmentShader).replace(
+  shader.uniforms.splatMap = { value: splatTex };
+  shader.uniforms.detA = { value: detAsphalt };
+  shader.uniforms.detG = { value: detGrass };
+  shader.uniforms.detF = { value: detForest };
+  shader.vertexShader = ('varying float vDist;\n' + shader.vertexShader).replace(
+    '#include <project_vertex>',
+    `#include <project_vertex>
+     vDist = -mvPosition.z;`
+  );
+  shader.fragmentShader = (
+    'uniform sampler2D splatMap;\nuniform sampler2D detA;\nuniform sampler2D detG;\nuniform sampler2D detF;\nvarying float vDist;\n'
+    + shader.fragmentShader
+  ).replace(
     '#include <map_fragment>',
     `#include <map_fragment>
-     diffuseColor.rgb *= 0.82 + 0.36 * texture2D(detailMap, vMapUv * 800.0).r;`
+     {
+       float wNear = 1.0 - smoothstep(18.0, 85.0, vDist);
+       if (wNear > 0.001) {
+         vec3 sp = texture2D(splatMap, vMapUv).rgb;
+         float sSum = max(sp.r + sp.g + sp.b, 0.001);
+         vec2 duv = vMapUv * 850.0;
+         vec3 det = (texture2D(detA, duv).rgb * sp.r
+                   + texture2D(detG, duv).rgb * sp.g
+                   + texture2D(detF, duv).rgb * sp.b) / sSum;
+         vec3 tinted = det * (0.35 + 1.5 * diffuseColor.rgb);
+         diffuseColor.rgb = mix(diffuseColor.rgb, tinted, wNear * 0.85);
+       }
+     }`
   );
 };
 const terrainMesh = new THREE.Mesh(terrainGeom, terrainMat);
@@ -1027,6 +1117,96 @@ for (let i = 0; i < sandbagObstacles.length; i++) {
       if (!obstHash.has(k)) obstHash.set(k, []);
       obstHash.get(k).push(i);
     }
+}
+
+// ---------- markclutter: grästuvor & stenar i en ring runt spelaren ----------
+const clutter = { pos: [], stonePos: [], tick: 0, cursor: 0 };
+let tuftMesh, stoneMesh;
+{
+  const tuftTex = (() => {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 64;
+    const c = cv.getContext('2d');
+    for (let i = 0; i < 15; i++) {
+      const g = 120 + Math.random() * 80;
+      c.strokeStyle = `rgb(${(g * 0.75) | 0},${g | 0},${(g * 0.55) | 0})`;
+      c.lineWidth = 2;
+      const x0 = 20 + Math.random() * 24;
+      c.beginPath(); c.moveTo(x0, 64);
+      c.quadraticCurveTo(x0 + (Math.random() - 0.5) * 10, 40, x0 + (Math.random() - 0.5) * 26, 6 + Math.random() * 22);
+      c.stroke();
+    }
+    const t = new THREE.CanvasTexture(cv);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  })();
+  const p1 = new THREE.PlaneGeometry(0.7, 0.5); p1.translate(0, 0.25, 0);
+  const p2 = p1.clone(); p2.rotateY(Math.PI / 2);
+  paintGeom(p1, new THREE.Color(1, 1, 1)); paintGeom(p2, new THREE.Color(1, 1, 1));
+  const N_TUFT = 700, N_STONE = 120;
+  tuftMesh = new THREE.InstancedMesh(mergeGeoms([p1, p2]),
+    new THREE.MeshLambertMaterial({ map: tuftTex, alphaTest: 0.5, side: THREE.DoubleSide }), N_TUFT);
+  stoneMesh = new THREE.InstancedMesh(new THREE.DodecahedronGeometry(0.15, 0),
+    new THREE.MeshLambertMaterial({ color: 0x8d8a82 }), N_STONE);
+  tuftMesh.frustumCulled = false; stoneMesh.frustumCulled = false;
+  const m = new THREE.Matrix4();
+  m.makeTranslation(0, -500, 0); // börja gömda
+  const col = new THREE.Color();
+  for (let i = 0; i < N_TUFT; i++) {
+    tuftMesh.setMatrixAt(i, m);
+    col.setHSL(0.24 + Math.random() * 0.06, 0.3 + Math.random() * 0.25, 0.35 + Math.random() * 0.2);
+    tuftMesh.setColorAt(i, col);
+    clutter.pos.push([0, -500, 0]);
+  }
+  for (let i = 0; i < N_STONE; i++) { stoneMesh.setMatrixAt(i, m); clutter.stonePos.push([0, -500, 0]); }
+  if (tuftMesh.instanceColor) tuftMesh.instanceColor.needsUpdate = true;
+  scene.add(tuftMesh); scene.add(stoneMesh);
+}
+
+const _cm = new THREE.Matrix4(), _cq = new THREE.Quaternion(), _cs = new THREE.Vector3(), _cv = new THREE.Vector3();
+function updateClutter() {
+  const R_FAR = 48, R_MIN = 6, R_MAX = 44;
+  let dirtyT = false, dirtyS = false;
+  // amortiserat: en delmängd per tick
+  for (let n = 0; n < 150; n++) {
+    const i = (clutter.cursor + n) % clutter.pos.length;
+    const p = clutter.pos[i];
+    if (Math.hypot(p[0] - player.pos.x, p[2] - player.pos.z) < R_FAR && p[1] > -400) continue;
+    for (let tries = 0; tries < 4; tries++) {
+      const a = Math.random() * 6.28, r = R_MIN + Math.random() * (R_MAX - R_MIN);
+      const x = player.pos.x + Math.cos(a) * r, z = player.pos.z + Math.sin(a) * r;
+      if (!inBounds(x, z, -5)) continue;
+      const gi = groundInfoAt(x, z);
+      if (gi.road) continue;                       // inga tuvor i asfalten
+      if (insideAnyBuilding(x, z)) continue;
+      const nr = nearestRiver(x, z);
+      if (nr && nr.d < 6) continue;
+      _cq.setFromAxisAngle(_cv.set(0, 1, 0), Math.random() * 6.28);
+      const s = 0.7 + Math.random() * 0.9;
+      _cm.compose(_cv.set(x, gi.y, z), _cq, _cs.set(s, s * (0.8 + Math.random() * 0.5), s));
+      tuftMesh.setMatrixAt(i, _cm);
+      p[0] = x; p[1] = gi.y; p[2] = z;
+      dirtyT = true;
+      break;
+    }
+  }
+  for (let n = 0; n < 30; n++) {
+    const i = (clutter.cursor + n) % clutter.stonePos.length;
+    const p = clutter.stonePos[i];
+    if (Math.hypot(p[0] - player.pos.x, p[2] - player.pos.z) < R_FAR && p[1] > -400) continue;
+    const a = Math.random() * 6.28, r = R_MIN + Math.random() * (R_MAX - R_MIN);
+    const x = player.pos.x + Math.cos(a) * r, z = player.pos.z + Math.sin(a) * r;
+    if (!inBounds(x, z, -5) || insideAnyBuilding(x, z)) continue;
+    const gi = groundInfoAt(x, z);
+    _cq.setFromAxisAngle(_cv.set(Math.random(), 1, Math.random()).normalize(), Math.random() * 6.28);
+    const s = 0.5 + Math.random() * 1.1;
+    _cm.compose(_cv.set(x, gi.y + 0.05, z), _cq, _cs.set(s, s * 0.7, s));
+    stoneMesh.setMatrixAt(i, _cm);
+    p[0] = x; p[1] = gi.y; p[2] = z;
+    dirtyS = true;
+  }
+  clutter.cursor = (clutter.cursor + 150) % clutter.pos.length;
+  if (dirtyT) tuftMesh.instanceMatrix.needsUpdate = true;
+  if (dirtyS) stoneMesh.instanceMatrix.needsUpdate = true;
 }
 
 // ---------- träd: planteras där satellitbilden visar trädkronor ----------
@@ -2106,6 +2286,7 @@ const mapCanvas = document.createElement('canvas');
   mapImg.onload = () => {
     mc.drawImage(mapImg, 0, 0, w, h);
     plantTreesFromOrtho(mc, w, h); // träden läser pixlarna innan vägöverlägget ritas
+    buildSplatmap();               // ...och splatkartan behöver skogsrastret därifrån
     // thin road overlay for readability
     mc.strokeStyle = 'rgba(255,255,255,0.35)'; mc.lineWidth = 1;
     for (const rd of D.roads) {
@@ -2387,6 +2568,8 @@ function frame(dt) {
       bmT -= dt;
       if (bmT <= 0) { bmT = 0.5; drawBigmap(); }
     }
+    clutter.tick -= dt;
+    if (clutter.tick <= 0) { clutter.tick = 0.3; updateClutter(); }
     mmT -= dt;
     if (mmT <= 0) {
       mmT = 0.08;
