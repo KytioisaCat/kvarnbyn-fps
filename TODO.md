@@ -3,6 +3,22 @@
 Idébacklogg. En punkt i taget, ~30 min styck. Bocka av med `[x]` och flytta till
 Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md).
 
+## Pågående sprint (Joels feedback 2026-07-08, en commit per färdig punkt)
+
+- [ ] **Minimap-fixar** — vänd spelarpilen rätt (pekar 180° fel), större/tydligare
+  fiendeprickar, något större synradie (gäller även pilen på taktiska kartan)
+- [ ] **Flytta Roten M (B)** — punkten står halvt i ett hus; snappa till närmsta
+  gatunod så ringen ligger på gatan
+- [ ] **Croucha på C** — toggle: lägre ögonhöjd, halverad fart, svårare att träffa,
+  bryter fiendens siktlinje bakom sandsäckar/murar
+- [ ] **Gå på tak** — platta tak blir gångbara: hoppa ner från höjder, landa och
+  spring längs taket (sadeltak förblir solida)
+- [ ] **Fler fiender** — ockupationen ~30 man, större och tätare vågor, nästa våg
+  triggar redan vid ≤6 kvar eller på timer (konstant tryck), tak på ~55 samtidiga
+- [ ] **Skog där ortofotot visar skog** — tätareträdplantering i skogspartierna,
+  skogen blockerar siktlinjer/kulor efter ~14 m djup, långsammare att röra sig i
+  (stigarna genom = fria korridorer). Joel pekar ut hemliga stigar senare
+
 ## Backlogg (~30 min styck)
 
 - [ ] **Ljudlandskap** — fotsteg (asfalt/gräs olika), vapenljudsvarianter, avlägset
