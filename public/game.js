@@ -1965,7 +1965,7 @@ const mapCanvas = document.createElement('canvas');
   mapImg.src = 'ortho.jpg?v=9';
 }
 function drawMinimap() {
-  const S = 1, R = 140; // map scale px/m, view radius px (=140 m radius)
+  const S = 1, R = 175; // map scale px/m, view radius px (=175 m radius)
   const ctx = mmCtx;
   const k = 220 / R; // map px → screen px
   ctx.clearRect(0, 0, 440, 440);
@@ -1981,24 +1981,28 @@ function drawMinimap() {
     ctx.fillStyle = '#fff'; ctx.font = 'bold 11px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(cap.id, cx, cy);
   }
-  // enemies
-  ctx.fillStyle = '#ff5a5a';
+  // enemies (vit kant så de syns mot fotot)
   for (const en of enemies) {
     if (en.dead) continue;
     const ex = 220 + ((en.pos.x - T.x0) * S - px) * k, ey = 220 + ((en.pos.z - T.z1) * S - pz) * k;
-    if (Math.hypot(ex - 220, ey - 220) < 215) { ctx.beginPath(); ctx.arc(ex, ey, 3.5, 0, Math.PI * 2); ctx.fill(); }
+    if (Math.hypot(ex - 220, ey - 220) < 215) {
+      ctx.fillStyle = '#ff4040'; ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    }
   }
   // allies
-  ctx.fillStyle = '#6db2ff';
   for (const al of allies) {
     if (al.dead) continue;
     const ex = 220 + ((al.pos.x - T.x0) * S - px) * k, ey = 220 + ((al.pos.z - T.z1) * S - pz) * k;
-    if (Math.hypot(ex - 220, ey - 220) < 215) { ctx.beginPath(); ctx.arc(ex, ey, 3.5, 0, Math.PI * 2); ctx.fill(); }
+    if (Math.hypot(ex - 220, ey - 220) < 215) {
+      ctx.fillStyle = '#5aa8ff'; ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    }
   }
-  // player arrow
+  // player arrow (yaw 0 = norr = uppåt på kartan)
   ctx.save();
   ctx.translate(220, 220);
-  ctx.rotate(-player.yaw + Math.PI);
+  ctx.rotate(-player.yaw);
   ctx.fillStyle = '#ffd76a';
   ctx.beginPath(); ctx.moveTo(0, -8); ctx.lineTo(5, 6); ctx.lineTo(-5, 6); ctx.closePath(); ctx.fill();
   ctx.restore();
@@ -2044,7 +2048,7 @@ function drawBigmap() {
   c.fillText('⌂ BASEN', toX(D.spawn[0]), toZ(D.spawn[1]) - 10);
   c.save();
   c.translate(toX(player.pos.x), toZ(player.pos.z));
-  c.rotate(-player.yaw + Math.PI);
+  c.rotate(-player.yaw);
   c.fillStyle = '#ffd76a';
   c.beginPath(); c.moveTo(0, -11); c.lineTo(7, 8); c.lineTo(-7, 8); c.closePath(); c.fill();
   c.restore();
