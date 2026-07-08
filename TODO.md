@@ -30,6 +30,10 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Klart
 
+- [x] 2026-07-08 (sent): alla tak gångbara — sadeltak har riktig lutande takyta (nock→takfot),
+  step-up 0,6 m; raket med håll-för-kraft (tap ~3 m, full ~12 m), snällare fallskada;
+  8192px-marktextur ur 0,16 m-cachen + detaljbrus i markshadern; håll-C för crouch
+
 - [x] 2026-07-08 (kväll, sprint från speltest): minimap-pil rättvänd + tydligare prickar;
   Roten M snappad till gatan; croucha på C; gå på platta tak (med fallskada över kanten);
   fler fiender (30 ockupanter, vågor 10+3n, konstant tryck, tak 55); skog från OSM-polygoner

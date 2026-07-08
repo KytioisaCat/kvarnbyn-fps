@@ -201,9 +201,24 @@ function nearestRiver(x, z) {
 }
 
 // ---------- terrain (draped with satellite orthophoto) ----------
-const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=9');
+const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=13');
 orthoTex.colorSpace = THREE.SRGBColorSpace;
-orthoTex.anisotropy = 8;
+orthoTex.anisotropy = 16;
+
+// detaljbrus som bryter suddigheten på nära håll (multipliceras in i markshadern)
+const detailTex = (() => {
+  const cv = document.createElement('canvas'); cv.width = cv.height = 256;
+  const c = cv.getContext('2d');
+  c.fillStyle = '#808080'; c.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 9000; i++) {
+    const v = 108 + Math.random() * 40;
+    c.fillStyle = `rgba(${v},${v},${v},0.5)`;
+    c.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1 + Math.random() * 2);
+  }
+  const t = new THREE.CanvasTexture(cv);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+})();
 
 const terrainGeom = new THREE.BufferGeometry();
 {
@@ -229,8 +244,18 @@ const terrainGeom = new THREE.BufferGeometry();
   terrainGeom.setIndex(idx);
   terrainGeom.computeVertexNormals();
 }
-// Basic material: the aerial photo has real-world lighting baked in already
-const terrainMesh = new THREE.Mesh(terrainGeom, new THREE.MeshBasicMaterial({ map: orthoTex }));
+// Basic material: the aerial photo has real-world lighting baked in already.
+// Detaljbruset tilar var ~2,7 m och döljer fototexturens pixlar på nära håll.
+const terrainMat = new THREE.MeshBasicMaterial({ map: orthoTex });
+terrainMat.onBeforeCompile = shader => {
+  shader.uniforms.detailMap = { value: detailTex };
+  shader.fragmentShader = ('uniform sampler2D detailMap;\n' + shader.fragmentShader).replace(
+    '#include <map_fragment>',
+    `#include <map_fragment>
+     diffuseColor.rgb *= 0.82 + 0.36 * texture2D(detailMap, vMapUv * 800.0).r;`
+  );
+};
+const terrainMesh = new THREE.Mesh(terrainGeom, terrainMat);
 scene.add(terrainMesh);
 
 // ---------- roads (draped ribbons) ----------
@@ -332,15 +357,27 @@ const roadHash = new Map();
   scene.add(mDash);
 }
 
-// platta tak bär spelaren: högsta taket under fötterna (refY) på denna punkt
+// takhöjd i en punkt: platt = topY, sadeltak = interpolerat mellan nock och takfot
+function roofYAt(b, x, z) {
+  if (!b.gable) return b.topY;
+  const g = b.gable;
+  const dx = g.bx - g.ax, dz = g.bz - g.az;
+  const len = Math.hypot(dx, dz) || 1;
+  const d = Math.abs((x - g.ax) * dz - (z - g.az) * dx) / len; // avstånd till nockaxeln
+  return g.ridgeY - (g.ridgeY - g.eaveY) * Math.min(1, d / g.halfW);
+}
+
+// alla tak bär spelaren: högsta takytan under fötterna (refY) på denna punkt
 function roofSupportAt(x, z, refY) {
   const arr = bldHash.get(Math.floor(x / CELL) + ':' + Math.floor(z / CELL));
   if (!arr) return -Infinity;
   let best = -Infinity;
   for (const i of arr) {
     const b = bldPolys[i];
-    if (!b.flat || b.topY > refY + 0.6 || b.topY <= best) continue;
-    if (x >= b.minX && x <= b.maxX && z >= b.minZ && z <= b.maxZ && pointInPoly(x, z, b.poly)) best = b.topY;
+    if (x < b.minX || x > b.maxX || z < b.minZ || z > b.maxZ) continue;
+    if (!pointInPoly(x, z, b.poly)) continue;
+    const rY = roofYAt(b, x, z);
+    if (rY <= refY + 0.6 && rY > best) best = rY;
   }
   return best;
 }
@@ -573,6 +610,7 @@ function minAreaRect(poly) {
     // --- roof ---
     const rPos = [], rNor = [], rCol = [];
     const gabled = poly.length === 4 && area < 800 && h < 15;
+    let gableInfo = null;
     if (gabled) {
       // ridge along the longer opposite-edge pair
       const e0 = Math.hypot(poly[1][0] - poly[0][0], poly[1][1] - poly[0][1]);
@@ -583,6 +621,7 @@ function minAreaRect(poly) {
       const rise = Math.min(3.8, Math.max(1.6, shortLen * 0.32));
       const R1 = [(B[0] + C[0]) / 2, (B[1] + C[1]) / 2, eave + rise]; // over edge B-C
       const R2 = [(A[0] + E[0]) / 2, (A[1] + E[1]) / 2, eave + rise]; // over edge E-A
+      gableInfo = { ax: R2[0], az: R2[1], bx: R1[0], bz: R1[1], ridgeY: eave + rise, eaveY: eave, halfW: Math.max(1, shortLen / 2) };
       const slope = [
         [A, B, R1, R2], // side 1: quad A,B,R1,R2
         [C, E, R2, R1]  // side 2
@@ -632,7 +671,7 @@ function minAreaRect(poly) {
     rg.setAttribute('color', new THREE.BufferAttribute(new Float32Array(rCol), 3));
     roofGeoms.push(rg);
 
-    bldPolys.push({ poly, minX: minX - 1, maxX: maxX + 1, minZ: minZ - 1, maxZ: maxZ + 1, topY: eave, flat: !gabled });
+    bldPolys.push({ poly, minX: minX - 1, maxX: maxX + 1, minZ: minZ - 1, maxZ: maxZ + 1, topY: eave, flat: !gabled, gable: gableInfo });
   }
 
   function mergeWithUV(geoms) {
@@ -685,7 +724,7 @@ function collideBuildings(pos, radius, footY) {
   }
   for (const i of near) {
     const b = bldPolys[i];
-    if (b.flat && footY !== undefined && footY > b.topY - 0.6) continue; // uppe på/vid platta takkanten (step-up)
+    if (footY !== undefined && footY > roofYAt(b, pos.x, pos.z) - 0.6) continue; // uppe på/vid takytan (step-up)
     if (pos.x < b.minX - radius || pos.x > b.maxX + radius || pos.z < b.minZ - radius || pos.z > b.maxZ + radius) continue;
     const poly = b.poly;
     const inside = pointInPoly(pos.x, pos.z, poly);
@@ -1304,7 +1343,7 @@ const player = {
   hp: 100, maxHp: 100,
   onGround: true,
   crouch: false, eyeY: 1.7,
-  airBoosted: false, dashX: 0, dashZ: 0,
+  airBoosted: false, dashX: 0, dashZ: 0, thrustT: 0,
   lastHurt: -99,
   dead: false, deadTimer: 0,
   mag: 30, magSize: 30, reloading: false, reloadT: 0,
@@ -1320,13 +1359,12 @@ const keys = {};
 addEventListener('keydown', e => {
   keys[e.code] = true;
   if (e.code === 'KeyR') startReload();
-  // raketdubbelhopp: Space i luften → kanonad framåt/uppåt (en gång per lufttur)
+  // raketdubbelhopp: Space i luften tänder raketen — håll för mer kraft, släpp för att dosera
   if (e.code === 'Space' && !e.repeat && game.started && !game.over && !player.dead &&
       !player.onGround && !player.airBoosted) {
     player.airBoosted = true;
-    player.vel.y = Math.max(player.vel.y + 7, 11);
-    player.dashX = -Math.sin(player.yaw) * 15;
-    player.dashZ = -Math.cos(player.yaw) * 15;
+    player.thrustT = 0.45;            // bränsle: full effekt vid håll, liten skjuts vid tapp
+    player.vel.y = Math.max(player.vel.y + 4, 6);
     playShot(0.18, 300);
   }
 });
@@ -2074,7 +2112,7 @@ const mapCanvas = document.createElement('canvas');
       mc.stroke();
     }
   };
-  mapImg.src = 'ortho.jpg?v=9';
+  mapImg.src = 'ortho.jpg?v=13';
 }
 function drawMinimap() {
   const S = 1, R = 175; // map scale px/m, view radius px (=175 m radius)
@@ -2219,12 +2257,20 @@ function updatePlayer(dt) {
 
   const groundY = Math.max(gInfo.y, roofSupportAt(player.pos.x, player.pos.z, player.pos.y));
   if (player.onGround && keys['Space']) { player.vel.y = 5.2; player.onGround = false; }
+  // raketen brinner så länge Space hålls och bränslet räcker
+  if (player.thrustT > 0 && keys['Space'] && !player.onGround) {
+    player.thrustT -= dt;
+    player.vel.y += 30 * dt;
+    const tx = -Math.sin(player.yaw) * 17, tz = -Math.cos(player.yaw) * 17;
+    player.dashX += (tx - player.dashX) * Math.min(1, dt * 6);
+    player.dashZ += (tz - player.dashZ) * Math.min(1, dt * 6);
+  } else if (!keys['Space']) player.thrustT = 0; // släppt = klart
   player.vel.y -= 14 * dt;
   player.pos.y += player.vel.y * dt;
   if (player.pos.y <= groundY && player.vel.y <= 0) {
-    if (player.vel.y < -12) damagePlayer(Math.min(45, (-player.vel.y - 12) * 8)); // fallskada
+    if (player.vel.y < -15) damagePlayer(Math.min(35, (-player.vel.y - 15) * 5)); // fallskada (raketvänlig)
     player.pos.y = groundY; player.vel.y = 0; player.onGround = true;
-    player.airBoosted = false; player.dashX = 0; player.dashZ = 0; // landad — raketen laddas om
+    player.airBoosted = false; player.dashX = 0; player.dashZ = 0; player.thrustT = 0; // landad — raketen laddas om
   }
 
   // axelvis förflyttning med branthetsspärr — branta sluttningar går inte att klättra,
@@ -2377,7 +2423,7 @@ animate();
 
 // debug hooks (used by automated playtesting; harmless in normal play)
 window.__frame = (dt) => { clock.elapsedTime += dt; frame(dt); };
-window.__game = { game, player, enemies, allies, capState, spawnEnemy, D, heightAt, scene, terrainMesh, orthoTex, renderer, camera, wallSegs, forestAt: (x, z) => forestAt(x, z), hasLOS };
+window.__game = { game, player, enemies, allies, capState, spawnEnemy, D, heightAt, scene, terrainMesh, orthoTex, renderer, camera, wallSegs, forestAt: (x, z) => forestAt(x, z), hasLOS, bldPolys, roofYAt };
 window.__keys = keys;
 window.__fire = () => playerShoot();
 window.__look = (yaw, pitch) => { player.yaw = yaw; player.pitch = pitch; };
