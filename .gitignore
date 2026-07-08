@@ -13,3 +13,5 @@ tools/data.js
 
 # Lokala Claude-inställningar
 .claude/settings.local.json
+tools/cache/
+tools/lidar_meta.json
