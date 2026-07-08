@@ -1559,7 +1559,7 @@ const capPills = capState.map(cap => {
   document.getElementById('wavenum').textContent = 'Våg 1/8';
   // förtruppen är redan på väg uppför backarna mot B och C
   // ockupationen: fienden håller hela kartan utom området närmast basen
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 30; i++) {
     const p = randomOccupationPos(170);
     const en = spawnEnemy(p);
     en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
@@ -1927,21 +1927,25 @@ function updateCaps(dt) {
 function updateWaves(dt) {
   if (game.over) return;
   const alive = enemies.filter(e => !e.dead).length;
+  game.waveT = (game.waveT || 0) + dt;
   if (game.toSpawn > 0) {
     game.spawnT -= dt;
-    if (game.spawnT <= 0) {
-      game.spawnT = 1.2;
+    if (game.spawnT <= 0 && alive < 55) { // tak för prestandan
+      game.spawnT = 0.8;
       spawnEnemy();
       game.toSpawn--;
     }
-  } else if (alive === 0) {
+  } else if (alive === 0 && game.wave >= game.maxWave) {
+    endGame(true); // sista vågen nedkämpad — Kvarnbyn är rensat
+  } else if (alive <= 6 || game.waveT > 75) {
+    // konstant tryck: nästa våg innan den förra är helt utraderad
     game.betweenT -= dt;
-    if (game.betweenT <= 0) {
-      if (game.wave >= game.maxWave) { endGame(true); return; }
+    if (game.betweenT <= 0 && game.wave < game.maxWave) {
       game.wave++;
-      game.toSpawn = 6 + game.wave * 2;
+      game.waveT = 0;
+      game.toSpawn = 10 + game.wave * 3;
       game.spawnT = 0.5;
-      game.betweenT = 9;
+      game.betweenT = 8;
       document.getElementById('wavenum').textContent = 'Våg ' + game.wave + '/' + game.maxWave;
       msg('🔴 Våg ' + game.wave + ' — fienden rycker fram från flera håll!');
       playTone(440, 0.2, 0.15); setTimeout(() => playTone(550, 0.25, 0.15), 220);
