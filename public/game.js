@@ -3,6 +3,21 @@ import * as THREE from './three.module.js';
 const D = window.KVARNBYN_DATA;
 const T = D.terrain;
 
+// Roten M:s gatucentroid hamnar mitt i ett hus — snappa B till närmsta punkt på gatan
+// (måste ske före allt som läser D.caps: sandsäckar, försvarare, startläge)
+{
+  const B = D.caps[1];
+  let best = null, bd = Infinity;
+  for (const rd of D.roads) {
+    if (rd.n !== 'Roten M') continue;
+    for (const p of rd.p) {
+      const d = Math.hypot(p[0] - B.pos[0], p[1] - B.pos[1]);
+      if (d < bd) { bd = d; best = p; }
+    }
+  }
+  if (best) B.pos = [best[0], best[1]];
+}
+
 // ---------- helpers ----------
 function lerp(a, b, t) { return a + (b - a) * t; }
 
