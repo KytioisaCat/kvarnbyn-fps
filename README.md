@@ -41,11 +41,12 @@ Allt i världen är riktigt:
 
 - **Byggnader, gator, vatten och grönområden** från OpenStreetMap (Overpass API),
   ~1 660 byggnader och ~1 340 vägsegment kring Kvarnbyn (bbox 57.6495–57.6625 N, 12.008–12.044 E)
-- **Satellitfoto** (Esri World Imagery, z18 ≈ 0,3 m/px) draperat över terrängen och som minimap.
-  Varje byggnads **takfärg samplas ur fotot** (median över fotavtrycket), så husen har sina
-  verkliga färger; fasaderna får fönster och färgsätts utifrån taket
-- **Terräng** i ~5 m-grid från AWS Terrain Tiles (terrarium), med **1,5× vertikal förstärkning**
-  så att de branta gatorna känns som de gör i benen — 3 m vid ån till 91 m (137 m i spelet) på bergen
+- **Ortofoto** från Lantmäteriet (0,16 m/px, flygår 2024, CC BY 4.0) draperat över terrängen
+  och som minimap. Varje byggnads **takfärg samplas ur fotot** (median över fotavtrycket),
+  så husen har sina verkliga färger; fasaderna får fönster och färgsätts utifrån taket
+- **Terräng** från Lantmäteriets **laserskannade markhöjdmodell (1 m)** samplad i 2 m-grid —
+  riktiga stödmurar, stenbrottsbranten och trappterrasseringarna finns i terrängen.
+  Mild 1,2× vertikal förstärkning för cykelbackskänslan
 - **Sadeltak** genereras på småhusen, platta tak på större byggnader; nästan-rektangulära
   fotavtryck snappas till rena rektanglar (minsta omslutande rektangel)
 - **Fasader**: vita/benvita med stående träpanel på småhus och slät puts på större hus
@@ -91,5 +92,4 @@ curl -s -X POST "https://overpass-api.de/api/interpreter" \
 - Terrängen renderas oskuggad (MeshBasic) eftersom flygfotot redan har verklighetens ljus inbakat
 - Skott och siktlinjer använder en analytisk ray-march mot husens polygoner i stället för
   triangel-raycast, så det klarar full våg på 60 fps
-- Kartdata © OpenStreetMap-bidragsgivarna (ODbL) · Flygbild © Esri, Maxar, Earthstar Geographics ·
-  Höjddata © Copernicus EU-DEM (via AWS Terrain Tiles)
+- Kartdata © OpenStreetMap-bidragsgivarna (ODbL) · Flygbild & höjddata © Lantmäteriet (CC BY 4.0)

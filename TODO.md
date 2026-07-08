@@ -3,19 +3,6 @@
 Idébacklogg. En punkt i taget, ~30 min styck. Bocka av med `[x]` och flytta till
 Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md).
 
-## Blockerat (väntar på externt)
-
-- [ ] **Byt satellitbild till Lantmäteriet** — beställning av "Ortofoto Nedladdning"
-  ligger hos Lantmäteriet för beslut (lagd 2026-07-07, sommarkö väntas).
-  När Joel fått nedladdningsrätt: kör `tools/fetch_ortho_lm.py` (kräver LM_USER/LM_PASS
-  i miljön — aldrig i chat/repo), sen `build_data2.py`, kopiera till `public/`,
-  uppdatera attributionsrad till "© Lantmäteriet, CC BY 4.0" (index.html + README),
-  bumpa `?v=`, committa. Tills dess ligger Esri-bilden kvar på sajten (medvetet beslut,
-  formellt villkorsbrott med låg risk — ska bort så fort LM-datan är inne).
-- [ ] **LiDAR-terräng 1 m** — beställning av "Markhöjdmodell" ligger också för
-  handläggning. När filerna kommer: lägg i `tools/lidar/`, bygg om terrängen,
-  ta bort 1,5×-överdriften (EXAG i game.js), omkalibrera branthetsspärr + stödmurar.
-
 ## Backlogg (~30 min styck)
 
 - [ ] **Ljudlandskap** — fotsteg (asfalt/gräs olika), vapenljudsvarianter, avlägset
@@ -60,3 +47,8 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 - [x] 2026-07-08 (natt) — Träd från ortofotots pixlar: riktiga positioner + kronfärger,
   ~2 400 st, stamkollision
 - [x] 2026-07-08 (natt) — Taktisk fullskärmskarta på M: ortofoto, frontläge, alla styrkor
+- [x] 2026-07-08 — **Lantmäteriet-bytet klart** (båda beställningarna godkända):
+  ortofoto 0,16 m (2024, molnfritt, CC BY 4.0) ersätter Esri → licensrent att publicera;
+  terräng från 1 m-LiDAR i 2 m-grid — riktiga murar/branter (Royens trappor brantast, 0,61!),
+  EXAG 1,5→1,2, branthetsspärr omkalibrerad (block 0,60 / tungt 0,38), åfåre-nedskärningen
+  reducerad (LiDAR:n har den riktiga ravinen), attribution uppdaterad

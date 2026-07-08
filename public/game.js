@@ -6,8 +6,9 @@ const T = D.terrain;
 // ---------- helpers ----------
 function lerp(a, b, t) { return a + (b - a) * t; }
 
-// vertical exaggeration — makes the real slopes feel as steep as they do on a bike
-const EXAG = 1.5;
+// vertical exaggeration — terrängen är nu Lantmäteriets 1 m-LiDAR med äkta murar
+// och branter, så bara en mild förstärkning för cykelkänslan
+const EXAG = 1.2;
 
 function bilinear(arr, x, z) {
   const fx = (x - T.x0) / (T.x1 - T.x0) * (T.cols - 1);
@@ -131,7 +132,7 @@ const riverHash = new Map();
         minX: Math.min(ax, bx), maxX: Math.max(ax, bx), minZ: Math.min(az, bz), maxZ: Math.max(az, bz) });
     }
   }
-  const CARVE_W = 9, DEPTH_RAW = 3.0 / EXAG; // ~3 m djup fåra i världskoordinater
+  const CARVE_W = 7, DEPTH_RAW = 2.2 / EXAG; // LiDAR:n har redan den riktiga fåran — vi gräver bara flodbädden under vattenytan
   const lower = new Float64Array(T.elev.length);
   const zToRow = z => (z - T.z0) / (T.z1 - T.z0) * (T.rows - 1);
   const xToCol = x => (x - T.x0) / (T.x1 - T.x0) * (T.cols - 1);
@@ -185,7 +186,7 @@ function nearestRiver(x, z) {
 }
 
 // ---------- terrain (draped with satellite orthophoto) ----------
-const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=3');
+const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=9');
 orthoTex.colorSpace = THREE.SRGBColorSpace;
 orthoTex.anisotropy = 8;
 
@@ -361,7 +362,7 @@ const waterTex = (() => {
 
 {
   const cCalm = new THREE.Color(0.62, 0.78, 0.88), cFoam = new THREE.Color(1, 1, 1);
-  const surfFn = (x, z) => origHeightAt(x, z) - 1.5; // vattenytan ~1,5 m under strandkanten
+  const surfFn = (x, z) => origHeightAt(x, z) - 0.7; // DTM:ns "mark" på vatten ÄR vattenytan — lägg spelets yta strax under
   const ribbonGeoms = [];
   for (const w of D.water) {
     if (w.poly) continue;
@@ -820,7 +821,7 @@ const wallHash = new Map();
           const off = rd.w / 2 + 2.0;
           const diff = heightAt(mx + px * off * side, mz + pz * off * side) - h0;
           const ex = rd.w / 2 + 0.6;
-          if (diff > 1.15) {
+          if (diff > 1.35) {
             addSeg(x1 + dx * len * t0 + px * ex * side, z1 + dz * len * t0 + pz * ex * side,
                    x1 + dx * len * t1 + px * ex * side, z1 + dz * len * t1 + pz * ex * side,
                    Math.max(0.9, Math.min(diff * 0.55, 2.6)), 'stodmur');
@@ -1714,7 +1715,7 @@ function updateEnemy(en, dt) {
       if (d > 0.1) {
         let sp = en.speed * speedMul;
         const nrE = nearestRiver(en.pos.x, en.pos.z);
-        if (nrE && nrE.d < 4.6 && en.pos.y < origHeightAt(en.pos.x, en.pos.z) - 1.1) sp *= 0.4; // vadar
+        if (nrE && nrE.d < 4.6 && en.pos.y < origHeightAt(en.pos.x, en.pos.z) - 0.8) sp *= 0.4; // vadar
         en.pos.x += dx / d * sp * dt;
         en.pos.z += dz / d * sp * dt;
         if (!engaging) en.mesh.rotation.y = Math.atan2(dx, dz);
@@ -1961,7 +1962,7 @@ const mapCanvas = document.createElement('canvas');
       mc.stroke();
     }
   };
-  mapImg.src = 'ortho.jpg?v=3';
+  mapImg.src = 'ortho.jpg?v=9';
 }
 function drawMinimap() {
   const S = 1, R = 140; // map scale px/m, view radius px (=140 m radius)
@@ -2077,7 +2078,7 @@ function updatePlayer(dt) {
   const gInfo = groundInfoAt(player.pos.x, player.pos.z);
   // i forsen? (nära å-segment och nere i den nedskurna fåran)
   const nr = nearestRiver(player.pos.x, player.pos.z);
-  player.inWater = !!(nr && nr.d < 4.6 && player.pos.y < origHeightAt(player.pos.x, player.pos.z) - 1.1);
+  player.inWater = !!(nr && nr.d < 4.6 && player.pos.y < origHeightAt(player.pos.x, player.pos.z) - 0.8);
 
   let speed = (keys['ShiftLeft'] || keys['ShiftRight']) ? 8.2 : 5.2;
   if (player.inWater) speed *= 0.35;          // vada i strömmen
@@ -2116,8 +2117,8 @@ function updatePlayer(dt) {
       const tx = player.pos.x + ux * 1.6, tz = player.pos.z + uz * 1.6;
       if (!groundInfoAt(tx, tz).road && !gInfo.road) {
         const grade = (heightAt(tx, tz) - heightAt(player.pos.x, player.pos.z)) / 1.6;
-        if (grade > 0.38) return;               // spärr — ta gatan eller trappan
-        if (grade > 0.26) { dx *= 0.5; dz *= 0.5; } // tung klättring
+        if (grade > 0.60) return;               // spärr (murar/klippor) — ta gatan eller trappan
+        if (grade > 0.38) { dx *= 0.5; dz *= 0.5; } // tung klättring
       }
     }
     player.pos.x += dx; player.pos.z += dz;

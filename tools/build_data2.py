@@ -16,24 +16,13 @@ def rnd(pts): return [[round(x,1),round(z,1)] for x,z in pts]
 X0, Z1 = xz(LAT1, LON0)[0], xz(LAT1, LON0)[1]   # west, north(z neg)
 X1, Z0 = xz(LAT0, LON1)[0], xz(LAT0, LON1)[1]   # east, south(z pos)
 
-# ---- dense terrain from terrarium (resample onto lat/lon-linear grid, 5 m) ----
-full = np.load('terrarium_full.npy')
-meta = json.load(open('terrarium_meta.json'))
-def merc_y(lat):
-    lr = math.radians(lat)
-    return (1 - math.log(math.tan(lr) + 1/math.cos(lr)) / math.pi) / 2
-ROWS, COLS = 290, 430   # ~5m spacing
-elev = np.zeros((ROWS, COLS))
-for r in range(ROWS):
-    lat = LAT0 + (LAT1-LAT0)*r/(ROWS-1)
-    py = meta['py0'] + (merc_y(lat)-merc_y(LAT1))/(merc_y(LAT0)-merc_y(LAT1))*(meta['py1']-meta['py0'])
-    py = min(max(py,0), full.shape[0]-1.001)
-    r0 = int(py); tr = py-r0
-    for c in range(COLS):
-        px = meta['px0'] + c/(COLS-1)*(meta['px1']-meta['px0'])
-        px = min(max(px,0), full.shape[1]-1.001)
-        c0 = int(px); tc = px-c0
-        elev[r,c] = (full[r0,c0]*(1-tc)+full[r0,c0+1]*tc)*(1-tr) + (full[r0+1,c0]*(1-tc)+full[r0+1,c0+1]*tc)*tr
+# ---- terräng: Lantmäteriets 1 m-LiDAR (lat/lon-linjärt, rad 0 = norr i filen) ----
+full = np.load('lidar_full.npy').astype(float)  # (1447, 2144)
+H, W = full.shape
+ROWS, COLS = 724, 1072   # ~2 m rutnät i spelet
+rr = np.linspace(H-1, 0, ROWS).round().astype(int)  # spelets rad 0 = söder
+cc = np.linspace(0, W-1, COLS).round().astype(int)
+elev = full[np.ix_(rr, cc)]
 terrain = {'rows':ROWS,'cols':COLS,'x0':round(X0,1),'x1':round(X1,1),'z0':round(Z0,1),'z1':round(Z1,1),
            'elev':[round(float(v),1) for v in elev.flatten()]}
 def elev_at(x, z):

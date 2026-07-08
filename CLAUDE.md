@@ -15,7 +15,7 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 - `public/` — hela spelet, statiska filer utan byggsteg
   - `game.js` — all spellogik/rendering (Three.js, vendorerad `three.module.js`)
   - `data.js` — genererad kartdata (terräng, hus med takfärger, vägar, murar, landmärken)
-  - `ortho.jpg` — satellitmark (just nu Esri; byts till Lantmäteriet, se TODO)
+  - `ortho.jpg` — Lantmäteriets ortofoto 0,16 m (CC BY 4.0), lat/lon-linjärt
 - `tools/` — Python-datapipeline (OSM Overpass → terräng-tiles → ortofoto → `data.js`);
   venv i `tools/venv/`. Ordning: `fetch_tiles.py` → `fetch_ortho*.py` → `build_data2.py`
 - `.github/workflows/deploy.yml` — push till `main` deployar `public/` till GitHub Pages
@@ -38,10 +38,11 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 - OSM-vattenpolygoner måste vara slutna ringar — öppna strandlinjer trianguleras
   till jättepolygoner över hela kartan
 - Terrängmeshens trianglar ska vara CCW sedda uppifrån, annars backface-cullas allt
-- Höjder: `heightAt` = nedskuren terräng ×1,5 (EXAG); `origHeightAt` = före åfåran;
-  `groundInfoAt` = mark + vägdäck (broar!) — använd rätt för rätt sak
+- Höjder: `heightAt` = nedskuren terräng ×1,2 (EXAG, LiDAR 2 m-grid); `origHeightAt` =
+  före åfåran; `groundInfoAt` = mark + vägdäck (broar!) — använd rätt för rätt sak
 - Branthetsspärren mäter med 1,6 m lookahead, aldrig per frame-steg (för brusigt);
-  gatorna toppar på ~0,23 lutning, spärren ligger på 0,35
+  vägar/trappor alltid gångbara (road-exempt), spärr 0,60 / tung klättring 0,38
+  (Royens trappor 0,61 längs linjen — därför måste trappor vara exempta)
 - Kulor/siktlinjer använder analytisk ray-march (`pointBlocked`), inte trianglar —
   nya hinder måste in i respektive spatial hash (`bldHash`/`wallHash`/`obstHash`)
 - Aldrig inloggningsuppgifter/API-nycklar i chat, repo eller filer — miljövariabler
