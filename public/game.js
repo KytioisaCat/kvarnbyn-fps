@@ -1233,6 +1233,7 @@ const player = {
   yaw: 0, pitch: 0,
   hp: 100, maxHp: 100,
   onGround: true,
+  crouch: false, eyeY: 1.7,
   lastHurt: -99,
   dead: false, deadTimer: 0,
   mag: 30, magSize: 30, reloading: false, reloadT: 0,
@@ -1245,8 +1246,15 @@ player.pos.y = heightAt(player.pos.x, player.pos.z);
 }
 
 const keys = {};
-addEventListener('keydown', e => { keys[e.code] = true; if (e.code === 'KeyR') startReload(); });
+addEventListener('keydown', e => {
+  keys[e.code] = true;
+  if (e.code === 'KeyR') startReload();
+  if (e.code === 'KeyC' && !e.repeat) player.crouch = !player.crouch; // toggla hukning
+});
 addEventListener('keyup', e => { keys[e.code] = false; });
+
+// spelarens ögonhöjd (hukad = lägre, bryter siktlinjer bakom sandsäckar/murar)
+function eyeHeight() { return player.crouch ? 0.95 : 1.7; }
 
 let locked = false, firing = false;
 document.addEventListener('pointerlockchange', () => { locked = document.pointerLockElement === canvas; });
@@ -1683,7 +1691,7 @@ function updateEnemy(en, dt) {
     en.canSee = false;
     if (!player.dead && distToPlayer < 75) {
       const from = en.pos.clone(); from.y += 1.55;
-      const to = player.pos.clone(); to.y += 1.5;
+      const to = player.pos.clone(); to.y += (player.crouch ? 0.85 : 1.5); // hukad = svårare att se
       en.canSee = hasLOS(from, to);
     }
   }
@@ -1705,7 +1713,8 @@ function updateEnemy(en, dt) {
       soldierMuzzle(en.mesh);
       soldierAimAt(en.mesh, en.pos, { x: player.pos.x, y: player.pos.y + 1.4, z: player.pos.z });
       const moving = !inCapZone && distToPlayer > 22;
-      const hitChance = Math.max(0.07, (0.42 - distToPlayer / 150) * (moving ? 0.65 : 1));
+      let hitChance = Math.max(0.07, (0.42 - distToPlayer / 150) * (moving ? 0.65 : 1));
+      if (player.crouch) hitChance *= 0.55; // hukad = mindre måltavla
       if (Math.random() < hitChance) damagePlayer(6 + Math.random() * 5);
     }
   }
@@ -2099,7 +2108,8 @@ function updatePlayer(dt) {
   const nr = nearestRiver(player.pos.x, player.pos.z);
   player.inWater = !!(nr && nr.d < 4.6 && player.pos.y < origHeightAt(player.pos.x, player.pos.z) - 0.8);
 
-  let speed = (keys['ShiftLeft'] || keys['ShiftRight']) ? 8.2 : 5.2;
+  let speed = (keys['ShiftLeft'] || keys['ShiftRight']) && !player.crouch ? 8.2 : 5.2;
+  if (player.crouch) speed *= 0.5;            // hukad = långsam men låg
   if (player.inWater) speed *= 0.35;          // vada i strömmen
   else if (!gInfo.road) speed *= 0.8;         // gräs/terräng är segare än asfalt
   let mx = 0, mz = 0;
@@ -2187,9 +2197,10 @@ function updatePlayer(dt) {
     player.hp = Math.min(player.maxHp, player.hp + 8 * dt);
   }
 
-  // camera
-  const bobbing = ml > 0 && player.onGround ? Math.sin(clock.elapsedTime * 10) * 0.04 : 0;
-  camera.position.set(player.pos.x, player.pos.y + 1.7 + bobbing, player.pos.z);
+  // camera (mjuk övergång mellan stående/hukad)
+  const bobbing = ml > 0 && player.onGround ? Math.sin(clock.elapsedTime * 10) * (player.crouch ? 0.02 : 0.04) : 0;
+  player.eyeY = (player.eyeY ?? 1.7) + (eyeHeight() - (player.eyeY ?? 1.7)) * Math.min(1, dt * 10);
+  camera.position.set(player.pos.x, player.pos.y + player.eyeY + bobbing, player.pos.z);
   camera.rotation.set(player.pitch, player.yaw, 0, 'YXZ');
 
   // gun kick + sway
