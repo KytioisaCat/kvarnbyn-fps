@@ -18,6 +18,9 @@ const T = D.terrain;
   if (best) B.pos = [best[0], best[1]];
 }
 
+// sista försvarszonen: basen uppe vid spawn — faller den är slaget förlorat
+D.caps.push({ id: 'D', name: 'Basen', pos: [D.spawn[0], D.spawn[1]], r: 14 });
+
 // ---------- helpers ----------
 function lerp(a, b, t) { return a + (b - a) * t; }
 
@@ -1570,8 +1573,8 @@ function spawnAlly(x, z) {
   allies.push(al);
   return al;
 }
-// försvarsstyrkan grupperar vid B och C — A är redan förlorat när uppdraget börjar
-for (const cap of [capState[1], capState[2]]) {
+// försvarsstyrkan grupperar vid B, C och basen — A är redan förlorat när uppdraget börjar
+for (const cap of [capState[1], capState[2], capState[3]]) {
   spawnAlly(cap.pos[0] + 4, cap.pos[1] + 4);
   spawnAlly(cap.pos[0] - 4, cap.pos[1] - 3);
   spawnAlly(cap.pos[0] + 6, cap.pos[1] - 5);
@@ -2000,7 +2003,7 @@ function updateCaps(dt) {
           cap.beam.material.color.set(0xff4444);
           msg('⚠ Fienden har tagit ' + cap.name + '!');
           playTone(220, 0.5, 0.2, 'sawtooth');
-          if (cap.id === 'C') { endGame(false); }
+          if (cap === capState[capState.length - 1]) { endGame(false); } // basen föll
         }
       }
     } else if (fCount > 0 && eCount === 0) {
@@ -2083,7 +2086,7 @@ function endGame(victory) {
   ov.classList.remove('hidden');
   document.getElementById('title').textContent = victory ? 'KVARNBYN ÄR RÄDDAT!' : 'KVARNBYN HAR FALLIT';
   document.getElementById('title').style.color = victory ? '#7fd77f' : '#ff5a5a';
-  ov.querySelector('h2').textContent = game.kills + ' fiender nedkämpade · ' + (victory ? 'Alla 8 vågor avvärjda. Görjelycksgatan sover tryggt inatt.' : 'Royens trappor föll. Ladda om sidan för revansch.');
+  ov.querySelector('h2').textContent = game.kills + ' fiender nedkämpade · ' + (victory ? 'Alla 8 vågor avvärjda. Görjelycksgatan sover tryggt inatt.' : 'Basen föll. Ladda om sidan för revansch.');
   ov.querySelector('.panel').style.display = 'none';
   document.getElementById('gobtn').textContent = 'SPELA IGEN';
   document.getElementById('gobtn').onclick = () => location.reload();
