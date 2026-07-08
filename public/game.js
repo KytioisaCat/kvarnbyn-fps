@@ -332,6 +332,19 @@ const roadHash = new Map();
   scene.add(mDash);
 }
 
+// platta tak bär spelaren: högsta taket under fötterna (refY) på denna punkt
+function roofSupportAt(x, z, refY) {
+  const arr = bldHash.get(Math.floor(x / CELL) + ':' + Math.floor(z / CELL));
+  if (!arr) return -Infinity;
+  let best = -Infinity;
+  for (const i of arr) {
+    const b = bldPolys[i];
+    if (!b.flat || b.topY > refY + 0.45 || b.topY <= best) continue;
+    if (x >= b.minX && x <= b.maxX && z >= b.minZ && z <= b.maxZ && pointInPoly(x, z, b.poly)) best = b.topY;
+  }
+  return best;
+}
+
 // mark-info: carved terräng + ev. vägdäck ovanpå (broar!) + är vi på väg?
 function groundInfoAt(x, z) {
   let y = heightAt(x, z), road = false;
@@ -619,7 +632,7 @@ function minAreaRect(poly) {
     rg.setAttribute('color', new THREE.BufferAttribute(new Float32Array(rCol), 3));
     roofGeoms.push(rg);
 
-    bldPolys.push({ poly, minX: minX - 1, maxX: maxX + 1, minZ: minZ - 1, maxZ: maxZ + 1, topY: eave });
+    bldPolys.push({ poly, minX: minX - 1, maxX: maxX + 1, minZ: minZ - 1, maxZ: maxZ + 1, topY: eave, flat: !gabled });
   }
 
   function mergeWithUV(geoms) {
@@ -664,8 +677,7 @@ bldPolys.forEach((b, i) => {
     }
 });
 
-function collideBuildings(pos, radius) {
-  const k = Math.floor(pos.x / CELL) + ':' + Math.floor(pos.z / CELL);
+function collideBuildings(pos, radius, footY) {
   const near = new Set();
   for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) {
     const kk = (Math.floor(pos.x / CELL) + dx) + ':' + (Math.floor(pos.z / CELL) + dz);
@@ -673,6 +685,7 @@ function collideBuildings(pos, radius) {
   }
   for (const i of near) {
     const b = bldPolys[i];
+    if (b.flat && footY !== undefined && footY > b.topY - 0.35) continue; // uppe på platta taket
     if (pos.x < b.minX - radius || pos.x > b.maxX + radius || pos.z < b.minZ - radius || pos.z > b.maxZ + radius) continue;
     const poly = b.poly;
     const inside = pointInPoly(pos.x, pos.z, poly);
@@ -1762,7 +1775,7 @@ function updateEnemy(en, dt) {
     if (en.fireT <= 0) { en.fireT = 1.5; playShot(0.06, 400); }
   }
 
-  collideBuildings(en.pos, 0.45);
+  collideBuildings(en.pos, 0.45, en.pos.y);
   collideObstacles(en.pos, 0.45, en.pos.y);
   collideWalls(en.pos, 0.45, en.pos.y);
   en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
@@ -1843,7 +1856,7 @@ function updateAlly(al, dt) {
         al.stuckT = 0; al.lastX = al.pos.x; al.lastZ = al.pos.z;
       }
     }
-    collideBuildings(al.pos, 0.45);
+    collideBuildings(al.pos, 0.45, al.pos.y);
     collideObstacles(al.pos, 0.45, al.pos.y);
     collideWalls(al.pos, 0.45, al.pos.y);
     al.pos.y = groundInfoAt(al.pos.x, al.pos.z).y;
@@ -2125,7 +2138,7 @@ function updatePlayer(dt) {
   let vx = (rightX * mx - fwdX * mz) * speed;
   let vz = (rightZ * mx - fwdZ * mz) * speed;
 
-  const groundY = gInfo.y;
+  const groundY = Math.max(gInfo.y, roofSupportAt(player.pos.x, player.pos.z, player.pos.y));
   if (player.onGround && keys['Space']) { player.vel.y = 5.2; player.onGround = false; }
   player.vel.y -= 14 * dt;
   player.pos.y += player.vel.y * dt;
@@ -2164,14 +2177,15 @@ function updatePlayer(dt) {
       if (player.waterDmg > 5) { player.waterDmg = 0; damagePlayer(5); }
     }
   } else player.wetMsg = false;
-  collideBuildings(player.pos, 0.5);
+  collideBuildings(player.pos, 0.5, player.pos.y);
   collideObstacles(player.pos, 0.5, player.pos.y);
   collideWalls(player.pos, 0.5, player.pos.y);
   // keep inside map
   player.pos.x = Math.max(T.x0 + 5, Math.min(T.x1 - 5, player.pos.x));
   player.pos.z = Math.max(T.z1 + 5, Math.min(T.z0 - 5, player.pos.z));
   if (player.onGround) {
-    const gy = groundInfoAt(player.pos.x, player.pos.z).y;
+    const gy = Math.max(groundInfoAt(player.pos.x, player.pos.z).y,
+                        roofSupportAt(player.pos.x, player.pos.z, player.pos.y + 0.3));
     if (player.pos.y - gy > 0.55) player.onGround = false; // gick över en kant → fall
     else player.pos.y = gy;
   }
