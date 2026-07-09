@@ -244,35 +244,43 @@ function makeDetailTex(kind) {
   t.colorSpace = THREE.SRGBColorSpace;
   return t;
 }
-const detAsphalt = makeDetailTex('asphalt'), detGrass = makeDetailTex('grass'), detForest = makeDetailTex('forest');
+function makeRockTex() {
+  const cv = document.createElement('canvas'); cv.width = cv.height = 256;
+  const c = cv.getContext('2d');
+  c.fillStyle = '#8d8d89'; c.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 10000; i++) { // granitkorn
+    const v = 105 + Math.random() * 70;
+    c.fillStyle = `rgba(${v},${v},${(v * 0.97) | 0},0.55)`;
+    c.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1 + Math.random() * 2);
+  }
+  for (let i = 0; i < 7; i++) { // sprickor
+    c.strokeStyle = 'rgba(50,50,48,0.55)'; c.lineWidth = 1 + Math.random();
+    let x = Math.random() * 256, y = Math.random() * 256;
+    c.beginPath(); c.moveTo(x, y);
+    for (let s = 0; s < 7; s++) { x += (Math.random() - 0.5) * 50; y += (Math.random() - 0.5) * 50; c.lineTo(x, y); }
+    c.stroke();
+  }
+  for (let i = 0; i < 30; i++) { // insprängda gröna mossfläckar
+    const g = 90 + Math.random() * 60;
+    c.fillStyle = `rgba(${(g * 0.7) | 0},${g | 0},${(g * 0.5) | 0},${0.25 + Math.random() * 0.3})`;
+    c.beginPath(); c.arc(Math.random() * 256, Math.random() * 256, 3 + Math.random() * 9, 0, 7); c.fill();
+  }
+  const t = new THREE.CanvasTexture(cv);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+const detAsphalt = makeDetailTex('asphalt'), detGrass = makeDetailTex('grass'),
+      detForest = makeDetailTex('forest'), detRock = makeRockTex();
 
-// splatkarta (1 px = 2 m): R = asfalt/väg, G = gräs, B = skogsbotten — fylls när ortofotot laddats
+// klasskarta (1 px = 2 m, byggd i pipelinen ur foto+LiDAR+OSM):
+// R = asfalt, G = gräs, B = skog, svart = berg (residual i shadern)
 const splatCanvas = document.createElement('canvas');
 splatCanvas.width = Math.ceil((T.x1 - T.x0) / 2);
 splatCanvas.height = Math.ceil((T.z0 - T.z1) / 2);
 splatCanvas.getContext('2d').fillStyle = '#00ff00';
 splatCanvas.getContext('2d').fillRect(0, 0, splatCanvas.width, splatCanvas.height);
 const splatTex = new THREE.CanvasTexture(splatCanvas);
-
-function buildSplatmap() {
-  const c = splatCanvas.getContext('2d');
-  const S = 0.5; // världsmeter → splatpixel
-  c.fillStyle = '#00ff00'; c.fillRect(0, 0, splatCanvas.width, splatCanvas.height);
-  // skogsbotten
-  c.fillStyle = '#0000ff';
-  for (let r = 0; r < F_ROWS; r++) for (let cc = 0; cc < F_COLS; cc++) {
-    if (forestGrid[r * F_COLS + cc]) c.fillRect(cc * F_CELL * S, r * F_CELL * S, F_CELL * S + 1, F_CELL * S + 1);
-  }
-  // vägar & stigar överst
-  c.strokeStyle = '#ff0000'; c.lineCap = 'round'; c.lineJoin = 'round';
-  for (const rd of D.roads) {
-    c.lineWidth = Math.max(1.5, (rd.w + 1) * S);
-    c.beginPath();
-    rd.p.forEach((p, i) => { const x = (p[0] - T.x0) * S, y = (p[1] - T.z1) * S; i ? c.lineTo(x, y) : c.moveTo(x, y); });
-    c.stroke();
-  }
-  splatTex.needsUpdate = true;
-}
 
 const terrainGeom = new THREE.BufferGeometry();
 {
@@ -307,26 +315,36 @@ terrainMat.onBeforeCompile = shader => {
   shader.uniforms.detA = { value: detAsphalt };
   shader.uniforms.detG = { value: detGrass };
   shader.uniforms.detF = { value: detForest };
+  shader.uniforms.detR = { value: detRock };
   shader.vertexShader = ('varying float vDist;\n' + shader.vertexShader).replace(
     '#include <project_vertex>',
     `#include <project_vertex>
      vDist = -mvPosition.z;`
   );
   shader.fragmentShader = (
-    'uniform sampler2D splatMap;\nuniform sampler2D detA;\nuniform sampler2D detG;\nuniform sampler2D detF;\nvarying float vDist;\n'
+    'uniform sampler2D splatMap;\nuniform sampler2D detA;\nuniform sampler2D detG;\nuniform sampler2D detF;\nuniform sampler2D detR;\nvarying float vDist;\n'
     + shader.fragmentShader
   ).replace(
     '#include <map_fragment>',
     `#include <map_fragment>
      {
+       vec3 sp = texture2D(splatMap, vMapUv).rgb;
+       float wRock = clamp(1.0 - sp.r - sp.g - sp.b, 0.0, 1.0);
+       float sSum = max(sp.r + sp.g + sp.b + wRock, 0.001);
+       // färglägg fotot efter markklass även på håll (vårfotot är gråblekt):
+       // skog trycks mot mättad grönska, gräs lyfts lätt, berg avmättas ljusgrått
+       vec3 farTint = (sp.r * vec3(1.0, 1.0, 1.0)
+                     + sp.g * vec3(0.98, 1.10, 0.86)
+                     + sp.b * vec3(0.62, 0.94, 0.55)
+                     + wRock * vec3(1.10, 1.08, 1.02)) / sSum;
+       diffuseColor.rgb *= farTint;
        float wNear = 1.0 - smoothstep(18.0, 85.0, vDist);
        if (wNear > 0.001) {
-         vec3 sp = texture2D(splatMap, vMapUv).rgb;
-         float sSum = max(sp.r + sp.g + sp.b, 0.001);
          vec2 duv = vMapUv * 850.0;
          vec3 det = (texture2D(detA, duv).rgb * sp.r
                    + texture2D(detG, duv).rgb * sp.g
-                   + texture2D(detF, duv).rgb * sp.b) / sSum;
+                   + texture2D(detF, duv).rgb * sp.b
+                   + texture2D(detR, duv).rgb * wRock) / sSum;
          vec3 tinted = det * (0.35 + 1.5 * diffuseColor.rgb);
          diffuseColor.rgb = mix(diffuseColor.rgb, tinted, wNear * 0.85);
        }
@@ -1195,6 +1213,7 @@ function updateClutter() {
       if (!inBounds(x, z, -5)) continue;
       const gi = groundInfoAt(x, z);
       if (gi.road) continue;                       // inga tuvor i asfalten
+      if (rockAt(x, z) && Math.random() < 0.8) continue; // bara enstaka tuvor på hällarna
       if (insideAnyBuilding(x, z)) continue;
       const nr = nearestRiver(x, z);
       if (nr && nr.d < 6) continue;
@@ -1229,92 +1248,60 @@ function updateClutter() {
 
 // ---------- träd: planteras där satellitbilden visar trädkronor ----------
 // (anropas när ortofotot laddats — se minimap-blocket)
-// skogsraster (6 m-celler ur ortofotots gröna pixlar) — blockerar sikt & saktar rörelse
-const F_CELL = 6;
-let forestGrid = null, F_COLS = 0, F_ROWS = 0;
+// skogs- och bergsraster (2 m-celler ur klasskartan) — sikt, fart, växtlighet
+const F_CELL = 2;
+let forestGrid = null, rockGrid = null, F_COLS = 0, F_ROWS = 0;
 function forestAt(x, z) {
   if (!forestGrid) return false;
   const c = Math.floor((x - T.x0) / F_CELL), r = Math.floor((z - T.z1) / F_CELL);
   if (c < 0 || r < 0 || c >= F_COLS || r >= F_ROWS) return false;
   return forestGrid[r * F_COLS + c] === 1;
 }
+function rockAt(x, z) {
+  if (!rockGrid) return false;
+  const c = Math.floor((x - T.x0) / F_CELL), r = Math.floor((z - T.z1) / F_CELL);
+  if (c < 0 || r < 0 || c >= F_COLS || r >= F_ROWS) return false;
+  return rockGrid[r * F_COLS + c] === 1;
+}
 
 let treesPlanted = false;
-function plantTreesFromOrtho(mc, W, H) {
+// klasskartan styr: tät skog i skogsceller, buskage insprängt på bergen,
+// solitärträd i gräs där fotot visar mörk krona. mc = ortofoto-canvas (1 px = 1 m) för färger.
+function plantVegetation(mc, W, H, cls, CW, CH) {
   if (treesPlanted) return;
   treesPlanted = true;
-  const img = mc.getImageData(0, 0, W, H).data; // 1 px = 1 m
-  F_COLS = Math.ceil((T.x1 - T.x0) / F_CELL);
-  F_ROWS = Math.ceil((T.z0 - T.z1) / F_CELL);
-  const marked = new Uint8Array(F_COLS * F_ROWS);
-  // samla ALLA kandidater först, glesa sedan ut jämnt över hela kartan
-  const cand = [];
-  for (let z = T.z1 + 12; z < T.z0 - 12; z += 6) {
-    for (let x = T.x0 + 12; x < T.x1 - 12; x += 6) {
-      const px = Math.round(x - T.x0 + (Math.random() - 0.5) * 4);
-      const pz = Math.round(z - T.z1 + (Math.random() - 0.5) * 4);
-      if (px < 0 || pz < 0 || px >= W || pz >= H) continue;
-      const i = (pz * W + px) * 4;
-      const r = img[i], g = img[i + 1], b = img[i + 2];
-      // trädkrona: grönt dominerar och mörkt (gräsmattor är ljusare)
-      if (!(g > r + 6 && g > b + 12 && (r + g + b) / 3 < 100)) continue;
-      cand.push([T.x0 + px, T.z1 + pz, r, g, b]);
-      marked[Math.floor((z - T.z1) / F_CELL) * F_COLS + Math.floor((x - T.x0) / F_CELL)] = 1;
-    }
+  const img = mc.getImageData(0, 0, W, H).data;
+  F_COLS = CW; F_ROWS = CH;
+  forestGrid = new Uint8Array(CW * CH);
+  rockGrid = new Uint8Array(CW * CH);
+  for (let i = 0; i < CW * CH; i++) {
+    const r = cls[i * 4], g = cls[i * 4 + 1], b = cls[i * 4 + 2];
+    if (b > 110 && b >= r && b >= g) forestGrid[i] = 1;
+    else if (r + g + b < 140) rockGrid[i] = 1; // svart = berg
   }
-  forestGrid = new Uint8Array(F_COLS * F_ROWS);
-  // 1) OSM:s skogspolygoner (natural=wood / landuse=forest) är facit
-  for (const gp of D.green) {
-    if (gp.k !== 'forest') continue;
-    let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
-    for (const p of gp.p) { minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minZ = Math.min(minZ, p[1]); maxZ = Math.max(maxZ, p[1]); }
-    const c1 = Math.max(0, Math.floor((minX - T.x0) / F_CELL)), c2 = Math.min(F_COLS - 1, Math.ceil((maxX - T.x0) / F_CELL));
-    const r1 = Math.max(0, Math.floor((minZ - T.z1) / F_CELL)), r2 = Math.min(F_ROWS - 1, Math.ceil((maxZ - T.z1) / F_CELL));
-    for (let r = r1; r <= r2; r++) {
-      for (let c = c1; c <= c2; c++) {
-        const cx = T.x0 + (c + 0.5) * F_CELL, cz = T.z1 + (r + 0.5) * F_CELL;
-        if (pointInPoly(cx, cz, gp.p)) forestGrid[r * F_COLS + c] = 1;
-      }
-    }
-  }
-  // 2) + täta pixelkluster (fångar okartlagda dungar): cell + ≥4 grannar markerade
-  for (let r = 1; r < F_ROWS - 1; r++) {
-    for (let c = 1; c < F_COLS - 1; c++) {
-      if (!marked[r * F_COLS + c] || forestGrid[r * F_COLS + c]) continue;
-      let n = 0;
-      for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
-        if ((dr || dc) && marked[(r + dr) * F_COLS + c + dc]) n++;
-      }
-      if (n >= 4) forestGrid[r * F_COLS + c] = 1;
-    }
-  }
-  // träd: tätt i varje skogscell (färg ur fotot, tryckt mot grönt), glest för solitärer
-  const candF = [], candG = [];
-  for (let r = 0; r < F_ROWS; r++) {
-    for (let c = 0; c < F_COLS; c++) {
-      if (!forestGrid[r * F_COLS + c]) continue;
-      const wx = T.x0 + (c + 0.5) * F_CELL + (Math.random() - 0.5) * 4;
-      const wz = T.z1 + (r + 0.5) * F_CELL + (Math.random() - 0.5) * 4;
-      const px = Math.max(0, Math.min(W - 1, Math.round(wx - T.x0)));
-      const pz = Math.max(0, Math.min(H - 1, Math.round(wz - T.z1)));
-      const i = (pz * W + px) * 4;
-      candF.push([wx, wz, img[i], Math.max(img[i + 1], img[i] + 18), img[i + 2]]);
-    }
-  }
-  for (const c of cand) if (!forestAt(c[0], c[1])) candG.push(c);
-  const keepF = Math.min(1, 3800 / (candF.length || 1));
-  const keepG = Math.min(1, 800 / (candG.length || 1));
+  const photoAt = (wx, wz) => {
+    const px = Math.max(0, Math.min(W - 1, Math.round(wx - T.x0)));
+    const pz = Math.max(0, Math.min(H - 1, Math.round(wz - T.z1)));
+    const i = (pz * W + px) * 4;
+    return [img[i], img[i + 1], img[i + 2]];
+  };
   const spots = [];
-  for (const [list, keep, forest] of [[candF, keepF, true], [candG, keepG, false]]) {
-    for (const c of list) {
-      if (Math.random() > keep) continue;
-      const [wx, wz] = c;
+  for (let r = 0; r < CH; r++) {
+    for (let c = 0; c < CW; c++) {
+      const i = r * CW + c;
+      let p; // sannolikhet för träd i denna 2m-cell
+      if (forestGrid[i]) p = 0.10;            // tät skog
+      else if (rockGrid[i]) p = 0.012;        // enstaka tallar/buskar på hällarna
+      else continue;
+      if (Math.random() > p) continue;
+      const wx = T.x0 + (c + 0.5) * F_CELL + (Math.random() - 0.5) * 3;
+      const wz = T.z1 + (r + 0.5) * F_CELL + (Math.random() - 0.5) * 3;
       if (insideAnyBuilding(wx, wz)) continue;
       if (groundInfoAt(wx, wz).road) continue;
       const nr = nearestRiver(wx, wz);
       if (nr && nr.d < 6) continue;
-      c.push(forest);
-      spots.push(c);
+      const [pr, pg, pb] = photoAt(wx, wz);
+      spots.push([wx, wz, pr, Math.max(pg, pr + 18), pb, forestGrid[i] === 1]);
     }
   }
   const trunkG = new THREE.CylinderGeometry(0.16, 0.26, 2.4, 5);
@@ -2358,8 +2345,21 @@ const mapCanvas = document.createElement('canvas');
   const mapImg = new Image();
   mapImg.onload = () => {
     mc.drawImage(mapImg, 0, 0, w, h);
-    plantTreesFromOrtho(mc, w, h); // träden läser pixlarna innan vägöverlägget ritas
-    buildSplatmap();               // ...och splatkartan behöver skogsrastret därifrån
+    // klasskartan (asfalt/gräs/skog/berg, byggd i pipelinen) styr splat, växtlighet & raster
+    const classImg = new Image();
+    classImg.onload = () => {
+      const cc = document.createElement('canvas');
+      cc.width = classImg.width; cc.height = classImg.height;
+      const cctx = cc.getContext('2d');
+      cctx.drawImage(classImg, 0, 0);
+      const cls = cctx.getImageData(0, 0, classImg.width, classImg.height).data;
+      plantVegetation(mc, w, h, cls, classImg.width, classImg.height);
+      // splat-texturen = klasskartan rakt av
+      const sc = splatCanvas.getContext('2d');
+      sc.drawImage(classImg, 0, 0, splatCanvas.width, splatCanvas.height);
+      splatTex.needsUpdate = true;
+    };
+    classImg.src = 'classmap.png?v=18';
     // thin road overlay for readability
     mc.strokeStyle = 'rgba(255,255,255,0.35)'; mc.lineWidth = 1;
     for (const rd of D.roads) {

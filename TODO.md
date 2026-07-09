@@ -33,6 +33,13 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Klart
 
+- [x] 2026-07-09 — **Markklassningskartan**: pipeline (`tools/build_classmap.py`) klassar varje
+  2 m-cell som asfalt/gräs/skog/berg ur ortofotots färg+textur, LiDAR-lutning/lokala toppar
+  och OSM (skog, 170 parkeringar, berg, husnärhet) → `classmap.png`. Styr splat-shadern
+  (+ ny granitdetalj med mossfläckar), färglägger fotot per klass även på håll (vårgrå skog
+  blir grön), 15 000 träd (tät skog, buskar på hällar), tuvor undviker berg. Parkeringen
+  vid spawn = asfalt, smygstigen österut går genom tät skog.
+
 - [x] 2026-07-08 (sent): alla tak gångbara — sadeltak har riktig lutande takyta (nock→takfot),
   step-up 0,6 m; raket med håll-för-kraft (tap ~3 m, full ~12 m), snällare fallskada;
   8192px-marktextur ur 0,16 m-cachen + detaljbrus i markshadern; håll-C för crouch
