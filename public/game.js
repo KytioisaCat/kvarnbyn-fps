@@ -1574,6 +1574,7 @@ addEventListener('mouseup', e => { if (e.button === 0) firing = false; });
 
 // ---------- weapon viewmodel ----------
 const gun = new THREE.Group();
+let gunMag = null;
 {
   const mDark = new THREE.MeshLambertMaterial({ color: 0x2b2f33 });
   const mWood = new THREE.MeshLambertMaterial({ color: 0x5a4632 });
@@ -1584,6 +1585,7 @@ const gun = new THREE.Group();
   stock.position.set(0, -0.02, 0.38);
   const magMesh = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.18, 0.1), mDark);
   magMesh.position.set(0, -0.14, -0.08);
+  gunMag = magMesh;
   gun.add(body, barrel, stock, magMesh);
   gun.scale.set(0.38, 0.38, 0.38);
   gun.position.set(0.26, -0.24, -0.45);
@@ -1822,7 +1824,7 @@ function hasLOS(from, to) {
 // ---------- game state ----------
 const game = {
   started: false, over: false,
-  wave: 0, maxWave: 8,
+  wave: 0, maxWave: 3, // ~5 min genomspelning
   kills: 0,
   toSpawn: 0, spawnT: 0, betweenT: 4,
   msgT: 0
@@ -1852,11 +1854,11 @@ const capPills = capState.map(cap => {
   const A = capState[0], B = capState[1], C = capState[2];
   A.owner = 'enemy'; A.progress = 1;
   A.beam.material.color.set(0xff4444);
-  game.wave = 1; game.toSpawn = 5; game.spawnT = 3; game.betweenT = 9;
-  document.getElementById('wavenum').textContent = 'Våg 1/8';
+  game.wave = 1; game.toSpawn = 4; game.spawnT = 3; game.betweenT = 7;
+  document.getElementById('wavenum').textContent = 'Våg 1/' + game.maxWave;
   // förtruppen är redan på väg uppför backarna mot B och C
   // ockupationen: fienden håller hela kartan utom området närmast basen
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 16; i++) {
     const p = randomOccupationPos(170);
     const en = spawnEnemy(p);
     en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
@@ -1877,6 +1879,7 @@ const capPills = capState.map(cap => {
 function startReload() {
   if (player.reloading || player.mag === player.magSize || player.dead) return;
   player.reloading = true; player.reloadT = 1.7;
+  playTone(280, 0.06, 0.12, 'square'); // magasinsspärren
   document.getElementById('reloadmsg').style.display = 'block';
 }
 
@@ -2289,15 +2292,15 @@ function updateWaves(dt) {
     }
   } else if (alive === 0 && game.wave >= game.maxWave) {
     endGame(true); // sista vågen nedkämpad — Kvarnbyn är rensat
-  } else if (alive <= 6 || game.waveT > 75) {
+  } else if (alive <= 6 || game.waveT > 60) {
     // konstant tryck: nästa våg innan den förra är helt utraderad
     game.betweenT -= dt;
     if (game.betweenT <= 0 && game.wave < game.maxWave) {
       game.wave++;
       game.waveT = 0;
-      game.toSpawn = 10 + game.wave * 3;
+      game.toSpawn = 8 + game.wave * 2;
       game.spawnT = 0.5;
-      game.betweenT = 8;
+      game.betweenT = 7;
       document.getElementById('wavenum').textContent = 'Våg ' + game.wave + '/' + game.maxWave;
       msg('🔴 Våg ' + game.wave + ' — fienden rycker fram från flera håll!');
       playTone(440, 0.2, 0.15); setTimeout(() => playTone(550, 0.25, 0.15), 220);
@@ -2326,7 +2329,7 @@ function endGame(victory) {
   ov.classList.remove('hidden');
   document.getElementById('title').textContent = victory ? 'KVARNBYN ÄR RÄDDAT!' : 'KVARNBYN HAR FALLIT';
   document.getElementById('title').style.color = victory ? '#7fd77f' : '#ff5a5a';
-  ov.querySelector('h2').textContent = game.kills + ' fiender nedkämpade · ' + (victory ? 'Alla 8 vågor avvärjda. Görjelycksgatan sover tryggt inatt.' : 'Basen föll. Ladda om sidan för revansch.');
+  ov.querySelector('h2').textContent = game.kills + ' fiender nedkämpade · ' + (victory ? 'Kvarnbyn är rensat. Görjelycksgatan sover tryggt inatt.' : 'Basen föll. Ladda om sidan för revansch.');
   ov.querySelector('.panel').style.display = 'none';
   document.getElementById('gobtn').textContent = 'SPELA IGEN';
   document.getElementById('gobtn').onclick = () => location.reload();
@@ -2618,11 +2621,30 @@ function updatePlayer(dt) {
   camera.position.set(player.pos.x, player.pos.y + player.eyeY + bobbing, player.pos.z);
   camera.rotation.set(player.pitch, player.yaw, 0, 'YXZ');
 
-  // gun kick + sway
+  // gun kick + sway + reload-animation
   gunKick = Math.max(0, gunKick - dt * 8);
   gun.position.z = -0.5 + gunKick * 0.06;
-  gun.rotation.x = gunKick * 0.08;
   gun.position.y = -0.22 + bobbing * 0.5;
+  if (player.reloading) {
+    // vapnet vinklas ner och vrids in, magasinet glider ur, byts och trycks i
+    const p = 1 - player.reloadT / 1.7;
+    const env = Math.min(1, p / 0.15) * (1 - Math.max(0, (p - 0.85) / 0.15));
+    gun.rotation.x = -0.45 * env + gunKick * 0.08;
+    gun.rotation.z = 0.38 * env;
+    let magOff = 0;
+    if (p < 0.42) magOff = Math.max(0, (p - 0.18) / 0.24);      // ur
+    else if (p < 0.66) magOff = 1;                               // ute (nytt magasin)
+    else magOff = Math.max(0, 1 - (p - 0.66) / 0.22);            // i
+    gunMag.position.y = -0.14 - magOff * 0.32;
+    gunMag.rotation.x = magOff * 0.5;
+    if (magOff >= 1 && !player.magClick) { player.magClick = true; playTone(240, 0.05, 0.1, 'square'); }
+  } else {
+    gun.rotation.x = gunKick * 0.08;
+    gun.rotation.z *= Math.max(0, 1 - dt * 10);
+    gunMag.position.y = -0.14;
+    gunMag.rotation.x = 0;
+    player.magClick = false;
+  }
 }
 
 // ---------- HUD update ----------
