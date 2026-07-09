@@ -2,9 +2,12 @@
 <html lang="sv">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>Försvara Kvarnbyn</title>
 <style>
-  html,body{margin:0;padding:0;overflow:hidden;background:#0b0f14;font-family:"Helvetica Neue",Arial,sans-serif;user-select:none}
+  html,body{margin:0;padding:0;overflow:hidden;background:#0b0f14;font-family:"Helvetica Neue",Arial,sans-serif;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none}
   #c{display:block;width:100vw;height:100vh}
   .hud{position:fixed;color:#eef3f8;text-shadow:0 1px 3px rgba(0,0,0,.8);z-index:10;pointer-events:none}
 
@@ -54,7 +57,7 @@
   #hitmarker{left:50%;top:50%;transform:translate(-50%,-50%) rotate(45deg);width:26px;height:26px;opacity:0;color:#fff;font-size:26px;font-weight:900}
   #hitmarker::before{content:"✚";position:absolute}
 
-  #overlay{position:fixed;inset:0;background:rgba(6,10,16,.88);z-index:50;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#eef3f8;text-align:center;cursor:pointer}
+  #overlay{position:fixed;inset:0;background:rgba(6,10,16,.88);z-index:50;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#eef3f8;text-align:center;cursor:pointer;overflow-y:auto;touch-action:pan-y;padding:12px 0}
   #overlay h1{font-size:52px;margin:0 0 6px;letter-spacing:3px;color:#ffd76a;text-shadow:0 2px 12px rgba(0,0,0,.9)}
   #overlay h2{font-weight:400;font-size:17px;margin:0 0 26px;color:#a8c4dd}
   #overlay .panel{background:rgba(20,32,46,.8);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:22px 34px;max-width:560px;font-size:14px;line-height:1.75;text-align:left}
@@ -63,6 +66,54 @@
   @keyframes pulse2{50%{background:rgba(255,215,106,.15)}}
   #overlay.hidden{display:none}
   #endtitle{display:none}
+
+  /* ---------- touchkontroller (visas bara på pekskärm — body.touch sätts i game.js) ---------- */
+  .tc{position:fixed;z-index:30;display:none;align-items:center;justify-content:center;
+    color:#eef3f8;font-size:12px;font-weight:700;letter-spacing:1px;
+    background:rgba(10,20,30,.4);border:1.5px solid rgba(255,255,255,.4);border-radius:50%;
+    text-shadow:0 1px 3px rgba(0,0,0,.8);touch-action:none}
+  body.touch .tc{display:flex}
+  .tc.on{background:rgba(255,215,106,.4)}
+  .tc.lock{border-color:#ffd76a;color:#ffd76a}
+  #stick{left:calc(18px + env(safe-area-inset-left));bottom:calc(20px + env(safe-area-inset-bottom));width:128px;height:128px;background:rgba(10,20,30,.25)}
+  #stickknob{position:absolute;left:50%;top:50%;width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.3);border:1.5px solid rgba(255,255,255,.55);transform:translate(-50%,-50%)}
+  #btnFire{right:calc(20px + env(safe-area-inset-right));bottom:calc(44px + env(safe-area-inset-bottom));width:88px;height:88px;background:rgba(150,40,30,.45);border-color:rgba(255,120,100,.65);font-size:15px}
+  #btnJump{right:calc(118px + env(safe-area-inset-right));bottom:calc(24px + env(safe-area-inset-bottom));width:62px;height:62px;font-size:11px}
+  #btnReload{right:calc(34px + env(safe-area-inset-right));bottom:calc(146px + env(safe-area-inset-bottom));width:52px;height:52px;font-size:20px}
+  #btnCrouch{right:calc(122px + env(safe-area-inset-right));bottom:calc(102px + env(safe-area-inset-bottom));width:52px;height:52px;font-size:10px}
+  #btnMap{right:18px;top:246px;width:auto;height:auto;padding:6px 12px;border-radius:8px;font-size:11px}
+
+  /* touchläge: hälsa/ammo flyttar till mitten (spak + knappar tar hörnen) */
+  body.touch #hp{left:50%;bottom:calc(16px + env(safe-area-inset-bottom));width:170px;transform:translateX(-105%)}
+  body.touch #ammo{left:50%;right:auto;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(14px);font-size:24px;text-align:left}
+  body.touch #ammo small{font-size:12px}
+  body.touch #reloadmsg{left:50%;right:auto;transform:translateX(-50%);bottom:calc(56px + env(safe-area-inset-bottom))}
+
+  #attrib{right:10px;bottom:4px;font-size:10px;opacity:.55}
+  body.touch #attrib{left:50%;right:auto;transform:translateX(-50%);bottom:calc(1px + env(safe-area-inset-bottom));font-size:8px;white-space:nowrap}
+
+  #rotatehint{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:60;background:rgba(10,20,30,.85);
+    border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:8px 16px;color:#ffd76a;font-size:14px;display:none;pointer-events:none}
+  @media (orientation: portrait){ body.touch #rotatehint{display:block} }
+
+  /* små skärmar: kompaktare HUD (mobil i liggande läge har ~390px höjd) */
+  @media (max-width:920px),(max-height:520px){
+    #caps{gap:4px;top:6px}
+    .cap{min-width:60px;padding:3px 6px;font-size:9px}
+    .cap b{font-size:11px}
+    #wave{top:6px;left:6px;font-size:10px;padding:4px 8px}
+    #wave b{font-size:12px}
+    #kills{font-size:9px}
+    #minimap{width:110px;height:110px;top:6px;right:6px}
+    #feed{top:54px;left:6px;font-size:10px;max-width:210px}
+    #crosshair{width:18px;height:18px}
+    #attrib{font-size:8px}
+    #btnMap{top:124px;right:6px}
+    #overlay h1{font-size:26px;letter-spacing:2px}
+    #overlay h2{font-size:12px;margin-bottom:10px}
+    #overlay .panel{font-size:11px;line-height:1.55;padding:10px 16px;max-width:88vw}
+    #overlay .go{margin-top:12px;font-size:15px;padding:8px 28px}
+  }
 </style>
 </head>
 <body>
@@ -77,8 +128,8 @@
     <b>A – Gamla Torget</b> · <b>B – Roten M</b> · <b>C – Royens trappor</b> · <b>D – Basen</b><br>
     Stå i en fiendezon (utan fiender i närheten) för att återta den — dina soldater hjälper till.
     Så länge fienden håller zoner strömmar deras förstärkningar in. Faller <b>basen</b> är allt förlorat.<br><br>
-    <b>WASD</b> springa · <b>Shift</b> sprinta · <b>Space</b> hoppa (<b>×2 = raket!</b>) ·
-    håll <b>C</b> för att huka · <b>Vänsterklick</b> skjut · <b>R</b> ladda om · <b>M</b> karta<br>
+    <span id="ctrlhelp"><b>WASD</b> springa · <b>Shift</b> sprinta · <b>Space</b> hoppa (<b>×2 = raket!</b>) ·
+    håll <b>C</b> för att huka · <b>Vänsterklick</b> skjut · <b>R</b> ladda om · <b>M</b> karta</span><br>
     Seger: alla zoner återtagna och gatorna rensade (~5 min).
   </div>
   <label id="nightopt" style="margin-top:18px;font-size:15px;color:#a8c4dd;cursor:pointer;display:flex;align-items:center;gap:8px;">
@@ -99,12 +150,20 @@
 <div class="hud" id="hitmarker"></div>
 <div id="minimap"><canvas id="mm" width="440" height="440"></canvas></div>
 <div id="bigmap" style="position:fixed;inset:0;background:rgba(6,10,16,.82);z-index:40;display:none;align-items:center;justify-content:center;flex-direction:column;">
-  <div style="color:#eef3f8;font-size:13px;margin-bottom:8px;opacity:.8">TAKTISK KARTA — tryck <b>M</b> för att stänga</div>
+  <div id="bmhint" style="color:#eef3f8;font-size:13px;margin-bottom:8px;opacity:.8">TAKTISK KARTA — tryck <b>M</b> för att stänga</div>
   <canvas id="bm" style="max-width:92vw;max-height:86vh;border:2px solid rgba(255,255,255,.3);border-radius:6px"></canvas>
 </div>
-<div class="hud" id="attrib" style="right:10px;bottom:4px;font-size:10px;opacity:.55">Kartdata © OpenStreetMap-bidragsgivarna · Flygbild &amp; höjddata © Lantmäteriet (CC BY 4.0)</div>
+<div class="hud" id="attrib">Kartdata © OpenStreetMap-bidragsgivarna · Flygbild &amp; höjddata © Lantmäteriet (CC BY 4.0)</div>
+
+<div id="stick" class="tc"><div id="stickknob"></div></div>
+<div id="btnFire" class="tc">ELD</div>
+<div id="btnJump" class="tc">HOPP</div>
+<div id="btnReload" class="tc">⟳</div>
+<div id="btnCrouch" class="tc">HUKA</div>
+<div id="btnMap" class="tc">KARTA</div>
+<div id="rotatehint">📱 Vrid till liggande läge</div>
 
 <script src="data.js?v=23"></script>
-<script type="module" src="game.js?v=23"></script>
+<script type="module" src="game.js?v=24"></script>
 </body>
 </html>

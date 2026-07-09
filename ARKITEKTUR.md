@@ -96,6 +96,12 @@ Bärande delsystem och deras beslut:
   yaw = `atan2(-dx, -dz)` — `lookAt` pekar +Z och blir 180° fel!
 - **Spawns**: LOS + avståndsgate (aldrig <60 m eller i spelarens synfält) över tre
   infallsvägar (Forsebron, syd, öst).
+- **Input**: desktop = pointer lock + WASD/mus; pekskärm (detekteras med `pointer: coarse`,
+  tvingas med `#touch`/`#desktop` i URL:en) = DOM-touchkontroller: analog spak (full
+  utstyrning = sprint, liten = smyg), sikt-drag på fri yta (första touchen utanför
+  kontrollerna), HUKA är **växlande** (håll-knapp funkar inte med två tummar upptagna),
+  hoppknappen återanvänder raketlogiken (`tryRocket`). Vid start: fullskärm +
+  landskapslås i stället för pointer lock. DPR-tak 1,5 på mobil (fillrate-gräns).
 
 ## Gameplay-design (befrielseläget, beslutat 2026-07-09)
 
@@ -127,6 +133,7 @@ Bärande delsystem och deras beslut:
 | data.js som JSON (~4 MB) i stället för binärt | Enkelhet; Pages gzip:ar till ~1 MB; parse < 200 ms |
 | Cache-bust med `?v=N` på data.js/game.js/ortho/classmap | Webbläsare + Pages cachar aggressivt; N bumpas vid VARJE ändring av filerna |
 | Fysik "fuskar" (ray-march, cylinderhinder, ingen fysikmotor) | Räcker för känslan; 55 fiender + 15 000 träd på ~1 ms/frame |
+| Touchkontroller som DOM-element (inte ritade i canvas) | CSS sköter layout/safe-areas/media queries gratis; touch-targets får egna event utan hit-testning i JS |
 
 ## Kända skulder / öppna frågor
 

@@ -33,6 +33,12 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Klart
 
+- [x] 2026-07-09 — **Mobilanpassning**: touchkontroller (virtuell spak med analog fart,
+  full utstyrning = sprint; sikt-drag på fri skärmyta; ELD/HOPP/⟳/HUKA/KARTA-knappar),
+  viewport-meta, kompakt HUD på små skärmar (hälsa/ammo flyttar till mitten), fullskärm +
+  landskapslås vid start, porträtt-hint, DPR-tak 1,5 på mobil, `#touch`/`#desktop` i
+  URL:en tvingar läget (test/felsökning)
+
 - [x] 2026-07-09 — **Markklassningskartan**: pipeline (`tools/build_classmap.py`) klassar varje
   2 m-cell som asfalt/gräs/skog/berg ur ortofotots färg+textur, LiDAR-lutning/lokala toppar
   och OSM (skog, 170 parkeringar, berg, husnärhet) → `classmap.png`. Styr splat-shadern

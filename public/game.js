@@ -98,9 +98,14 @@ function paintGeom(g, color) {
 }
 
 // ---------- renderer / scene ----------
+// mobil/pekskärm: touchkontroller + lägre DPR-tak (fillrate på telefon-GPU)
+// #touch / #desktop i URL:en tvingar läget (test/felsökning)
+const IS_TOUCH = location.hash !== '#desktop' &&
+  (matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window || location.hash === '#touch');
+if (IS_TOUCH) document.body.classList.add('touch');
 const canvas = document.getElementById('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(devicePixelRatio, IS_TOUCH ? 1.5 : 2));
 renderer.setSize(innerWidth, innerHeight);
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xb8d0e8);
@@ -1590,17 +1595,19 @@ player.pos.y = heightAt(player.pos.x, player.pos.z);
 }
 
 const keys = {};
-addEventListener('keydown', e => {
-  keys[e.code] = true;
-  if (e.code === 'KeyR') startReload();
-  // raketdubbelhopp: Space i luften tänder raketen — håll för mer kraft, släpp för att dosera
-  if (e.code === 'Space' && !e.repeat && game.started && !game.over && !player.dead &&
-      !player.onGround && !player.airBoosted) {
+// raketdubbelhopp: hoppknapp i luften tänder raketen — håll för mer kraft, släpp för att dosera
+function tryRocket() {
+  if (game.started && !game.over && !player.dead && !player.onGround && !player.airBoosted) {
     player.airBoosted = true;
     player.thrustT = 0.45;            // bränsle: full effekt vid håll, liten skjuts vid tapp
     player.vel.y = Math.max(player.vel.y + 4, 6);
     playShot(0.18, 300);
   }
+}
+addEventListener('keydown', e => {
+  keys[e.code] = true;
+  if (e.code === 'KeyR') startReload();
+  if (e.code === 'Space' && !e.repeat) tryRocket();
 });
 addEventListener('keyup', e => { keys[e.code] = false; });
 
@@ -1617,6 +1624,83 @@ addEventListener('mousemove', e => {
 });
 addEventListener('mousedown', e => { if (locked && e.button === 0) firing = true; });
 addEventListener('mouseup', e => { if (e.button === 0) firing = false; });
+
+// ---------- touchkontroller (mobil) ----------
+// Vänster tumme: virtuell spak (analog fart, full utstyrning = sprint). Höger tumme:
+// dra var som helst utanför kontrollerna för att sikta. Knappar: ELD (håll), HOPP
+// (i luften = raket, som Space), ⟳ omladdning, HUKA (växlar — svårt att hålla på mobil), KARTA.
+const touchMove = { x: 0, z: 0, sprint: false };
+let touchFiring = false, touchCrouch = false;
+if (IS_TOUCH) {
+  const stick = document.getElementById('stick');
+  const knob = document.getElementById('stickknob');
+  let stickId = null;
+  const setStick = t => {
+    const r = stick.getBoundingClientRect();
+    const max = r.width / 2;
+    let dx = t.clientX - (r.left + max), dy = t.clientY - (r.top + max);
+    const m = Math.hypot(dx, dy);
+    if (m > max) { dx *= max / m; dy *= max / m; }
+    knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+    const nx = dx / max, ny = dy / max, mag = Math.hypot(nx, ny);
+    if (mag < 0.18) { touchMove.x = 0; touchMove.z = 0; touchMove.sprint = false; }
+    else { touchMove.x = nx; touchMove.z = ny; touchMove.sprint = mag > 0.92; }
+  };
+  const endStick = e => {
+    for (const t of e.changedTouches) if (t.identifier === stickId) {
+      stickId = null; touchMove.x = touchMove.z = 0; touchMove.sprint = false;
+      knob.style.transform = 'translate(-50%,-50%)';
+    }
+  };
+  stick.addEventListener('touchstart', e => { e.preventDefault(); const t = e.changedTouches[0]; stickId = t.identifier; setStick(t); }, { passive: false });
+  stick.addEventListener('touchmove', e => { e.preventDefault(); for (const t of e.changedTouches) if (t.identifier === stickId) setStick(t); }, { passive: false });
+  stick.addEventListener('touchend', endStick);
+  stick.addEventListener('touchcancel', endStick);
+
+  // sikt-drag: första touchen som inte börjar på en kontroll/karta/startskärm styr kameran
+  let lookId = null, lookX = 0, lookY = 0;
+  addEventListener('touchstart', e => {
+    if (!game.started || game.over) return;
+    for (const t of e.changedTouches) {
+      if (t.target.closest && t.target.closest('.tc, #bigmap, #overlay')) continue;
+      if (lookId === null) { lookId = t.identifier; lookX = t.clientX; lookY = t.clientY; }
+    }
+  }, { passive: true });
+  addEventListener('touchmove', e => {
+    for (const t of e.changedTouches) if (t.identifier === lookId) {
+      player.yaw -= (t.clientX - lookX) * 0.0042;
+      player.pitch -= (t.clientY - lookY) * 0.0042;
+      player.pitch = Math.max(-1.45, Math.min(1.45, player.pitch));
+      lookX = t.clientX; lookY = t.clientY;
+    }
+  }, { passive: true });
+  const endLook = e => { for (const t of e.changedTouches) if (t.identifier === lookId) lookId = null; };
+  addEventListener('touchend', endLook);
+  addEventListener('touchcancel', endLook);
+
+  const bindBtn = (id, down, up) => {
+    const el = document.getElementById(id);
+    el.addEventListener('touchstart', e => { e.preventDefault(); el.classList.add('on'); down(); }, { passive: false });
+    const end = e => { e.preventDefault(); el.classList.remove('on'); if (up) up(); };
+    el.addEventListener('touchend', end);
+    el.addEventListener('touchcancel', end);
+  };
+  bindBtn('btnFire', () => { touchFiring = true; }, () => { touchFiring = false; });
+  bindBtn('btnJump', () => { tryRocket(); keys['Space'] = true; }, () => { keys['Space'] = false; });
+  bindBtn('btnReload', () => startReload());
+  bindBtn('btnCrouch', () => {
+    touchCrouch = !touchCrouch;
+    document.getElementById('btnCrouch').classList.toggle('lock', touchCrouch);
+  });
+  bindBtn('btnMap', () => toggleBigmap());
+
+  // startskärm + karthjälp med touchtext i stället för tangenter
+  document.getElementById('ctrlhelp').innerHTML =
+    '<b>Vänster spak</b> springa (full utstyrning = sprint) · <b>dra på skärmen</b> för att sikta ·<br>' +
+    '<b>ELD</b> skjut · <b>HOPP</b> (i luften = <b>raket!</b>) · <b>⟳</b> ladda om · <b>HUKA</b> växlar · <b>KARTA</b>';
+  document.getElementById('bmhint').textContent = 'TAKTISK KARTA — tryck för att stänga';
+  document.getElementById('gobtn').textContent = 'TRYCK FÖR ATT STRIDA';
+}
 
 // ---------- weapon viewmodel ----------
 const gun = new THREE.Group();
@@ -2569,13 +2653,14 @@ function drawBigmap() {
   c.beginPath(); c.moveTo(0, -11); c.lineTo(7, 8); c.lineTo(-7, 8); c.closePath(); c.fill();
   c.restore();
 }
-addEventListener('keydown', e => {
-  if (e.code === 'KeyM' && game.started && !game.over) {
-    bigmapOpen = !bigmapOpen;
-    bigmapEl.style.display = bigmapOpen ? 'flex' : 'none';
-    if (bigmapOpen) drawBigmap();
-  }
-});
+function toggleBigmap() {
+  if (!game.started || game.over) return;
+  bigmapOpen = !bigmapOpen;
+  bigmapEl.style.display = bigmapOpen ? 'flex' : 'none';
+  if (bigmapOpen) drawBigmap();
+}
+addEventListener('keydown', e => { if (e.code === 'KeyM') toggleBigmap(); });
+bigmapEl.addEventListener('click', () => { if (bigmapOpen) toggleBigmap(); }); // touch: tryck för att stänga
 
 // ---------- player update ----------
 function updatePlayer(dt) {
@@ -2600,8 +2685,8 @@ function updatePlayer(dt) {
   const nr = nearestRiver(player.pos.x, player.pos.z);
   player.inWater = !!(nr && nr.d < 4.6 && player.pos.y < origHeightAt(player.pos.x, player.pos.z) - 0.8);
 
-  player.crouch = !!keys['KeyC']; // håll C för att huka
-  let speed = (keys['ShiftLeft'] || keys['ShiftRight']) && !player.crouch ? 8.2 : 5.2;
+  player.crouch = !!keys['KeyC'] || touchCrouch; // håll C för att huka (touch: växla)
+  let speed = (keys['ShiftLeft'] || keys['ShiftRight'] || touchMove.sprint) && !player.crouch ? 8.2 : 5.2;
   if (player.crouch) speed *= 0.5;            // hukad = långsam men låg
   if (player.inWater) speed *= 0.35;          // vada i strömmen
   else if (!gInfo.road) {
@@ -2613,8 +2698,9 @@ function updatePlayer(dt) {
   if (keys['KeyS']) mz += 1;
   if (keys['KeyA']) mx -= 1;
   if (keys['KeyD']) mx += 1;
+  mx += touchMove.x; mz += touchMove.z; // spaken är analog — liten utstyrning = smyg
   const ml = Math.hypot(mx, mz);
-  if (ml > 0) { mx /= ml; mz /= ml; }
+  if (ml > 1) { mx /= ml; mz /= ml; }
   // forward = -Z in camera space rotated by yaw
   const fwdX = -Math.sin(player.yaw), fwdZ = -Math.cos(player.yaw);
   const rightX = Math.cos(player.yaw), rightZ = -Math.sin(player.yaw);
@@ -2692,7 +2778,7 @@ function updatePlayer(dt) {
 
   // firing
   player.fireCooldown -= dt;
-  if (firing && player.fireCooldown <= 0) playerShoot();
+  if ((firing || touchFiring) && player.fireCooldown <= 0) playerShoot();
 
   // reload
   if (player.reloading) {
@@ -2883,7 +2969,12 @@ overlay.addEventListener('click', () => {
   overlay.classList.add('hidden');
   audio();
   startAmbient();
-  canvas.requestPointerLock();
+  if (IS_TOUCH) {
+    // mobil: fullskärm + liggande i stället för pointer lock (stöds ej / behövs ej)
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
+  } else canvas.requestPointerLock();
   if (!game.started) {
     game.started = true;
     localStorage.setItem('kvarnbyn-night', nightChk.checked ? '1' : '0');
@@ -2892,5 +2983,5 @@ overlay.addEventListener('click', () => {
   }
 });
 canvas.addEventListener('click', () => {
-  if (game.started && !game.over && !locked) canvas.requestPointerLock();
+  if (game.started && !game.over && !locked && !IS_TOUCH) canvas.requestPointerLock();
 });
