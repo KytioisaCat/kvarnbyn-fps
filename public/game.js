@@ -2178,6 +2178,9 @@ function updateAlly(al, dt) {
 }
 
 // ---------- capture logic ----------
+let threatCap = null, threatMode = null; // 'attack' = zon tas just nu, 'retake' = närmsta förlorade
+const mapPings = []; // {x, z, t} — larmringar på minimapen
+
 function updateCaps(dt) {
   for (let i = 0; i < capState.length; i++) {
     const cap = capState[i];
@@ -2191,11 +2194,20 @@ function updateCaps(dt) {
       if (!al.dead && Math.hypot(al.pos.x - cap.pos[0], al.pos.z - cap.pos[1]) < cap.r) fCount++;
     }
 
+    cap.underAttack = eCount > 0 && cap.owner !== 'enemy';
     let cls = cap.owner;
     if (eCount > 0 && fCount === 0) {
       if (cap.owner !== 'enemy') {
         cap.progress += dt * 0.07 * Math.min(eCount, 3);
         cls = 'contested';
+        // larm när anfallet börjar (med paus så det inte tjatar)
+        if (cap.progress > 0.02 && clock.elapsedTime - (cap.lastAlarm ?? -99) > 25) {
+          cap.lastAlarm = clock.elapsedTime;
+          msg('🚨 ' + cap.name + ' är under anfall!');
+          playTone(520, 0.22, 0.2, 'square');
+          setTimeout(() => playTone(392, 0.3, 0.2, 'square'), 240);
+          mapPings.push({ x: cap.pos[0], z: cap.pos[1], t: clock.elapsedTime });
+        }
         if (cap.progress >= 1) {
           cap.owner = 'enemy'; cap.progress = 1;
           cap.beam.material.color.set(0xff4444);
@@ -2224,13 +2236,56 @@ function updateCaps(dt) {
 
     // HUD pill
     const pill = capPills[i];
-    pill.className = 'cap ' + (cls === 'contested' ? 'contested' : cap.owner);
+    pill.className = 'cap ' + (cls === 'contested' ? 'contested' : cap.owner) +
+      (cap === threatCap && threatMode === 'attack' ? ' alarm' : '');
     const bar = pill.querySelector('.bar i');
     bar.style.width = (cap.progress * 100) + '%';
     bar.style.background = cap.owner === 'enemy' ? '#ff5a5a' : '#ffb14f';
     // beam pulse when contested
     cap.beam.material.opacity = cls === 'contested' ? 0.3 + Math.sin(clock.elapsedTime * 8) * 0.12 : 0.16;
   }
+
+  // hotbild: pågående anfall vinner (den närmast att falla), annars närmsta zon att återta
+  threatCap = null; threatMode = null;
+  let bestP = -1;
+  for (const cap of capState) {
+    if (cap.underAttack && cap.progress > bestP) { bestP = cap.progress; threatCap = cap; threatMode = 'attack'; }
+  }
+  if (!threatCap) {
+    let bd = Infinity;
+    for (const cap of capState) {
+      if (cap.owner !== 'enemy') continue;
+      const d = Math.hypot(cap.pos[0] - player.pos.x, cap.pos[1] - player.pos.z);
+      if (d < bd) { bd = d; threatCap = cap; threatMode = 'retake'; }
+    }
+  }
+}
+
+// ---------- skärmkantspil mot hotad/förlorad punkt ----------
+const objmarkEl = document.getElementById('objmark');
+const _omv = new THREE.Vector3();
+function updateObjectiveMarker() {
+  if (!threatCap || player.dead) { objmarkEl.style.display = 'none'; return; }
+  objmarkEl.style.display = 'block';
+  objmarkEl.className = threatMode === 'retake' ? 'retake' : '';
+  const dist = Math.round(Math.hypot(threatCap.pos[0] - player.pos.x, threatCap.pos[1] - player.pos.z));
+  objmarkEl.querySelector('.txt').textContent =
+    (threatMode === 'attack' ? '🚨 ' : '⟳ ') + threatCap.id + ' · ' + threatCap.name + ' · ' + dist + ' m';
+  _omv.set(threatCap.pos[0], threatCap.y + 10, threatCap.pos[1]).project(camera);
+  let x = _omv.x, y = _omv.y;
+  const behind = _omv.z > 1;
+  if (behind) { x = -x; y = -y; }
+  const onScreen = !behind && Math.abs(x) < 0.82 && Math.abs(y) < 0.75;
+  const arr = objmarkEl.querySelector('.arr');
+  if (onScreen) {
+    arr.style.transform = 'rotate(90deg)'; // pekar nedåt mot punkten
+  } else {
+    const s = 1 / Math.max(Math.abs(x) / 0.82, Math.abs(y) / 0.75, 0.001);
+    x *= s; y *= s;
+    arr.style.transform = 'rotate(' + Math.atan2(-y, x) + 'rad)';
+  }
+  objmarkEl.style.left = ((x * 0.5 + 0.5) * innerWidth) + 'px';
+  objmarkEl.style.top = ((-y * 0.5 + 0.5) * innerHeight) + 'px';
 }
 
 // ---------- waves ----------
@@ -2350,6 +2405,16 @@ function drawMinimap() {
       ctx.fillStyle = '#5aa8ff'; ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
     }
+  }
+  // larmpingar: expanderande ringar
+  for (let i = mapPings.length - 1; i >= 0; i--) {
+    const pg = mapPings[i];
+    const age = clock.elapsedTime - pg.t;
+    if (age > 4) { mapPings.splice(i, 1); continue; }
+    const ex = 220 + ((pg.x - T.x0) * S - px) * k, ey = 220 + ((pg.z - T.z1) * S - pz) * k;
+    ctx.strokeStyle = 'rgba(255,60,60,' + (1 - age / 4).toFixed(2) + ')';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(ex, ey, 8 + age * 26, 0, Math.PI * 2); ctx.stroke();
   }
   // player arrow (yaw 0 = norr = uppåt på kartan)
   ctx.save();
@@ -2582,6 +2647,7 @@ function frame(dt) {
     updateCaps(dt);
     updateWaves(dt);
     updateHUD();
+    updateObjectiveMarker();
     if (bigmapOpen) {
       bmT -= dt;
       if (bmT <= 0) { bmT = 0.5; drawBigmap(); }
