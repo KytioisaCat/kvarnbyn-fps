@@ -5,6 +5,9 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Backlogg (~30 min styck)
 
+- [ ] **Frontlinje på kartorna** — tona fiendekontrollerat område rött på minimap/M-kartan
+  med gränslinje + anfallspilar från de tre infallsvägarna (förslag 2 från frontlinje-rundan)
+
 - [ ] **Ljudlandskap** — fotsteg (asfalt/gräs olika), vapenljudsvarianter, avlägset
   stridsmuller när AI strider utom synhåll, vind i träden
 - [ ] **Vapenpaket** — ADS på högerklick (zoom + lägre spridning), prickskyttegevär,
