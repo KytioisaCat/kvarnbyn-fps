@@ -1,0 +1,262 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-07-09T11:37:59Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 462692506,
+  "lat": 57.6560438,
+  "lon": 12.0167788,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza;kebab",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "name": "Portens Pizza",
+    "outdoor_seating": "no",
+    "payment:cryptocurrencies": "no",
+    "smoking": "no",
+    "website": "https://portenspizza.se/"
+  }
+},
+{
+  "type": "node",
+  "id": 463940794,
+  "lat": 57.6569865,
+  "lon": 12.0272102,
+  "tags": {
+    "amenity": "fast_food",
+    "cuisine": "thai",
+    "name": "Phuket Thai Kitchen",
+    "opening_hours": "Mo-Fr 11:00-20:00; Su 13:00-20:00"
+  }
+},
+{
+  "type": "node",
+  "id": 463940899,
+  "lat": 57.6566238,
+  "lon": 12.0281029,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Kråkans Krog",
+    "opening_hours": "Mo-Th 16:00-23:00; Fr 17:00-24:00; Sa 00:00-01:00,17:00-24:00; Su 00:00-01:00",
+    "payment:cryptocurrencies": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 463940910,
+  "lat": 57.6570508,
+  "lon": 12.0276394,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Corpus Pizzeria",
+    "opening_hours": "Mo-Fr 11:00-21:00; Sa 12:00-21:00; Su 13:00-21:00",
+    "website": "https://corpuspizzeria.se"
+  }
+},
+{
+  "type": "node",
+  "id": 4820693792,
+  "lat": 57.6568602,
+  "lon": 12.0159902,
+  "tags": {
+    "addr:city": "Mölndal",
+    "addr:country": "SE",
+    "addr:housenumber": "1",
+    "addr:postcode": "431 30",
+    "addr:street": "Tempelgatan",
+    "amenity": "fast_food",
+    "cuisine": "indian",
+    "name": "Masala Kitchen Express",
+    "website": "https://masalakitchen.se/molndal"
+  }
+},
+{
+  "type": "node",
+  "id": 5745083822,
+  "lat": 57.6563316,
+  "lon": 12.0162063,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-07-21",
+    "cuisine": "lebanese",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "email": "gamla.beirut@outlook.com",
+    "name": "Gamla Beirut",
+    "opening_hours": "Mo-Th 11:00-22:00; Fr-Sa 11:00-22:00",
+    "phone": "+46 76 3090825",
+    "smoking": "no",
+    "website": "www.gamlabeirut.se"
+  }
+},
+{
+  "type": "node",
+  "id": 5745087891,
+  "lat": 57.6563902,
+  "lon": 12.0165232,
+  "tags": {
+    "amenity": "restaurant",
+    "contact:phone": "+46 31878787",
+    "contact:website": "http://www.sushitaiking.se",
+    "cuisine": "japanese;asian;sushi",
+    "name": "Sushi King",
+    "opening_hours": "Mo-Th 11:00-22:00; Fr,Sa 11:00-02:00",
+    "payment:cryptocurrencies": "no",
+    "smoking": "no",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 5745090608,
+  "lat": 57.6562374,
+  "lon": 12.0166669,
+  "tags": {
+    "amenity": "restaurant",
+    "contact:phone": "+46 31873165",
+    "contact:website": "http://www.rasasayang.se",
+    "cuisine": "asian",
+    "description": "Lunch Mo-Fr 11-16",
+    "indoor_seating": "yes",
+    "name": "Rasa Sayang Restaurant",
+    "opening_hours": "Mo-Su 11:00-22:00",
+    "outdoor_seating": "no",
+    "payment:cryptocurrencies": "no",
+    "smoking": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 8260621237,
+  "lat": 57.6563655,
+  "lon": 12.0356351,
+  "tags": {
+    "name": "Grevedämmet",
+    "place": "isolated_dwelling",
+    "wikidata": "Q31885174",
+    "wikipedia": "sv:Grevedämmet"
+  }
+},
+{
+  "type": "node",
+  "id": 10829819096,
+  "lat": 57.6557239,
+  "lon": 12.0159269,
+  "tags": {
+    "amenity": "fast_food",
+    "brand": "Subway",
+    "brand:wikidata": "Q244457",
+    "cuisine": "sandwich",
+    "name": "Subway",
+    "takeaway": "yes",
+    "website": "https://restaurants.subway.com/sv/sverige/molndal/brogatan-4"
+  }
+},
+{
+  "type": "node",
+  "id": 13356800094,
+  "lat": 57.6562978,
+  "lon": 12.0192778,
+  "tags": {
+    "addr:city": "Mölndal",
+    "addr:housenumber": "1",
+    "addr:postcode": "431 33",
+    "addr:street": "Nämndemansgatan",
+    "amenity": "restaurant",
+    "bar": "yes",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "name": "Roy Restaurant Café & Bar",
+    "opening_hours": "24/7",
+    "outdoor_seating": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "payment:nfc_mobile_payments": "yes",
+    "phone": "+46 76 035 9971",
+    "reservation": "yes",
+    "smoking": "no",
+    "toilets:wheelchair": "yes",
+    "website": "https://www.roy.se",
+    "website:menu": "https://www.roy.se/lunch",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 13356800095,
+  "lat": 57.6554791,
+  "lon": 12.0173688,
+  "tags": {
+    "addr:city": "Mölndal",
+    "addr:housenumber": "9",
+    "addr:postcode": "431 30",
+    "addr:street": "Mölndals bro",
+    "air_conditioning": "yes",
+    "amenity": "fast_food",
+    "cuisine": "burger;fries;coffee;fast_food;fish_and_chips;wings",
+    "diet:halal": "yes",
+    "diet:vegetarian": "yes",
+    "drive_through": "no",
+    "email": "basusta@streetfoodtogo.se",
+    "indoor_seating": "yes",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "name": "Street Food To Go",
+    "opening_hours": "Mo-Fr 10:30-20:00; Sa 12:00-18:00",
+    "outdoor_seating": "no",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "payment:nfc_mobile_payments": "yes",
+    "phone": "+46 31 87 7780",
+    "smoking": "no",
+    "toilets:wheelchair": "yes",
+    "website": "https://www.streetfoodtogo.se",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 13419419401,
+  "lat": 57.6569407,
+  "lon": 12.0155631,
+  "tags": {
+    "addr:city": "Mölndal",
+    "addr:housenumber": "1A",
+    "addr:postcode": "431 30",
+    "addr:street": "Tempelgatan",
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Masaki Sushi",
+    "opening_hours": "Mo-Fr 11:00-20:00; Sa-Su 12:00-20:00",
+    "phone": "+46 31 48 7766",
+    "smoking": "no",
+    "website": "https://www.masakimölndal.se",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 149192012,
+  "center": {
+    "lat": 57.6565838,
+    "lon": 12.0349979
+  },
+  "tags": {
+    "bridge": "yes",
+    "highway": "footway",
+    "layer": "1",
+    "name": "Grevedämmetspången",
+    "source": "Bing Aerial",
+    "surface": "asphalt"
+  }
+}
+
+  ]
+}

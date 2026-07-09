@@ -453,6 +453,37 @@ const roadHash = new Map();
   scene.add(mDash);
 }
 
+// ---------- synliga broar: solida däck med balkar där vägen spänner över fåran ----------
+{
+  const geoms = [];
+  const cDeck = new THREE.Color(0x716c64), cSide = new THREE.Color(0x565249);
+  for (const s of roadSegs) {
+    const mx = (s.ax + s.bx) / 2, mz = (s.az + s.bz) / 2;
+    const deckY = (s.ya + s.yb) / 2;
+    if (deckY - heightAt(mx, mz) < 0.9) continue; // ingen luft under → ingen bro
+    const len = Math.hypot(s.bx - s.ax, s.bz - s.az);
+    if (len < 0.5) continue;
+    const dx = (s.bx - s.ax) / len, dz = (s.bz - s.az) / len;
+    const ang = Math.atan2(dx, dz);
+    const w = s.hw + 0.5;
+    const deck = new THREE.BoxGeometry(w * 2, 0.5, len + 0.4);
+    deck.rotateY(ang);
+    deck.translate(mx, deckY - 0.24, mz);
+    paintGeom(deck, cDeck);
+    geoms.push(deck);
+    for (const side of [-1, 1]) { // sidobalkar gör bron läsbar från alla håll
+      const rail = new THREE.BoxGeometry(0.14, 1.05, len + 0.4);
+      rail.rotateY(ang);
+      rail.translate(mx + (-dz) * w * side, deckY + 0.45, mz + dx * w * side);
+      paintGeom(rail, cSide);
+      geoms.push(rail);
+    }
+  }
+  if (geoms.length) {
+    scene.add(new THREE.Mesh(mergeGeoms(geoms), new THREE.MeshLambertMaterial({ vertexColors: true })));
+  }
+}
+
 // takhöjd i en punkt: platt = topY, sadeltak = interpolerat mellan nock och takfot
 function roofYAt(b, x, z) {
   if (!b.gable) return b.topY;
@@ -677,7 +708,14 @@ function minAreaRect(poly) {
       area += (p[0] * q[1] - q[0] * p[1]) / 2;
     }
     area = Math.abs(area);
-    const h = b.h * 1.2; // slight boost to match the exaggerated terrain
+    let h = b.h * 1.2; // slight boost to match the exaggerated terrain
+    // Kvarnbyns kärna: de gamla arbetarstugorna längs de branta gatorna är låga —
+    // sänk ~hälften av småhusen från 2 våningar till 1 våning + vind
+    const ccx = (minX + maxX) / 2, ccz = (minZ + maxZ) / 2;
+    if (ccx > 60 && ccx < 340 && ccz > -200 && ccz < 80 && area < 170 && h > 6 && h < 10) {
+      const seed = Math.abs(Math.sin(ccx * 3.7 + ccz * 7.1));
+      if (seed < 0.55) h = 4.3;
+    }
     const base = minY - 2, eave = minY + h;
     const roofCol = new THREE.Color('#' + (b.c || '9a8f80'));
     const wallCol = wallColorFor(b);
@@ -1377,6 +1415,12 @@ for (const cap of capState) {
 }
 
 // ---------- landmark labels ----------
+// extra landmärken (lägen från OSM-POI:er; Musikskolan = skolhuset väster om ån — flytta om fel hus)
+D.marks.push(
+  { n: 'Corpus Pizzeria', p: [97.6, -117.0], h: 10, k: 'bld' },
+  { n: 'Grevedämmet', p: [573.8, -40.7], h: 14, k: 'street' },
+  { n: 'Musikskolan', p: [-246, -120], h: 16, k: 'bld' }
+);
 const markSprites = [];
 {
   function labelSprite(text, kind) {

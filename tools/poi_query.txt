@@ -1,0 +1,8 @@
+[out:json][timeout:30];
+(
+  nwr["name"~"Corpus",i](57.6495,12.008,57.6625,12.044);
+  nwr["name"~"usikskola|ulturskola",i](57.6495,12.008,57.6625,12.044);
+  nwr["name"~"Grevedämmet"](57.6495,12.008,57.6625,12.044);
+  node["amenity"~"restaurant|fast_food|pizzeria"](57.652,12.015,57.658,12.03);
+);
+out center tags;
