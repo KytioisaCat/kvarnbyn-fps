@@ -1730,11 +1730,31 @@ function randomOccupationPos(minDist) {
   return [D.enemyEntry[0], D.enemyEntry[1]];
 }
 
+const _spA = new THREE.Vector3(), _spB = new THREE.Vector3();
+// förstärkningar ska inte poppa upp mitt framför spelaren: välj en infallspunkt
+// som är utom synhåll och inte för nära — annars den mest avlägsna kandidaten
+function pickSpawnPoint() {
+  let fallback = null, fallbackDist = -1;
+  for (let tries = 0; tries < 8; tries++) {
+    const e = ENTRY_POINTS[Math.floor(Math.random() * ENTRY_POINTS.length)];
+    const x = e[0] + (Math.random() - 0.5) * 24, z = e[1] + (Math.random() - 0.5) * 24;
+    const d = Math.hypot(x - player.pos.x, z - player.pos.z);
+    if (d > fallbackDist) { fallbackDist = d; fallback = [x, z]; }
+    if (d < 60) continue; // för nära — spelaren skulle se uppdykandet
+    if (d < 260) {
+      _spA.set(player.pos.x, player.pos.y + 1.6, player.pos.z);
+      _spB.set(x, heightAt(x, z) + 1.5, z);
+      if (hasLOS(_spA, _spB)) continue; // i synfältet — prova nästa
+    }
+    return [x, z];
+  }
+  return fallback;
+}
+
 function spawnEnemy(at) {
-  const e = at || ENTRY_POINTS[Math.floor(Math.random() * ENTRY_POINTS.length)];
-  const jx = (Math.random() - 0.5) * 24, jz = (Math.random() - 0.5) * 24;
+  const e = at || pickSpawnPoint();
   const mesh = makeSoldier(0x6e2f2a, 0x3a3f35);
-  const pos = new THREE.Vector3(e[0] + jx, 0, e[1] + jz);
+  const pos = new THREE.Vector3(e[0], 0, e[1]);
   pos.y = heightAt(pos.x, pos.z);
   mesh.position.copy(pos);
   scene.add(mesh);
@@ -2015,7 +2035,8 @@ function updateEnemy(en, dt) {
 
   // eld under framryckning — de stannar bara i närstrid
   if (engaging) {
-    en.mesh.lookAt(player.pos.x, en.pos.y + 1.5, player.pos.z);
+    // modellen är byggd med ansiktet åt -Z → yaw = atan2(-dx, -dz)
+    en.mesh.rotation.y = Math.atan2(-(player.pos.x - en.pos.x), -(player.pos.z - en.pos.z));
     en.fireT -= dt;
     if (en.fireT <= 0) {
       en.fireT = 0.75 + Math.random() * 0.6;
@@ -2055,7 +2076,7 @@ function updateEnemy(en, dt) {
         if (nrE && nrE.d < 4.6 && en.pos.y < origHeightAt(en.pos.x, en.pos.z) - 0.8) sp *= 0.4; // vadar
         en.pos.x += dx / d * sp * dt;
         en.pos.z += dz / d * sp * dt;
-        if (!engaging) en.mesh.rotation.y = Math.atan2(dx, dz);
+        if (!engaging) en.mesh.rotation.y = Math.atan2(-dx, -dz); // ansiktet åt -Z
         // fastna-detektor: kommer vi ingenstans → hoppa waypoint / räkna om vägen
         en.stuckT = (en.stuckT || 0) + dt;
         if (en.stuckT > 1.6) {
@@ -2110,9 +2131,9 @@ function updateAlly(al, dt) {
   }
 
   al.fireT -= dt;
+  if (best) al.mesh.rotation.y = Math.atan2(-(best.pos.x - al.pos.x), -(best.pos.z - al.pos.z));
   if (best && al.fireT <= 0) {
     al.fireT = 0.95 + Math.random() * 0.5;
-    al.mesh.lookAt(best.pos.x, al.pos.y + 1.5, best.pos.z);
     const from = al.pos.clone(); from.y += 1.5;
     const to = best.pos.clone(); to.y += 1.2;
     if (hasLOS(from, to)) {
@@ -2148,7 +2169,7 @@ function updateAlly(al, dt) {
     if (d > 0.1) {
       al.pos.x += dx / d * al.speed * dt;
       al.pos.z += dz / d * al.speed * dt;
-      if (!best) al.mesh.rotation.y = Math.atan2(dx, dz);
+      if (!best) al.mesh.rotation.y = Math.atan2(-dx, -dz); // ansiktet åt -Z
       al.stuckT += dt;
       if (al.stuckT > 1.8) {
         const moved = Math.hypot(al.pos.x - (al.lastX ?? al.pos.x), al.pos.z - (al.lastZ ?? al.pos.z));
