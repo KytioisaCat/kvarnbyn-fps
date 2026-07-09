@@ -3,21 +3,6 @@ import * as THREE from './three.module.js';
 const D = window.KVARNBYN_DATA;
 const T = D.terrain;
 
-// Roten M:s gatucentroid hamnar mitt i ett hus — snappa B till närmsta punkt på gatan
-// (måste ske före allt som läser D.caps: sandsäckar, försvarare, startläge)
-{
-  const B = D.caps[1];
-  let best = null, bd = Infinity;
-  for (const rd of D.roads) {
-    if (rd.n !== 'Roten M') continue;
-    for (const p of rd.p) {
-      const d = Math.hypot(p[0] - B.pos[0], p[1] - B.pos[1]);
-      if (d < bd) { bd = d; best = p; }
-    }
-  }
-  if (best) B.pos = [best[0], best[1]];
-}
-
 // sista försvarszonen: basen uppe vid spawn — faller den är slaget förlorat
 D.caps.push({ id: 'D', name: 'Basen', pos: [D.spawn[0], D.spawn[1]], r: 14 });
 
@@ -808,6 +793,39 @@ bldPolys.forEach((b, i) => {
       bldHash.get(k).push(i);
     }
 });
+
+// Roten M:s zonmitt ska ligga PÅ gatan: projicera längs gatusegmenten (varannan meter)
+// och kräv fri yta från husens rektangulariserade fotavtryck (som kan växa över gatupunkter)
+{
+  const B = D.caps[1];
+  const clearOf = (x, z) => {
+    for (const [dx, dz] of [[0, 0], [2.2, 0], [-2.2, 0], [0, 2.2], [0, -2.2]]) {
+      const px = x + dx, pz = z + dz;
+      const arr = bldHash.get(Math.floor(px / CELL) + ':' + Math.floor(pz / CELL));
+      if (!arr) continue;
+      for (const i of arr) {
+        const b = bldPolys[i];
+        if (px >= b.minX && px <= b.maxX && pz >= b.minZ && pz <= b.maxZ && pointInPoly(px, pz, b.poly)) return false;
+      }
+    }
+    return true;
+  };
+  let best = null, bd = Infinity;
+  for (const rd of D.roads) {
+    if (rd.n !== 'Roten M') continue;
+    for (let i = 0; i < rd.p.length - 1; i++) {
+      const [ax, az] = rd.p[i], [bx, bz] = rd.p[i + 1];
+      const len = Math.hypot(bx - ax, bz - az) || 1;
+      for (let s = 0; s <= len; s += 2) {
+        const x = ax + (bx - ax) * (s / len), z = az + (bz - az) * (s / len);
+        if (!clearOf(x, z)) continue;
+        const d = Math.hypot(x - B.pos[0], z - B.pos[1]);
+        if (d < bd) { bd = d; best = [x, z]; }
+      }
+    }
+  }
+  if (best) B.pos = [Math.round(best[0] * 10) / 10, Math.round(best[1] * 10) / 10];
+}
 
 function collideBuildings(pos, radius, footY) {
   const near = new Set();
@@ -2524,9 +2542,9 @@ function updatePlayer(dt) {
     }
   }
 
-  // hp regen
-  if (clock.elapsedTime - player.lastHurt > 6 && player.hp < player.maxHp) {
-    player.hp = Math.min(player.maxHp, player.hp + 8 * dt);
+  // hp-regen: mycket långsam läkning efter 8 s utan skada (full hälsa tar ~50 s)
+  if (clock.elapsedTime - player.lastHurt > 8 && player.hp < player.maxHp) {
+    player.hp = Math.min(player.maxHp, player.hp + 2 * dt);
   }
 
   // camera (mjuk övergång mellan stående/hukad)
