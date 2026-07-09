@@ -3,6 +3,9 @@
 **Läs `TODO.md` först** vid varje sessionstart — den är projektets backlogg och
 statusminne. Bocka av utfört arbete där (flytta till Klart med datum) och lägg
 nya idéer i backloggen i stället för att hålla dem i huvudet.
+**Läs sedan `ARKITEKTUR.md`** — arkitektur, datakällor/licenser, gameplay-design
+och beslutslogg med motiv (varför saker är som de är). Uppdatera den när nya
+beslut fattas eller gamla omprövas.
 
 ## Vad detta är
 

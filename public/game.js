@@ -461,6 +461,8 @@ const roadHash = new Map();
     const mx = (s.ax + s.bx) / 2, mz = (s.az + s.bz) / 2;
     const deckY = (s.ya + s.yb) / 2;
     if (deckY - heightAt(mx, mz) < 0.9) continue; // ingen luft under → ingen bro
+    const nrB = nearestRiver(mx, mz);
+    if (!nrB || nrB.d > 22) continue; // broar bara över vattnet — branta gatukorsningar ger falska träffar
     const len = Math.hypot(s.bx - s.ax, s.bz - s.az);
     if (len < 0.5) continue;
     const dx = (s.bx - s.ax) / len, dz = (s.bz - s.az) / len;
