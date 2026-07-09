@@ -1780,11 +1780,10 @@ function spawnAlly(x, z) {
   allies.push(al);
   return al;
 }
-// försvarsstyrkan grupperar vid B, C och basen — A är redan förlorat när uppdraget börjar
-for (const cap of [capState[1], capState[2], capState[3]]) {
-  spawnAlly(cap.pos[0] + 4, cap.pos[1] + 4);
-  spawnAlly(cap.pos[0] - 4, cap.pos[1] - 3);
-  spawnAlly(cap.pos[0] + 6, cap.pos[1] - 5);
+// hela styrkan börjar vid basen: 3 vakter håller D, 6 anfallare pushar ner med spelaren
+for (let i = 0; i < 9; i++) {
+  const al = spawnAlly(D.spawn[0] + (Math.random() - 0.5) * 16, D.spawn[1] + (Math.random() - 0.5) * 16);
+  al.role = i < 3 ? 'guard' : 'assault';
 }
 
 // ---------- fast analytic raycast (terrain + buildings + sandbags) ----------
@@ -1869,31 +1868,41 @@ const capPills = capState.map(cap => {
   return d;
 });
 
-// ---------- startläge: invasionen är redan igång ----------
+// ungefär hälften blir garnison med en tilldelad hemzon (de vandrar dit och
+// bemannar den — ger naturlig rörelse), resten anfaller basen/närmaste zon
+function assignEnemyRole(en) {
+  const held = capState.filter(c => c.owner === 'enemy');
+  if (held.length && Math.random() < 0.55) {
+    en.role = 'garrison';
+    en.home = held[Math.floor(Math.random() * held.length)];
+  } else en.role = 'assault';
+}
+
+// ---------- startläge: fienden har redan tagit nästan hela Kvarnbyn ----------
 {
-  const A = capState[0], B = capState[1], C = capState[2];
-  A.owner = 'enemy'; A.progress = 1;
-  A.beam.material.color.set(0xff4444);
-  game.wave = 1; game.toSpawn = 4; game.spawnT = 3; game.betweenT = 7;
-  document.getElementById('wavenum').textContent = 'Våg 1/' + game.maxWave;
-  // förtruppen är redan på väg uppför backarna mot B och C
-  // ockupationen: fienden håller hela kartan utom området närmast basen
-  for (let i = 0; i < 16; i++) {
+  for (const cap of [capState[0], capState[1], capState[2]]) {
+    cap.owner = 'enemy'; cap.progress = 1;
+    cap.beam.material.color.set(0xff4444);
+  }
+  game.reinfT = 50; game.reinfLeft = 3; // försörjningsgrupper in så länge de håller zoner
+  // ockupationen: ~34 man över hela kartan (fri zon närmast basen), garnisoner vid zonerna
+  for (let i = 0; i < 34; i++) {
     const p = randomOccupationPos(170);
     const en = spawnEnemy(p);
     en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
     en.mesh.position.copy(en.pos);
+    assignEnemyRole(en);
   }
-  // ...plus förtrupp på väg upp och två infiltratörer nära basen — omedelbar kontakt
-  for (const [from, to, n, tBase, tSpan] of [[A.pos, B.pos, 3, 0.25, 0.6], [B.pos, C.pos, 3, 0.15, 0.45], [C.pos, D.spawn, 2, 0.3, 0.25]]) {
-    for (let i = 0; i < n; i++) {
-      const t = tBase + tSpan * (i / n) + Math.random() * 0.08;
-      const en = spawnEnemy([lerp(from[0], to[0], t) + (Math.random() - 0.5) * 16,
-                             lerp(from[1], to[1], t) + (Math.random() - 0.5) * 16]);
-      en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
-      en.mesh.position.copy(en.pos);
-    }
+  // två infiltratörer nära basen — omedelbar kontakt
+  for (let i = 0; i < 2; i++) {
+    const t = 0.3 + 0.25 * i;
+    const en = spawnEnemy([lerp(capState[2].pos[0], D.spawn[0], t) + (Math.random() - 0.5) * 16,
+                           lerp(capState[2].pos[1], D.spawn[1], t) + (Math.random() - 0.5) * 16]);
+    en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
+    en.mesh.position.copy(en.pos);
+    en.role = 'assault';
   }
+  document.getElementById('wavenum').textContent = 'Fiender kvar: ' + enemies.length;
 }
 
 function startReload() {
@@ -1997,14 +2006,19 @@ function updateEnemy(en, dt) {
     return;
   }
 
-  // anfall närmaste punkt som inte redan är vår — ingen vänder om i onödan
-  let targetCap = null, tcd = Infinity;
-  for (const c of capState) {
-    if (c.owner === 'enemy') continue;
-    const dc = Math.hypot(en.pos.x - c.pos[0], en.pos.z - c.pos[1]);
-    if (dc < tcd) { tcd = dc; targetCap = c; }
+  // garnison håller sin zon så länge den är deras; anfallare tar närmaste icke-erövrade
+  let targetCap = null;
+  if (en.role === 'garrison' && en.home && en.home.owner === 'enemy') {
+    targetCap = en.home;
+  } else {
+    let tcd = Infinity;
+    for (const c of capState) {
+      if (c.owner === 'enemy') continue;
+      const dc = Math.hypot(en.pos.x - c.pos[0], en.pos.z - c.pos[1]);
+      if (dc < tcd) { tcd = dc; targetCap = c; }
+    }
+    if (!targetCap) targetCap = capState[capState.length - 1];
   }
-  if (!targetCap) targetCap = capState[capState.length - 1];
 
   // (re)path if needed
   if (!en.path || en.target !== targetCap.id) {
@@ -2145,15 +2159,34 @@ function updateAlly(al, dt) {
     }
   }
 
-  // försvara närmaste egna punkt — men förstärk hotade punkter i närheten
-  let fc = null, fcd = Infinity;
-  for (const c of capState) {
-    if (c.owner === 'enemy') continue;
-    let dc = Math.hypot(al.pos.x - c.pos[0], al.pos.z - c.pos[1]);
-    if (c.progress > 0.1) dc -= 100; // punkt under attack → dit!
-    if (dc < fcd) { fcd = dc; fc = c; }
+  // vakter håller basen; anfallare pushar mot närmaste fiendezon (och tar den!)
+  let fc = null;
+  if (al.role === 'guard') {
+    fc = capState[capState.length - 1];
+  } else {
+    let fcd = Infinity;
+    for (const c of capState) {
+      if (c.owner !== 'enemy') continue;
+      const dc = Math.hypot(al.pos.x - c.pos[0], al.pos.z - c.pos[1]);
+      if (dc < fcd) { fcd = dc; fc = c; }
+    }
+    if (!fc) { // allt återtaget: stötta hotade zoner, annars närmaste egna
+      fcd = Infinity;
+      for (const c of capState) {
+        let dc = Math.hypot(al.pos.x - c.pos[0], al.pos.z - c.pos[1]);
+        if (c.progress > 0.1) dc -= 100;
+        if (dc < fcd) { fcd = dc; fc = c; }
+      }
+    }
   }
-  if (!fc) fc = capState[capState.length - 1];
+  // strosa runt positionen i stället för att stå fastfrusen
+  al.wanderT = (al.wanderT ?? 0) - dt;
+  if (al.wanderT <= 0) {
+    al.wanderT = 10 + Math.random() * 12;
+    al.holdX = (Math.random() - 0.5) * (fc.r * 1.6);
+    al.holdZ = (Math.random() - 0.5) * (fc.r * 1.6);
+    al.path = null; // räkna om vägen mot nya hållpunkten
+  }
   const holdAt = [fc.pos[0] + al.holdX, fc.pos[1] + al.holdZ];
   const distHold = Math.hypot(al.pos.x - holdAt[0], al.pos.z - holdAt[1]);
   if (distHold > 6 && !(best && bd < 18)) {
@@ -2300,45 +2333,41 @@ function updateObjectiveMarker() {
 }
 
 // ---------- waves ----------
+// befrielseläget: fienden får förstärkningar bara så länge de håller zoner
+// (försörjningslinjer); allt återtaget + alla nedkämpade = seger
 function updateWaves(dt) {
   if (game.over) return;
   const alive = enemies.filter(e => !e.dead).length;
-  game.waveT = (game.waveT || 0) + dt;
-  if (game.toSpawn > 0) {
-    game.spawnT -= dt;
-    if (game.spawnT <= 0 && alive < 55) { // tak för prestandan
-      game.spawnT = 0.8;
-      spawnEnemy();
-      game.toSpawn--;
+  const enemyHolds = capState.some(c => c.owner === 'enemy');
+  document.getElementById('wavenum').textContent =
+    'Fiender kvar: ' + alive + (enemyHolds && game.reinfLeft > 0 ? ' (+förstärkningar)' : '');
+  if (!enemyHolds && alive === 0) { endGame(true); return; }
+  if (enemyHolds && game.reinfLeft > 0) {
+    game.reinfT -= dt;
+    if (game.reinfT <= 0 && alive < 42) {
+      game.reinfLeft--;
+      game.reinfT = 50;
+      for (let i = 0; i < 6; i++) assignEnemyRole(spawnEnemy());
+      msg('🔴 Fientliga förstärkningar strömmar in — de håller fortfarande zoner!');
+      playTone(440, 0.2, 0.15); setTimeout(() => playTone(392, 0.25, 0.15), 220);
     }
-  } else if (alive === 0 && game.wave >= game.maxWave) {
-    endGame(true); // sista vågen nedkämpad — Kvarnbyn är rensat
-  } else if (alive <= 6 || game.waveT > 60) {
-    // konstant tryck: nästa våg innan den förra är helt utraderad
-    game.betweenT -= dt;
-    if (game.betweenT <= 0 && game.wave < game.maxWave) {
-      game.wave++;
-      game.waveT = 0;
-      game.toSpawn = 8 + game.wave * 2;
-      game.spawnT = 0.5;
-      game.betweenT = 7;
-      document.getElementById('wavenum').textContent = 'Våg ' + game.wave + '/' + game.maxWave;
-      msg('🔴 Våg ' + game.wave + ' — fienden rycker fram från flera håll!');
-      playTone(440, 0.2, 0.15); setTimeout(() => playTone(550, 0.25, 0.15), 220);
-      // stupade försvarare ersätts av förstärkningar från basen — de springer ner till fronten
-      let reinforced = false;
-      for (const al of allies) {
-        if (al.dead) {
-          al.dead = false; al.hp = 100; al.mesh.visible = true; al.mesh.rotation.x = 0;
-          al.pos.set(D.spawn[0] + (Math.random() - 0.5) * 12, 0, D.spawn[1] + (Math.random() - 0.5) * 12);
-          al.pos.y = groundInfoAt(al.pos.x, al.pos.z).y;
-          al.mesh.position.copy(al.pos);
-          al.path = null; al.target = null;
-          reinforced = true;
-        }
+  }
+  // egna förstärkningar: stupade ersätts från basen med jämna mellanrum
+  game.allyReinfT = (game.allyReinfT ?? 40) - dt;
+  if (game.allyReinfT <= 0) {
+    game.allyReinfT = 45;
+    let reinforced = false;
+    for (const al of allies) {
+      if (al.dead) {
+        al.dead = false; al.hp = 100; al.mesh.visible = true; al.mesh.rotation.x = 0;
+        al.pos.set(D.spawn[0] + (Math.random() - 0.5) * 12, 0, D.spawn[1] + (Math.random() - 0.5) * 12);
+        al.pos.y = groundInfoAt(al.pos.x, al.pos.z).y;
+        al.mesh.position.copy(al.pos);
+        al.path = null; al.target = null;
+        reinforced = true;
       }
-      if (reinforced) msg('🔵 Förstärkning ansluter från Görjelycksgatan!');
     }
+    if (reinforced) msg('🔵 Förstärkning ansluter från basen!');
   }
 }
 
@@ -2813,7 +2842,7 @@ overlay.addEventListener('click', () => {
     game.started = true;
     localStorage.setItem('kvarnbyn-night', nightChk.checked ? '1' : '0');
     if (nightChk.checked) applyNightMode();
-    msg('⚠ Gamla Torget har fallit — fienden är på väg uppför backarna. Mota ner dem!');
+    msg('⚠ Kvarnbyn är ockuperat — återta zonerna och rensa gatorna!');
   }
 });
 canvas.addEventListener('click', () => {
