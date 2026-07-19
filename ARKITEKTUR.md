@@ -2,7 +2,9 @@
 
 Syftet med detta dokument: en ny session (eller människa) ska på fem minuter förstå
 *varför* saker ser ut som de gör. Läs CLAUDE.md för arbetsflöden/fällor och TODO.md
-för läget — detta är bakgrunden och besluten.
+för läget — detta är bakgrunden och besluten. **KRAVSPEC.md** är den teknikoberoende
+kravbilden (vad Joel önskar sig, oavsett implementation) — utgå från den vid större
+omprövningar eller nya planer.
 
 ## Vision
 
