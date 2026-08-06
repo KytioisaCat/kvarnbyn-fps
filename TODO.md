@@ -33,6 +33,14 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Klart
 
+- [x] 2026-08-06 — **Markgrafik-overhaul**: byggda plana ytor (147 parkeringar, 7 planer,
+  16 lekplatser, 3 torgytor ur OSM → `flats.js`) plattas med minsta-kvadrat-plan + mjuk
+  kant (gropighet 10 cm → 2,5 cm per cell); riktiga ytmeshar med P-rutelinjer, grus och
+  smågatsten; markmaterial v2 (512px-texturer: gräs med vårblommor, asfalt, skogsbotten,
+  granit+lav) som ÄGER närfältet med fotot som ljusmakro (35 % färg), bakat terrängljus,
+  branthets-berg och makrobrus mot tiling; vägar med asfalttextur; kvällsläget dämpar
+  detaljfältet (uNight); tuvor/stenar cullas från byggda ytor; full fart på hårdgjort
+
 - [x] 2026-07-09 — **Mobilanpassning**: touchkontroller (virtuell spak med analog fart,
   full utstyrning = sprint; sikt-drag på fri skärmyta; ELD/HOPP/⟳/HUKA/KARTA-knappar),
   viewport-meta, kompakt HUD på små skärmar (hälsa/ammo flyttar till mitten), fullskärm +

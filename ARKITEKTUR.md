@@ -71,9 +71,25 @@ Bärande delsystem och deras beslut:
 - **Rendering**: allt statiskt merge:as till få draw calls (väggar/tak/vägar/murar/vatten);
   träd/lyktor/bilar/tuvor är InstancedMesh. Terrängen är **MeshBasicMaterial** —
   flygfotot har verklighetens ljus inbakat; Lambert ovanpå blev överexponerat blåstick.
-- **Splat-shader** (onBeforeCompile på terrängmaterialet): klasskartan väljer detaljtextur
-  (asfalt/gräs/skog/granit-med-mossa) inom ~18–85 m och **färgtonar fotot per klass på
-  alla avstånd** (skog → mättad grönska osv). Detaljtexturerna är procedurella canvas.
+- **Splat-shader** (onBeforeCompile på terrängmaterialet): klasskartan väljer markmaterial
+  och **färgtonar fotot per klass på alla avstånd** (skog → mättad grönska osv).
+  Närfältet (<30 m, uttonat till 110 m) ÄGS av 512px-detaljtexturerna (procedurell canvas:
+  gräs/asfalt/skogsbotten/granit) — fotot bidrar där med *ljus* men bara 35 % färg
+  (vårfotot är gråblekt och smetar annars över kulörerna). Bakat per-vertex-terrängljus
+  (`aGround.x`) ger relief, branthet (`aGround.y`) blandar in berg i slänter, makrobrus
+  på 45 m-skalan dödar tiling. Kvällsläget dämpar detaljfältet via uniform `uNight`
+  (sätts i `applyNightMode` — Basic-materialets färgtint räcker inte då detaljfältet
+  har eget golv).
+- **Byggda plana ytor** (`public/flats.js`, extraherad ur OSM: parkeringar/planer/
+  lekplatser/torg): terrängen **plattas vid load** med minsta-kvadrat-plan per polygon
+  (gradient klämd till 8 %, 3,5 m feather-kant) FÖRE origElev-kopian så båda höjdgriddar
+  delar plan mark. Ytmeshar ovanpå (+0,08 m): asfalt med genererade **P-rutelinjer**
+  (orienterade via minAreaRect, klippta mot polygonen), grus på planer, smågatsten på
+  torg. Principen: **människobyggt = platt, natur = gropig** — LiDAR-brus × EXAG gav
+  annars 10–30 cm gropar på asfalt (uppmätt), ögat avslöjar det direkt. OBS: OSM-ringar
+  har blandad vridriktning — trianglarnas front tvingas uppåt per triangel, annars
+  flippar DoubleSide-normalen och ytan blir svart. Tuvor/stenar cullas via `flatAt`
+  (spatial hash), som också ger full gångfart på hårdgjorda ytor.
 - **Kollision/sikt**: ingen triangel-raycast. Kulor/LOS = analytisk ray-march
   (`pointBlocked`) mot polygon/segment/cirkel-hashar (`bldHash`/`wallHash`/`obstHash`,
   cellstorlek `CELL=24`). Skogsceller ackumulerar "lövdjup" — sikt blockeras efter ~14 m.
@@ -136,6 +152,8 @@ Bärande delsystem och deras beslut:
 | Cache-bust med `?v=N` på data.js/game.js/ortho/classmap | Webbläsare + Pages cachar aggressivt; N bumpas vid VARJE ändring av filerna |
 | Fysik "fuskar" (ray-march, cylinderhinder, ingen fysikmotor) | Räcker för känslan; 55 fiender + 15 000 träd på ~1 ms/frame |
 | Touchkontroller som DOM-element (inte ritade i canvas) | CSS sköter layout/safe-areas/media queries gratis; touch-targets får egna event utan hit-testning i JS |
+| Människobyggt = platt, natur = gropig (flats plattas i runtime, inte pipeline) | Ögat avslöjar vågig asfalt direkt men förlåter gropigt gräs; runtime-plattning ur flats.js slipper pipeline-körning och håller data.js orörd |
+| Närfältet ägs av detaljtexturer, fotot ger bara ljus + 35 % färg | Vårfotot är gråblekt — full fotomultiplikation smetade grått över gräsgrönskan; luminansen behåller ändå skuggor/solfläckar och kvällstonen |
 
 ## Kända skulder / öppna frågor
 

@@ -24,6 +24,101 @@ function bilinear(arr, x, z) {
           (E(r + 1, c) * (1 - tx) + E(r + 1, c + 1) * tx) * tz) * EXAG;
 }
 
+// ---------- byggda plana ytor plattas till (parkeringar, torg, planer, lekplatser) ----------
+// LiDAR-brus + höjdöverdrift gör annars asfalt gropig (10–30 cm mellan grannceller).
+// Verkliga byggda ytor är plana: minsta-kvadrat-plan per polygon + mjuk kant utåt.
+// Körs FÖRE origElev-kopian så båda höjdgriddarna delar samma plana mark.
+const flats = (window.KVARNBYN_FLATS || []).filter(f => f.p && f.p.length >= 3);
+function flatInPoly(P, x, z) {
+  let w = false;
+  for (let i = 0, j = P.length - 1; i < P.length; j = i++) {
+    if ((P[i][1] > z) !== (P[j][1] > z) &&
+        x < (P[j][0] - P[i][0]) * (z - P[i][1]) / (P[j][1] - P[i][1]) + P[i][0]) w = !w;
+  }
+  return w;
+}
+{
+  const FEATHER = 3.5;
+  const colToX = c => lerp(T.x0, T.x1, c / (T.cols - 1));
+  const rowToZ = r => lerp(T.z0, T.z1, r / (T.rows - 1));
+  const xToCol = x => (x - T.x0) / (T.x1 - T.x0) * (T.cols - 1);
+  const zToRow = z => (z - T.z0) / (T.z1 - T.z0) * (T.rows - 1);
+  for (const f of flats) {
+    const P = f.p;
+    let x0 = Infinity, x1 = -Infinity, zl = Infinity, zh = -Infinity;
+    for (const [x, z] of P) {
+      x0 = Math.min(x0, x); x1 = Math.max(x1, x);
+      zl = Math.min(zl, z); zh = Math.max(zh, z);
+    }
+    const rA = Math.max(0, Math.floor(Math.min(zToRow(zl - FEATHER), zToRow(zh + FEATHER))));
+    const rB = Math.min(T.rows - 1, Math.ceil(Math.max(zToRow(zl - FEATHER), zToRow(zh + FEATHER))));
+    const cA = Math.max(0, Math.floor(xToCol(x0 - FEATHER)));
+    const cB = Math.min(T.cols - 1, Math.ceil(xToCol(x1 + FEATHER)));
+    if (rB - rA < 1 || cB - cA < 1) continue;
+    const edgeDist = (x, z) => {
+      let d = Infinity;
+      for (let i = 0, j = P.length - 1; i < P.length; j = i++) {
+        const ax = P[j][0], az = P[j][1];
+        const abx = P[i][0] - ax, abz = P[i][1] - az;
+        const t = Math.max(0, Math.min(1, ((x - ax) * abx + (z - az) * abz) / (abx * abx + abz * abz || 1)));
+        d = Math.min(d, Math.hypot(x - (ax + abx * t), z - (az + abz * t)));
+      }
+      return d;
+    };
+    // minsta-kvadrat-plan y = a·x + b·z + c över cellerna innanför
+    let n = 0, sx = 0, sz = 0, sy = 0, sxx = 0, szz = 0, sxz = 0, sxy = 0, szy = 0;
+    for (let r = rA; r <= rB; r++) for (let c = cA; c <= cB; c++) {
+      const x = colToX(c), z = rowToZ(r);
+      if (!flatInPoly(P, x, z)) continue;
+      const y = T.elev[r * T.cols + c];
+      n++; sx += x; sz += z; sy += y;
+      sxx += x * x; szz += z * z; sxz += x * z; sxy += x * y; szy += z * y;
+    }
+    if (n < 3) continue;
+    let a = 0, b = 0, cc = sy / n;
+    const det3 = sxx * (szz * n - sz * sz) - sxz * (sxz * n - sz * sx) + sx * (sxz * sz - szz * sx);
+    if (Math.abs(det3) > 1e-6) {
+      a = (sxy * (szz * n - sz * sz) - sxz * (szy * n - sz * sy) + sx * (szy * sz - szz * sy)) / det3;
+      b = (sxx * (szy * n - sy * sz) - sxy * (sxz * n - sz * sx) + sx * (sxz * sy - szy * sx)) / det3;
+      // verkliga p-ytor kan luta svagt, men mer än ~8 % är anpassningsfel — kläm gradienten
+      const gm = Math.hypot(a, b);
+      if (gm > 0.08) { a *= 0.08 / gm; b *= 0.08 / gm; }
+      cc = (sy - a * sx - b * sz) / n;
+    }
+    for (let r = rA; r <= rB; r++) for (let c = cA; c <= cB; c++) {
+      const x = colToX(c), z = rowToZ(r);
+      const d = edgeDist(x, z);
+      const sd = flatInPoly(P, x, z) ? d : -d;
+      if (sd <= -FEATHER) continue;
+      let t = Math.min(1, (sd + FEATHER) / (FEATHER + 0.8));
+      t = t * t * (3 - 2 * t);
+      const i = r * T.cols + c;
+      T.elev[i] += (a * x + b * z + cc - T.elev[i]) * t;
+    }
+  }
+}
+// snabb "står jag på en byggd plan yta?"-fråga (spatial hash, används för vägfart)
+const flatHash = new Map();
+function flatAt(x, z) {
+  const arr = flatHash.get(Math.floor(x / 24) + ':' + Math.floor(z / 24));
+  if (!arr) return null;
+  for (const f of arr) if (flatInPoly(f.p, x, z)) return f;
+  return null;
+}
+for (const f of flats) {
+  let x0 = Infinity, x1 = -Infinity, zl = Infinity, zh = -Infinity;
+  for (const [x, z] of f.p) {
+    x0 = Math.min(x0, x); x1 = Math.max(x1, x);
+    zl = Math.min(zl, z); zh = Math.max(zh, z);
+  }
+  for (let cx = Math.floor(x0 / 24); cx <= Math.floor(x1 / 24); cx++)
+    for (let cz = Math.floor(zl / 24); cz <= Math.floor(zh / 24); cz++) {
+      const k = cx + ':' + cz;
+      if (!flatHash.has(k)) flatHash.set(k, []);
+      flatHash.get(k).push(f);
+    }
+}
+
 // urspungsterrängen (före åfåre-nedskärningen) — broar/vägar/vattenyta refererar hit
 const origElev = Float64Array.from(T.elev);
 function heightAt(x, z) { return bilinear(T.elev, x, z); }
@@ -198,85 +293,161 @@ const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=13');
 orthoTex.colorSpace = THREE.SRGBColorSpace;
 orthoTex.anisotropy = 16;
 
-// ---------- splatmap + detaljtexturer: nära marken visas riktig asfalt/gräs/skogsbotten ----------
-function makeDetailTex(kind) {
-  const cv = document.createElement('canvas'); cv.width = cv.height = 256;
+// ---------- markmaterial: procedurella detaljtexturer (512 px ≈ 2,6 m i världen) ----------
+// Recept per material: stora mjuka tonfläckar i flera skalor (låg frekvens som bryter
+// enformighet) + finkorn + karaktärsinslag (strån, löv, stenar, sprickor).
+function groundCanvas(base, size = 512) {
+  const cv = document.createElement('canvas'); cv.width = cv.height = size;
   const c = cv.getContext('2d');
-  if (kind === 'asphalt') {
-    c.fillStyle = '#969696'; c.fillRect(0, 0, 256, 256);
-    for (let i = 0; i < 14000; i++) { // kornighet
-      const v = 110 + Math.random() * 60;
-      c.fillStyle = `rgba(${v},${v},${v},0.6)`;
-      c.fillRect(Math.random() * 256, Math.random() * 256, 1, 1);
-    }
-    for (let i = 0; i < 5; i++) { // sprickor
-      c.strokeStyle = 'rgba(60,60,60,0.5)'; c.lineWidth = 1;
-      c.beginPath();
-      let x = Math.random() * 256, y = Math.random() * 256;
-      c.moveTo(x, y);
-      for (let s = 0; s < 6; s++) { x += (Math.random() - 0.5) * 40; y += (Math.random() - 0.5) * 40; c.lineTo(x, y); }
-      c.stroke();
-    }
-  } else if (kind === 'grass') {
-    c.fillStyle = '#75885c'; c.fillRect(0, 0, 256, 256);
-    for (let i = 0; i < 9000; i++) { // strån i riktning
-      const g = 110 + Math.random() * 70, r = g * (0.72 + Math.random() * 0.2), b = g * 0.6;
-      c.strokeStyle = `rgba(${r | 0},${g | 0},${b | 0},0.55)`;
-      c.lineWidth = 1;
-      const x = Math.random() * 256, y = Math.random() * 256;
-      c.beginPath(); c.moveTo(x, y); c.lineTo(x + (Math.random() - 0.5) * 3, y - 3 - Math.random() * 4); c.stroke();
-    }
-    for (let i = 0; i < 25; i++) { // jordfläckar
-      c.fillStyle = 'rgba(96,84,60,0.25)';
-      c.beginPath(); c.arc(Math.random() * 256, Math.random() * 256, 4 + Math.random() * 10, 0, 7); c.fill();
-    }
-  } else { // skogsbotten
-    c.fillStyle = '#5f5644'; c.fillRect(0, 0, 256, 256);
-    for (let i = 0; i < 8000; i++) {
-      const v = 60 + Math.random() * 70;
-      c.fillStyle = `rgba(${v | 0},${(v * 0.9) | 0},${(v * 0.65) | 0},0.55)`;
-      c.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1);
-    }
-    for (let i = 0; i < 40; i++) { // kvistar/löv
-      c.strokeStyle = `rgba(${70 + Math.random() * 60},${55 + Math.random() * 40},30,0.5)`;
-      c.lineWidth = 1;
-      const x = Math.random() * 256, y = Math.random() * 256, a = Math.random() * 6.28;
-      c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * 9, y + Math.sin(a) * 9); c.stroke();
-    }
-  }
-  const t = new THREE.CanvasTexture(cv);
-  t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  t.colorSpace = THREE.SRGBColorSpace;
-  return t;
+  c.fillStyle = base; c.fillRect(0, 0, size, size);
+  return [cv, c];
 }
-function makeRockTex() {
-  const cv = document.createElement('canvas'); cv.width = cv.height = 256;
-  const c = cv.getContext('2d');
-  c.fillStyle = '#8d8d89'; c.fillRect(0, 0, 256, 256);
-  for (let i = 0; i < 10000; i++) { // granitkorn
-    const v = 105 + Math.random() * 70;
-    c.fillStyle = `rgba(${v},${v},${(v * 0.97) | 0},0.55)`;
-    c.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1 + Math.random() * 2);
+// mjuka tonfläckar; fläckar som korsar kanten ritas wrappat så texturen förblir sömlös
+function blotch(c, n, rMin, rMax, colFn, aMax, size = 512) {
+  for (let i = 0; i < n; i++) {
+    const x = Math.random() * size, y = Math.random() * size;
+    const r = rMin + Math.random() * (rMax - rMin);
+    const col = colFn(), al = (0.35 + Math.random() * 0.65) * aMax;
+    for (const ox of (x - r < 0 || x + r > size) ? [0, x < size / 2 ? size : -size] : [0])
+      for (const oy of (y - r < 0 || y + r > size) ? [0, y < size / 2 ? size : -size] : [0]) {
+        const g = c.createRadialGradient(x + ox, y + oy, 0, x + ox, y + oy, r);
+        g.addColorStop(0, `rgba(${col},${al.toFixed(3)})`);
+        g.addColorStop(1, `rgba(${col},0)`);
+        c.fillStyle = g;
+        c.fillRect(x + ox - r, y + oy - r, r * 2, r * 2);
+      }
   }
-  for (let i = 0; i < 7; i++) { // sprickor
-    c.strokeStyle = 'rgba(50,50,48,0.55)'; c.lineWidth = 1 + Math.random();
-    let x = Math.random() * 256, y = Math.random() * 256;
+}
+function speckle(c, n, vFn, aMax, sMax = 2, size = 512) {
+  for (let i = 0; i < n; i++) {
+    c.fillStyle = `rgba(${vFn()},${(0.25 + Math.random() * 0.75) * aMax})`;
+    c.fillRect(Math.random() * size, Math.random() * size, 1 + Math.random() * (sMax - 1), 1 + Math.random() * (sMax - 1));
+  }
+}
+function cracks(c, n, style, size = 512) {
+  for (let i = 0; i < n; i++) {
+    c.strokeStyle = style; c.lineWidth = 1 + Math.random();
+    let x = Math.random() * size, y = Math.random() * size;
     c.beginPath(); c.moveTo(x, y);
-    for (let s = 0; s < 7; s++) { x += (Math.random() - 0.5) * 50; y += (Math.random() - 0.5) * 50; c.lineTo(x, y); }
+    for (let s = 0; s < 7; s++) { x += (Math.random() - 0.5) * 70; y += (Math.random() - 0.5) * 70; c.lineTo(x, y); }
     c.stroke();
   }
-  for (let i = 0; i < 30; i++) { // insprängda gröna mossfläckar
-    const g = 90 + Math.random() * 60;
-    c.fillStyle = `rgba(${(g * 0.7) | 0},${g | 0},${(g * 0.5) | 0},${0.25 + Math.random() * 0.3})`;
-    c.beginPath(); c.arc(Math.random() * 256, Math.random() * 256, 3 + Math.random() * 9, 0, 7); c.fill();
-  }
+}
+function toGroundTex(cv) {
   const t = new THREE.CanvasTexture(cv);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
   return t;
 }
-const detAsphalt = makeDetailTex('asphalt'), detGrass = makeDetailTex('grass'),
-      detForest = makeDetailTex('forest'), detRock = makeRockTex();
+const gray = (lo, hi) => { const v = (lo + Math.random() * (hi - lo)) | 0; return `${v},${v},${v}`; };
+
+const detAsphalt = (() => {
+  const [cv, c] = groundCanvas('#a9abae');
+  blotch(c, 24, 90, 210, () => gray(Math.random() < 0.5 ? 128 : 178, Math.random() < 0.5 ? 148 : 196), 0.30); // väderfläckar/lagningar
+  blotch(c, 70, 22, 70, () => gray(132, 192), 0.22);
+  speckle(c, 26000, () => gray(128, 205), 0.5, 2);   // ballastkorn
+  speckle(c, 1200, () => gray(180, 215), 0.5, 2);   // ljusa stenar
+  cracks(c, 6, 'rgba(52,52,54,0.35)');
+  return toGroundTex(cv);
+})();
+const detGrass = (() => {
+  const [cv, c] = groundCanvas('#83955e');
+  blotch(c, 26, 80, 190, () => Math.random() < 0.45 ? '148,146,88' : '72,98,52', 0.32); // torrfläckar/frodigt
+  blotch(c, 80, 18, 55, () => Math.random() < 0.5 ? '128,134,74' : '84,110,58', 0.25);
+  for (let i = 0; i < 16000; i++) { // grässtrån
+    const g = 122 + Math.random() * 84, r = g * (0.68 + Math.random() * 0.24), b = g * 0.46;
+    c.strokeStyle = `rgba(${r | 0},${g | 0},${b | 0},${0.35 + Math.random() * 0.3})`;
+    c.lineWidth = 1;
+    const x = Math.random() * 512, y = Math.random() * 512;
+    c.beginPath(); c.moveTo(x, y);
+    c.lineTo(x + (Math.random() - 0.5) * 4, y - 3 - Math.random() * 5);
+    c.stroke();
+  }
+  blotch(c, 16, 12, 34, () => '96,82,58', 0.30);    // jordfläckar
+  for (let i = 0; i < 70; i++) { // vårblommor (maskros/vitsippa — fotot är vårtaget)
+    c.fillStyle = Math.random() < 0.6 ? 'rgba(238,214,90,0.6)' : 'rgba(235,238,225,0.55)';
+    c.beginPath(); c.arc(Math.random() * 512, Math.random() * 512, 1 + Math.random() * 1.4, 0, 7); c.fill();
+  }
+  return toGroundTex(cv);
+})();
+const detForest = (() => {
+  const [cv, c] = groundCanvas('#6b614c');
+  blotch(c, 24, 70, 180, () => Math.random() < 0.5 ? '44,40,30' : '112,96,66', 0.35); // humus/barrmattor
+  blotch(c, 60, 18, 60, () => '90,78,52', 0.25);
+  for (let i = 0; i < 9000; i++) { // barr
+    c.strokeStyle = `rgba(${96 + Math.random() * 60 | 0},${70 + Math.random() * 40 | 0},${34 + Math.random() * 20 | 0},${0.3 + Math.random() * 0.3})`;
+    c.lineWidth = 1;
+    const x = Math.random() * 512, y = Math.random() * 512, a = Math.random() * 6.28;
+    c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * (4 + Math.random() * 6), y + Math.sin(a) * (4 + Math.random() * 6)); c.stroke();
+  }
+  for (let i = 0; i < 1100; i++) { // fjolårslöv
+    const r = 120 + Math.random() * 70;
+    c.fillStyle = `rgba(${r | 0},${r * (0.55 + Math.random() * 0.2) | 0},${r * 0.3 | 0},${0.3 + Math.random() * 0.3})`;
+    c.beginPath();
+    c.ellipse(Math.random() * 512, Math.random() * 512, 1.6 + Math.random() * 2.4, 1 + Math.random() * 1.6, Math.random() * 3.14, 0, 7);
+    c.fill();
+  }
+  blotch(c, 22, 14, 45, () => '86,116,58', 0.30);   // mossa
+  for (let i = 0; i < 70; i++) { // kvistar
+    c.strokeStyle = 'rgba(58,46,32,0.5)'; c.lineWidth = 1 + Math.random();
+    const x = Math.random() * 512, y = Math.random() * 512, a = Math.random() * 6.28;
+    c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * (10 + Math.random() * 16), y + Math.sin(a) * (10 + Math.random() * 16)); c.stroke();
+  }
+  return toGroundTex(cv);
+})();
+const detRock = (() => {
+  const [cv, c] = groundCanvas('#a7a6a1');
+  blotch(c, 20, 80, 200, () => gray(Math.random() < 0.5 ? 110 : 150, Math.random() < 0.5 ? 130 : 170), 0.30);
+  speckle(c, 20000, () => gray(128, 208), 0.5, 3);  // granitkorn
+  cracks(c, 9, 'rgba(48,48,46,0.5)');
+  blotch(c, 26, 10, 40, () => '104,128,64', 0.30);  // mossa i skrevorna
+  for (let i = 0; i < 320; i++) { // lav
+    c.fillStyle = `rgba(${190 + Math.random() * 40 | 0},${190 + Math.random() * 40 | 0},${170 + Math.random() * 30 | 0},0.35)`;
+    c.beginPath(); c.arc(Math.random() * 512, Math.random() * 512, 1 + Math.random() * 2.4, 0, 7); c.fill();
+  }
+  return toGroundTex(cv);
+})();
+// smågatsten (torgytor) — stenraster med fog, granitkulörer med dragning åt rosa/blågrått
+const detCobble = (() => {
+  const [cv, c] = groundCanvas('#78736e');
+  const N = 24, cell = 512 / N;
+  for (let gy = 0; gy < N; gy++) for (let gx = 0; gx < N; gx++) {
+    const v = 138 + Math.random() * 52;
+    const r = v * (0.96 + Math.random() * 0.12), b = v * (0.94 + Math.random() * 0.12);
+    c.fillStyle = `rgb(${r | 0},${v | 0},${b | 0})`;
+    const jx = (Math.random() - 0.5) * 2, jy = (Math.random() - 0.5) * 2;
+    const inset = 1.2 + Math.random() * 1.4;
+    c.beginPath();
+    c.roundRect(gx * cell + inset + jx, gy * cell + inset + jy, cell - inset * 2, cell - inset * 2, 3);
+    c.fill();
+    c.fillStyle = 'rgba(40,38,36,0.35)'; // skuggkant nederst = relief
+    c.fillRect(gx * cell + inset + jx, (gy + 1) * cell - inset + jy - 1.5, cell - inset * 2, 1.5);
+  }
+  blotch(c, 20, 60, 160, () => gray(70, 150), 0.20); // slitage/smuts över rastret
+  return toGroundTex(cv);
+})();
+// grus (planer, stigar, obelagda p-ytor)
+const detGravel = (() => {
+  const [cv, c] = groundCanvas('#b1a790');
+  blotch(c, 22, 70, 180, () => Math.random() < 0.5 ? '132,122,104' : '168,158,138', 0.30);
+  speckle(c, 26000, () => gray(138, 216), 0.55, 2);
+  for (let i = 0; i < 600; i++) { // större stenar med skuggpunkt
+    const v = 120 + Math.random() * 70, x = Math.random() * 512, y = Math.random() * 512, r = 1.5 + Math.random() * 2;
+    c.fillStyle = `rgba(${v | 0},${v * 0.96 | 0},${v * 0.88 | 0},0.8)`;
+    c.beginPath(); c.arc(x, y, r, 0, 7); c.fill();
+    c.fillStyle = 'rgba(50,46,40,0.4)';
+    c.fillRect(x - r, y + r * 0.5, r * 2, 1);
+  }
+  return toGroundTex(cv);
+})();
+// makrobrus: låg frekvens som moduleras in på ~45 m-skalan för att döda tiling-mönstret
+const detMacro = (() => {
+  const [cv, c] = groundCanvas('#808080', 256);
+  blotch(c, 46, 40, 120, () => gray(96, 164), 0.5, 256);
+  blotch(c, 90, 12, 45, () => gray(104, 152), 0.35, 256);
+  return toGroundTex(cv);
+})();
 
 // klasskarta (1 px = 2 m, byggd i pipelinen ur foto+LiDAR+OSM):
 // R = asfalt, G = gräs, B = skog, svart = berg (residual i shadern)
@@ -310,10 +481,20 @@ const terrainGeom = new THREE.BufferGeometry();
   terrainGeom.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   terrainGeom.setIndex(idx);
   terrainGeom.computeVertexNormals();
+  // bakat terrängljus (x: sol+ambient — milt, fotot bär redan skuggorna) + branthet (y)
+  const nrm = terrainGeom.attributes.normal.array;
+  const aGround = new Float32Array(T.rows * T.cols * 2);
+  const sunDir = new THREE.Vector3(300, 500, 200).normalize();
+  for (let i = 0; i < T.rows * T.cols; i++) {
+    const dt = Math.max(0, nrm[i * 3] * sunDir.x + nrm[i * 3 + 1] * sunDir.y + nrm[i * 3 + 2] * sunDir.z);
+    aGround[i * 2] = 0.66 + 0.42 * dt;
+    aGround[i * 2 + 1] = Math.min(1, (1 - nrm[i * 3 + 1]) * 2.2);
+  }
+  terrainGeom.setAttribute('aGround', new THREE.BufferAttribute(aGround, 2));
 }
-// Basic material: the aerial photo has real-world lighting baked in already.
-// Nära kameran blandas splat-styrda detaljtexturer in (färgsatta av fotot),
-// på håll rent ortofoto — det döljer fotopixlarnas suddighet i FPS-avstånd.
+// Basic material: flygfotot har verklighetens ljus inbakat och äger avståndsbilden.
+// Nära kameran ÄGER klassmaterialen i stället (riktig asfalt/gräs/skogsbotten/granit)
+// med fotot som makrofärg + bakat terrängljus (aGround.x) och branthets-berg (aGround.y).
 const terrainMat = new THREE.MeshBasicMaterial({ map: orthoTex });
 terrainMat.onBeforeCompile = shader => {
   shader.uniforms.splatMap = { value: splatTex };
@@ -321,13 +502,17 @@ terrainMat.onBeforeCompile = shader => {
   shader.uniforms.detG = { value: detGrass };
   shader.uniforms.detF = { value: detForest };
   shader.uniforms.detR = { value: detRock };
-  shader.vertexShader = ('varying float vDist;\n' + shader.vertexShader).replace(
+  shader.uniforms.detN = { value: detMacro };
+  shader.uniforms.uNight = { value: 0 };
+  terrainMat.userData.shader = shader;
+  shader.vertexShader = ('attribute vec2 aGround;\nvarying float vDist;\nvarying vec2 vGround;\n' + shader.vertexShader).replace(
     '#include <project_vertex>',
     `#include <project_vertex>
-     vDist = -mvPosition.z;`
+     vDist = -mvPosition.z;
+     vGround = aGround;`
   );
   shader.fragmentShader = (
-    'uniform sampler2D splatMap;\nuniform sampler2D detA;\nuniform sampler2D detG;\nuniform sampler2D detF;\nuniform sampler2D detR;\nvarying float vDist;\n'
+    'uniform sampler2D splatMap;\nuniform sampler2D detA;\nuniform sampler2D detG;\nuniform sampler2D detF;\nuniform sampler2D detR;\nuniform sampler2D detN;\nuniform float uNight;\nvarying float vDist;\nvarying vec2 vGround;\n'
     + shader.fragmentShader
   ).replace(
     '#include <map_fragment>',
@@ -335,23 +520,35 @@ terrainMat.onBeforeCompile = shader => {
      {
        vec3 sp = texture2D(splatMap, vMapUv).rgb;
        float wRock = clamp(1.0 - sp.r - sp.g - sp.b, 0.0, 1.0);
-       float sSum = max(sp.r + sp.g + sp.b + wRock, 0.001);
+       // branta ytor blir berg oavsett klass — klippkänsla i slänterna
+       wRock = max(wRock, smoothstep(0.55, 0.8, vGround.y) * 0.85);
+       vec4 w = vec4(sp.r, sp.g, sp.b, wRock);
+       w = pow(w, vec4(1.35));                       // skärp klassgränserna
+       w /= max(w.x + w.y + w.z + w.w, 1e-3);
        // färglägg fotot efter markklass även på håll (vårfotot är gråblekt):
        // skog trycks mot mättad grönska, gräs lyfts lätt, berg avmättas ljusgrått
-       vec3 farTint = (sp.r * vec3(1.0, 1.0, 1.0)
-                     + sp.g * vec3(0.98, 1.10, 0.86)
-                     + sp.b * vec3(0.62, 0.94, 0.55)
-                     + wRock * vec3(1.10, 1.08, 1.02)) / sSum;
-       diffuseColor.rgb *= farTint;
-       float wNear = 1.0 - smoothstep(18.0, 85.0, vDist);
-       if (wNear > 0.001) {
-         vec2 duv = vMapUv * 850.0;
-         vec3 det = (texture2D(detA, duv).rgb * sp.r
-                   + texture2D(detG, duv).rgb * sp.g
-                   + texture2D(detF, duv).rgb * sp.b
-                   + texture2D(detR, duv).rgb * wRock) / sSum;
-         vec3 tinted = det * (0.35 + 1.5 * diffuseColor.rgb);
-         diffuseColor.rgb = mix(diffuseColor.rgb, tinted, wNear * 0.85);
+       vec3 farTint = w.x * vec3(1.0, 1.0, 1.0)
+                    + w.y * vec3(0.98, 1.10, 0.86)
+                    + w.z * vec3(0.62, 0.94, 0.55)
+                    + w.w * vec3(1.10, 1.08, 1.02);
+       vec3 photo = diffuseColor.rgb * farTint;
+       float wNear = 1.0 - smoothstep(30.0, 110.0, vDist);
+       diffuseColor.rgb = photo;
+       if (wNear > 0.003) {
+         vec2 duv = vMapUv * 850.0;                  // ~2,6 m per tile
+         vec3 det = vec3(0.0);
+         if (w.x > 0.004) det += texture2D(detA, duv).rgb * w.x;
+         if (w.y > 0.004) det += texture2D(detG, duv).rgb * w.y;
+         if (w.z > 0.004) det += texture2D(detF, duv).rgb * w.z;
+         if (w.w > 0.004) det += texture2D(detR, duv).rgb * w.w;
+         det *= 0.82 + 0.36 * texture2D(detN, vMapUv * 47.0).r; // makrobrus dödar tiling
+         det *= vGround.x;                           // bakat sol/ambient ger relief
+         // fotot bidrar med LJUS (skuggor/solfläckar) men bara 35 % färg — annars
+         // smetar det gråbleka vårfotot över texturernas kulör; kvällstonen följer ändå med
+         float pl = dot(photo, vec3(0.299, 0.587, 0.114));
+         vec3 near = det * (0.50 + 1.15 * mix(vec3(pl), photo, 0.35));
+         near *= mix(1.0, 0.34, uNight); // månljus: detaljfältet mörknar med natten
+         diffuseColor.rgb = mix(photo, near, wNear);
        }
      }`
   );
@@ -397,9 +594,9 @@ const roadSegs = [];
 const roadHash = new Map();
 {
   const geoms = [], shoulderGeoms = [], dashGeoms = [];
-  const cRoad = new THREE.Color(0x33363a), cFoot = new THREE.Color(0x8a8072), cSteps = new THREE.Color(0x9d8c72),
+  const cRoad = new THREE.Color(0x62686e), cFoot = new THREE.Color(0x9a9280), cSteps = new THREE.Color(0xaa9a7e),
         cShoulder = new THREE.Color(0xa6aab0), cDash = new THREE.Color(0xd8d8d0);
-  const hOpts = { heightFn: origHeightAt };
+  const hOpts = { heightFn: origHeightAt, uv: true };
   for (const rd of D.roads) {
     let color = cRoad, lift = 0.16;
     const soft = rd.k === 'footway' || rd.k === 'path' || rd.k === 'cycleway' || rd.k === 'track';
@@ -450,10 +647,12 @@ const roadHash = new Map();
   const mSh = new THREE.Mesh(mergeGeoms(shoulderGeoms), new THREE.MeshLambertMaterial({ vertexColors: true, transparent: true, opacity: 0.5, depthWrite: false }));
   mSh.renderOrder = 1;
   scene.add(mSh);
-  const m = new THREE.Mesh(mergeGeoms(geoms), new THREE.MeshLambertMaterial({ vertexColors: true, transparent: true, opacity: 0.55, depthWrite: false }));
+  // riktig asfalt på körbanan (nästan opak — fotot under är suddigare än texturen)
+  const m = new THREE.Mesh(mergeGeoms(geoms), new THREE.MeshLambertMaterial({
+    vertexColors: true, map: detAsphalt, transparent: true, opacity: 0.92, depthWrite: false }));
   m.renderOrder = 2;
   scene.add(m);
-  const mDash = new THREE.Mesh(mergeGeoms(dashGeoms), new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.6, depthWrite: false }));
+  const mDash = new THREE.Mesh(mergeGeoms(dashGeoms), new THREE.MeshLambertMaterial({ vertexColors: true, transparent: true, opacity: 0.6, depthWrite: false }));
   mDash.renderOrder = 3;
   scene.add(mDash);
 }
@@ -535,6 +734,102 @@ function groundInfoAt(x, z) {
     }
   }
   return { y, road };
+}
+
+// ---------- byggda plana ytor: riktig beläggning + P-rutor ----------
+// Marken under är redan tillplattad (plan-fit vid load) — här får ytorna sin
+// beläggning: asfalt med målade parkeringsrutor, grus på planer, smågatsten på torg.
+{
+  const surfGeoms = { asphalt: [], gravel: [], cobble: [] };
+  const lineGeoms = [];
+  const mkStripe = (x1, z1, x2, z2, w) => {
+    const len = Math.hypot(x2 - x1, z2 - z1); if (len < 0.3) return null;
+    const dx = (x2 - x1) / len, dz = (z2 - z1) / len;
+    const px = -dz * w / 2, pz = dx * w / 2;
+    const g = new THREE.BufferGeometry();
+    const y1 = heightAt(x1, z1) + 0.13, y2 = heightAt(x2, z2) + 0.13;
+    g.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+      x1 - px, y1, z1 - pz, x1 + px, y1, z1 + pz, x2 - px, y2, z2 - pz,
+      x1 + px, y1, z1 + pz, x2 + px, y2, z2 + pz, x2 - px, y2, z2 - pz]), 3));
+    g.setAttribute('normal', new THREE.BufferAttribute(new Float32Array([0,1,0, 0,1,0, 0,1,0, 0,1,0, 0,1,0, 0,1,0]), 3));
+    paintGeom(g, cFlatWhite); // mergeGeoms kräver color-attribut
+    return g;
+  };
+  const cFlatWhite = new THREE.Color(0xffffff);
+  for (const f of flats) {
+    let bucket = 'asphalt';
+    if (f.k === 'pitch') bucket = (f.s.includes('grass') || f.s.includes('turf')) ? 'turf' : 'gravel';
+    else if (f.k === 'playground') bucket = f.s === 'asphalt' ? 'asphalt' : 'gravel';
+    else if (f.k === 'square') bucket = 'cobble';
+    else if (f.k === 'parking' && (f.s.includes('grass') || f.s === 'gravel' || f.s === 'unpaved' || f.s === 'ground'))
+      bucket = f.s.includes('grass') ? 'turf' : 'gravel';
+    if (bucket === 'turf') continue; // gräsytor sköts av terrängmaterialet
+    const v2 = f.p.map(p => new THREE.Vector2(p[0], p[1]));
+    let tris; try { tris = THREE.ShapeUtils.triangulateShape(v2, []); } catch (e) { continue; }
+    if (!tris.length) continue;
+    const pos = [], uvs = [], nor = [];
+    for (const t of tris) {
+      // OSM-ringar har blandad vridriktning — tvinga uppåtvänd front per triangel
+      const [a, b, c2] = [f.p[t[0]], f.p[t[1]], f.p[t[2]]];
+      const crossY = (b[0] - a[0]) * (c2[1] - a[1]) - (b[1] - a[1]) * (c2[0] - a[0]);
+      const order = crossY < 0 ? [t[0], t[1], t[2]] : [t[0], t[2], t[1]];
+      for (const vi of order) {
+        const [x, z] = f.p[vi];
+        pos.push(x, heightAt(x, z) + 0.08, z);
+        uvs.push(x / 2.6, z / 2.6);
+        nor.push(0, 1, 0);
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3));
+    g.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
+    g.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(nor), 3));
+    paintGeom(g, cFlatWhite);
+    surfGeoms[bucket].push(g);
+
+    // P-rutor: rader av bås längs den orienterade rektangelns långsidor
+    if (f.k === 'parking' && bucket === 'asphalt' && f.a >= 280) {
+      const rect = minAreaRect(f.p);
+      if (!rect) continue;
+      const [A, B, C] = rect.corners;
+      const e1x = B[0] - A[0], e1z = B[1] - A[1], L1 = Math.hypot(e1x, e1z);
+      const e2x = C[0] - B[0], e2z = C[1] - B[1], L2 = Math.hypot(e2x, e2z);
+      // u = långsidan (båsen radas längs den), v = kortsidan (båsens djup)
+      const o = L1 >= L2 ? A : B;
+      const ux = (L1 >= L2 ? e1x : e2x) / Math.max(L1, L2), uz = (L1 >= L2 ? e1z : e2z) / Math.max(L1, L2);
+      const vx = (L1 >= L2 ? e2x : -e1x) / Math.min(L1, L2), vz = (L1 >= L2 ? e2z : -e1z) / Math.min(L1, L2);
+      const uLen = Math.max(L1, L2), vLen = Math.min(L1, L2);
+      if (vLen < 5.5) continue;
+      const DEPTH = 4.6, GAP = 2.55;
+      const rows = vLen >= 12.5 ? [0.4, vLen - DEPTH - 0.4] : [0.4]; // en eller två rader
+      for (const rOff of rows) {
+        for (let s = 1.2; s + 0.2 < uLen; s += GAP) {
+          const x1 = o[0] + ux * s + vx * rOff, z1 = o[1] + uz * s + vz * rOff;
+          const x2 = x1 + vx * DEPTH, z2 = z1 + vz * DEPTH;
+          // hela strecket + lite marginal måste ligga inne i polygonen
+          if (!flatInPoly(f.p, x1, z1) || !flatInPoly(f.p, x2, z2) ||
+              !flatInPoly(f.p, (x1 + x2) / 2, (z1 + z2) / 2)) continue;
+          const sg = mkStripe(x1, z1, x2, z2, 0.13);
+          if (sg) lineGeoms.push(sg);
+        }
+      }
+    }
+  }
+  const addSurf = (arr, mat) => {
+    if (!arr.length) return;
+    const mesh = new THREE.Mesh(mergeGeoms(arr), mat);
+    mesh.renderOrder = 1;
+    scene.add(mesh);
+  };
+  addSurf(surfGeoms.asphalt, new THREE.MeshLambertMaterial({ map: detAsphalt, color: 0x9ba1a7, side: THREE.DoubleSide }));
+  addSurf(surfGeoms.gravel, new THREE.MeshLambertMaterial({ map: detGravel, color: 0xb3a992, side: THREE.DoubleSide }));
+  addSurf(surfGeoms.cobble, new THREE.MeshLambertMaterial({ map: detCobble, color: 0xb8b5b0, side: THREE.DoubleSide }));
+  if (lineGeoms.length) {
+    const lm = new THREE.Mesh(mergeGeoms(lineGeoms), new THREE.MeshLambertMaterial({
+      color: 0xe6e6de, transparent: true, opacity: 0.8, depthWrite: false, side: THREE.DoubleSide }));
+    lm.renderOrder = 2;
+    scene.add(lm);
+  }
 }
 
 // ---------- water ----------
@@ -1257,7 +1552,7 @@ function updateClutter() {
       const x = player.pos.x + Math.cos(a) * r, z = player.pos.z + Math.sin(a) * r;
       if (!inBounds(x, z, -5)) continue;
       const gi = groundInfoAt(x, z);
-      if (gi.road) continue;                       // inga tuvor i asfalten
+      if (gi.road || flatAt(x, z)) continue;       // inga tuvor i asfalt eller på byggda ytor
       if (rockAt(x, z) && Math.random() < 0.8) continue; // bara enstaka tuvor på hällarna
       if (insideAnyBuilding(x, z)) continue;
       const nr = nearestRiver(x, z);
@@ -1277,7 +1572,7 @@ function updateClutter() {
     if (Math.hypot(p[0] - player.pos.x, p[2] - player.pos.z) < R_FAR && p[1] > -400) continue;
     const a = Math.random() * 6.28, r = R_MIN + Math.random() * (R_MAX - R_MIN);
     const x = player.pos.x + Math.cos(a) * r, z = player.pos.z + Math.sin(a) * r;
-    if (!inBounds(x, z, -5) || insideAnyBuilding(x, z)) continue;
+    if (!inBounds(x, z, -5) || insideAnyBuilding(x, z) || flatAt(x, z)) continue;
     const gi = groundInfoAt(x, z);
     _cq.setFromAxisAngle(_cv.set(Math.random(), 1, Math.random()).normalize(), Math.random() * 6.28);
     const s = 0.5 + Math.random() * 1.1;
@@ -2689,7 +2984,7 @@ function updatePlayer(dt) {
   let speed = (keys['ShiftLeft'] || keys['ShiftRight'] || touchMove.sprint) && !player.crouch ? 8.2 : 5.2;
   if (player.crouch) speed *= 0.5;            // hukad = långsam men låg
   if (player.inWater) speed *= 0.35;          // vada i strömmen
-  else if (!gInfo.road) {
+  else if (!gInfo.road && !flatAt(player.pos.x, player.pos.z)) { // byggda ytor = hårdgjort
     speed *= 0.8;                             // gräs/terräng är segare än asfalt
     if (forestAt(player.pos.x, player.pos.z)) speed *= 0.6; // tät skog — nästan ogenomtränglig
   }
@@ -2909,6 +3204,7 @@ function applyNightMode() {
   hemiLight.color.set(0x36425e); hemiLight.groundColor.set(0x1a1d18); hemiLight.intensity = 0.5;
   sun.color.set(0x93a7cf); sun.intensity = 0.28; // månljus
   terrainMesh.material.color.set(0x55607a);      // mörk mark (Basic-material × textur)
+  if (terrainMat.userData.shader) terrainMat.userData.shader.uniforms.uNight.value = 1;
   buildingMesh.material.map = makeFacadeTex('plaster', true);
   buildingMeshWood.material.map = makeFacadeTex('wood', true);
   if (waterMat) waterMat.color.set(0x6b7c96);
