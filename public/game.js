@@ -288,6 +288,74 @@ function nearestRiver(x, z) {
   return best ? { d: bd, seg: best } : null;
 }
 
+// ---------- broar (OSM bridge=yes): plana spann från landfäste till landfäste ----------
+// Markmodellen saknar brodäcken (broar rensas ur DTM) — en väg draperad på marken dyker
+// annars ner i dalen och upp igen (Mölndals bro låg bokstavligen på marken). Varje
+// brokedja får ett linjärt däck mellan ändpunkternas markhöjd; vägar som löper LÄNGS
+// bron (riktningsfilter — inte gator som korsar under) samplar däcket i stället.
+const bridgeChains = [];
+const bridgeHash = new Map();
+{
+  for (const b of (window.KVARNBYN_BRIDGES || [])) {
+    if (!b.p || b.p.length < 2) continue;
+    const pts = b.p, cum = [0];
+    let len = 0;
+    for (let i = 1; i < pts.length; i++) {
+      len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      cum.push(len);
+    }
+    if (len < 5) continue;
+    const ch = {
+      pts, cum, len, hw: (b.w || 5) / 2,
+      ya: origHeightAt(pts[0][0], pts[0][1]),
+      yb: origHeightAt(pts[pts.length - 1][0], pts[pts.length - 1][1])
+    };
+    const ci = bridgeChains.length;
+    bridgeChains.push(ch);
+    for (let i = 1; i < pts.length; i++) {
+      const m = ch.hw + 4;
+      for (let cx = Math.floor((Math.min(pts[i-1][0], pts[i][0]) - m) / CELL); cx <= Math.floor((Math.max(pts[i-1][0], pts[i][0]) + m) / CELL); cx++)
+        for (let cz = Math.floor((Math.min(pts[i-1][1], pts[i][1]) - m) / CELL); cz <= Math.floor((Math.max(pts[i-1][1], pts[i][1]) + m) / CELL); cz++) {
+          const k = cx + ':' + cz;
+          if (!bridgeHash.has(k)) bridgeHash.set(k, []);
+          bridgeHash.get(k).push([ci, i]);
+        }
+    }
+  }
+}
+// deckhöjd vid (x,z), eller null. (dx,dz) = färdriktning: bara spann i samma riktning
+// räknas, annars skulle gatan UNDER viadukten kastas upp på däcket.
+function bridgeDeckAt(x, z, dx, dz) {
+  const arr = bridgeHash.get(Math.floor(x / CELL) + ':' + Math.floor(z / CELL));
+  if (!arr) return null;
+  let best = null, bd = Infinity;
+  for (const [ci, i] of arr) {
+    const ch = bridgeChains[ci];
+    const [ax, az] = ch.pts[i - 1], [bx, bz] = ch.pts[i];
+    const abx = bx - ax, abz = bz - az, l2 = abx * abx + abz * abz || 1;
+    if (dx !== undefined && Math.abs(dx * abx + dz * abz) / Math.sqrt(l2) < 0.6) continue;
+    const t = Math.max(0, Math.min(1, ((x - ax) * abx + (z - az) * abz) / l2));
+    const d = Math.hypot(x - (ax + abx * t), z - (az + abz * t));
+    if (d < ch.hw + 2.5 && d < bd) {
+      bd = d;
+      const s = ch.cum[i - 1] + Math.sqrt(l2) * t;
+      best = ch.ya + (ch.yb - ch.ya) * (s / ch.len);
+    }
+  }
+  return best;
+}
+// tätare polylinjer: terrängen samplas per ~steg — långa OSM-segment lät annars
+// terrängbulor mitt på segmentet sticka upp genom vägbanan ("grön jord i gatan")
+function densify(pts, step) {
+  const out = [pts[0]];
+  for (let i = 1; i < pts.length; i++) {
+    const [ax, az] = pts[i - 1], [bx, bz] = pts[i];
+    const n = Math.max(1, Math.ceil(Math.hypot(bx - ax, bz - az) / step));
+    for (let k = 1; k <= n; k++) out.push([ax + (bx - ax) * k / n, az + (bz - az) * k / n]);
+  }
+  return out;
+}
+
 // ---------- terrain (draped with satellite orthophoto) ----------
 const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=13');
 orthoTex.colorSpace = THREE.SRGBColorSpace;
@@ -568,8 +636,17 @@ function ribbonGeom(pts, w, lift, color, opts = {}) {
     const len = Math.hypot(dx, dz); if (len < 0.01) continue;
     dx /= len; dz /= len;
     const px = -dz * w / 2, pz = dx * w / 2;
-    const y11 = hFn(x1 - px, z1 - pz) + lift, y12 = hFn(x1 + px, z1 + pz) + lift;
-    const y21 = hFn(x2 - px, z2 - pz) + lift, y22 = hFn(x2 + px, z2 + pz) + lift;
+    let y11, y12, y21, y22;
+    if (opts.flatAcross) {
+      // vägar är plana i tvärled — ta max över tvärsnittet så terrängen aldrig
+      // sticker upp genom banan (vägen "skär in" i slänten som i verkligheten)
+      const y1 = Math.max(hFn(x1, z1, dx, dz), hFn(x1 - px, z1 - pz, dx, dz), hFn(x1 + px, z1 + pz, dx, dz)) + lift;
+      const y2 = Math.max(hFn(x2, z2, dx, dz), hFn(x2 - px, z2 - pz, dx, dz), hFn(x2 + px, z2 + pz, dx, dz)) + lift;
+      y11 = y12 = y1; y21 = y22 = y2;
+    } else {
+      y11 = hFn(x1 - px, z1 - pz) + lift; y12 = hFn(x1 + px, z1 + pz) + lift;
+      y21 = hFn(x2 - px, z2 - pz) + lift; y22 = hFn(x2 + px, z2 + pz) + lift;
+    }
     const v0 = vAcc / 6, v1 = (vAcc + len) / 6;
     vAcc += len;
     const quad = [
@@ -596,21 +673,28 @@ const roadHash = new Map();
   const geoms = [], shoulderGeoms = [], dashGeoms = [];
   const cRoad = new THREE.Color(0x62686e), cFoot = new THREE.Color(0x9a9280), cSteps = new THREE.Color(0xaa9a7e),
         cShoulder = new THREE.Color(0xa6aab0), cDash = new THREE.Color(0xd8d8d0);
-  const hOpts = { heightFn: origHeightAt, uv: true };
+  // bro-medveten väghöjd: längs taggade brospann gäller däcket, annars marken
+  const roadH = (x, z, dx, dz) => {
+    const g = origHeightAt(x, z);
+    const b = bridgeDeckAt(x, z, dx, dz);
+    return b !== null && b > g - 0.5 ? Math.max(b, g) : g;
+  };
+  const hOpts = { heightFn: roadH, uv: true, flatAcross: true };
   for (const rd of D.roads) {
-    let color = cRoad, lift = 0.16;
+    let color = cRoad, lift = 0.2;
     const soft = rd.k === 'footway' || rd.k === 'path' || rd.k === 'cycleway' || rd.k === 'track';
-    if (soft) { color = cFoot; lift = 0.13; }
-    else if (rd.k === 'steps') { color = cSteps; lift = 0.22; }
-    geoms.push(ribbonGeom(rd.p, rd.w, lift, color, hOpts));
+    if (soft) { color = cFoot; lift = 0.17; }
+    else if (rd.k === 'steps') { color = cSteps; lift = 0.24; }
+    const rp = densify(rd.p, 3.5);
+    geoms.push(ribbonGeom(rp, rd.w, lift, color, hOpts));
     if (!soft && rd.k !== 'steps') {
       // ljus vägren gör gatan tydlig mot gräset
-      shoulderGeoms.push(ribbonGeom(rd.p, rd.w + 0.9, lift - 0.03, cShoulder, hOpts));
+      shoulderGeoms.push(ribbonGeom(rp, rd.w + 0.9, lift - 0.03, cShoulder, hOpts));
       // mittlinje (streckad) på de större gatorna
       if (rd.w >= 7) {
         let acc = 0;
-        for (let i = 0; i < rd.p.length - 1; i++) {
-          const [x1, z1] = rd.p[i], [x2, z2] = rd.p[i + 1];
+        for (let i = 0; i < rp.length - 1; i++) {
+          const [x1, z1] = rp[i], [x2, z2] = rp[i + 1];
           const len = Math.hypot(x2 - x1, z2 - z1); if (len < 0.5) continue;
           const dx = (x2 - x1) / len, dz = (z2 - z1) / len;
           let s = 0;
@@ -629,11 +713,17 @@ const roadHash = new Map();
       }
     }
     // gångbara däck-segment (för broar och vägkänning)
-    for (let i = 0; i < rd.p.length - 1; i++) {
-      const [ax, az] = rd.p[i], [bx, bz] = rd.p[i + 1];
+    for (let i = 0; i < rp.length - 1; i++) {
+      const [ax, az] = rp[i], [bx, bz] = rp[i + 1];
       if (!inBounds(ax, az, 15) || !inBounds(bx, bz, 15)) continue;
-      if (Math.hypot(bx - ax, bz - az) < 0.3) continue;
-      const seg = { ax, az, bx, bz, hw: rd.w / 2, ya: origHeightAt(ax, az) + 0.16, yb: origHeightAt(bx, bz) + 0.16 };
+      const sLen = Math.hypot(bx - ax, bz - az);
+      if (sLen < 0.3) continue;
+      const dxn = (bx - ax) / sLen, dzn = (bz - az) / sLen;
+      const seg = { ax, az, bx, bz, hw: rd.w / 2,
+        ya: roadH(ax, az, dxn, dzn) + 0.16, yb: roadH(bx, bz, dxn, dzn) + 0.16 };
+      // taggat brospann? (styr brodäcks-rendering — riktiga broar utan flodheuristik)
+      const bMid = bridgeDeckAt((ax + bx) / 2, (az + bz) / 2, dxn, dzn);
+      if (bMid !== null && bMid > origHeightAt((ax + bx) / 2, (az + bz) / 2) + 0.4) seg.bridge = true;
       const idx = roadSegs.length;
       roadSegs.push(seg);
       for (let cx = Math.floor((Math.min(ax, bx) - 6) / CELL); cx <= Math.floor((Math.max(ax, bx) + 6) / CELL); cx++)
@@ -664,21 +754,26 @@ const roadHash = new Map();
   for (const s of roadSegs) {
     const mx = (s.ax + s.bx) / 2, mz = (s.az + s.bz) / 2;
     const deckY = (s.ya + s.yb) / 2;
-    if (deckY - heightAt(mx, mz) < 0.9) continue; // ingen luft under → ingen bro
-    const nrB = nearestRiver(mx, mz);
-    if (!nrB || nrB.d > 22) continue; // broar bara över vattnet — branta gatukorsningar ger falska träffar
+    if (s.bridge) {
+      if (deckY - heightAt(mx, mz) < 0.5) continue; // landfästet — ingen luft, ingen låda
+    } else {
+      if (deckY - heightAt(mx, mz) < 0.9) continue; // ingen luft under → ingen bro
+      const nrB = nearestRiver(mx, mz);
+      if (!nrB || nrB.d > 22) continue; // otaggade broar bara över vattnet — branta korsningar ger falska träffar
+    }
     const len = Math.hypot(s.bx - s.ax, s.bz - s.az);
     if (len < 0.5) continue;
     const dx = (s.bx - s.ax) / len, dz = (s.bz - s.az) / len;
     const ang = Math.atan2(dx, dz);
     const w = s.hw + 0.5;
-    const deck = new THREE.BoxGeometry(w * 2, 0.5, len + 0.4);
+    // rejält överlapp (+1,8 m) — segmenterade lådor lämnar annars kilgap i kurvorna
+    const deck = new THREE.BoxGeometry(w * 2, 0.75, len + 1.8);
     deck.rotateY(ang);
-    deck.translate(mx, deckY - 0.24, mz);
+    deck.translate(mx, deckY - 0.36, mz);
     paintGeom(deck, cDeck);
     geoms.push(deck);
     for (const side of [-1, 1]) { // sidobalkar gör bron läsbar från alla håll
-      const rail = new THREE.BoxGeometry(0.14, 1.05, len + 0.4);
+      const rail = new THREE.BoxGeometry(0.14, 1.05, len + 1.8);
       rail.rotateY(ang);
       rail.translate(mx + (-dz) * w * side, deckY + 0.45, mz + dx * w * side);
       paintGeom(rail, cSide);
@@ -716,7 +811,9 @@ function roofSupportAt(x, z, refY) {
 }
 
 // mark-info: carved terräng + ev. vägdäck ovanpå (broar!) + är vi på väg?
-function groundInfoAt(x, z) {
+// refY (valfri) = frågarens egen höjd: däck högt ovanför (broar) räknas bara om
+// frågaren faktiskt är uppe på dem — annars teleporteras den som går UNDER bron upp
+function groundInfoAt(x, z, refY) {
   let y = heightAt(x, z), road = false;
   const cx = Math.floor(x / CELL), cz = Math.floor(z / CELL);
   const arr = roadHash.get(cx + ':' + cz);
@@ -729,7 +826,8 @@ function groundInfoAt(x, z) {
       if (d < s.hw + 0.5) {
         road = true;
         const dy = s.ya + (s.yb - s.ya) * t;
-        if (dy > y + 0.25) y = dy; // vägen ligger som ett däck över fåran
+        // vägen ligger som ett däck över fåran/dalen
+        if (dy > y + 0.25 && (refY === undefined || refY > dy - 1.4)) y = dy;
       }
     }
   }
@@ -2314,7 +2412,7 @@ function assignEnemyRole(en) {
   for (let i = 0; i < 34; i++) {
     const p = randomOccupationPos(170);
     const en = spawnEnemy(p);
-    en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
+    en.pos.y = groundInfoAt(en.pos.x, en.pos.z, en.pos.y).y;
     en.mesh.position.copy(en.pos);
     assignEnemyRole(en);
   }
@@ -2323,7 +2421,7 @@ function assignEnemyRole(en) {
     const t = 0.3 + 0.25 * i;
     const en = spawnEnemy([lerp(capState[2].pos[0], D.spawn[0], t) + (Math.random() - 0.5) * 16,
                            lerp(capState[2].pos[1], D.spawn[1], t) + (Math.random() - 0.5) * 16]);
-    en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
+    en.pos.y = groundInfoAt(en.pos.x, en.pos.z, en.pos.y).y;
     en.mesh.position.copy(en.pos);
     en.role = 'assault';
   }
@@ -2538,7 +2636,7 @@ function updateEnemy(en, dt) {
   collideBuildings(en.pos, 0.45, en.pos.y);
   collideObstacles(en.pos, 0.45, en.pos.y);
   collideWalls(en.pos, 0.45, en.pos.y);
-  en.pos.y = groundInfoAt(en.pos.x, en.pos.z).y;
+  en.pos.y = groundInfoAt(en.pos.x, en.pos.z, en.pos.y).y;
   en.wobble += dt * 8;
   en.mesh.position.copy(en.pos);
   animateSoldier(en.mesh, Math.hypot(en.pos.x - preX, en.pos.z - preZ) > 0.15 * dt, dt, en.speed / 3);
@@ -2638,7 +2736,7 @@ function updateAlly(al, dt) {
     collideBuildings(al.pos, 0.45, al.pos.y);
     collideObstacles(al.pos, 0.45, al.pos.y);
     collideWalls(al.pos, 0.45, al.pos.y);
-    al.pos.y = groundInfoAt(al.pos.x, al.pos.z).y;
+    al.pos.y = groundInfoAt(al.pos.x, al.pos.z, al.pos.y).y;
     al.mesh.position.copy(al.pos);
     animateSoldier(al.mesh, d > 0.1, dt, 0.95);
     return;
@@ -2786,7 +2884,7 @@ function updateWaves(dt) {
       if (al.dead) {
         al.dead = false; al.hp = 100; al.mesh.visible = true; al.mesh.rotation.x = 0;
         al.pos.set(D.spawn[0] + (Math.random() - 0.5) * 12, 0, D.spawn[1] + (Math.random() - 0.5) * 12);
-        al.pos.y = groundInfoAt(al.pos.x, al.pos.z).y;
+        al.pos.y = groundInfoAt(al.pos.x, al.pos.z, al.pos.y).y;
         al.mesh.position.copy(al.pos);
         al.path = null; al.target = null;
         reinforced = true;
@@ -2975,7 +3073,7 @@ function updatePlayer(dt) {
     return;
   }
 
-  const gInfo = groundInfoAt(player.pos.x, player.pos.z);
+  const gInfo = groundInfoAt(player.pos.x, player.pos.z, player.pos.y);
   // i forsen? (nära å-segment och nere i den nedskurna fåran)
   const nr = nearestRiver(player.pos.x, player.pos.z);
   player.inWater = !!(nr && nr.d < 4.6 && player.pos.y < origHeightAt(player.pos.x, player.pos.z) - 0.8);
@@ -3065,7 +3163,7 @@ function updatePlayer(dt) {
   player.pos.x = Math.max(T.x0 + 5, Math.min(T.x1 - 5, player.pos.x));
   player.pos.z = Math.max(T.z1 + 5, Math.min(T.z0 - 5, player.pos.z));
   if (player.onGround) {
-    const gy = Math.max(groundInfoAt(player.pos.x, player.pos.z).y,
+    const gy = Math.max(groundInfoAt(player.pos.x, player.pos.z, player.pos.y).y,
                         roofSupportAt(player.pos.x, player.pos.z, player.pos.y + 0.3));
     if (player.pos.y - gy > 0.55) player.onGround = false; // gick över en kant → fall
     else player.pos.y = gy;
