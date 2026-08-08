@@ -33,6 +33,17 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Klart
 
+- [x] 2026-08-08 — **Riktiga broar + vägar som aldrig försvinner**: OSM `bridge=yes` (59 ways)
+  kedjas till spann med plana däck landfäste→landfäste — Mölndals bro finns nu på riktigt
+  (går att gå både PÅ och UNDER, riktningsfilter så gatan under viadukten inte kastas upp);
+  vägar förtätas till 3,5 m-segment + tvärsnitts-max så terräng aldrig sticker genom asfalten
+  (Götaforsliden hel hela vägen); `groundInfoAt(refY)` skiljer på/under däck
+
+- [x] 2026-08-08 — **Flyktmanöver för fastklämda soldater**: fastna-detektorn triggar nu
+  en probad flykt (sidled/bakåt, `insideAnyBuilding`-test, eskalerande tid vid upprepning)
+  i stället för bara waypoint-hopp — fiender och allierade tar sig ur hushörn och räknar
+  om vägen från den fria positionen; syntettest med 1,3 m-gap mellan hus verifierat
+
 - [x] 2026-08-06 — **Markgrafik-overhaul**: byggda plana ytor (147 parkeringar, 7 planer,
   16 lekplatser, 3 torgytor ur OSM → `flats.js`) plattas med minsta-kvadrat-plan + mjuk
   kant (gropighet 10 cm → 2,5 cm per cell); riktiga ytmeshar med P-rutelinjer, grus och

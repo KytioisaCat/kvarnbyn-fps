@@ -2518,6 +2518,23 @@ function damagePlayer(dmg) {
 }
 
 // ---------- enemy update ----------
+// fastklämd i ett hushörn: proba fri flyktriktning (sidled/bakåt relativt önskad
+// färdriktning — rakt fram är ju blockerat) och backa ur; vid upprepad fastkörning
+// eskalerar flykttiden så soldaten kommer ordentligt loss innan vägen räknas om
+function planEscape(u, dirX, dirZ) {
+  const base = Math.atan2(dirZ, dirX);
+  const side = Math.random() < 0.5 ? 1 : -1;
+  const cands = [side * Math.PI / 2, -side * Math.PI / 2, side * Math.PI * 0.78, -side * Math.PI * 0.78, Math.PI];
+  let ex = -dirX, ez = -dirZ; // reserv: rakt bakåt
+  for (const a of cands) {
+    const cx = Math.cos(base + a), cz = Math.sin(base + a);
+    if (!insideAnyBuilding(u.pos.x + cx * 2, u.pos.z + cz * 2) &&
+        !insideAnyBuilding(u.pos.x + cx * 4.2, u.pos.z + cz * 4.2)) { ex = cx; ez = cz; break; }
+  }
+  u.escapeX = ex; u.escapeZ = ez;
+  u.escapeT = 0.9 + Math.random() * 0.5 + Math.min(1.2, (u.stuckN || 0) * 0.3);
+}
+
 function updateEnemy(en, dt) {
   if (en.dead) {
     en.deadT += dt;
@@ -2590,7 +2607,17 @@ function updateEnemy(en, dt) {
     }
   }
 
-  if (!inCapZone && en.path) {
+  // flyktmanöver: fastklämd (hushörn!) — gå åt probat fritt håll, räkna sen om vägen
+  if (en.escapeT > 0) {
+    en.escapeT -= dt;
+    en.pos.x += en.escapeX * en.speed * dt;
+    en.pos.z += en.escapeZ * en.speed * dt;
+    if (!engaging) en.mesh.rotation.y = Math.atan2(-en.escapeX, -en.escapeZ);
+    if (en.escapeT <= 0) {
+      en.path = null; // färsk väg från den nya, fria positionen
+      en.stuckT = 0; en.lastX = en.pos.x; en.lastZ = en.pos.z;
+    }
+  } else if (!inCapZone && en.path) {
     // avancera mot målet — även under beskjutning (långsammare), strafe:a i närkontakt
     let speedMul = 1;
     if (engaging) speedMul = distToPlayer < 22 ? 0 : 0.65;
@@ -2614,15 +2641,15 @@ function updateEnemy(en, dt) {
         en.pos.x += dx / d * sp * dt;
         en.pos.z += dz / d * sp * dt;
         if (!engaging) en.mesh.rotation.y = Math.atan2(-dx, -dz); // ansiktet åt -Z
-        // fastna-detektor: kommer vi ingenstans → hoppa waypoint / räkna om vägen
+        // fastna-detektor: kommer vi ingenstans → flyktmanöver ut ur hörnet
         en.stuckT = (en.stuckT || 0) + dt;
         if (en.stuckT > 1.6) {
           const moved = Math.hypot(en.pos.x - (en.lastX ?? en.pos.x), en.pos.z - (en.lastZ ?? en.pos.z));
           if (moved < 1.2) {
-            if (en.pathI < en.path.length - 1) en.pathI++;
-            else en.path = null; // tvinga ompathning
+            en.stuckN = (en.stuckN || 0) + 1;
+            planEscape(en, dx / d, dz / d);
             en.lateral = (Math.random() - 0.5) * 4;
-          }
+          } else en.stuckN = 0;
           en.stuckT = 0; en.lastX = en.pos.x; en.lastZ = en.pos.z;
         }
       }
@@ -2712,6 +2739,21 @@ function updateAlly(al, dt) {
   }
   const holdAt = [fc.pos[0] + al.holdX, fc.pos[1] + al.holdZ];
   const distHold = Math.hypot(al.pos.x - holdAt[0], al.pos.z - holdAt[1]);
+  // flyktmanöver — fastklämd mellan hus (samma logik som fienderna)
+  if (al.escapeT > 0) {
+    al.escapeT -= dt;
+    al.pos.x += al.escapeX * al.speed * dt;
+    al.pos.z += al.escapeZ * al.speed * dt;
+    al.mesh.rotation.y = Math.atan2(-al.escapeX, -al.escapeZ);
+    if (al.escapeT <= 0) { al.path = null; al.stuckT = 0; al.lastX = al.pos.x; al.lastZ = al.pos.z; }
+    collideBuildings(al.pos, 0.45, al.pos.y);
+    collideObstacles(al.pos, 0.45, al.pos.y);
+    collideWalls(al.pos, 0.45, al.pos.y);
+    al.pos.y = groundInfoAt(al.pos.x, al.pos.z, al.pos.y).y;
+    al.mesh.position.copy(al.pos);
+    animateSoldier(al.mesh, true, dt, 0.95);
+    return;
+  }
   if (distHold > 6 && !(best && bd < 18)) {
     if (!al.path || al.target !== fc.id) {
       al.target = fc.id;
@@ -2729,7 +2771,10 @@ function updateAlly(al, dt) {
       al.stuckT += dt;
       if (al.stuckT > 1.8) {
         const moved = Math.hypot(al.pos.x - (al.lastX ?? al.pos.x), al.pos.z - (al.lastZ ?? al.pos.z));
-        if (moved < 1.0) { if (al.pathI < al.path.length - 1) al.pathI++; else al.path = null; }
+        if (moved < 1.0) {
+          al.stuckN = (al.stuckN || 0) + 1;
+          planEscape(al, dx / d, dz / d);
+        } else al.stuckN = 0;
         al.stuckT = 0; al.lastX = al.pos.x; al.lastZ = al.pos.z;
       }
     }

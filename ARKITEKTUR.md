@@ -102,15 +102,26 @@ Bärande delsystem och deras beslut:
   kärnan (x 60–340, z −200–80) sänks till 1 våning (seedat på position = stabilt).
 - **Murar**: OSM-barriärer + **procedurella stödmurar** ur väg×terräng-tvärlutning
   (diff >1,35 m vid vägkant) + räcken där marken störtar (>2,2 m, hoppbara).
-- **Broar**: solida däck + sidobalkar där vägbana >0,9 m över mark **och <22 m från ån**
+- **Broar**: OSM `bridge=yes`-ways kedjas (namn+klass via delade ändnoder) till spann med
+  **plana däck landfäste→landfäste** (`bridgeDeckAt`) — markmodellen saknar brodäcken, så
+  draperade vägar dök annars ner i dalen (Mölndals bro låg på marken). Vägar samplar däcket
+  med **riktningsfilter** (annars kastas gatan under viadukten upp på bron), och
+  `groundInfoAt(x,z,refY)` ger däcket bara till den som är uppe på det — man kan gå under.
+  Otaggade broar: heuristiken solida däck där vägbana >0,9 m över mark **och <22 m från ån**
   (annars falska broar i branta korsningar — inträffade vid Royens trappor).
+- **Vägrendering**: polylinjer förtätas till 3,5 m-segment och varje tvärsnitt tar
+  **max över bredden** (plan i tvärled, som riktiga vägar) — annars stack terrängbulor
+  mitt på långa OSM-segment upp genom vägbanan ("grön jord i gatan").
 - **Rörelse**: branthetsspärr med **1,6 m lookahead** (aldrig per frame-steg — brus),
   spärr 0,60 / tung klättring 0,38, vägar/trappor alltid gångbara (Royens trappor är
   0,61 längs linjen!), kravla fritt i/vid åfåran. Vägfart 1,0 / terräng 0,8 / skog 0,5 /
   vatten 0,35 + ström som drar nedströms + skada i vitvatten. Crouch = håll C (bryter LOS
   bakom cover). Rakethopp: Space i luften, håll för mer kraft (tap ~3 m, full ~12 m).
-- **AI**: vägnätsgraf + A*; fiender skjuter under framryckning, strafe:ar i närstrid,
-  fastna-detektor (ompathning). **Soldatmodellerna är byggda med ansiktet åt −Z** →
+- **AI**: vägnätsgraf + A*; fiender skjuter under framryckning, strafe:ar i närstrid.
+  Fastna-detektorn (ingen förflyttning på 1,6 s) triggar en **flyktmanöver** (`planEscape`):
+  proba sidled/bakåt mot `insideAnyBuilding`, gå åt fritt håll ~1 s (eskalerar vid
+  upprepning), räkna sen om vägen från den nya positionen — waypoint-hopp räckte inte
+  när soldater klämdes i inre hörn mellan två hus. **Soldatmodellerna är byggda med ansiktet åt −Z** →
   yaw = `atan2(-dx, -dz)` — `lookAt` pekar +Z och blir 180° fel!
 - **Spawns**: LOS + avståndsgate (aldrig <60 m eller i spelarens synfält) över tre
   infallsvägar (Forsebron, syd, öst).
