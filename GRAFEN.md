@@ -75,6 +75,14 @@ Cirka två sekunder, noll tokens. Parsar om AST-lagret och återanvänder det se
 lagret ur `graphify-out/cache/`. Rimlig vana: kör det när en session lagt till, döpt om
 eller tagit bort funktioner — inte efter varje liten redigering.
 
+Skriptet skriver **inget** om den nya grafen blivit mindre än den befintliga — det är
+graphifys inbyggda spärr mot oavsiktlig krympning, och den är värd att respektera. Är
+krympningen väntad (du har tagit bort kod på riktigt) kör:
+
+```bash
+python3 tools/rebuild_graph.py --force && graphify export html
+```
+
 > ### ⚠️ Kör INTE `graphify update .` i detta repo
 >
 > Det bara kommandot skannar hela trädet och drar in `public/three.module.js`

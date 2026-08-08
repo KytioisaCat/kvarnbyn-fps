@@ -35,14 +35,20 @@ CODE_FILES = [
     'tools/make_ortho8k.py',
     'tools/rebuild_graph.py',
 ]
-# Medvetet UTESLUTNA (ändra bara med god anledning):
+# Medvetet UTESLUTNA ur AST-parsningen (ändra bara med god anledning):
 #   public/data.js, public/flats.js  — genererad kartdata, tiotusentals siffror
 #   public/three.module.js           — vendorerat bibliotek (MIT), ~2 300 symboler
-#   public/*.png, *.jpg, tools/*     — bilder och cache
+#   public/*.png, *.jpg, tools/cache — bilder och mellanfiler
 DOC_FILES = [
     '.github/workflows/deploy.yml', 'ARKITEKTUR.md', 'CLAUDE.md', 'DEPLOY.md',
     'GRAFEN.md', 'KRAVSPEC.md', 'README.md', 'TODO.md', 'public/index.html',
     'tools/DEPLOY.md', 'tools/overpass_query.txt', 'tools/poi_query.txt',
+]
+# Artefakter som INTE parsas men som det semantiska lagret har noder för (de beskrivs
+# i ARKITEKTUR.md som datakällor). Måste med i cache-uppslaget, annars tappas de noderna.
+ARTIFACT_FILES = [
+    'public/data.js', 'public/flats.js', 'public/three.module.js',
+    'public/ortho.jpg', 'public/classmap.png',
 ]
 
 # Community-namn (svenska). Nya kluster får platshållare tills någon döper dem.
@@ -81,7 +87,8 @@ def main():
     print(f'AST: {len(ast["nodes"])} noder, {len(ast["edges"])} kanter (gratis)')
 
     # semantiskt lager ur cachen — kostar inga tokens så länge filerna är oförändrade
-    all_files = [str(ROOT / f) for f in CODE_FILES + DOC_FILES if (ROOT / f).exists()]
+    all_files = [str(ROOT / f) for f in CODE_FILES + DOC_FILES + ARTIFACT_FILES
+                 if (ROOT / f).exists()]
     sem_nodes, sem_edges, sem_hyper, uncached = check_semantic_cache(all_files)
     print(f'Semantiskt (cache): {len(sem_nodes)} noder, {len(sem_edges)} kanter')
     if uncached:
@@ -118,16 +125,26 @@ def main():
                  'files': {'code': [str(p) for p in code_paths]}}
     report = generate(G, communities, cohesion, labels, gods, surprises, detection,
                       {'input': 0, 'output': 0}, str(ROOT), suggested_questions=questions)
-    (OUT / 'GRAPH_REPORT.md').write_text(report, encoding='utf-8')
-    to_json(G, communities, str(OUT / ('gr' + 'aph.json')))
-    (OUT / '.graphify_labels.json').write_text(
-        json.dumps({str(k): v for k, v in labels.items()}, ensure_ascii=False), encoding='utf-8')
+    # graphify vägrar som skydd att skriva en MINDRE graf än den befintliga — bra spärr
+    # mot oavsiktlig krympning, men den blockerar också ett legitimt ombygge efter att
+    # kod tagits bort. Då (och bara då) kör med --force.
+    force = '--force' in sys.argv
+    wrote = to_json(G, communities, str(OUT / ('gr' + 'aph.json')), force=force)
 
     print(f'\nGraf: {G.number_of_nodes()} noder, {G.number_of_edges()} kanter, '
           f'{len(communities)} communities')
     if G.number_of_nodes() > 600:
         print('VARNING: ovanligt många noder — kom vendorerad/genererad kod in i urvalet?')
-    print('Kör `graphify export html` för att uppdatera graph.html.')
+    if wrote is False:
+        print('\nINGET SKREVS: den nya grafen är mindre än den befintliga (skyddsspärr).')
+        print('Är krympningen väntad (borttagen kod)? Kör: '
+              'python3 tools/rebuild_graph.py --force')
+        return
+    (OUT / 'GRAPH_REPORT.md').write_text(report, encoding='utf-8')
+    (OUT / '.graphify_labels.json').write_text(
+        json.dumps({str(k): v for k, v in labels.items()}, ensure_ascii=False), encoding='utf-8')
+    print('Skrev graph.json + GRAPH_REPORT.md. '
+          'Kör `graphify export html` för att uppdatera graph.html.')
 
 
 if __name__ == '__main__':
