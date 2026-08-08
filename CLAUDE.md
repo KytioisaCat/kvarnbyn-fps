@@ -25,6 +25,20 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 
 ## Arbetsflöden
 
+- **Hitta i koden — fråga grafen först, läs filer sen.** `graphify-out/` innehåller en
+  kunskapsgraf över hela projektet (247 noder: alla funktioner i `game.js` + pipelinen,
+  plus arkitekturbesluten ur ARKITEKTUR.md/KRAVSPEC.md). Den kostar ~1–2 kB kontext per
+  fråga i stället för att läsa 3 000 rader `game.js`:
+  ```bash
+  graphify explain "planEscape"                 # vad är det, var bor det, vem anropar det
+  graphify path "updateEnemy()" "heightAt()"    # hur hänger två saker ihop
+  graphify query "hur fungerar brosystemet"     # bredare kontext kring ett ämne
+  ```
+  **Läs aldrig `graph.json` eller `GRAPH_REPORT.md` in i kontexten** — fråga dem.
+  Bygg om efter större ändringar: `/graphify . --update` (AST-lagret är gratis och
+  deterministiskt; det semantiska lagret kostar tokens — sätt `GEMINI_API_KEY` för att
+  flytta den kostnaden ur sessionen). Grafen är ett *index*, inte facit: `game.js` är
+  alltid sanningen.
 - **Kör lokalt:** `python3 -m http.server 8763 --directory public` (finns i `.claude/launch.json`)
 - **Testa i preview:** rAF sover i headless — stega spelet med debughookarna
   `window.__frame(dt)`, `window.__game`, `window.__look(yaw,pitch)`, `window.__fire()`.

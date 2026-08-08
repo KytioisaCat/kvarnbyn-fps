@@ -1,0 +1,107 @@
+{
+  "/Users/joel/Workspace/kvarnbyn/public/game.js": {
+    "mtime": 1786169945.5880337,
+    "ast_hash": "aea990369ce8d421a40b317012340886",
+    "semantic_hash": "aea990369ce8d421a40b317012340886"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/build_classmap.py": {
+    "mtime": 1783586089.4645991,
+    "ast_hash": "5e8c29b5f6d2eea7b77736dd3dec2b68",
+    "semantic_hash": "5e8c29b5f6d2eea7b77736dd3dec2b68"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/build_data.py": {
+    "mtime": 1783409443.9031525,
+    "ast_hash": "9b39fd0db436d79e3c47069d3bfbfa76",
+    "semantic_hash": "9b39fd0db436d79e3c47069d3bfbfa76"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/build_data2.py": {
+    "mtime": 1783527423.7287433,
+    "ast_hash": "a25be44bd21623bfd94df8e3856bef33",
+    "semantic_hash": "a25be44bd21623bfd94df8e3856bef33"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/fetch_elev.py": {
+    "mtime": 1783409443.9027033,
+    "ast_hash": "99263e978eda5147af5436431afe5067",
+    "semantic_hash": "99263e978eda5147af5436431afe5067"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/fetch_lidar.py": {
+    "mtime": 1783523998.640636,
+    "ast_hash": "842697fde1265f447d9a2a484c422cfd",
+    "semantic_hash": "842697fde1265f447d9a2a484c422cfd"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/fetch_ortho.py": {
+    "mtime": 1783410406.0218382,
+    "ast_hash": "3a81297a39b9d6d3ef65cd3b390a3a68",
+    "semantic_hash": "3a81297a39b9d6d3ef65cd3b390a3a68"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/fetch_ortho_lm.py": {
+    "mtime": 1783434781.236205,
+    "ast_hash": "2861823731582be6d8e6d995a48059f5",
+    "semantic_hash": "2861823731582be6d8e6d995a48059f5"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/fetch_tiles.py": {
+    "mtime": 1783410406.0214899,
+    "ast_hash": "84916f3fdb3b078b595ea56e278fec97",
+    "semantic_hash": "84916f3fdb3b078b595ea56e278fec97"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/make_ortho8k.py": {
+    "mtime": 1783539189.9973574,
+    "ast_hash": "1b51c4d533503f7d5385f41a1b596804",
+    "semantic_hash": "1b51c4d533503f7d5385f41a1b596804"
+  },
+  "/Users/joel/Workspace/kvarnbyn/.github/workflows/deploy.yml": {
+    "mtime": 1783425192.0602129,
+    "ast_hash": "91d982cc2365dc419c40941819077741",
+    "semantic_hash": "91d982cc2365dc419c40941819077741"
+  },
+  "/Users/joel/Workspace/kvarnbyn/ARKITEKTUR.md": {
+    "mtime": 1786170090.2712035,
+    "ast_hash": "4dd35b6a2eb783b3fe4c8b2d6f909736",
+    "semantic_hash": "4dd35b6a2eb783b3fe4c8b2d6f909736"
+  },
+  "/Users/joel/Workspace/kvarnbyn/CLAUDE.md": {
+    "mtime": 1783598740.9734309,
+    "ast_hash": "73e2b88a5526a94dc928d0fcb73d7bfc",
+    "semantic_hash": "73e2b88a5526a94dc928d0fcb73d7bfc"
+  },
+  "/Users/joel/Workspace/kvarnbyn/DEPLOY.md": {
+    "mtime": 1783425260.7455883,
+    "ast_hash": "b525924b03708afeb9696c6a5bd23e47",
+    "semantic_hash": "b525924b03708afeb9696c6a5bd23e47"
+  },
+  "/Users/joel/Workspace/kvarnbyn/KRAVSPEC.md": {
+    "mtime": 1784474859.8564348,
+    "ast_hash": "ae4c8bebbef43ac2420771a83afff69d",
+    "semantic_hash": "ae4c8bebbef43ac2420771a83afff69d"
+  },
+  "/Users/joel/Workspace/kvarnbyn/README.md": {
+    "mtime": 1783524692.8770041,
+    "ast_hash": "917ac0a1146c77b86ec52a10213a9113",
+    "semantic_hash": "917ac0a1146c77b86ec52a10213a9113"
+  },
+  "/Users/joel/Workspace/kvarnbyn/TODO.md": {
+    "mtime": 1786170056.6639438,
+    "ast_hash": "b18cfc888287397efcbd2d75f519cc15",
+    "semantic_hash": "b18cfc888287397efcbd2d75f519cc15"
+  },
+  "/Users/joel/Workspace/kvarnbyn/public/index.html": {
+    "mtime": 1786169953.0981984,
+    "ast_hash": "52c468f16261dbafbed05ee16dff1fe2",
+    "semantic_hash": "52c468f16261dbafbed05ee16dff1fe2"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/DEPLOY.md": {
+    "mtime": 1783524751.0167792,
+    "ast_hash": "ea038ff8a4f8e91a4f50f4c26cc06fbf",
+    "semantic_hash": "ea038ff8a4f8e91a4f50f4c26cc06fbf"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/overpass_query.txt": {
+    "mtime": 1783585886.2923746,
+    "ast_hash": "05e111b33694b450942cceceafdc2948",
+    "semantic_hash": "05e111b33694b450942cceceafdc2948"
+  },
+  "/Users/joel/Workspace/kvarnbyn/tools/poi_query.txt": {
+    "mtime": 1783596731.2410564,
+    "ast_hash": "1ce11a4aa44a1c061e5e6564753a5286",
+    "semantic_hash": "1ce11a4aa44a1c061e5e6564753a5286"
+  }
+}
