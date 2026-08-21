@@ -2408,17 +2408,17 @@ function assignEnemyRole(en) {
     cap.beam.material.color.set(0xff4444);
   }
   game.reinfT = 50; game.reinfLeft = 3; // försörjningsgrupper in så länge de håller zoner
-  // ockupationen: ~34 man över hela kartan (fri zon närmast basen), garnisoner vid zonerna
-  for (let i = 0; i < 34; i++) {
+  // ockupationen: ~102 man över hela kartan (fri zon närmast basen), garnisoner vid zonerna
+  for (let i = 0; i < 102; i++) {
     const p = randomOccupationPos(170);
     const en = spawnEnemy(p);
     en.pos.y = groundInfoAt(en.pos.x, en.pos.z, en.pos.y).y;
     en.mesh.position.copy(en.pos);
     assignEnemyRole(en);
   }
-  // två infiltratörer nära basen — omedelbar kontakt
-  for (let i = 0; i < 2; i++) {
-    const t = 0.3 + 0.25 * i;
+  // sex infiltratörer nära basen — omedelbar kontakt
+  for (let i = 0; i < 6; i++) {
+    const t = 0.3 + 0.25 * (i % 2) + (Math.random() - 0.5) * 0.1;
     const en = spawnEnemy([lerp(capState[2].pos[0], D.spawn[0], t) + (Math.random() - 0.5) * 16,
                            lerp(capState[2].pos[1], D.spawn[1], t) + (Math.random() - 0.5) * 16]);
     en.pos.y = groundInfoAt(en.pos.x, en.pos.z, en.pos.y).y;
@@ -2912,10 +2912,10 @@ function updateWaves(dt) {
   if (!enemyHolds && alive === 0) { endGame(true); return; }
   if (enemyHolds && game.reinfLeft > 0) {
     game.reinfT -= dt;
-    if (game.reinfT <= 0 && alive < 42) {
+    if (game.reinfT <= 0 && alive < 126) {
       game.reinfLeft--;
       game.reinfT = 50;
-      for (let i = 0; i < 6; i++) assignEnemyRole(spawnEnemy());
+      for (let i = 0; i < 18; i++) assignEnemyRole(spawnEnemy());
       msg('🔴 Fientliga förstärkningar strömmar in — de håller fortfarande zoner!');
       playTone(440, 0.2, 0.15); setTimeout(() => playTone(392, 0.25, 0.15), 220);
     }
