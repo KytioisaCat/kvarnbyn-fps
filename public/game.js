@@ -357,7 +357,7 @@ function densify(pts, step) {
 }
 
 // ---------- terrain (draped with satellite orthophoto) ----------
-const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=13');
+const orthoTex = new THREE.TextureLoader().load('ortho.jpg?v=14');
 orthoTex.colorSpace = THREE.SRGBColorSpace;
 orthoTex.anisotropy = 16;
 
@@ -2980,7 +2980,7 @@ const mapCanvas = document.createElement('canvas');
       sc.drawImage(classImg, 0, 0, splatCanvas.width, splatCanvas.height);
       splatTex.needsUpdate = true;
     };
-    classImg.src = 'classmap.png?v=18';
+    classImg.src = 'classmap.png?v=19';
     // thin road overlay for readability
     mc.strokeStyle = 'rgba(255,255,255,0.35)'; mc.lineWidth = 1;
     for (const rd of D.roads) {
@@ -2990,7 +2990,7 @@ const mapCanvas = document.createElement('canvas');
       mc.stroke();
     }
   };
-  mapImg.src = 'ortho.jpg?v=13';
+  mapImg.src = 'ortho.jpg?v=14';
 }
 function drawMinimap() {
   const S = 1, R = 175; // map scale px/m, view radius px (=175 m radius)

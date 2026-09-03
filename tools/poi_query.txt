@@ -1,8 +1,8 @@
-[out:json][timeout:30];
+[out:json][timeout:60];
 (
-  nwr["name"~"Corpus",i](57.6495,12.008,57.6625,12.044);
-  nwr["name"~"usikskola|ulturskola",i](57.6495,12.008,57.6625,12.044);
-  nwr["name"~"Grevedämmet"](57.6495,12.008,57.6625,12.044);
+  nwr["name"~"Corpus",i](57.64625,11.999,57.66575,12.053);
+  nwr["name"~"usikskola|ulturskola",i](57.64625,11.999,57.66575,12.053);
+  nwr["name"~"Grevedämmet"](57.64625,11.999,57.66575,12.053);
   node["amenity"~"restaurant|fast_food|pizzeria"](57.652,12.015,57.658,12.03);
 );
 out center tags;

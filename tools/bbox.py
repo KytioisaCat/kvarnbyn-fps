@@ -15,8 +15,8 @@ overpass_query.txt / poi_query.txt. Gör så här i stället:
 Värdena är WGS84 lat/lon. Spelprojektionen är lat/lon-linjär, se ARKITEKTUR.md.
 """
 
-LAT0, LAT1 = 57.6495, 57.6625   # syd, nord
-LON0, LON1 = 12.008, 12.044     # väst, öst
+LAT0, LAT1 = 57.64625, 57.66575   # syd, nord (+50 % radie runt 57.656)
+LON0, LON1 = 11.999, 12.053       # väst, öst (+50 % radie runt 12.026)
 
 CLAT = (LAT0 + LAT1) / 2
 CLON = (LON0 + LON1) / 2
@@ -33,7 +33,8 @@ def area_str(lat0=LAT0, lon0=LON0, lat1=LAT1, lon1=LON1):
 
 
 # Samma way-typer som overpass_query.txt alltid haft (ODbL-data till data.js).
-OVERPASS_TIMEOUT = 60
+# Större fråga sedan +50 %-utvidgningen (2026-09-03): 2,25× yta.
+OVERPASS_TIMEOUT = 120
 OVERPASS_WAYS = [
     'way["building"]',
     'way["highway"]',
@@ -52,7 +53,7 @@ OVERPASS_WAYS = [
 ]
 
 # Samma POI-rader som poi_query.txt alltid haft.
-POI_TIMEOUT = 30
+POI_TIMEOUT = 60
 POI_QUERIES = [
     'nwr["name"~"Corpus",i]',
     'nwr["name"~"usikskola|ulturskola",i]',

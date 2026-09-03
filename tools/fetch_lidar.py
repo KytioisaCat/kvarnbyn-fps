@@ -15,7 +15,7 @@ from rasterio.warp import reproject, Resampling
 from rasterio.transform import from_bounds
 
 from bbox import LAT0, LAT1, LON0, LON1
-OUT_W, OUT_H = 2144, 1447  # ~1 m/px
+OUT_W, OUT_H = 3219, 2171  # ~1 m/px över +50 %-boxen
 
 USER, PASS = os.environ.get("LM_USER"), os.environ.get("LM_PASS")
 if not USER or not PASS:

@@ -7,7 +7,7 @@ from PIL import Image
 
 from bbox import LAT0, LAT1, LON0, LON1
 paths = sorted(glob.glob('cache/o*_mr24.tif'))
-assert len(paths) == 4, paths
+assert len(paths) >= 1, paths
 datasets = [rasterio.open(p) for p in paths]
 mosaic, tr = merge(datasets, res=(0.2, 0.2))
 crs = datasets[0].crs

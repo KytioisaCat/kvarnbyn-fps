@@ -19,7 +19,7 @@ X1, Z0 = xz(LAT0, LON1)[0], xz(LAT0, LON1)[1]   # east, south(z pos)
 # ---- terräng: Lantmäteriets 1 m-LiDAR (lat/lon-linjärt, rad 0 = norr i filen) ----
 full = np.load('lidar_full.npy').astype(float)  # (1447, 2144)
 H, W = full.shape
-ROWS, COLS = 724, 1072   # ~2 m rutnät i spelet
+ROWS, COLS = 1086, 1610   # ~2 m rutnät i spelet
 rr = np.linspace(H-1, 0, ROWS).round().astype(int)  # spelets rad 0 = söder
 cc = np.linspace(0, W-1, COLS).round().astype(int)
 elev = full[np.ix_(rr, cc)]

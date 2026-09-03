@@ -40,7 +40,7 @@ flytta frontlinjen nedåt igen. Blåa AI-försvarare hjälper till vid varje pun
 Allt i världen är riktigt:
 
 - **Byggnader, gator, vatten och grönområden** från OpenStreetMap (Overpass API),
-  ~1 660 byggnader och ~1 340 vägsegment kring Kvarnbyn (bbox 57.6495–57.6625 N, 12.008–12.044 E)
+  ~3 460 byggnader och ~2 550 vägsegment kring Kvarnbyn (bbox 57.64625–57.66575 N, 11.999–12.053 E)
 - **Ortofoto** från Lantmäteriet (0,16 m/px, flygår 2024, CC BY 4.0) draperat över terrängen
   och som minimap. Varje byggnads **takfärg samplas ur fotot** (median över fotavtrycket),
   så husen har sina verkliga färger; fasaderna får fönster och färgsätts utifrån taket

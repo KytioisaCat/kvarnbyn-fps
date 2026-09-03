@@ -21,7 +21,7 @@ from rasterio.io import MemoryFile
 from PIL import Image
 
 from bbox import LAT0, LAT1, LON0, LON1
-OUT_W, OUT_H = 6711, 4530          # ~0,3 m/px i full storlek (som tidigare)
+OUT_W, OUT_H = 10066, 6795          # ~0,3 m/px i full storlek (som tidigare)
 TEX_W = 4096                        # speltexturen
 
 USER = os.environ.get("LM_USER")

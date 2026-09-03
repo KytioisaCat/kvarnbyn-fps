@@ -11,7 +11,7 @@ MLAT = 111320.0; MLON = 111320.0*math.cos(math.radians(CLAT))
 def xz(lat, lon): return ((lon-CLON)*MLON, -(lat-CLAT)*MLAT)
 X0, Z1 = xz(LAT1, LON0); X1, Z0 = xz(LAT0, LON1)   # väst, norr / öst, syd
 
-COLS, ROWS = 1072, 724   # 2 m/cell, rad 0 = norr
+COLS, ROWS = 1610, 1086   # 2 m/cell, rad 0 = norr
 def to_px(x, z): return ((x-X0)/(X1-X0)*COLS, (z-Z1)/(Z0-Z1)*ROWS)
 
 osm = json.load(open('osm_raw.json'))
