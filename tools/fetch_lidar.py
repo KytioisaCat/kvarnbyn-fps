@@ -14,8 +14,7 @@ from rasterio.merge import merge
 from rasterio.warp import reproject, Resampling
 from rasterio.transform import from_bounds
 
-LON0, LON1 = 12.008, 12.044
-LAT0, LAT1 = 57.6495, 57.6625
+from bbox import LAT0, LAT1, LON0, LON1
 OUT_W, OUT_H = 2144, 1447  # ~1 m/px
 
 USER, PASS = os.environ.get("LM_USER"), os.environ.get("LM_PASS")

@@ -1,7 +1,6 @@
 import json, time, urllib.request
 
-LAT0, LAT1 = 57.6495, 57.6625
-LON0, LON1 = 12.008, 12.044
+from bbox import LAT0, LAT1, LON0, LON1
 ROWS, COLS = 56, 84  # ~26m spacing
 
 pts = []

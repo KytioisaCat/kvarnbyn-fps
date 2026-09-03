@@ -20,8 +20,7 @@ from rasterio.transform import from_bounds
 from rasterio.io import MemoryFile
 from PIL import Image
 
-LON0, LON1 = 12.008, 12.044
-LAT0, LAT1 = 57.6495, 57.6625
+from bbox import LAT0, LAT1, LON0, LON1
 OUT_W, OUT_H = 6711, 4530          # ~0,3 m/px i full storlek (som tidigare)
 TEX_W = 4096                        # speltexturen
 

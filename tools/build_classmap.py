@@ -5,7 +5,7 @@ import json, math
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-LON0, LON1, LAT0, LAT1 = 12.008, 12.044, 57.6495, 57.6625
+from bbox import LAT0, LAT1, LON0, LON1
 CLAT, CLON = (LAT0+LAT1)/2, (LON0+LON1)/2
 MLAT = 111320.0; MLON = 111320.0*math.cos(math.radians(CLAT))
 def xz(lat, lon): return ((lon-CLON)*MLON, -(lat-CLAT)*MLAT)

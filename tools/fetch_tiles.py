@@ -2,8 +2,7 @@ import math, io, time, urllib.request, json
 import numpy as np
 from PIL import Image
 
-LAT0, LAT1 = 57.6495, 57.6625
-LON0, LON1 = 12.008, 12.044
+from bbox import LAT0, LAT1, LON0, LON1
 
 def tile_xy(lat, lon, z):
     n = 2**z

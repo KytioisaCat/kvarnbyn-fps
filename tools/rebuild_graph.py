@@ -24,6 +24,7 @@ OUT = ROOT / 'graphify-out'
 # Kurerat urval: vår egen kod. Allt annat är vendorerat, genererat eller binärt.
 CODE_FILES = [
     'public/game.js',
+    'tools/bbox.py',
     'tools/build_classmap.py',
     'tools/build_data.py',
     'tools/build_data2.py',

@@ -5,7 +5,7 @@ from rasterio.warp import reproject, Resampling
 from rasterio.transform import from_bounds
 from PIL import Image
 
-LON0, LON1, LAT0, LAT1 = 12.008, 12.044, 57.6495, 57.6625
+from bbox import LAT0, LAT1, LON0, LON1
 paths = sorted(glob.glob('cache/o*_mr24.tif'))
 assert len(paths) == 4, paths
 datasets = [rasterio.open(p) for p in paths]
