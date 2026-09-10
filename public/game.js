@@ -288,13 +288,32 @@ function nearestRiver(x, z) {
   return best ? { d: bd, seg: best } : null;
 }
 
-// ---------- broar (OSM bridge=yes): plana spann från landfäste till landfäste ----------
-// Markmodellen saknar brodäcken (broar rensas ur DTM) — en väg draperad på marken dyker
-// annars ner i dalen och upp igen (Mölndals bro låg bokstavligen på marken). Varje
-// brokedja får ett linjärt däck mellan ändpunkternas markhöjd; vägar som löper LÄNGS
-// bron (riktningsfilter — inte gator som korsar under) samplar däcket i stället.
+// ---------- broar (OSM bridge=yes): däck landfäste→landfäste, exakt kopplade till sina vägar ----------
+// Markmodellen saknar brodäcken (broar rensas ur DTM) — en väg draperad på marken dök annars
+// ner i dalen (Mölndals bro låg bokstavligen på marken). Varje brokedja (bridge=yes-ways
+// kedjade i tools/build_flats.py, med OSM-way-id:n) får ett däck. Vägar kopplas till SIN
+// kedja via way-id — inte via närhet + riktningsfilter som förr: då stal viadukten höjd åt
+// gångbron intill och proben mätte 4–5 m-klippor längs 30 av 64 kedjor.
+// Däckprofil per brytpunkt: ändpunkter = markhöjd (landfästen), inre punkter = linjärt A→B,
+// UTOM där punkten ligger inne på en BREDARE, parallell kedjas däck (gång-/cykelbana på
+// samma viadukt): då tar den viaduktens höjd → ramp upp, gemensam nivå, ramp ner.
 const bridgeChains = [];
-const bridgeHash = new Map();
+const bridgeByWay = new Map(); // OSM way-id → kedjeindex
+// däckhöjd på kedja ch i (x,z): projektion på närmaste kedjesegment, profilen interpolerad
+function chainDeckAt(ch, x, z) {
+  let y = ch.ya, bd = Infinity, sdx = 1, sdz = 0, sAt = 0;
+  for (let i = 1; i < ch.pts.length; i++) {
+    const [ax, az] = ch.pts[i - 1], [bx, bz] = ch.pts[i];
+    const abx = bx - ax, abz = bz - az, l2 = abx * abx + abz * abz || 1;
+    const t = Math.max(0, Math.min(1, ((x - ax) * abx + (z - az) * abz) / l2));
+    const d = Math.hypot(x - (ax + abx * t), z - (az + abz * t));
+    if (d < bd) {
+      bd = d; y = ch.vy[i - 1] + (ch.vy[i] - ch.vy[i - 1]) * t;
+      const l = Math.sqrt(l2); sdx = abx / l; sdz = abz / l; sAt = ch.cum[i - 1] + l * t;
+    }
+  }
+  return { y, d: bd, dx: sdx, dz: sdz, s: sAt };
+}
 {
   for (const b of (window.KVARNBYN_BRIDGES || [])) {
     if (!b.p || b.p.length < 2) continue;
@@ -305,42 +324,66 @@ const bridgeHash = new Map();
       cum.push(len);
     }
     if (len < 5) continue;
-    const ch = {
-      pts, cum, len, hw: (b.w || 5) / 2,
-      ya: origHeightAt(pts[0][0], pts[0][1]),
-      yb: origHeightAt(pts[pts.length - 1][0], pts[pts.length - 1][1])
-    };
-    const ci = bridgeChains.length;
+    const ya = origHeightAt(pts[0][0], pts[0][1]), yb = origHeightAt(pts[pts.length - 1][0], pts[pts.length - 1][1]);
+    const ch = { pts, cum, len, hw: (b.w || 5) / 2, ya, yb, ids: b.ids || [], gA: true, gB: true, vy: null };
+    for (const id of ch.ids) bridgeByWay.set(id, bridgeChains.length);
     bridgeChains.push(ch);
-    for (let i = 1; i < pts.length; i++) {
-      const m = ch.hw + 4;
-      for (let cx = Math.floor((Math.min(pts[i-1][0], pts[i][0]) - m) / CELL); cx <= Math.floor((Math.max(pts[i-1][0], pts[i][0]) + m) / CELL); cx++)
-        for (let cz = Math.floor((Math.min(pts[i-1][1], pts[i][1]) - m) / CELL); cz <= Math.floor((Math.max(pts[i-1][1], pts[i][1]) + m) / CELL); cz++) {
-          const k = cx + ':' + cz;
-          if (!bridgeHash.has(k)) bridgeHash.set(k, []);
-          bridgeHash.get(k).push([ci, i]);
+  }
+  // knutpunkter MELLAN broar (ramp ↔ rondellen uppe på Mölndals bro, cykelbana som ansluter
+  // mitt på viadukten): en ändpunkt som ligger på en annan brokedjas däck är inget landfäste —
+  // "marken" där är gatan under viadukten (proben visade rondellen på marknivå och 4,5 m-
+  // klippor där ramperna mötte den). Sådana ändar lyfts till mark + 6 m (fri höjd + däck)
+  // eller grannens däckhöjd om den är högre; två varv så att ramper ser rondellens lyfta nivå.
+  const linDeck = ch => ch.cum.map(sd => ch.ya + (ch.yb - ch.ya) * sd / ch.len);
+  for (const ch of bridgeChains) ch.vy = linDeck(ch);
+  for (let pass = 0; pass < 2; pass++) {
+    for (const ch of bridgeChains) {
+      for (const e of [0, 1]) {
+        const P = e === 0 ? ch.pts[0] : ch.pts[ch.pts.length - 1];
+        let yk = null;
+        for (const o of bridgeChains) {
+          if (o === ch) continue;
+          const r = chainDeckAt(o, P[0], P[1]);
+          if (r.d < o.hw + 1.5) yk = Math.max(yk ?? -Infinity, origHeightAt(P[0], P[1]) + 6.0, r.y);
         }
+        if (yk === null) continue;
+        if (e === 0) { ch.ya = Math.max(ch.ya, yk); ch.gA = false; } else { ch.yb = Math.max(ch.yb, yk); ch.gB = false; }
+      }
+      ch.vy = linDeck(ch);
+    }
+  }
+  // lutningsspärr: ett däck lutar inte >10 % — då står den låga änden i ett hål i DTM:en
+  // (underfarten under brofästet) och lyfts så att lutningen blir 8 %
+  for (const ch of bridgeChains) {
+    if (Math.abs(ch.yb - ch.ya) / ch.len > 0.10) {
+      if (ch.ya < ch.yb) { ch.ya = ch.yb - 0.08 * ch.len; ch.gA = false; } else { ch.yb = ch.ya - 0.08 * ch.len; ch.gB = false; }
+      ch.vy = linDeck(ch);
+    }
+  }
+  // gemensam nivå för spann på samma bro (bredast först så mästarna är klara innan de smalare snappar)
+  const order = bridgeChains.map((c, i) => i).sort((i, j) => bridgeChains[j].hw - bridgeChains[i].hw);
+  for (const ci of order) {
+    const ch = bridgeChains[ci];
+    for (let k = 1; k < ch.pts.length - 1; k++) {
+      const tx = ch.pts[k + 1][0] - ch.pts[k - 1][0], tz = ch.pts[k + 1][1] - ch.pts[k - 1][1];
+      const tl = Math.hypot(tx, tz) || 1;
+      for (const oi of order) {
+        const o = bridgeChains[oi];
+        if (o === ch || o.hw <= ch.hw) continue;
+        const r = chainDeckAt(o, ch.pts[k][0], ch.pts[k][1]);
+        // inne på den bredare kedjans däck OCH parallell med den (en gångbro som korsar
+        // UNDER viadukten är vinkelrät och ska inte lyftas)
+        if (r.d < o.hw + ch.hw * 0.5 + 0.3 && Math.abs((tx * r.dx + tz * r.dz) / tl) > 0.6) { ch.vy[k] = r.y; break; }
+      }
     }
   }
 }
-// deckhöjd vid (x,z), eller null. (dx,dz) = färdriktning: bara spann i samma riktning
-// räknas, annars skulle gatan UNDER viadukten kastas upp på däcket.
-function bridgeDeckAt(x, z, dx, dz) {
-  const arr = bridgeHash.get(Math.floor(x / CELL) + ':' + Math.floor(z / CELL));
-  if (!arr) return null;
+// närmaste däck oavsett väg (debug/visualisering) — spelet självt använder way-id-kopplingen
+function bridgeDeckAt(x, z) {
   let best = null, bd = Infinity;
-  for (const [ci, i] of arr) {
-    const ch = bridgeChains[ci];
-    const [ax, az] = ch.pts[i - 1], [bx, bz] = ch.pts[i];
-    const abx = bx - ax, abz = bz - az, l2 = abx * abx + abz * abz || 1;
-    if (dx !== undefined && Math.abs(dx * abx + dz * abz) / Math.sqrt(l2) < 0.6) continue;
-    const t = Math.max(0, Math.min(1, ((x - ax) * abx + (z - az) * abz) / l2));
-    const d = Math.hypot(x - (ax + abx * t), z - (az + abz * t));
-    if (d < ch.hw + 2.5 && d < bd) {
-      bd = d;
-      const s = ch.cum[i - 1] + Math.sqrt(l2) * t;
-      best = ch.ya + (ch.yb - ch.ya) * (s / ch.len);
-    }
+  for (const ch of bridgeChains) {
+    const r = chainDeckAt(ch, x, z);
+    if (r.d < ch.hw + 2.5 && r.d < bd) { bd = r.d; best = r.y; }
   }
   return best;
 }
@@ -637,7 +680,11 @@ function ribbonGeom(pts, w, lift, color, opts = {}) {
     dx /= len; dz /= len;
     const px = -dz * w / 2, pz = dx * w / 2;
     let y11, y12, y21, y22;
-    if (opts.flatAcross) {
+    if (opts.centerOnly) {
+      // höjdfunktionen är redan tvärsnitts-medveten (vägar) — sampla bara mittlinjen
+      const y1 = hFn(x1, z1, dx, dz) + lift, y2 = hFn(x2, z2, dx, dz) + lift;
+      y11 = y12 = y1; y21 = y22 = y2;
+    } else if (opts.flatAcross) {
       // vägar är plana i tvärled — ta max över tvärsnittet så terrängen aldrig
       // sticker upp genom banan (vägen "skär in" i slänten som i verkligheten)
       const y1 = Math.max(hFn(x1, z1, dx, dz), hFn(x1 - px, z1 - pz, dx, dz), hFn(x1 + px, z1 + pz, dx, dz)) + lift;
@@ -669,22 +716,87 @@ function ribbonGeom(pts, w, lift, color, opts = {}) {
 // roadSegs: gångbara däck (broar över åfåran) + snabbare rörelse på väg än i terräng
 const roadSegs = [];
 const roadHash = new Map();
+const bridgeRails = []; // fria däckkanter → guard_rail-murar (kolliderbara, hoppbara), byggs i murblocket
 {
-  const geoms = [], shoulderGeoms = [], dashGeoms = [];
+  const geoms = [], shoulderGeoms = [], dashGeoms = [], deckGeoms = [];
   const cRoad = new THREE.Color(0x62686e), cFoot = new THREE.Color(0x9a9280), cSteps = new THREE.Color(0xaa9a7e),
         cShoulder = new THREE.Color(0xa6aab0), cDash = new THREE.Color(0xd8d8d0);
-  // bro-medveten väghöjd: längs taggade brospann gäller däcket, annars marken
-  const roadH = (x, z, dx, dz) => {
-    const g = origHeightAt(x, z);
-    const b = bridgeDeckAt(x, z, dx, dz);
-    return b !== null && b > g - 0.5 ? Math.max(b, g) : g;
+  const cDeck = new THREE.Color(0x716c64), cDeckSide = new THREE.Color(0x565249);
+  const LIFT_CAP = 1.2; // tvärsnitts-max får lyfta banan högst så här över mittlinjen (alltid klivbart)
+  const railCands = []; // räckeskandidater — avgörs när alla vägar är kända (grannväg på samma däck?)
+  // sammanhängande däckband (ovansida, undersida, två sidor) med gering i knäcken — de gamla
+  // per-segment-lådorna med 1,8 m överlapp skar in i varandra i kurvorna och gav kilgap
+  const deckRun = (run, w) => {
+    const n = run.length; if (n < 2) return;
+    const L = [], R = [];
+    for (let i = 0; i < n; i++) {
+      const p = run[i], a = run[Math.max(0, i - 1)], b = run[Math.min(n - 1, i + 1)];
+      let dx = b[0] - a[0], dz = b[1] - a[1]; const dl = Math.hypot(dx, dz) || 1; dx /= dl; dz /= dl;
+      let mit = 1;
+      if (i > 0 && i < n - 1) { // geringsfaktor: kanten breddas i knäcken så bandet håller bredden (klämd)
+        const d1x = p[0] - a[0], d1z = p[1] - a[1], l1 = Math.hypot(d1x, d1z) || 1;
+        const d2x = b[0] - p[0], d2z = b[1] - p[1], l2 = Math.hypot(d2x, d2z) || 1;
+        const cosHalf = Math.sqrt(Math.max(0.25, (1 + (d1x * d2x + d1z * d2z) / (l1 * l2)) / 2));
+        mit = Math.min(1.6, 1 / cosHalf);
+      }
+      const px = -dz * w / 2 * mit, pz = dx * w / 2 * mit;
+      L.push([p[0] - px, p[2], p[1] - pz]); R.push([p[0] + px, p[2], p[1] + pz]);
+    }
+    const pos = [], nor = [], col = [];
+    const quad = (a, b, c, d, nx, ny, nz, cc) => {
+      for (const v of [a, b, c, a, c, d]) { pos.push(v[0], v[1], v[2]); nor.push(nx, ny, nz); col.push(cc.r, cc.g, cc.b); }
+    };
+    const TH = 0.75, lo = v => [v[0], v[1] - TH, v[2]];
+    for (let i = 0; i < n - 1; i++) {
+      const l0 = L[i], l1 = L[i + 1], r0 = R[i], r1 = R[i + 1];
+      const ex = l1[0] - l0[0], ez = l1[2] - l0[2], el = Math.hypot(ex, ez) || 1, dx = ex / el, dz = ez / el;
+      quad(l0, r0, r1, l1, 0, 1, 0, cDeck);                      // ovansida
+      quad(lo(r0), lo(l0), lo(l1), lo(r1), 0, -1, 0, cDeckSide); // undersida
+      quad(lo(l0), l0, l1, lo(l1), dz, 0, -dx, cDeckSide);       // vänster sida
+      quad(r0, lo(r0), lo(r1), r1, -dz, 0, dx, cDeckSide);       // höger sida
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3));
+    g.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(nor), 3));
+    g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(col), 3));
+    deckGeoms.push(g);
+    for (let i = 0; i < n - 1; i++) { // räckeskandidater längs båda kanterna
+      for (const [E, side] of [[L, -1], [R, 1]]) {
+        const a = E[i], b = E[i + 1];
+        const ex = b[0] - a[0], ez = b[2] - a[2], el = Math.hypot(ex, ez) || 1;
+        const mx = (a[0] + b[0]) / 2, mz = (a[2] + b[2]) / 2;
+        railCands.push({ ax: a[0], az: a[2], bx: b[0], bz: b[2], ya: a[1], yb: b[1],
+          ox: mx + (-ez / el) * side * 1.0, oz: mz + (ex / el) * side * 1.0, oy: (a[1] + b[1]) / 2 }); // probpunkt 1 m utanför
+      }
+    }
   };
-  const hOpts = { heightFn: roadH, uv: true, flatAcross: true };
   for (const rd of D.roads) {
     let color = cRoad, lift = 0.2;
     const soft = rd.k === 'footway' || rd.k === 'path' || rd.k === 'cycleway' || rd.k === 'track';
     if (soft) { color = cFoot; lift = 0.17; }
     else if (rd.k === 'steps') { color = cSteps; lift = 0.24; }
+    const ch = (!rd.tu && rd.id !== undefined && bridgeByWay.has(rd.id)) ? bridgeChains[bridgeByWay.get(rd.id)] : null;
+    // väghöjd i mittlinjen: vägar som ÄR broar (way-id-match) följer sitt däck, alla andra marken
+    // (ursprunglig, före åfåran) — gatan under viadukten kan aldrig längre kastas upp på den
+    const centerH = (x, z) => {
+      const g = origHeightAt(x, z);
+      if (!ch) return g;
+      // däcket är facit på bron; bara de sista 12 m mot ett riktigt landfäste får marken
+      // (DTM:ens vägbank) lyfta banan så det inte blir en läpp vid brofästet
+      const r = chainDeckAt(ch, x, z);
+      const nearEnd = Math.min(ch.gA ? r.s : Infinity, ch.gB ? ch.len - r.s : Infinity) < 12;
+      return nearEnd ? Math.max(r.y, g - 0.3) : r.y;
+    };
+    // plan i tvärled: max över bredden (terrängen får aldrig sticka upp genom banan), med tak.
+    // SAMMA funktion ger ritad bana OCH gångyta — förr mätte gångytan i mittlinjen och fötterna
+    // sjönk upp till 2,8 m ner i asfalten på tvärlutande gator (4 % av segmenten >40 cm)
+    const roadH = (x, z, dx, dz) => {
+      const c = centerH(x, z);
+      if (ch) return c; // brodäck är plana i sig
+      const px = -dz * rd.w / 2, pz = dx * rd.w / 2;
+      return Math.min(c + LIFT_CAP, Math.max(c, origHeightAt(x - px, z - pz), origHeightAt(x + px, z + pz)));
+    };
+    const hOpts = { heightFn: roadH, uv: true, centerOnly: true };
     const rp = densify(rd.p, 3.5);
     geoms.push(ribbonGeom(rp, rd.w, lift, color, hOpts));
     if (!soft && rd.k !== 'steps') {
@@ -697,33 +809,39 @@ const roadHash = new Map();
           const [x1, z1] = rp[i], [x2, z2] = rp[i + 1];
           const len = Math.hypot(x2 - x1, z2 - z1); if (len < 0.5) continue;
           const dx = (x2 - x1) / len, dz = (z2 - z1) / len;
-          let s = 0;
-          while (s < len) {
-            const phase = (acc + s) % 9;
-            const dashLeft = phase < 3 ? Math.min(3 - phase, len - s) : 0;
+          let sd = 0;
+          while (sd < len) {
+            const phase = (acc + sd) % 9;
+            const dashLeft = phase < 3 ? Math.min(3 - phase, len - sd) : 0;
             if (dashLeft > 0.3) {
               dashGeoms.push(ribbonGeom(
-                [[x1 + dx * s, z1 + dz * s], [x1 + dx * (s + dashLeft), z1 + dz * (s + dashLeft)]],
+                [[x1 + dx * sd, z1 + dz * sd], [x1 + dx * (sd + dashLeft), z1 + dz * (sd + dashLeft)]],
                 0.2, lift + 0.02, cDash, hOpts));
             }
-            s += dashLeft > 0 ? dashLeft : Math.min(9 - phase, len - s);
+            sd += dashLeft > 0 ? dashLeft : Math.min(9 - phase, len - sd);
           }
           acc += len;
         }
       }
     }
-    // gångbara däck-segment (för broar och vägkänning)
+    // gångbara segment (broar och vägkänning) + däckband där banan svävar över marken
+    let run = [];
+    const flush = () => { if (run.length >= 2) deckRun(run, rd.w + 1.0); run = []; };
     for (let i = 0; i < rp.length - 1; i++) {
       const [ax, az] = rp[i], [bx, bz] = rp[i + 1];
-      if (!inBounds(ax, az, 15) || !inBounds(bx, bz, 15)) continue;
+      if (!inBounds(ax, az, 15) || !inBounds(bx, bz, 15)) { flush(); continue; }
       const sLen = Math.hypot(bx - ax, bz - az);
       if (sLen < 0.3) continue;
       const dxn = (bx - ax) / sLen, dzn = (bz - az) / sLen;
-      const seg = { ax, az, bx, bz, hw: rd.w / 2,
-        ya: roadH(ax, az, dxn, dzn) + 0.16, yb: roadH(bx, bz, dxn, dzn) + 0.16 };
-      // taggat brospann? (styr brodäcks-rendering — riktiga broar utan flodheuristik)
-      const bMid = bridgeDeckAt((ax + bx) / 2, (az + bz) / 2, dxn, dzn);
-      if (bMid !== null && bMid > origHeightAt((ax + bx) / 2, (az + bz) / 2) + 0.4) seg.bridge = true;
+      const ya = roadH(ax, az, dxn, dzn) + 0.16, yb = roadH(bx, bz, dxn, dzn) + 0.16;
+      const seg = { ax, az, bx, bz, hw: rd.w / 2, ya, yb, rid: rd.id };
+      const mx = (ax + bx) / 2, mz = (az + bz) / 2, air = (ya + yb) / 2 - heightAt(mx, mz);
+      // bro? taggad kedja: däcket svävar. Otaggad: bana >0,9 m över marken OCH <22 m från ån
+      // (branta korsningar gav annars falska broar — inträffade vid Royens trappor)
+      let isBridge = false;
+      if (ch) isBridge = air > 0.45;
+      else if (!rd.tu && air > 0.9) { const nrB = nearestRiver(mx, mz); isBridge = !!(nrB && nrB.d <= 22); }
+      if (isBridge) seg.bridge = true;
       const idx = roadSegs.length;
       roadSegs.push(seg);
       for (let cx = Math.floor((Math.min(ax, bx) - 6) / CELL); cx <= Math.floor((Math.max(ax, bx) + 6) / CELL); cx++)
@@ -732,7 +850,23 @@ const roadHash = new Map();
           if (!roadHash.has(k)) roadHash.set(k, []);
           roadHash.get(k).push(idx);
         }
+      if (isBridge) { if (!run.length) run.push([ax, az, ya - 0.04]); run.push([bx, bz, yb - 0.04]); } else flush();
     }
+    flush();
+  }
+  // räcken bara där däckkanten är fri: ingen annan bro-väg (körbana bredvid gångbanan) täcker
+  // probpunkten strax utanför kanten på ungefär samma nivå
+  for (const rc of railCands) {
+    const arr = roadHash.get(Math.floor(rc.ox / CELL) + ':' + Math.floor(rc.oz / CELL));
+    let covered = false;
+    if (arr) for (const i of arr) {
+      const sg = roadSegs[i]; if (!sg.bridge) continue;
+      const abx = sg.bx - sg.ax, abz = sg.bz - sg.az;
+      const t = Math.max(0, Math.min(1, ((rc.ox - sg.ax) * abx + (rc.oz - sg.az) * abz) / (abx * abx + abz * abz || 1)));
+      const d = Math.hypot(rc.ox - (sg.ax + abx * t), rc.oz - (sg.az + abz * t));
+      if (d < sg.hw + 0.6 && Math.abs(sg.ya + (sg.yb - sg.ya) * t - rc.oy) < 1.2) { covered = true; break; }
+    }
+    if (!covered) bridgeRails.push(rc);
   }
   const mSh = new THREE.Mesh(mergeGeoms(shoulderGeoms), new THREE.MeshLambertMaterial({ vertexColors: true, transparent: true, opacity: 0.5, depthWrite: false }));
   mSh.renderOrder = 1;
@@ -745,44 +879,8 @@ const roadHash = new Map();
   const mDash = new THREE.Mesh(mergeGeoms(dashGeoms), new THREE.MeshLambertMaterial({ vertexColors: true, transparent: true, opacity: 0.6, depthWrite: false }));
   mDash.renderOrder = 3;
   scene.add(mDash);
-}
-
-// ---------- synliga broar: solida däck med balkar där vägen spänner över fåran ----------
-{
-  const geoms = [];
-  const cDeck = new THREE.Color(0x716c64), cSide = new THREE.Color(0x565249);
-  for (const s of roadSegs) {
-    const mx = (s.ax + s.bx) / 2, mz = (s.az + s.bz) / 2;
-    const deckY = (s.ya + s.yb) / 2;
-    if (s.bridge) {
-      if (deckY - heightAt(mx, mz) < 0.5) continue; // landfästet — ingen luft, ingen låda
-    } else {
-      if (deckY - heightAt(mx, mz) < 0.9) continue; // ingen luft under → ingen bro
-      const nrB = nearestRiver(mx, mz);
-      if (!nrB || nrB.d > 22) continue; // otaggade broar bara över vattnet — branta korsningar ger falska träffar
-    }
-    const len = Math.hypot(s.bx - s.ax, s.bz - s.az);
-    if (len < 0.5) continue;
-    const dx = (s.bx - s.ax) / len, dz = (s.bz - s.az) / len;
-    const ang = Math.atan2(dx, dz);
-    const w = s.hw + 0.5;
-    // rejält överlapp (+1,8 m) — segmenterade lådor lämnar annars kilgap i kurvorna
-    const deck = new THREE.BoxGeometry(w * 2, 0.75, len + 1.8);
-    deck.rotateY(ang);
-    deck.translate(mx, deckY - 0.36, mz);
-    paintGeom(deck, cDeck);
-    geoms.push(deck);
-    for (const side of [-1, 1]) { // sidobalkar gör bron läsbar från alla håll
-      const rail = new THREE.BoxGeometry(0.14, 1.05, len + 1.8);
-      rail.rotateY(ang);
-      rail.translate(mx + (-dz) * w * side, deckY + 0.45, mz + dx * w * side);
-      paintGeom(rail, cSide);
-      geoms.push(rail);
-    }
-  }
-  if (geoms.length) {
-    scene.add(new THREE.Mesh(mergeGeoms(geoms), new THREE.MeshLambertMaterial({ vertexColors: true })));
-  }
+  // synliga broar: sammanhängande däck med sidor (räckena ritas av murblocket)
+  if (deckGeoms.length) scene.add(new THREE.Mesh(mergeGeoms(deckGeoms), new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })));
 }
 
 // takhöjd i en punkt: platt = topY, sadeltak = interpolerat mellan nock och takfot
@@ -818,17 +916,22 @@ function groundInfoAt(x, z, refY) {
   const cx = Math.floor(x / CELL), cz = Math.floor(z / CELL);
   const arr = roadHash.get(cx + ':' + cz);
   if (arr) {
+    // per väg räknas bara det NÄRMASTE segmentet: grannsegment längs samma lutande gata gav
+    // annars (klämd projektion mot sin bortre ände) en höjd 1–1,5 m fel → gångytan hoppade
+    const best = new Map();
     for (const i of arr) {
       const s = roadSegs[i];
       const abx = s.bx - s.ax, abz = s.bz - s.az;
       const t = Math.max(0, Math.min(1, ((x - s.ax) * abx + (z - s.az) * abz) / (abx * abx + abz * abz || 1)));
       const d = Math.hypot(x - (s.ax + abx * t), z - (s.az + abz * t));
-      if (d < s.hw + 0.5) {
-        road = true;
-        const dy = s.ya + (s.yb - s.ya) * t;
-        // vägen ligger som ett däck över fåran/dalen
-        if (dy > y + 0.25 && (refY === undefined || refY > dy - 1.4)) y = dy;
-      }
+      if (d >= s.hw + 0.5) continue;
+      const b = best.get(s.rid);
+      if (!b || d < b.d) best.set(s.rid, { d, dy: s.ya + (s.yb - s.ya) * t });
+    }
+    for (const b of best.values()) {
+      road = true;
+      // vägen ligger som ett däck över fåran/dalen — bara för den som är uppe på det (refY)
+      if (b.dy > y + 0.25 && (refY === undefined || refY > b.dy - 1.4)) y = b.dy;
     }
   }
   return { y, road };
@@ -1009,6 +1112,18 @@ function makeFacadeTex(style, night) {
       c.fillStyle = 'rgba(90,70,40,' + (Math.random() * 0.04) + ')';
       c.fillRect(Math.random() * 128, Math.random() * 128, 2, 6 + Math.random() * 10);
     }
+  } else if (style === 'brick') {
+    // tegel i löpförband: ~0,07 m skift → 3 px per rad i 3 m-tegen
+    c.fillStyle = '#9b5a44'; c.fillRect(0, 0, 128, 128);
+    for (let y = 0; y < 128; y += 3) {
+      c.fillStyle = 'rgba(225,215,200,0.55)'; c.fillRect(0, y, 128, 1);
+      const off = (y / 3) % 2 ? 5 : 0;
+      for (let x = off; x < 128; x += 10) c.fillRect(x, y, 1, 3);
+    }
+    for (let i = 0; i < 300; i++) { // stenvariation
+      c.fillStyle = 'rgba(' + (Math.random() < 0.5 ? '60,25,15' : '200,120,90') + ',' + (Math.random() * 0.12) + ')';
+      c.fillRect(Math.random() * 128, Math.random() * 128, 9, 2);
+    }
   } else {
     for (let i = 0; i < 350; i++) { // plaster grain
       c.fillStyle = 'rgba(0,0,0,' + (Math.random() * 0.035) + ')';
@@ -1034,6 +1149,42 @@ function makeFacadeTex(style, night) {
 }
 const facadeTexWood = makeFacadeTex('wood');
 const facadeTexPlaster = makeFacadeTex('plaster');
+const facadeTexBrick = makeFacadeTex('brick');
+
+// ---------- husfakta: hur enskilda hus SER UT, som data ----------
+// Två källor slås ihop per hus: OSM-taggar (building:levels/colour, roof:shape, material —
+// ligger i data.js) och public/husfakta.js (handförfattat: titta på foton/Street View som
+// mänskligt referensmaterial och beskriv huset i JSON — aldrig pixlar in i spelet, se
+// KRAVSPEC §4). Nyckel = 'w<OSM-way-id>' eller adress ("Kvarnbygatan 12"). Fält (svenska):
+// farg, vaningar, hojd, tak (sadel|platt), takfarg, material (tra|puts|tegel|plat|glas),
+// skylt (text på fasaden mot gatan), kommentar, kalla.
+const HUSFAKTA = window.KVARNBYN_HUSFAKTA || {};
+const SV_COLORS = { vit: '#f4f1e8', gul: '#efdc96', ljusgul: '#f6eab8', 'röd': '#a33a2a', 'faluröd': '#7e2b1f',
+  'grå': '#a3a39e', 'ljusgrå': '#d2d2cc', beige: '#e5d6b8', brun: '#6e4b32', 'grön': '#6f8a5a', 'mörkgrön': '#3f5a3a',
+  'blå': '#6f8fb0', rosa: '#e9bfb4', ockra: '#d4a24a', 'tegelröd': '#a24e3a', terrakotta: '#b8623f', svart: '#2b2b2b' };
+function cssColor(v, fallback = 0xf1eee6) {
+  const key = String(v).trim().toLowerCase();
+  const c = new THREE.Color(fallback);
+  if (SV_COLORS[key]) return c.set(SV_COLORS[key]);
+  const hex = key.startsWith('#') ? key : /^[0-9a-f]{6}$/.test(key) ? '#' + key : null;
+  if (hex) return c.set(hex);
+  c.set(key); // CSS-namn (OSM skriver 'yellow', 'grey'…) — skrikiga som fasad, dämpa
+  const hsl = { h: 0, s: 0, l: 0 }; c.getHSL(hsl);
+  return c.setHSL(hsl.h, Math.min(hsl.s, 0.45), Math.max(0.55, Math.min(0.9, hsl.l)));
+}
+function factsFor(b) {
+  const F = {};
+  if (b.lv) F.vaningar = b.lv;
+  if (b.col) F.farg = b.col;
+  if (b.rs) F.tak = (b.rs === 'flat' || b.rs === 'skillion') ? 'platt' : 'sadel';
+  if (b.rc) F.takfarg = b.rc;
+  if (b.mat) F.material = ({ brick: 'tegel', wood: 'tra', plaster: 'puts', glass: 'glas', metal: 'plat' })[b.mat];
+  const o = HUSFAKTA['w' + b.id] || (b.addr && HUSFAKTA[b.addr]);
+  if (o && typeof o === 'object') Object.assign(F, o);
+  return F;
+}
+let buildingMeshBrick;
+const signMeshes = [];
 
 // white wood/plaster palette — Kvarnbyn per Joels minne
 const WHITES = [0xf7f4ec, 0xf2efe6, 0xefe9db, 0xf5f2ea, 0xece7d8, 0xf2f1ea, 0xe9e6da];
@@ -1080,8 +1231,10 @@ function minAreaRect(poly) {
 }
 
 {
-  const wallGeomsWood = [], wallGeomsPlaster = [], roofGeoms = [];
+  const wallGeomsWood = [], wallGeomsPlaster = [], wallGeomsBrick = [], roofGeoms = [];
+  const signs = [];
   for (const b of D.buildings) {
+    const F = factsFor(b); // husfakta: OSM-taggar + husfakta.js
     let poly = b.p.slice();
     // drop duplicate consecutive points
     poly = poly.filter((p, i) => {
@@ -1109,18 +1262,21 @@ function minAreaRect(poly) {
     }
     area = Math.abs(area);
     let h = b.h * 1.2; // slight boost to match the exaggerated terrain
+    if (F.vaningar) h = (F.vaningar * 3.0 + 1.5) * 1.2;   // fakta slår gissning
+    else if (F.hojd) h = F.hojd * 1.2;
     // Kvarnbyns kärna: de gamla arbetarstugorna längs de branta gatorna är låga —
-    // sänk ~hälften av småhusen från 2 våningar till 1 våning + vind
+    // sänk ~hälften av småhusen från 2 våningar till 1 våning + vind (bara hus utan fakta)
     const ccx = (minX + maxX) / 2, ccz = (minZ + maxZ) / 2;
-    if (ccx > 60 && ccx < 340 && ccz > -200 && ccz < 80 && area < 170 && h > 6 && h < 10) {
+    if (!F.vaningar && !F.hojd && ccx > 60 && ccx < 340 && ccz > -200 && ccz < 80 && area < 170 && h > 6 && h < 10) {
       const seed = Math.abs(Math.sin(ccx * 3.7 + ccz * 7.1));
       if (seed < 0.55) h = 4.3;
     }
     const base = minY - 2, eave = minY + h;
-    const roofCol = new THREE.Color('#' + (b.c || '9a8f80'));
-    const wallCol = wallColorFor(b);
-    const isWood = area < 350 && h < 10; // småhus: träpanel, större: puts
-    const wallGeoms = isWood ? wallGeomsWood : wallGeomsPlaster;
+    const roofCol = F.takfarg ? cssColor(F.takfarg, 0x9a8f80) : new THREE.Color('#' + (b.c || '9a8f80'));
+    const wallCol = F.farg ? cssColor(F.farg) : wallColorFor(b);
+    const matKind = F.material || (area < 350 && h < 10 ? 'tra' : 'puts'); // småhus: träpanel, större: puts
+    const wallGeoms = matKind === 'tra' ? wallGeomsWood : matKind === 'tegel' ? wallGeomsBrick : wallGeomsPlaster;
+    if (F.skylt) signs.push({ poly, y: minY, eave, text: String(F.skylt) });
 
     // --- walls ---
     const wPos = [], wNor = [], wCol = [], wUV = [];
@@ -1143,7 +1299,7 @@ function minAreaRect(poly) {
 
     // --- roof ---
     const rPos = [], rNor = [], rCol = [];
-    const gabled = poly.length === 4 && area < 800 && h < 15;
+    const gabled = poly.length === 4 && (F.tak ? F.tak !== 'platt' : (area < 800 && h < 15));
     let gableInfo = null;
     if (gabled) {
       // ridge along the longer opposite-edge pair
@@ -1232,11 +1388,56 @@ function minAreaRect(poly) {
     new THREE.MeshLambertMaterial({ vertexColors: true, map: facadeTexPlaster, side: THREE.DoubleSide }));
   buildingMeshWood = new THREE.Mesh(mergeWithUV(wallGeomsWood),
     new THREE.MeshLambertMaterial({ vertexColors: true, map: facadeTexWood, side: THREE.DoubleSide }));
+  buildingMeshBrick = new THREE.Mesh(mergeWithUV(wallGeomsBrick),
+    new THREE.MeshLambertMaterial({ vertexColors: true, map: facadeTexBrick, side: THREE.DoubleSide }));
   roofMesh = new THREE.Mesh(mergeGeoms(roofGeoms),
     new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide }));
   scene.add(buildingMesh);
   scene.add(buildingMeshWood);
+  scene.add(buildingMeshBrick);
   scene.add(roofMesh);
+
+  // skyltar: text på den fasad som vetter mot närmaste gata, ovanför dörrhöjd
+  const roadDist = (x, z) => {
+    let bd = Infinity;
+    for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) {
+      const arr = roadHash.get((Math.floor(x / CELL) + dx) + ':' + (Math.floor(z / CELL) + dz));
+      if (!arr) continue;
+      for (const i of arr) {
+        const sg = roadSegs[i], abx = sg.bx - sg.ax, abz = sg.bz - sg.az;
+        const t = Math.max(0, Math.min(1, ((x - sg.ax) * abx + (z - sg.az) * abz) / (abx * abx + abz * abz || 1)));
+        bd = Math.min(bd, Math.hypot(x - (sg.ax + abx * t), z - (sg.az + abz * t)) - sg.hw);
+      }
+    }
+    return bd;
+  };
+  for (const sg of signs) {
+    let best = null;
+    for (let i = 0; i < sg.poly.length; i++) {
+      const p = sg.poly[i], q = sg.poly[(i + 1) % sg.poly.length];
+      const len = Math.hypot(q[0] - p[0], q[1] - p[1]); if (len < 2.5) continue;
+      const mx = (p[0] + q[0]) / 2, mz = (p[1] + q[1]) / 2;
+      let nx = (q[1] - p[1]) / len, nz = -(q[0] - p[0]) / len;
+      if (pointInPoly(mx + nx * 0.5, mz + nz * 0.5, sg.poly)) { nx = -nx; nz = -nz; } // utåt
+      const d = roadDist(mx + nx * 3, mz + nz * 3) - Math.min(len, 12) * 0.05; // långa fasader föredras
+      if (!best || d < best.d) best = { d, mx, mz, nx, nz, len };
+    }
+    if (!best) continue;
+    const cv = document.createElement('canvas'); cv.width = 512; cv.height = 96;
+    const c = cv.getContext('2d');
+    c.fillStyle = 'rgba(28,26,24,0.92)'; c.beginPath(); c.roundRect(2, 2, 508, 92, 10); c.fill();
+    c.strokeStyle = '#ffd76a'; c.lineWidth = 3; c.beginPath(); c.roundRect(8, 8, 496, 80, 8); c.stroke();
+    let fs = 54; c.font = `bold ${fs}px "Helvetica Neue", Arial`;
+    while (c.measureText(sg.text).width > 470 && fs > 22) { fs -= 2; c.font = `bold ${fs}px "Helvetica Neue", Arial`; }
+    c.fillStyle = '#ffd76a'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(sg.text, 256, 50);
+    const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+    const w = Math.min(best.len * 0.75, 7), hgt = w * 96 / 512;
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, hgt), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
+    const yTop = Math.min(sg.eave - 0.15, sg.y + 3.4 + hgt / 2);
+    m.position.set(best.mx + best.nx * 0.1, yTop, best.mz + best.nz * 0.1);
+    m.rotation.y = Math.atan2(best.nx, best.nz);
+    scene.add(m); signMeshes.push(m);
+  }
 }
 
 // spatial hash for building collision
@@ -1402,10 +1603,10 @@ const wallHash = new Map();
     stodmur:        { h: 0, c: 0x8f8a7e, jump: false }  // höjd sätts per segment
   };
   const pos = [], nor = [], col = [];
-  function addSeg(ax, az, bx, bz, hgt, kind) {
+  function addSeg(ax, az, bx, bz, hgt, kind, yA, yB) {
     const k = KIND[kind];
     const len = Math.hypot(bx - ax, bz - az); if (len < 0.4) return;
-    const y1 = groundInfoAt(ax, az).y, y2 = groundInfoAt(bx, bz).y;
+    const y1 = yA !== undefined ? yA : groundInfoAt(ax, az).y, y2 = yB !== undefined ? yB : groundInfoAt(bx, bz).y;
     const base = Math.min(y1, y2) - 0.6;
     const top1 = y1 + hgt, top2 = y2 + hgt;
     const nx = (bz - az) / len, nz = -(bx - ax) / len;
@@ -1436,6 +1637,9 @@ const wallHash = new Map();
       addSeg(ax, az, bx, bz, KIND[k].h, k);
     }
   }
+  // broräcken längs fria däckkanter (parapet): kolliderbara så man inte kliver av bron av
+  // misstag, hoppbara (raketen tar dig över), höjder från däcket självt
+  for (const r of bridgeRails) addSeg(r.ax, r.az, r.bx, r.bz, 1.0, 'guard_rail', r.ya, r.yb);
   // procedurella stödmurar: där terrängen reser sig brant alldeles intill gatukanten
   const roadKinds = new Set(['residential', 'living_street', 'tertiary', 'secondary', 'unclassified', 'service', 'pedestrian']);
   for (const rd of D.roads) {
@@ -2055,7 +2259,7 @@ if (IS_TOUCH) {
   addEventListener('touchstart', e => {
     if (!game.started || game.over) return;
     for (const t of e.changedTouches) {
-      if (t.target.closest && t.target.closest('.tc, #bigmap, #overlay')) continue;
+      if (t.target.closest && t.target.closest('.tc, #bigmap, #overlay, #minimap')) continue;
       if (lookId === null) { lookId = t.identifier; lookX = t.clientX; lookY = t.clientY; }
     }
   }, { passive: true });
@@ -2992,8 +3196,20 @@ const mapCanvas = document.createElement('canvas');
   };
   mapImg.src = 'ortho.jpg?v=14';
 }
+// zoombar minikarta: synradie i meter — scrollhjul över spelet, +/− på tangentbordet,
+// tryck på kartan på mobil (cyklar). Sparas mellan rundor.
+const MM_ZOOMS = [60, 100, 175, 280, 420];
+let mmRadius = 175;
+try { const v = +localStorage.getItem('kvarnbyn-mmzoom'); if (MM_ZOOMS.includes(v)) mmRadius = v; } catch (e) {}
+function zoomMinimap(dir, cyclic) { // dir < 0 = zooma in
+  let i = MM_ZOOMS.indexOf(mmRadius); if (i < 0) i = 2;
+  i += dir < 0 ? -1 : 1;
+  if (cyclic) i = (i + MM_ZOOMS.length) % MM_ZOOMS.length; else i = Math.max(0, Math.min(MM_ZOOMS.length - 1, i));
+  mmRadius = MM_ZOOMS[i];
+  try { localStorage.setItem('kvarnbyn-mmzoom', mmRadius); } catch (e) {}
+}
 function drawMinimap() {
-  const S = 1, R = 175; // map scale px/m, view radius px (=175 m radius)
+  const S = 1, R = mmRadius; // map scale px/m, view radius m (zoombar)
   const ctx = mmCtx;
   const k = 220 / R; // map px → screen px
   ctx.clearRect(0, 0, 440, 440);
@@ -3044,6 +3260,9 @@ function drawMinimap() {
   ctx.fillStyle = '#ffd76a';
   ctx.beginPath(); ctx.moveTo(0, -8); ctx.lineTo(5, 6); ctx.lineTo(-5, 6); ctx.closePath(); ctx.fill();
   ctx.restore();
+  // skalstock: synradien i meter
+  ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.font = 'bold 14px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText(R + ' m', 220, 424);
   ctx.restore();
 }
 
@@ -3051,12 +3270,22 @@ function drawMinimap() {
 const bigmapEl = document.getElementById('bigmap');
 const bmCanvas = document.getElementById('bm');
 let bigmapOpen = false, bmT = 0;
+// zoombar taktisk karta: utsnitt centrerat på spelaren (klämt mot kartkanten), scroll / +/−
+const BM_ZOOMS = [1, 1.7, 2.8, 4.5];
+let bmZoom = 1;
+function zoomBigmap(dir) {
+  let i = BM_ZOOMS.indexOf(bmZoom); if (i < 0) i = 0;
+  bmZoom = BM_ZOOMS[Math.max(0, Math.min(BM_ZOOMS.length - 1, i + (dir < 0 ? 1 : -1)))];
+}
 function drawBigmap() {
   const W = mapCanvas.width, H = mapCanvas.height;
   bmCanvas.width = W; bmCanvas.height = H;
   const c = bmCanvas.getContext('2d');
-  c.drawImage(mapCanvas, 0, 0);
-  const toX = x => x - T.x0, toZ = z => z - T.z1;
+  const zm = bmZoom, vw = W / zm, vh = H / zm;
+  const sx = Math.max(0, Math.min(W - vw, (player.pos.x - T.x0) - vw / 2));
+  const sy = Math.max(0, Math.min(H - vh, (player.pos.z - T.z1) - vh / 2));
+  c.drawImage(mapCanvas, sx, sy, vw, vh, 0, 0, W, H);
+  const toX = x => (x - T.x0 - sx) * zm, toZ = z => (z - T.z1 - sy) * zm;
   // fiender
   c.fillStyle = '#ff5a5a';
   for (const en of enemies) {
@@ -3074,12 +3303,12 @@ function drawBigmap() {
     const x = toX(cap.pos[0]), z = toZ(cap.pos[1]);
     c.strokeStyle = cap.owner === 'enemy' ? '#ff5a5a' : '#4f9dff';
     c.lineWidth = 3;
-    c.beginPath(); c.arc(x, z, cap.r, 0, 7); c.stroke();
+    c.beginPath(); c.arc(x, z, cap.r * zm, 0, 7); c.stroke();
     c.fillStyle = cap.owner === 'enemy' ? 'rgba(255,90,90,.25)' : 'rgba(79,157,255,.25)';
-    c.beginPath(); c.arc(x, z, cap.r, 0, 7); c.fill();
+    c.beginPath(); c.arc(x, z, cap.r * zm, 0, 7); c.fill();
     c.fillStyle = '#fff'; c.font = 'bold 22px Arial'; c.textAlign = 'center'; c.textBaseline = 'middle';
     c.fillText(cap.id, x, z);
-    c.font = '12px Arial'; c.fillText(cap.name, x, z + cap.r + 12);
+    c.font = '12px Arial'; c.fillText(cap.name, x, z + cap.r * zm + 12);
   }
   // basen + spelaren
   c.fillStyle = '#ffd76a'; c.font = '12px Arial'; c.textAlign = 'center';
@@ -3097,7 +3326,19 @@ function toggleBigmap() {
   bigmapEl.style.display = bigmapOpen ? 'flex' : 'none';
   if (bigmapOpen) drawBigmap();
 }
-addEventListener('keydown', e => { if (e.code === 'KeyM') toggleBigmap(); });
+addEventListener('keydown', e => {
+  if (e.code === 'KeyM') toggleBigmap();
+  // +/− zoomar den karta som visas (e.key: svenskt tangentbord har + där US har -)
+  const zi = (e.key === '+' || e.code === 'NumpadAdd') ? -1 : (e.key === '-' || e.code === 'NumpadSubtract') ? 1 : 0;
+  if (zi && game.started && !game.over) { if (bigmapOpen) { zoomBigmap(zi); drawBigmap(); } else zoomMinimap(zi); }
+});
+addEventListener('wheel', e => {
+  if (!game.started || game.over) return;
+  const dir = e.deltaY > 0 ? 1 : -1;
+  if (bigmapOpen) { zoomBigmap(dir); drawBigmap(); } else zoomMinimap(dir);
+}, { passive: true });
+// mobil: tryck på minikartan cyklar zoomnivån
+document.getElementById('minimap').addEventListener('touchstart', e => { e.preventDefault(); zoomMinimap(-1, true); }, { passive: false });
 bigmapEl.addEventListener('click', () => { if (bigmapOpen) toggleBigmap(); }); // touch: tryck för att stänga
 
 // ---------- player update ----------
@@ -3335,7 +3576,7 @@ animate();
 
 // debug hooks (used by automated playtesting; harmless in normal play)
 window.__frame = (dt) => { clock.elapsedTime += dt; frame(dt); };
-window.__game = { game, player, enemies, allies, capState, spawnEnemy, D, heightAt, scene, terrainMesh, orthoTex, renderer, camera, wallSegs, forestAt: (x, z) => forestAt(x, z), hasLOS, bldPolys, roofYAt };
+window.__game = { game, player, enemies, allies, capState, spawnEnemy, D, heightAt, origHeightAt, groundInfoAt, roofSupportAt, bridgeDeckAt, bridgeChains, roadSegs, scene, terrainMesh, orthoTex, renderer, camera, wallSegs, forestAt: (x, z) => forestAt(x, z), hasLOS, bldPolys, roofYAt, graph, findPath, nearestNode };
 window.__keys = keys;
 window.__fire = () => playerShoot();
 window.__look = (yaw, pitch) => { player.yaw = yaw; player.pitch = pitch; };
@@ -3350,6 +3591,7 @@ function applyNightMode() {
   if (terrainMat.userData.shader) terrainMat.userData.shader.uniforms.uNight.value = 1;
   buildingMesh.material.map = makeFacadeTex('plaster', true);
   buildingMeshWood.material.map = makeFacadeTex('wood', true);
+  buildingMeshBrick.material.map = makeFacadeTex('brick', true);
   if (waterMat) waterMat.color.set(0x6b7c96);
 
   // stjärnhimmel

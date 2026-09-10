@@ -129,7 +129,7 @@
     Stå i en fiendezon (utan fiender i närheten) för att återta den — dina soldater hjälper till.
     Så länge fienden håller zoner strömmar deras förstärkningar in. Faller <b>basen</b> är allt förlorat.<br><br>
     <span id="ctrlhelp"><b>WASD</b> springa · <b>Shift</b> sprinta · <b>Space</b> hoppa (<b>×2 = raket!</b>) ·
-    håll <b>C</b> för att huka · <b>Vänsterklick</b> skjut · <b>R</b> ladda om · <b>M</b> karta</span><br>
+    håll <b>C</b> för att huka · <b>Vänsterklick</b> skjut · <b>R</b> ladda om · <b>M</b> karta · <b>scroll</b>/<b>+−</b> zoomar kartorna</span><br>
     Seger: alla zoner återtagna och gatorna rensade (~5 min).
   </div>
   <label id="nightopt" style="margin-top:18px;font-size:15px;color:#a8c4dd;cursor:pointer;display:flex;align-items:center;gap:8px;">
@@ -150,7 +150,7 @@
 <div class="hud" id="hitmarker"></div>
 <div id="minimap"><canvas id="mm" width="440" height="440"></canvas></div>
 <div id="bigmap" style="position:fixed;inset:0;background:rgba(6,10,16,.82);z-index:40;display:none;align-items:center;justify-content:center;flex-direction:column;">
-  <div id="bmhint" style="color:#eef3f8;font-size:13px;margin-bottom:8px;opacity:.8">TAKTISK KARTA — tryck <b>M</b> för att stänga</div>
+  <div id="bmhint" style="color:#eef3f8;font-size:13px;margin-bottom:8px;opacity:.8">TAKTISK KARTA — <b>scroll</b> eller <b>+/−</b> zoomar · <b>M</b> stänger</div>
   <canvas id="bm" style="max-width:92vw;max-height:86vh;border:2px solid rgba(255,255,255,.3);border-radius:6px"></canvas>
 </div>
 <div class="hud" id="attrib">Kartdata © OpenStreetMap-bidragsgivarna · Flygbild &amp; höjddata © Lantmäteriet (CC BY 4.0)</div>
@@ -163,8 +163,9 @@
 <div id="btnMap" class="tc">KARTA</div>
 <div id="rotatehint">📱 Vrid till liggande läge</div>
 
-<script src="data.js?v=24"></script>
-<script src="flats.js?v=2"></script>
-<script type="module" src="game.js?v=29"></script>
+<script src="data.js?v=25"></script>
+<script src="flats.js?v=3"></script>
+<script src="husfakta.js?v=1"></script>
+<script type="module" src="game.js?v=30"></script>
 </body>
 </html>

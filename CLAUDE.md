@@ -17,10 +17,15 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 
 - `public/` — hela spelet, statiska filer utan byggsteg
   - `game.js` — all spellogik/rendering (Three.js, vendorerad `three.module.js`)
-  - `data.js` — genererad kartdata (terräng, hus med takfärger, vägar, murar, landmärken)
+  - `data.js` — genererad kartdata (terräng, hus med takfärger + OSM-id/husfakta-taggar, vägar
+    med OSM-id, murar, landmärken)
+  - `flats.js` — genererade byggda plana ytor + brokedjor (med OSM-way-id:n)
+  - `husfakta.js` — handförfattat: hur enskilda hus ser ut (farg/vaningar/tak/material/skylt)
   - `ortho.jpg` — Lantmäteriets ortofoto 0,16 m (CC BY 4.0), lat/lon-linjärt
 - `tools/` — Python-datapipeline (OSM Overpass → terräng-tiles → ortofoto → `data.js`);
-  venv i `tools/venv/`. Ordning: `fetch_tiles.py` → `fetch_ortho*.py` → `build_data2.py`
+  venv i `tools/venv/`. Ordning: `bbox.py` (bbox = enda sanningen) → `fetch_tiles.py` →
+  `fetch_ortho*.py` → `fetch_lidar.py` → `build_classmap.py` → `build_data2.py` → `build_flats.py`;
+  `husfakta_lista.py` ger kandidatlistan för husfakta
 - `.github/workflows/deploy.yml` — push till `main` deployar `public/` till GitHub Pages
 
 ## Arbetsflöden
@@ -43,8 +48,11 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
   `window.__frame(dt)`, `window.__game`, `window.__look(yaw,pitch)`, `window.__fire()`.
   Starta via klick-event på `#overlay` (preview_click når inte lyssnaren; använd
   `dispatchEvent(new MouseEvent('click',{bubbles:true}))`)
-- **Cache:** webbläsaren cachar aggressivt — bumpa `?v=N` på `data.js`/`game.js`
-  i `index.html` vid varje ändring av dem
+- **Cache:** webbläsaren cachar aggressivt — bumpa `?v=N` på `data.js`/`game.js`/`flats.js`/
+  `husfakta.js` i `index.html` vid varje ändring av dem
+- **Geometri-/gångytefel:** felsök med proben, inte ögat — `__game.groundInfoAt/bridgeChains/
+  roadSegs` är exponerade; gå 1 m-steg längs vägar/kedjor med refY-spårning och räkna hopp
+  (recept i ARKITEKTUR.md under Broar)
 - **Deploy:** committa + pusha till `main` (Joel har godkänt push); sajten:
   https://kytioisacat.github.io/kvarnbyn-fps/ — repo: KytioisaCat/kvarnbyn-fps
   (Joels privata GitHub-konto, INTE jobbkontot; aldrig GitLab)

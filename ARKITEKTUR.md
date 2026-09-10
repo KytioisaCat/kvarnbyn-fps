@@ -46,9 +46,14 @@ overpass_query.txt ──curl──► osm_raw.json
 fetch_ortho_lm.py  ────────► cache/*.tif ─► ortho_full.png (6711×4530) + ortho.jpg (4k)
 make_ortho8k.py    ────────► (ur cache) ─► public/ortho.jpg (8192px, 0,26 m/px)
 fetch_lidar.py     ────────► cache/*.tif ─► lidar_full.npy (2144×1447, 1 m)
-build_classmap.py  ────────► public/classmap.png (1072×724, 2 m/cell)
-build_data2.py     ────────► public/data.js (~4 MB)
+build_classmap.py  ────────► public/classmap.png (1608×1086, 2 m/cell)
+build_data2.py     ────────► public/data.js (~9 MB; hus/vägar bär OSM-way-id + husfakta-taggar)
+build_flats.py     ────────► public/flats.js (byggda plana ytor + brokedjor med way-id:n)
+husfakta_lista.py  ────────► husfakta_kandidater.md (hus att titta på → public/husfakta.js, för hand)
 ```
+
+Bbox:en är en enda sanning i `tools/bbox.py` (Pass A, 2026-09) — kartan växte +50 % i radie
+(Pass B) med oförändrat centrum så alla spelkoordinater är stabila.
 
 - **Allt är lat/lon-linjärt**: spelkoordinat x = (lon−12.026)·59560 m, z = −(lat−57.656)·111320 m.
   Ortho/klasskarta/terräng delar exakt samma mappning → terrängens UV = (x,z) normaliserat.
@@ -96,19 +101,42 @@ Bärande delsystem och deras beslut:
   **Nya hinder måste in i rätt hash**, annars går kulor igenom.
 - **Tak**: alla tak bär spelaren. Platta = topY; sadeltak = interpolerad höjd nock→takfot
   (`roofYAt`); 0,6 m step-up-assist vid kanter. Sadeltaksinfo sparas per byggnad (`gable`).
+- **Husfakta** (2026-09-10): hur enskilda hus SER UT ligger som data, inte kod. Två källor slås
+  ihop per hus i `factsFor`: OSM-taggar ur data.js (`lv` våningar, `col` kulör, `rs` takform,
+  `mat` material, `addr`) och `public/husfakta.js` (handförfattat, nyckel `w<OSM-id>` eller adress;
+  fält farg/vaningar/hojd/tak/takfarg/material/skylt/kommentar/kalla). Arbetssättet är KRAVSPEC
+  §4:s: **titta** på foton/Street View som referens och beskriv i ord — aldrig pixlar in i
+  spelet. `tools/husfakta_lista.py` genererar kandidatlistan med länkar. Svenska färgnamn och
+  CSS-namn stöds; OSM:s skrikiga namn ('yellow') dämpas i HSL. Tegel är tredje fasadmaterial.
+  `skylt` blir en textplatta på fasaden som vetter mot närmaste gata (roadHash-probe 3 m ut).
 - **Byggnader**: nästan-rektangulära fotavtryck snappas till minsta omslutande rektangel
   (fyller ≥68 %); småhus < 350 m² får träpanel, större slät puts (två fasadtexturer);
   vita kulörer (Joels fakta: Kvarnbyn är vita trä-/putshus); ~hälften av småhusen i
   kärnan (x 60–340, z −200–80) sänks till 1 våning (seedat på position = stabilt).
 - **Murar**: OSM-barriärer + **procedurella stödmurar** ur väg×terräng-tvärlutning
   (diff >1,35 m vid vägkant) + räcken där marken störtar (>2,2 m, hoppbara).
-- **Broar**: OSM `bridge=yes`-ways kedjas (namn+klass via delade ändnoder) till spann med
-  **plana däck landfäste→landfäste** (`bridgeDeckAt`) — markmodellen saknar brodäcken, så
-  draperade vägar dök annars ner i dalen (Mölndals bro låg på marken). Vägar samplar däcket
-  med **riktningsfilter** (annars kastas gatan under viadukten upp på bron), och
-  `groundInfoAt(x,z,refY)` ger däcket bara till den som är uppe på det — man kan gå under.
-  Otaggade broar: heuristiken solida däck där vägbana >0,9 m över mark **och <22 m från ån**
-  (annars falska broar i branta korsningar — inträffade vid Royens trappor).
+- **Broar** (v2, 2026-09-10): OSM `bridge=yes`-ways kedjas i `tools/build_flats.py` (namn+klass
+  via delade ändnoder) till spann med **linjärt däck landfäste→landfäste** och **OSM-way-id:n**.
+  Vägar kopplas till SIN kedja via way-id (`bridgeByWay`) — v1 matchade på närhet + riktning,
+  och då stal viadukten höjd åt gångbron intill medan gatan under ibland kastades upp.
+  Knutpunkter **mellan** broar (ändpunkt som ligger på en annan kedjas däck: ramp ↔ rondellen
+  uppe på Mölndals bro, cykelbana som ansluter mitt på viadukten) är inga landfästen — DTM:en
+  visar gatan under — och lyfts till **mark + 6 m** (fri höjd + däck) eller grannens nivå; inre
+  brytpunkter på en bredare parallell kedjas däck snappar till den (ramp upp, gemensam nivå,
+  ramp ner); lutningsspärr 10 % (den låga änden står annars i ett hål i DTM:en). Däcket är facit
+  på bron, marken får bara lyfta banan de sista 12 m mot ett riktigt landfäste. Rendering:
+  **sammanhängande däckband** med gering (v1:s per-segment-lådor med överlapp skar i varandra),
+  räcken som `guard_rail`-murar bara på fria kanter (körbana + gångbana på samma bro får inget
+  räcke emellan). `groundInfoAt(x,z,refY)` ger däcket bara till den som är uppe på det — man kan
+  gå under. Otaggade broar: heuristik där vägbana >0,9 m över mark **och <22 m från ån**.
+  **Mätmetod**: proben går 1 m-steg längs alla vägar/kedjor med refY-spårning via
+  `__game.groundInfoAt` och räknar höjdhopp >45 cm — 4 716 → 842 av 203 000 steg. Kör den igen
+  vid ändringar i vägar/broar/terräng (koden ligger i sessionsloggen 2026-09-10; ~40 rader JS).
+- **Gångyta = ritad bana**: `roadSegs.ya/yb` använder samma tvärsnitts-max som ribbon-renderingen
+  (med tak 1,2 m så kanten alltid är klivbar) — förr mättes gångytan i mittlinjen och fötterna
+  sjönk upp till 2,8 m ner i asfalten på tvärlutande gator (4 % av segmenten >40 cm).
+  `groundInfoAt` tar dessutom **närmaste segment per väg**: grannsegment längs samma lutande gata
+  gav (klämd projektion mot sin bortre ände) 1–1,5 m-hopp.
 - **Vägrendering**: polylinjer förtätas till 3,5 m-segment och varje tvärsnitt tar
   **max över bredden** (plan i tvärled, som riktiga vägar) — annars stack terrängbulor
   mitt på långa OSM-segment upp genom vägbanan ("grön jord i gatan").
@@ -125,6 +153,9 @@ Bärande delsystem och deras beslut:
   yaw = `atan2(-dx, -dz)` — `lookAt` pekar +Z och blir 180° fel!
 - **Spawns**: LOS + avståndsgate (aldrig <60 m eller i spelarens synfält) över tre
   infallsvägar (Forsebron, syd, öst).
+- **Kartor**: minikartan är zoombar (60–420 m radie; scrollhjul, +/− via `e.key` så svenskt
+  tangentbord fungerar, tryck på kartan på mobil; sparas i localStorage) med skalstock; taktiska
+  kartan zoomar 1–4,5× som ett utsnitt centrerat på spelaren, klämt mot kartkanten.
 - **Input**: desktop = pointer lock + WASD/mus; pekskärm (detekteras med `pointer: coarse`,
   tvingas med `#touch`/`#desktop` i URL:en) = DOM-touchkontroller: analog spak (full
   utstyrning = sprint, liten = smyg), sikt-drag på fri yta (första touchen utanför
@@ -165,6 +196,11 @@ Bärande delsystem och deras beslut:
 | Touchkontroller som DOM-element (inte ritade i canvas) | CSS sköter layout/safe-areas/media queries gratis; touch-targets får egna event utan hit-testning i JS |
 | Människobyggt = platt, natur = gropig (flats plattas i runtime, inte pipeline) | Ögat avslöjar vågig asfalt direkt men förlåter gropigt gräs; runtime-plattning ur flats.js slipper pipeline-körning och håller data.js orörd |
 | Närfältet ägs av detaljtexturer, fotot ger bara ljus + 35 % färg | Vårfotot är gråblekt — full fotomultiplikation smetade grått över gräsgrönskan; luminansen behåller ändå skuggor/solfläckar och kvällstonen |
+| Väg↔bro via OSM-way-id, inte närhet | Närhetsmatchning lät viadukten stjäla höjd åt gångbron intill (4–5 m-klippor uppmätta); id:n är exakta och gratis ur samma OSM-data |
+| Broknutar = mark + 6 m | DTM:en under en ramp↔rondell-knut är gatan nedanför; 6 m ≈ fri höjd + däck, och ramperna får då sin verkliga stigning |
+| Gångyta = ritad vägbana, närmaste segment per väg | Det ögat ser ska bära fötterna; max över alla grannsegment gav klämda höjder från bortre ändar |
+| Husfakta som data (husfakta.js + OSM-taggar) | Igenkänning kräver att enskilda hus kan rättas mot verkligheten, hus för hus, utan kodändring — och KRAVSPEC förbjuder bilder från karttjänster, så beskrivning i ord är vägen |
+| Mätdriven geometrifix (probe före/efter) | "Knasiga ytor" är omöjliga att felsöka med ögat i 3 400 hus och 2 500 vägar — proben pekade direkt på Mölndals bro, klämda projektioner och sjunkande gångyta |
 
 ## Kända skulder / öppna frågor
 
@@ -173,7 +209,10 @@ Bärande delsystem och deras beslut:
 - Joel ska peka ut **hemliga stigar** i skogen som saknas i OSM (ritas då in i datan).
 - Vårfotot: gräs/skog gråblekt → klasstintning kompenserar, men hösten 2025-fotot vore bättre
   om G2-området omflygs.
-- Fasaderna är procedurella (inte husens riktiga) — promenadfoton/drönare är planen (TODO).
+- Fasaderna är procedurella (inte husens riktiga) — husfakta.js är vägen att rätta dem hus för
+  hus (kandidatlista i tools/husfakta_kandidater.md); promenadfoton/drönare längre fram (TODO).
+- Broar: Gunnebogatans bro (NV) och cykelbanan vid Mölndals bros västra landfäste har kvar
+  1–2 m-steg; E6:ans broar saknar vägbana (`motorway` ej i ROAD_W); 20 tunnelvägar ritas på ytan.
 - Ljudlandskapet är minimalt (syntetiska skott, forsbrus) — punkt i backloggen.
 - `updateWaves` heter kvar så trots att vågorna är borta (befrielseläget) — omdöp vid tillfälle.
 

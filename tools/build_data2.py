@@ -72,7 +72,17 @@ for w in ways:
     if h is None:
         h = (levels or (1 if t['building'] in ('garage','garages','shed','carport') else 2))*3.0 + 1.5
     col = poly_color(pts) or '9a8f80'
-    buildings.append({'p':rnd(pts),'h':round(h,1),'t':t['building'],'n':t.get('name',''),'c':col})
+    b = {'id':w['id'],'p':rnd(pts),'h':round(h,1),'t':t['building'],'n':t.get('name',''),'c':col}
+    # husfakta ur OSM (ODbL) — första faktakällan för fasadrenderingen; public/husfakta.js
+    # kan skriva över per hus (nyckel 'w<id>' eller adress). Bara taggar som faktiskt finns.
+    if levels: b['lv'] = levels
+    if t.get('building:colour'): b['col'] = t['building:colour']
+    if t.get('roof:shape'): b['rs'] = t['roof:shape']
+    if t.get('roof:colour'): b['rc'] = t['roof:colour']
+    if t.get('building:material'): b['mat'] = t['building:material']
+    if t.get('addr:street') and t.get('addr:housenumber'):
+        b['addr'] = f"{t['addr:street']} {t['addr:housenumber']}"
+    buildings.append(b)
 print('buildings with colors:', len(buildings))
 
 ROAD_W = {'primary':9,'secondary':8,'tertiary':7,'residential':6,'living_street':5.5,'unclassified':6,
@@ -83,7 +93,10 @@ for w in ways:
     hw = t.get('highway')
     if hw not in ROAD_W: continue
     pts = way_coords(w)
-    if len(pts) >= 2: roads.append({'p':rnd(pts),'w':ROAD_W[hw],'k':hw,'n':t.get('name','')})
+    if len(pts) >= 2:
+        rd = {'id':w['id'],'p':rnd(pts),'w':ROAD_W[hw],'k':hw,'n':t.get('name','')}
+        if t.get('tunnel') and t['tunnel'] != 'no': rd['tu'] = 1   # tunnel/underfart (ritas ej som bro)
+        roads.append(rd)
 
 water = []
 for w in ways:

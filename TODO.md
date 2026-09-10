@@ -5,6 +5,15 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Backlogg (~30 min styck)
 
+- [ ] **Husfakta: fyll i hjältehusen** — gå igenom `tools/husfakta_kandidater.md` (93 hus med
+  Street View-länkar att TITTA på), skriv kulör/våningar/tak/material i `public/husfakta.js`
+  för Corpus, Kråkan, Götaforsliden-raden, Roten M, stadsmuseet (aldrig bilder in i spelet)
+- [ ] **Bro-rester** — Gunnebogatans bro (NV; OSM-ändarna ger 28 % däcklutning, nu klämd till 8 %)
+  och gång-/cykelbanan vid Mölndals bros västra landfäste (−800,180) har kvar 1–2 m-steg;
+  motorvägsbroarna (E6) saknar vägbana helt (`motorway` ej i ROAD_W) — proben: se ARKITEKTUR.md
+- [ ] **Tunnlar** — 20 vägar taggade tunnel (`tu:1` i data.js) ritas fortfarande som ytvägar;
+  rita underfart eller dölj dem under marken
+
 - [ ] **Frontlinje på kartorna** — tona fiendekontrollerat område rött på minimap/M-kartan
   med gränslinje + anfallspilar från de tre infallsvägarna (förslag 2 från frontlinje-rundan)
 
@@ -32,6 +41,28 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-09-10 — **Broar & gångytor v2** (mätdrivet: probe som går 1 m-steg längs alla vägar och
+  brodäck via debughookarna `__game.groundInfoAt/bridgeChains/roadSegs`): vägar kopplas till SIN
+  bro via OSM-way-id (`tools/build_flats.py` skriver `ids` per kedja, `build_data2.py` `id` per väg)
+  i stället för närhet + riktningsfilter — viadukten stal höjd åt gångbron intill; knutpunkter
+  mellan broar (ramp ↔ rondell uppe på Mölndals bro) är inga landfästen → mark + 6 m; spann som
+  ansluter på en bredare parallell bro snappar till dess nivå; lutningsspärr 10 %; gångytan är nu
+  exakt den ritade banan (tvärsnitts-max med tak 1,2 m — förr sjönk fötterna upp till 2,8 m i
+  asfalten) och `groundInfoAt` tar närmaste segment per väg (grannsegment på lutande gator gav
+  1–1,5 m-hopp). Resultat: 4 716 → 842 höjdhopp >45 cm på 203 000 provsteg. Däcken är
+  sammanhängande band med gering (inte överlappande lådor), räcken = kolliderbara/hoppbara
+  `guard_rail`-murar på fria kanter. flats/broar regenererade för hela nya kartan (173 → 365 ytor,
+  44 → 65 brokedjor)
+- [x] 2026-09-10 — **Zoombara kartor**: minikartan 60–420 m radie (scrollhjul, +/−, tryck på kartan
+  på mobil; sparas i localStorage) med skalstock; taktiska kartan (M) zoomar 1–4,5× centrerad på
+  spelaren med scroll/+/−
+- [x] 2026-09-10 — **Husfakta-lagret**: `public/husfakta.js` beskriver hur enskilda hus SER UT som
+  data (farg, vaningar, hojd, tak, takfarg, material, skylt; nyckel `w<OSM-id>` eller adress);
+  OSM-taggarna (151 hus med våningar, 60 med kulör, 26 med takform, 7 material) läses automatiskt
+  ur data.js och husfakta.js vinner; tegel som tredje fasadmaterial; skyltar på fasaden mot
+  närmaste gata (Corpus Pizzeria, Kråkans Krog, Mölndals stadsmuseum, Kulturhuset Möllan m.fl.);
+  `tools/husfakta_lista.py` → `husfakta_kandidater.md` med 93 hus + Street View-länkar att titta på
 
 - [x] 2026-08-08 — **Riktiga broar + vägar som aldrig försvinner**: OSM `bridge=yes` (59 ways)
   kedjas till spann med plana däck landfäste→landfäste — Mölndals bro finns nu på riktigt

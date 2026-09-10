@@ -28,6 +28,8 @@ CODE_FILES = [
     'tools/build_classmap.py',
     'tools/build_data.py',
     'tools/build_data2.py',
+    'tools/build_flats.py',
+    'tools/husfakta_lista.py',
     'tools/fetch_elev.py',
     'tools/fetch_lidar.py',
     'tools/fetch_ortho.py',
