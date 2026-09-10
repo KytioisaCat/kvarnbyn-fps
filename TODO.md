@@ -54,6 +54,12 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
   sammanhängande band med gering (inte överlappande lådor), räcken = kolliderbara/hoppbara
   `guard_rail`-murar på fria kanter. flats/broar regenererade för hela nya kartan (173 → 365 ytor,
   44 → 65 brokedjor)
+- [x] 2026-09-10 — **Broar v2.1 (Joels speltest: "sticker upp i ingenting")**: v2.0:s knutregel lade
+  +6 m på varje ändpunkt som delade nod med en annan brokedja → 30 kedjor lyfta, små gångbroar
+  över ån svävade och en trappa vid (−168,−199) blev ett 26 m-torn. Nu: bara viadukter (korsar
+  annan väg) deltar, knutar tar grannens faktiska däckhöjd, rondellen seedas, branta (>25 %)
+  kedjor släpps → 12 lyfta ändar, alla i trafikplatsen Mölndals bro. Verifierat från luften och
+  vägbanan; `window.__THREE` exponerad för raycast-felsökning
 - [x] 2026-09-10 — **Zoombara kartor**: minikartan 60–420 m radie (scrollhjul, +/−, tryck på kartan
   på mobil; sparas i localStorage) med skalstock; taktiska kartan (M) zoomar 1–4,5× centrerad på
   spelaren med scroll/+/−

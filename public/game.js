@@ -329,39 +329,84 @@ function chainDeckAt(ch, x, z) {
     for (const id of ch.ids) bridgeByWay.set(id, bridgeChains.length);
     bridgeChains.push(ch);
   }
-  // knutpunkter MELLAN broar (ramp ↔ rondellen uppe på Mölndals bro, cykelbana som ansluter
-  // mitt på viadukten): en ändpunkt som ligger på en annan brokedjas däck är inget landfäste —
-  // "marken" där är gatan under viadukten (proben visade rondellen på marknivå och 4,5 m-
-  // klippor där ramperna mötte den). Sådana ändar lyfts till mark + 6 m (fri höjd + däck)
-  // eller grannens däckhöjd om den är högre; två varv så att ramper ser rondellens lyfta nivå.
+  // Vilka kedjor är VIADUKTER (korsar en annan väg som inte själv är bro/tunnel)? Bara sådana får
+  // upphöjda knutpunkter — v2.0 lyfte alla ändar som delade nod med en annan brokedja 6 m, och då
+  // svävade små gångbroar över ån (två ways som möts på stranden) i luften utan ramp.
+  const nonBridgeRoads = D.roads.filter(rd => !rd.tu && !(rd.id !== undefined && bridgeByWay.has(rd.id)));
+  const segCross = (ax, az, bx, bz, cx, cz, dx, dz) => {
+    const d1 = (bx - ax) * (cz - az) - (bz - az) * (cx - ax), d2 = (bx - ax) * (dz - az) - (bz - az) * (dx - ax);
+    const d3 = (dx - cx) * (az - cz) - (dz - cz) * (ax - cx), d4 = (dx - cx) * (bz - cz) - (dz - cz) * (bx - cx);
+    return d1 * d2 < 0 && d3 * d4 < 0;
+  };
+  for (const ch of bridgeChains) {
+    let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity;
+    for (const [x, z] of ch.pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); z0 = Math.min(z0, z); z1 = Math.max(z1, z); }
+    ch.overpass = false;
+    outer: for (const rd of nonBridgeRoads) {
+      for (let i = 0; i < rd.p.length - 1; i++) {
+        const [cx, cz] = rd.p[i], [dx, dz] = rd.p[i + 1];
+        if (Math.max(cx, dx) < x0 - 1 || Math.min(cx, dx) > x1 + 1 || Math.max(cz, dz) < z0 - 1 || Math.min(cz, dz) > z1 + 1) continue;
+        for (let k = 1; k < ch.pts.length; k++) {
+          // korsning en bit in på spannet (inte i själva landfästet där vägarna möts på marken)
+          if (segCross(ch.pts[k - 1][0], ch.pts[k - 1][1], ch.pts[k][0], ch.pts[k][1], cx, cz, dx, dz)) {
+            const mx = (cx + dx) / 2, mz = (cz + dz) / 2;
+            const dA = Math.hypot(mx - ch.pts[0][0], mz - ch.pts[0][1]), dB = Math.hypot(mx - ch.pts[ch.pts.length - 1][0], mz - ch.pts[ch.pts.length - 1][1]);
+            if (Math.min(dA, dB) > 6) { ch.overpass = true; break outer; }
+          }
+        }
+      }
+    }
+  }
+  // Branta "broar" (>25 %) är trappor/ramper på en bergssida taggade bridge — ett linjärt däck
+  // blev där ett 26 m högt torn (uppmätt vid −168,−199). De släpps: vägen draperas på marken.
+  for (const ch of bridgeChains) if (Math.abs(ch.yb - ch.ya) / ch.len > 0.25) { ch.dropped = true; for (const id of ch.ids) bridgeByWay.delete(id); }
+  const live = bridgeChains.filter(ch => !ch.dropped);
   const linDeck = ch => ch.cum.map(sd => ch.ya + (ch.yb - ch.ya) * sd / ch.len);
   for (const ch of bridgeChains) ch.vy = linDeck(ch);
-  for (let pass = 0; pass < 2; pass++) {
-    for (const ch of bridgeChains) {
+  // Knutpunkter MELLAN broar (ramp ↔ rondellen uppe på Mölndals bro, cykelbana som ansluter
+  // mitt på viadukten): en ändpunkt som ligger på en annan kedjas däck tar DEN kedjans faktiska
+  // däckhöjd där — vid rampens landfäste är det marken (ingen lyftning), uppe på viadukten är det
+  // däcket. v2.0 lade alltid på +6 m i knutar → gångstigar svävade vid brofästena. Utan landfästen
+  // alls (rondellen: sluten slinga) finns ingen känd höjd — den seedas till mark + 6 m (fri höjd +
+  // däck) och ramperna hämtar sedan sin topp därifrån. Tre varv så höjden hinner sprida sig.
+  const groundAt = P => origHeightAt(P[0], P[1]);
+  for (const ch of live) {
+    const A = ch.pts[0], B = ch.pts[ch.pts.length - 1];
+    if (Math.hypot(A[0] - B[0], A[1] - B[1]) < 2 && live.some(o => o !== ch && o.overpass &&
+        (chainDeckAt(ch, o.pts[0][0], o.pts[0][1]).d < ch.hw + 1.5 || chainDeckAt(ch, o.pts[o.pts.length - 1][0], o.pts[o.pts.length - 1][1]).d < ch.hw + 1.5))) {
+      ch.ya = ch.yb = groundAt(A) + 6.0; ch.gA = ch.gB = false; ch.seeded = true; ch.vy = linDeck(ch);
+    }
+  }
+  for (let pass = 0; pass < 3; pass++) {
+    for (const ch of live) {
+      if (ch.seeded) continue;
       for (const e of [0, 1]) {
         const P = e === 0 ? ch.pts[0] : ch.pts[ch.pts.length - 1];
-        let yk = null;
-        for (const o of bridgeChains) {
-          if (o === ch) continue;
+        const g = groundAt(P);
+        let yk = -Infinity;
+        for (const o of live) {
+          if (o === ch || !(ch.overpass || o.overpass || o.seeded)) continue;
           const r = chainDeckAt(o, P[0], P[1]);
-          if (r.d < o.hw + 1.5) yk = Math.max(yk ?? -Infinity, origHeightAt(P[0], P[1]) + 6.0, r.y);
+          if (r.d < o.hw + 1.5) yk = Math.max(yk, r.y);
         }
-        if (yk === null) continue;
-        if (e === 0) { ch.ya = Math.max(ch.ya, yk); ch.gA = false; } else { ch.yb = Math.max(ch.yb, yk); ch.gB = false; }
+        if (yk < g + 1.0) continue; // grannen står på marken här → detta är ett landfäste
+        yk = Math.min(yk, g + 9.0);
+        if (e === 0) { ch.ya = yk; ch.gA = false; } else { ch.yb = yk; ch.gB = false; }
       }
       ch.vy = linDeck(ch);
     }
   }
-  // lutningsspärr: ett däck lutar inte >10 % — då står den låga änden i ett hål i DTM:en
-  // (underfarten under brofästet) och lyfts så att lutningen blir 8 %
-  for (const ch of bridgeChains) {
-    if (Math.abs(ch.yb - ch.ya) / ch.len > 0.10) {
-      if (ch.ya < ch.yb) { ch.ya = ch.yb - 0.08 * ch.len; ch.gA = false; } else { ch.yb = ch.ya - 0.08 * ch.len; ch.gB = false; }
+  // Lutningsspärr bara för viadukter: en bilbro lutar inte >10 % — då står den låga änden i
+  // ett hål i DTM:en (underfarten) och lyfts så lutningen blir 8 % (högst 8 m)
+  for (const ch of live) {
+    if (ch.overpass && ch.hw >= 2 && Math.abs(ch.yb - ch.ya) / ch.len > 0.10) {
+      const target = Math.max(ch.ya, ch.yb) - 0.08 * ch.len;
+      if (ch.ya < ch.yb) { ch.ya = Math.min(target, ch.ya + 8); ch.gA = false; } else { ch.yb = Math.min(target, ch.yb + 8); ch.gB = false; }
       ch.vy = linDeck(ch);
     }
   }
   // gemensam nivå för spann på samma bro (bredast först så mästarna är klara innan de smalare snappar)
-  const order = bridgeChains.map((c, i) => i).sort((i, j) => bridgeChains[j].hw - bridgeChains[i].hw);
+  const order = live.map(c => bridgeChains.indexOf(c)).sort((i, j) => bridgeChains[j].hw - bridgeChains[i].hw);
   for (const ci of order) {
     const ch = bridgeChains[ci];
     for (let k = 1; k < ch.pts.length - 1; k++) {
@@ -382,6 +427,7 @@ function chainDeckAt(ch, x, z) {
 function bridgeDeckAt(x, z) {
   let best = null, bd = Infinity;
   for (const ch of bridgeChains) {
+    if (ch.dropped) continue;
     const r = chainDeckAt(ch, x, z);
     if (r.d < ch.hw + 2.5 && r.d < bd) { bd = r.d; best = r.y; }
   }
@@ -3578,6 +3624,7 @@ animate();
 window.__frame = (dt) => { clock.elapsedTime += dt; frame(dt); };
 window.__game = { game, player, enemies, allies, capState, spawnEnemy, D, heightAt, origHeightAt, groundInfoAt, roofSupportAt, bridgeDeckAt, bridgeChains, roadSegs, scene, terrainMesh, orthoTex, renderer, camera, wallSegs, forestAt: (x, z) => forestAt(x, z), hasLOS, bldPolys, roofYAt, graph, findPath, nearestNode };
 window.__keys = keys;
+window.__THREE = THREE; // debug: raycast/inspektion från konsolen
 window.__fire = () => playerShoot();
 window.__look = (yaw, pitch) => { player.yaw = yaw; player.pitch = pitch; };
 

@@ -120,11 +120,20 @@ Bärande delsystem och deras beslut:
   Vägar kopplas till SIN kedja via way-id (`bridgeByWay`) — v1 matchade på närhet + riktning,
   och då stal viadukten höjd åt gångbron intill medan gatan under ibland kastades upp.
   Knutpunkter **mellan** broar (ändpunkt som ligger på en annan kedjas däck: ramp ↔ rondellen
-  uppe på Mölndals bro, cykelbana som ansluter mitt på viadukten) är inga landfästen — DTM:en
-  visar gatan under — och lyfts till **mark + 6 m** (fri höjd + däck) eller grannens nivå; inre
-  brytpunkter på en bredare parallell kedjas däck snappar till den (ramp upp, gemensam nivå,
-  ramp ner); lutningsspärr 10 % (den låga änden står annars i ett hål i DTM:en). Däcket är facit
-  på bron, marken får bara lyfta banan de sista 12 m mot ett riktigt landfäste. Rendering:
+  uppe på Mölndals bro, cykelbana som ansluter mitt på viadukten) tar **grannens faktiska
+  däckhöjd där** — vid rampens landfäste är det marken, uppe på viadukten är det däcket. Bara
+  kedjor som bevisligen är **viadukter** (korsar en annan väg som inte själv är bro/tunnel, en
+  bit in på spannet) får delta i knutlyft; rondellen (sluten slinga utan landfästen) **seedas**
+  till mark + 6 m och ramperna hämtar sin topp därifrån (tre varv). v2.0 lade alltid på +6 m i
+  varje knut → små gångbroar över ån och stigar vid brofästena svävade i luften utan ramp
+  ("sticker upp i ingenting", Joel 2026-09-10). **Branta "broar" (>25 %) släpps** helt — det är
+  trappor/ramper på en bergssida taggade bridge; ett linjärt däck blev ett 26 m högt torn vid
+  (−168,−199). Inre brytpunkter på en bredare parallell kedjas däck snappar till den (ramp upp,
+  gemensam nivå, ramp ner); lutningsspärr 10 % bara för viadukter med bilväg (högst 8 m lyft).
+  Däcket är facit på bron, marken får bara lyfta banan de sista 12 m mot ett riktigt landfäste.
+  **Verifiera alltid från luften och från vägbanan** (`__aerial`/`__onRoad`-hjälpare i sessions-
+  loggen; `window.__THREE` finns för raycast) — en provkamera som råkar stå inne i ett hus ser
+  en jättevägg och lurar en att jaga brofel som inte finns. Rendering:
   **sammanhängande däckband** med gering (v1:s per-segment-lådor med överlapp skar i varandra),
   räcken som `guard_rail`-murar bara på fria kanter (körbana + gångbana på samma bro får inget
   räcke emellan). `groundInfoAt(x,z,refY)` ger däcket bara till den som är uppe på det — man kan
@@ -197,7 +206,7 @@ Bärande delsystem och deras beslut:
 | Människobyggt = platt, natur = gropig (flats plattas i runtime, inte pipeline) | Ögat avslöjar vågig asfalt direkt men förlåter gropigt gräs; runtime-plattning ur flats.js slipper pipeline-körning och håller data.js orörd |
 | Närfältet ägs av detaljtexturer, fotot ger bara ljus + 35 % färg | Vårfotot är gråblekt — full fotomultiplikation smetade grått över gräsgrönskan; luminansen behåller ändå skuggor/solfläckar och kvällstonen |
 | Väg↔bro via OSM-way-id, inte närhet | Närhetsmatchning lät viadukten stjäla höjd åt gångbron intill (4–5 m-klippor uppmätta); id:n är exakta och gratis ur samma OSM-data |
-| Broknutar = mark + 6 m | DTM:en under en ramp↔rondell-knut är gatan nedanför; 6 m ≈ fri höjd + däck, och ramperna får då sin verkliga stigning |
+| Broknutar tar grannens däckhöjd; bara rondellen seedas mark + 6 m; branta broar släpps | +6 m i alla knutar (v2.0) fick gångbroar att sväva; grannens faktiska höjd är marken vid landfästen och däcket på viadukten. DTM:en under rondellen är gatan nedanför → 6 m ≈ fri höjd + däck |
 | Gångyta = ritad vägbana, närmaste segment per väg | Det ögat ser ska bära fötterna; max över alla grannsegment gav klämda höjder från bortre ändar |
 | Husfakta som data (husfakta.js + OSM-taggar) | Igenkänning kräver att enskilda hus kan rättas mot verkligheten, hus för hus, utan kodändring — och KRAVSPEC förbjuder bilder från karttjänster, så beskrivning i ord är vägen |
 | Mätdriven geometrifix (probe före/efter) | "Knasiga ytor" är omöjliga att felsöka med ögat i 3 400 hus och 2 500 vägar — proben pekade direkt på Mölndals bro, klämda projektioner och sjunkande gångyta |
