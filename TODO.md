@@ -7,12 +7,9 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 Delmålen M0–M5 och reglerna står i `v2/PLAN.md` — bocka av där och notera datum här.
 
-- [ ] M0 Skalet: deployat till /v2/ (2026-10-21, verifierat 200) — **återstår**: `npm install` på
-  bra nät (~15–20 MB: `three` + `@types/three` saknas i npm-cachen), lockfile committad,
-  Joel ser skalet på telefonen
-- [ ] M1 Terrängen: **kod skriven 2026-10-21 men obyggd** (`v2/src/world|terrain|sky|controls|main.ts`,
-  data exporterad av `tools/build_v2.py`) — efter `npm install`: `npm run build`, smoke-test i
-  preview (launch.json → `v2`), pusha, Joel-test på telefonen: "känns Götaforsliden lika brant?"
+- [ ] M1 Terrängen: **byggd och pushad 2026-10-21, väntar på Joel-test på telefonen**
+  ("känns Götaforsliden lika brant?", fps, ser marken ut som mark?). Kvar i M1: CSM-skuggor,
+  riktiga PBR-texturer (CC0, kräver nedladdning), åfåran/vatten
 - [ ] M2 Husen · M3 Gatubild & vegetation · M4 Kväll · M5 Spelet (se PLAN.md)
 
 ## v1-backlogg (FRYST 2026-10-21 — v1 är referens, bara hotfixar på Joels begäran)
@@ -57,8 +54,10 @@ Delmålen M0–M5 och reglerna står i `v2/PLAN.md` — bocka av där och notera
 - [x] 2026-10-21 — **v2 lokalt i stället för molnet**: molnformuleringar bort ur docs, `v2`-server i
   `.claude/launch.json` (Vite 5173), `tools/build_v2.py` exporterar `height.png` (1 m, RGB hi/lo-
   byte), `classmap.png`, `ortho_8k/4k.jpg`, `meta.json` till `v2/public/data/` (committat, 19 MB);
-  M1-motorkod skriven (terräng-LOD 128 m-rutor 1/2/4/8/16 m med kjolar, ortofoto + procedurell
-  klassdetalj nära, Sky + sol med följande skuggkamera + PMREM-IBL, FPS-styrning mus/touch)
+  M1-motorkod (terräng-LOD 128 m-rutor 1/2/4/8/16 m med kjolar, ortofoto + v1:s procedurella
+  markdetaljer nära, Sky + sol med följande skuggkamera + PMREM-IBL, FPS-styrning mus/touch)
+- [x] 2026-10-21 — **M0 klart, M1 byggd**: `npm install` (three 0.180, vite 6.4.4), lockfile committad,
+  `npm run build` grönt, smoke-testat i preview (442 rutor, 0,77 M tri, inga konsolfel), pushat
 
 - [x] 2026-10-21 — **Förberett för v2 i molnet**: `v2/` scaffold (Vite/TS/Three.js, `PLAN.md`),
   deploy-workflow bygger v2 under `/v2/` med v1 kvar på roten, `.claude/cloud-setup.sh`,

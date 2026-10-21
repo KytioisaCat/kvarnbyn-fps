@@ -60,18 +60,23 @@ Mobil först: KTX2-texturer, Draco/meshopt, LOD, budget ~60 fps på Joels telefo
 
 ## Delmål (i ordning)
 
-- [ ] **M0 Skalet**: `npm install`, lockfile committad, bygget deployar till `/v2/` (✓ 2026-10-21),
-      Joel ser skalet på telefonen med renderarnamn i statusraden.
+- [x] **M0 Skalet** (2026-10-21): `npm install`, lockfile committad, bygget deployar till `/v2/`.
+      (Joel ser skalet på telefonen — bekräftas i samband med M1.)
 - [ ] **M1 Terrängen**: `tools/build_v2.py` → höjdkarta + klasskarta (✓); terrängmesh med LOD,
       ortofoto på håll + procedurell klassdetalj nära (riktiga PBR-texturer när nät finns),
-      FPS-kamera med WASD/touch, sol + himmel + skuggor + tonemapping (kod ✓ 2026-10-21, obyggd).
-      Joel-test: "känns Götaforsliden lika brant?"
+      FPS-kamera med WASD/touch, sol + himmel + skuggor + tonemapping (✓ byggt, smoke-testat
+      och pushat 2026-10-21 — 442 rutor, 0,77 M tri, 227 draw calls).
+      **Väntar på Joel-test**: "känns Götaforsliden lika brant?" Återstår i M1: CSM-skuggor,
+      riktiga PBR-texturer (CC0) när nät finns, åfåre-nedskärning + vatten (kan bli M3).
 
 Moduler (`src/`): `world.ts` (meta + höjdfält, `heightAt` = rå × 1,2 som v1), `terrain.ts`
 (128 m-rutor, LOD 1/2/4/8/16 m efter avstånd 150/380/850/1600 m, kjolar mot sprickor, normaler
 ur 1 m-fältet, CCW uppifrån; material = MeshStandard + `onBeforeCompile`-detalj ur klasskartan),
-`sky.ts` (three/addons `Sky`, sol 34° från SV, en skuggkamera 220 m som följer spelaren — CSM
-senare), `controls.ts` (pointer lock + touch: vänster halva gå, höger titta), `main.ts`.
+`ground.ts` (v1:s canvasgenererade detaljtexturer asfalt/gräs/skog/berg + makrobrus, porterade
+rakt av — blandningsformeln i shadern är också v1:s: klasstonat foto på håll, detalj × fotoljus
+nära 30–110 m, branta ytor → berg), `sky.ts` (three/addons `Sky`, sol 34° från SV, en skugg-
+kamera 220 m som följer spelaren — CSM senare), `controls.ts` (pointer lock + touch: vänster
+halva gå, höger titta), `main.ts`.
 Debughookar: `__frame(dt)`, `__look(yaw,pitch)`, `__tp(x,z)`, `__v2.{world,terrain,player,…}`.
 - [ ] **M2 Husen**: fotavtryck → väggar/tak, fasadgenerator från husfakta, skuggor.
       Joel-test: hjältehusen igenkännbara.

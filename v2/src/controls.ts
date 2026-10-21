@@ -53,7 +53,10 @@ export class FpsControls {
     dom.addEventListener('touchcancel', end);
   }
 
-  lock(): void { if (!this.isTouch) this.dom.requestPointerLock?.(); }
+  lock(): void {
+    if (this.isTouch) return;
+    try { (this.dom.requestPointerLock() as unknown as Promise<void> | undefined)?.catch?.(() => {}); } catch { /* headless/iframe: ingen pointer lock */ }
+  }
 
   look(dyaw: number, dpitch: number): void {
     this.yaw += dyaw;

@@ -6,6 +6,7 @@ import { World, SPAWN, DATA_URL } from './world';
 import { Terrain, makeTerrainMaterial } from './terrain';
 import { Daylight } from './sky';
 import { FpsControls } from './controls';
+import { makeGroundTextures } from './ground';
 
 const app = document.getElementById('app')!;
 const overlay = document.getElementById('overlay')!;
@@ -62,7 +63,9 @@ async function init() {
   classmap.minFilter = THREE.LinearFilter; classmap.magFilter = THREE.LinearFilter;
   classmap.generateMipmaps = false;
 
-  terrain = new Terrain(world, makeTerrainMaterial(world, ortho, classmap));
+  say('ritar markdetaljer …');
+  const ground = makeGroundTextures(Math.min(4, renderer.capabilities.getMaxAnisotropy()));
+  terrain = new Terrain(world, makeTerrainMaterial(world, ortho, classmap, ground));
   scene.add(terrain.group);
   daylight = new Daylight(renderer, scene, isMobile);
 

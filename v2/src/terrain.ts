@@ -3,6 +3,7 @@
 // så backarna ser lika ut på håll. Trianglar CCW sedda uppifrån (annars backface-cullas allt).
 import * as THREE from 'three';
 import { World } from './world';
+import type { GroundTextures } from './ground';
 
 const TILE = 128;
 const LOD_STEPS = [1, 2, 4, 8, 16];
@@ -101,48 +102,65 @@ export class Terrain {
   }
 }
 
-/** Terrängmaterial: ortofotot som färg på håll; nära blandas klasskartan in som
- *  procedurell detalj (gräs/asfalt/skog/berg — tills riktiga PBR-texturer laddas ner). */
-export function makeTerrainMaterial(world: World, ortho: THREE.Texture, classmap: THREE.Texture): THREE.MeshStandardMaterial {
+/** Terrängmaterial: ortofotot som färg på håll (klasstonat — vårfotot är gråblekt); nära
+ *  blandas v1:s procedurella detaljtexturer in per markklass, med fotot som ljus/makrofärg.
+ *  Blandningsformeln är v1:s (public/game.js, kalibrerad), minus det bakade ljuset som här
+ *  kommer från riktig belysning + skuggor. Branta ytor blir berg oavsett klass. */
+export function makeTerrainMaterial(world: World, ortho: THREE.Texture, classmap: THREE.Texture, det: GroundTextures): THREE.MeshStandardMaterial {
   const m = world.meta;
   const mat = new THREE.MeshStandardMaterial({ map: ortho, roughness: 0.95, metalness: 0 });
   const uniforms = {
     uClass: { value: classmap },
     uBounds: { value: new THREE.Vector4(m.x0, m.z1, 1 / (m.x1 - m.x0), 1 / (m.z0 - m.z1)) },
+    detA: { value: det.asphalt }, detG: { value: det.grass }, detF: { value: det.forest }, detR: { value: det.rock }, detN: { value: det.macro },
   };
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+      .replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\nvarying float vSlope;')
+      .replace('#include <begin_vertex>', `#include <begin_vertex>
+vWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
+vSlope = min(1.0, (1.0 - normal.y) * 2.2);`);
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
 varying vec3 vWPos;
+varying float vSlope;
 uniform sampler2D uClass;
 uniform vec4 uBounds;
-float kvHash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
-float kvNoise(vec2 p) {
-  vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
-  return mix(mix(kvHash(i), kvHash(i + vec2(1.0, 0.0)), f.x), mix(kvHash(i + vec2(0.0, 1.0)), kvHash(i + vec2(1.0, 1.0)), f.x), f.y);
-}`)
+uniform sampler2D detA, detG, detF, detR, detN;
+vec4 kvW;   // klassvikter: asfalt, gräs, skog, berg`)
       .replace('#include <map_fragment>', `#include <map_fragment>
-vec2 kvUv = vec2((vWPos.x - uBounds.x) * uBounds.z, 1.0 - (vWPos.z - uBounds.y) * uBounds.w);
-vec3 kvCls = texture2D(uClass, kvUv).rgb;                       // R asfalt, G gräs, B skog
-float kvRock = clamp(1.0 - kvCls.r - kvCls.g - kvCls.b, 0.0, 1.0); // svart = berg
-float kvNear = 1.0 - smoothstep(25.0, 180.0, length(vWPos - cameraPosition));
-float n1 = kvNoise(vWPos.xz * 0.8), n2 = kvNoise(vWPos.xz * 6.0), n3 = kvNoise(vWPos.xz * 23.0);
-vec3 kvTint = vec3(1.0);
-kvTint = mix(kvTint, vec3(0.88, 1.06, 0.78), kvCls.g * 0.55);
-kvTint = mix(kvTint, vec3(0.70, 0.84, 0.62), kvCls.b * 0.55);
-kvTint = mix(kvTint, vec3(0.80, 0.80, 0.83), kvCls.r * 0.40);
-kvTint = mix(kvTint, vec3(1.06, 1.02, 0.96), kvRock * 0.35);
-float kvGrain = (n1 - 0.5) * (0.08 + 0.22 * kvCls.g + 0.18 * kvCls.b + 0.28 * kvRock)
-              + (n2 - 0.5) * (0.05 + 0.14 * kvCls.g + 0.10 * kvCls.b + 0.12 * kvRock + 0.04 * kvCls.r)
-              + (n3 - 0.5) * (0.03 + 0.06 * kvCls.g + 0.05 * kvRock + 0.05 * kvCls.r);
-diffuseColor.rgb *= mix(vec3(1.0), kvTint * (1.0 + kvGrain), kvNear);`)
+{
+  vec2 kvUv = vec2((vWPos.x - uBounds.x) * uBounds.z, 1.0 - (vWPos.z - uBounds.y) * uBounds.w);
+  vec3 sp = texture2D(uClass, kvUv).rgb;                        // R asfalt, G gräs, B skog
+  float wRock = clamp(1.0 - sp.r - sp.g - sp.b, 0.0, 1.0);      // svart = berg
+  wRock = max(wRock, smoothstep(0.55, 0.8, vSlope) * 0.85);     // branta ytor blir berg
+  vec4 w = pow(vec4(sp.r, sp.g, sp.b, wRock), vec4(1.35));      // skärp klassgränserna
+  w /= max(w.x + w.y + w.z + w.w, 1e-3);
+  kvW = w;
+  // färglägg fotot efter markklass även på håll (vårfotot är gråblekt)
+  vec3 farTint = w.x * vec3(1.0, 1.0, 1.0) + w.y * vec3(0.98, 1.10, 0.86)
+               + w.z * vec3(0.62, 0.94, 0.55) + w.w * vec3(1.10, 1.08, 1.02);
+  vec3 photo = diffuseColor.rgb * farTint;
+  float wNear = 1.0 - smoothstep(30.0, 110.0, length(vWPos - cameraPosition));
+  diffuseColor.rgb = photo;
+  if (wNear > 0.003) {
+    vec2 duv = vWPos.xz / 2.6;                                    // 512 px ≈ 2,6 m
+    vec3 d = vec3(0.0);
+    if (w.x > 0.004) d += texture2D(detA, duv).rgb * w.x;
+    if (w.y > 0.004) d += texture2D(detG, duv).rgb * w.y;
+    if (w.z > 0.004) d += texture2D(detF, duv).rgb * w.z;
+    if (w.w > 0.004) d += texture2D(detR, duv).rgb * w.w;
+    d *= 0.82 + 0.36 * texture2D(detN, vWPos.xz / 45.0).r;       // makrobrus dödar tiling
+    // fotot bidrar med ljus (solfläckar/skuggor) men bara 35 % färg
+    float pl = dot(photo, vec3(0.299, 0.587, 0.114));
+    vec3 near = d * (0.50 + 1.15 * mix(vec3(pl), photo, 0.35));
+    diffuseColor.rgb = mix(photo, near, wNear);
+  }
+}`)
       .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
-roughnessFactor = mix(roughnessFactor, 0.72 + 0.26 * kvCls.g + 0.2 * kvCls.b + 0.1 * kvCls.r - 0.05 * kvRock, kvNear);`);
+roughnessFactor = 0.80 * kvW.x + 0.98 * kvW.y + 1.0 * kvW.z + 0.75 * kvW.w;`);
   };
-  mat.customProgramCacheKey = () => 'kvarnbyn-terrain-v1';
+  mat.customProgramCacheKey = () => 'kvarnbyn-terrain-v2';
   return mat;
 }
