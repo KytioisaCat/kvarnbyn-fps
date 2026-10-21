@@ -7,17 +7,20 @@ Kalibreringar och dyrt inlärda fällor står i `../ARKITEKTUR.md` och gäller o
 
 ## Teknikval (beslutade 2026-10-21)
 
-- **Webben, inte UE5/Godot.** Joel spelar från en länk i telefonen; utvecklingen sker i
-  Claude Code cloud-sessioner (ingen GPU i VM:en, ingen nedladdning till Joels laptop).
+- **Webben, inte UE5/Godot.** Joel spelar från en länk i telefonen utan nedladdningar;
+  telefonen är test-GPU:n. Utvecklingen sker lokalt på Joels laptop (molnsessioner provades
+  2026-10-21 men Consats Claude-org saknar GitHub-connectorn — föreslå dem inte igen).
 - **Three.js + TypeScript + Vite.** `WebGPURenderer` när projektet är moget, med automatisk
   WebGL2-fallback — Joels telefon är målhårdvaran och måste alltid fungera. Börja i
   WebGL2 (`WebGLRenderer`), byt renderare först när grundscenen står.
 - **Deploy**: push till `main` → `.github/workflows/deploy.yml` bygger `v2/` och lägger den
   under `/v2/`; v1 ligger kvar på roten. Spelbart på
   <https://kytioisacat.github.io/kvarnbyn-fps/v2/>.
-- **Data**: nytt pipelinesteg `tools/build_v2.py` (att skriva) exporterar motorvänliga filer
-  till `v2/public/data/`: binär höjdkarta (ur `tools/lidar_1m.png`, 1 m), klasskarta som
-  textur, hus som glTF/binära buffertar med OSM-id + husfakta, vägar/murar/broar/flats.
+- **Data**: pipelinesteget `tools/build_v2.py` exporterar motorvänliga filer till
+  `v2/public/data/` (committade, så bygget går utan Python): höjdkarta 1 m ur
+  `tools/lidar_1m.png` som 8-bit RGB-PNG (R=hög byte, G=låg byte, 1 cm-steg — canvas-
+  avkodbar, ingen alfa), klasskarta, ortofoto i 4k+8k, `meta.json` med bbox/projektion;
+  senare (M2–M3) hus med OSM-id + husfakta, vägar/murar/broar/flats.
   Källorna finns i git (`tools/lidar_1m.png`, `tools/osm_raw.json`, `tools/ortho8k.jpg`,
   `tools/classmap.png`, `public/husfakta.js`) — Lantmäteriet-konto behövs inte.
 - **Tillgångar**: bara CC0/CC BY (Poly Haven, ambientCG, egna). Aldrig kommersiella
@@ -40,26 +43,36 @@ Kalibreringar och dyrt inlärda fällor står i `../ARKITEKTUR.md` och gäller o
 
 Mobil först: KTX2-texturer, Draco/meshopt, LOD, budget ~60 fps på Joels telefon.
 
-## Arbetssätt i molnet
+## Arbetssätt (lokalt)
 
-- **Committa och pusha till `main` vid varje delmål** (VM:en kan återvinnas; Joel har godkänt
-  push till main). Varje push deployar — skriv inte sönder bygget; `npm run build` ska gå
-  igenom innan push.
-- **Smoke-test i VM:en**: `npm run build` + headless Chromium (Playwright, mjukvaru-WebGL)
-  laddar `dist/` utan konsolfel och tar en screenshot. Det visuella omdömet är Joels, på
-  telefonen — be om feedback i stället för att gissa.
+- **Committa och pusha till `main` vid varje delmål** (Joel har godkänt push till main).
+  Varje push deployar — skriv inte sönder bygget; `npm run build` ska gå igenom innan push.
+- **Mätt uppkoppling**: fråga Joel innan `npm install`, nya paket eller nedladdade tillgångar,
+  och säg ungefärlig storlek. Håll beroendelistan kort.
+- **Smoke-test i preview** (`.claude/launch.json` → `v2`, Vite på port 5173): ladda sidan utan
+  konsolfel, stega med `window.__frame(dt)`, ta screenshot. Det visuella omdömet är Joels, på
+  telefonen via <https://kytioisacat.github.io/kvarnbyn-fps/v2/> — be om feedback i stället
+  för att gissa.
 - **Debughookar** som i v1: `window.__frame(dt)`, `window.__v2` (scene/camera/renderer),
   senare `__look/__fire/__game`. Starta via klick på `#overlay`.
-- Ett delmål per session. Uppdatera `../TODO.md` (avsnittet v2) och denna fil när beslut
+- Ett delmål per pass. Uppdatera `../TODO.md` (avsnittet v2) och denna fil när beslut
   fattas. Rör aldrig `../public/` (v1 är fryst som referens).
 
 ## Delmål (i ordning)
 
-- [ ] **M0 Skalet**: `npm install`, lockfile committad, bygget deployar till `/v2/`, Joel ser
-      den roterande lådan på telefonen med renderarnamn i statusraden.
-- [ ] **M1 Terrängen**: `tools/build_v2.py` → höjdkarta + klasskarta; terrängmesh med LOD,
-      PBR-splat, ortofoto på håll, FPS-kamera med WASD/touch, sol + himmel + tonemapping.
+- [ ] **M0 Skalet**: `npm install`, lockfile committad, bygget deployar till `/v2/` (✓ 2026-10-21),
+      Joel ser skalet på telefonen med renderarnamn i statusraden.
+- [ ] **M1 Terrängen**: `tools/build_v2.py` → höjdkarta + klasskarta (✓); terrängmesh med LOD,
+      ortofoto på håll + procedurell klassdetalj nära (riktiga PBR-texturer när nät finns),
+      FPS-kamera med WASD/touch, sol + himmel + skuggor + tonemapping (kod ✓ 2026-10-21, obyggd).
       Joel-test: "känns Götaforsliden lika brant?"
+
+Moduler (`src/`): `world.ts` (meta + höjdfält, `heightAt` = rå × 1,2 som v1), `terrain.ts`
+(128 m-rutor, LOD 1/2/4/8/16 m efter avstånd 150/380/850/1600 m, kjolar mot sprickor, normaler
+ur 1 m-fältet, CCW uppifrån; material = MeshStandard + `onBeforeCompile`-detalj ur klasskartan),
+`sky.ts` (three/addons `Sky`, sol 34° från SV, en skuggkamera 220 m som följer spelaren — CSM
+senare), `controls.ts` (pointer lock + touch: vänster halva gå, höger titta), `main.ts`.
+Debughookar: `__frame(dt)`, `__look(yaw,pitch)`, `__tp(x,z)`, `__v2.{world,terrain,player,…}`.
 - [ ] **M2 Husen**: fotavtryck → väggar/tak, fasadgenerator från husfakta, skuggor.
       Joel-test: hjältehusen igenkännbara.
 - [ ] **M3 Gatubild & vegetation**: vägar med markeringar, flats, broar (v1:s brokedjor),

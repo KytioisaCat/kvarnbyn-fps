@@ -1,0 +1,49 @@
+{
+ "version": 1,
+ "bbox": {
+  "lat0": 57.64625,
+  "lat1": 57.66575,
+  "lon0": 11.999,
+  "lon1": 12.053
+ },
+ "center": {
+  "lat": 57.656000000000006,
+  "lon": 12.026
+ },
+ "mPerDegLat": 111320.0,
+ "mPerDegLon": 59556.345411873226,
+ "x0": -1608.02,
+ "x1": 1608.02,
+ "z0": 1085.37,
+ "z1": -1085.37,
+ "note": "x = (lon−center.lon)·mPerDegLon, z = −(lat−center.lat)·mPerDegLat; rad 0 i alla bilder = norr (z1); UV = ((x−x0)/(x1−x0), (z−z1)/(z0−z1))",
+ "exag": 1.2,
+ "height": {
+  "file": "height.png",
+  "w": 3219,
+  "h": 2171,
+  "offsetM": 10.0,
+  "scale": 100.0,
+  "decode": "h_m = (R*256 + G)/scale − offsetM (rå LiDAR, före exag/åfåra)"
+ },
+ "classmap": {
+  "file": "classmap.png",
+  "w": 1610,
+  "h": 1086,
+  "classes": "R=asfalt G=gräs B=skog svart=berg"
+ },
+ "ortho": {
+  "ortho_8k.jpg": {
+   "w": 8192,
+   "h": 5529
+  },
+  "ortho_4k.jpg": {
+   "w": 4096,
+   "h": 2764
+  }
+ },
+ "attribution": [
+  "Höjddata och ortofoto: © Lantmäteriet (CC BY 4.0)",
+  "Kartdata: © OpenStreetMap-bidragsgivare (ODbL)"
+ ]
+}

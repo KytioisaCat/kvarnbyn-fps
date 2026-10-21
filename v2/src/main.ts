@@ -1,46 +1,81 @@
-// Försvara Kvarnbyn v2 — startpunkt.
-// Detta är ett tomt skal: bevisar att bygget, deployen till /v2/ och renderaren fungerar
-// på Joels telefon. Själva motorn byggs ovanpå detta enligt KRAVSPEC.md och v2/PLAN.md.
+// Försvara Kvarnbyn v2 — startpunkt. Delmål M1: terrängen (1 m-LiDAR, LOD, ortofoto + klass-
+// detalj, himmel/sol/skuggor) med FPS-kamera. Kalibreringar från v1 (public/game.js):
+// EXAG 1,2, ögonhöjd 1,7 m, gångfart 5,2 / sprint 8,2 m/s, spawn (447,53).
 import * as THREE from 'three';
+import { World, SPAWN, DATA_URL } from './world';
+import { Terrain, makeTerrainMaterial } from './terrain';
+import { Daylight } from './sky';
+import { FpsControls } from './controls';
 
 const app = document.getElementById('app')!;
 const overlay = document.getElementById('overlay')!;
 const status = document.getElementById('status')!;
+const hud = document.getElementById('hud')!;
+const say = (s: string) => { status.textContent = s; };
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const isMobile = matchMedia('(pointer: coarse)').matches;
+const renderer = new THREE.WebGLRenderer({ antialias: !isMobile, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile ? 1.5 : 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.55;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 app.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x87a8c8);
-const camera = new THREE.PerspectiveCamera(70, innerWidth / innerHeight, 0.1, 2000);
-camera.position.set(0, 1.7, 5);
-
-const sun = new THREE.DirectionalLight(0xfff2e0, 3);
-sun.position.set(50, 80, 30);
-scene.add(sun, new THREE.HemisphereLight(0xbfd8ff, 0x50452e, 1));
-
-const ground = new THREE.Mesh(
-  new THREE.PlaneGeometry(200, 200),
-  new THREE.MeshStandardMaterial({ color: 0x4a6b3a, roughness: 1 })
-);
-ground.rotation.x = -Math.PI / 2;
-scene.add(ground);
-
-const hus = new THREE.Mesh(
-  new THREE.BoxGeometry(8, 5, 6),
-  new THREE.MeshStandardMaterial({ color: 0xf2efe6, roughness: 0.8 })
-);
-hus.position.set(0, 2.5, -10);
-scene.add(hus);
+scene.fog = new THREE.FogExp2(0xc3d2e4, 0.00042);
+const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.15, 6000);
 
 const gl = renderer.getContext();
 const dbg = gl.getExtension('WEBGL_debug_renderer_info');
-const gpu = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : 'okänd';
-status.textContent = `three r${THREE.REVISION} · ${gpu}`;
+const gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : 'okänd GPU';
+const maxTex = renderer.capabilities.maxTextureSize;
+
+const player = {
+  pos: new THREE.Vector3(SPAWN[0], 0, SPAWN[1]),
+  eyeY: 1.7,
+  walk: 5.2, sprint: 8.2,
+};
+const controls = new FpsControls(renderer.domElement);
+
+let world: World | null = null;
+let terrain: Terrain | null = null;
+let daylight: Daylight | null = null;
+
+async function init() {
+  say(`three r${THREE.REVISION} · ${gpu}`);
+  world = await World.load(say);
+  const loader = new THREE.TextureLoader();
+  const orthoFile = maxTex >= 8192 ? 'ortho_8k.jpg' : 'ortho_4k.jpg';
+  say(`laddar ${orthoFile} …`);
+  const [ortho, classmap] = await Promise.all([
+    loader.loadAsync(`${DATA_URL}${orthoFile}`),
+    loader.loadAsync(`${DATA_URL}${world.meta.classmap.file}`),
+  ]);
+  ortho.colorSpace = THREE.SRGBColorSpace;
+  ortho.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  ortho.generateMipmaps = true;
+  ortho.minFilter = THREE.LinearMipmapLinearFilter;
+  classmap.colorSpace = THREE.NoColorSpace;
+  classmap.minFilter = THREE.LinearFilter; classmap.magFilter = THREE.LinearFilter;
+  classmap.generateMipmaps = false;
+
+  terrain = new Terrain(world, makeTerrainMaterial(world, ortho, classmap));
+  scene.add(terrain.group);
+  daylight = new Daylight(renderer, scene, isMobile);
+
+  player.pos.y = world.heightAt(player.pos.x, player.pos.z) + player.eyeY;
+  camera.position.copy(player.pos);
+  controls.applyTo(camera);
+  say('bygger terräng …');
+  terrain.update(player.pos, true);
+  daylight.follow(player.pos);
+  renderer.render(scene, camera);   // kompilera shaders före första riktiga bildrutan
+  say(`klart · ${terrain.stats.tiles} rutor, ${(terrain.stats.tris / 1e6).toFixed(2)} M tri · ${gpu}`);
+  overlay.classList.add('ready');
+}
 
 addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight;
@@ -49,24 +84,53 @@ addEventListener('resize', () => {
 });
 
 let running = false;
-overlay.addEventListener('click', () => { overlay.style.display = 'none'; running = true; });
+overlay.addEventListener('click', () => {
+  if (!overlay.classList.contains('ready')) return;
+  overlay.style.display = 'none'; running = true; controls.lock();
+});
 
-let t = 0;
+const tmpMove = new THREE.Vector3();
+let fpsAcc = 0, fpsN = 0, fpsShown = 0;
 function frame(dt: number) {
-  t += dt;
-  hus.rotation.y = t * 0.3;
+  if (!world || !terrain || !daylight) return;
+  controls.poll();
+  controls.worldMove(tmpMove);
+  const speed = controls.sprint ? player.sprint : player.walk;
+  const nx = player.pos.x + tmpMove.x * speed * dt, nz = player.pos.z + tmpMove.z * speed * dt;
+  if (world.inside(nx, nz, 4)) { player.pos.x = nx; player.pos.z = nz; }
+  const groundY = world.heightAt(player.pos.x, player.pos.z) + player.eyeY;
+  player.pos.y += (groundY - player.pos.y) * Math.min(1, dt * 14);
+  camera.position.copy(player.pos);
+  controls.applyTo(camera);
+  terrain.update(player.pos);
+  daylight.follow(player.pos);
   renderer.render(scene, camera);
+
+  fpsAcc += dt; fpsN++;
+  if (fpsAcc >= 0.5) { fpsShown = Math.round(fpsN / fpsAcc); fpsAcc = 0; fpsN = 0; }
+  hud.textContent = `${fpsShown} fps · x ${player.pos.x.toFixed(0)} z ${player.pos.z.toFixed(0)} · ${(player.pos.y - player.eyeY).toFixed(1)} m ö.h. · ${terrain.stats.tiles} rutor ${(terrain.stats.tris / 1e6).toFixed(2)} M tri`;
 }
+
 let last = performance.now();
 renderer.setAnimationLoop(() => {
   const now = performance.now();
   const dt = Math.min(0.1, (now - last) / 1000);
   last = now;
   if (running) frame(dt);
-  else renderer.render(scene, camera);
 });
 
+init().catch((e: unknown) => { say(`fel: ${e instanceof Error ? e.message : String(e)}`); console.error(e); });
+
 // Debughookar (samma mönster som v1) så en headless-körning kan stega spelet utan rAF.
-declare global { interface Window { __frame: (dt: number) => void; __v2: unknown } }
-window.__frame = frame;
-window.__v2 = { scene, camera, renderer };
+declare global {
+  interface Window {
+    __frame: (dt: number) => void;
+    __look: (yaw: number, pitch: number) => void;
+    __tp: (x: number, z: number) => void;
+    __v2: Record<string, unknown>;
+  }
+}
+window.__frame = (dt) => { running = true; frame(dt); };
+window.__look = (yaw, pitch) => { controls.yaw = yaw; controls.pitch = pitch; };
+window.__tp = (x, z) => { player.pos.x = x; player.pos.z = z; if (world) player.pos.y = world.heightAt(x, z) + player.eyeY; };
+window.__v2 = { scene, camera, renderer, player, controls, get world() { return world; }, get terrain() { return terrain; }, get daylight() { return daylight; } };

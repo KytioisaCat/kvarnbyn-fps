@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8763", "--directory", "public"],
       "port": 8763
+    },
+    {
+      "name": "v2",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "v2"],
+      "port": 5173
     }
   ]
 }

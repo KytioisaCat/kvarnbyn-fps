@@ -7,13 +7,26 @@
   <style>
     html, body { margin: 0; height: 100%; background: #0b0f14; color: #e8e6e0; font-family: system-ui, sans-serif; overflow: hidden; }
     #app { position: fixed; inset: 0; }
-    #overlay { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; background: rgba(11,15,20,.85); cursor: pointer; }
+    #app canvas { display: block; touch-action: none; }
+    #overlay { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; background: rgba(11,15,20,.85); cursor: progress; }
+    #overlay.ready { cursor: pointer; }
     #overlay small { opacity: .6; }
+    #overlay .hint { display: none; }
+    #overlay.ready .hint { display: block; }
+    #hud { position: fixed; left: 8px; top: 6px; font: 12px/1.3 ui-monospace, monospace; opacity: .75; text-shadow: 0 1px 2px #000; pointer-events: none; padding-top: env(safe-area-inset-top); }
+    #attr { position: fixed; right: 8px; bottom: 6px; font-size: 10px; opacity: .55; text-shadow: 0 1px 2px #000; pointer-events: none; padding-bottom: env(safe-area-inset-bottom); }
   </style>
 </head>
 <body>
   <div id="app"></div>
-  <div id="overlay"><div><h1>Försvara Kvarnbyn <small>v2</small></h1><p>Klicka eller tryck för att börja</p><p><small id="status">startar …</small></p></div></div>
+  <div id="hud"></div>
+  <div id="attr">Höjddata &amp; ortofoto © Lantmäteriet (CC BY 4.0) · Kartdata © OpenStreetMap-bidragsgivare (ODbL)</div>
+  <div id="overlay"><div>
+    <h1>Försvara Kvarnbyn <small>v2</small></h1>
+    <p class="hint">Klicka eller tryck för att börja</p>
+    <p class="hint"><small>Dator: WASD + mus, Shift = spring · Telefon: vänster halva = gå, höger halva = titta</small></p>
+    <p><small id="status">startar …</small></p>
+  </div></div>
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

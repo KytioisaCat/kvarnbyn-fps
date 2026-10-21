@@ -15,14 +15,16 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 
 ## v2 — ny motor (från 2026-10-21)
 
-**Allt nytt arbete sker i `v2/`** (Three.js + TypeScript + Vite) och körs i **Claude Code
-cloud-sessioner** styrda från Joels telefon. Läs **`v2/PLAN.md`** först i varje v2-session:
-teknikval, delmål, arbetssätt. `public/` är **v1, fryst som referens/facit** — läs
-`public/game.js` för kalibreringar och beteenden, men ändra aldrig där (undantag: om Joel
-uttryckligen ber om en v1-hotfix). Pipelinen i `tools/` delas; v2 får ett eget exportsteg.
-Molnregler: pusha till `main` vid varje delmål (VM:en kan återvinnas), `npm run build` måste
-gå igenom före push (varje push deployar), smoke-testa headless men låt Joel bedöma det
-visuella på telefonen. Setup-scriptet för molnmiljön ligger i `.claude/cloud-setup.sh`.
+**Allt nytt arbete sker i `v2/`** (Three.js + TypeScript + Vite) och byggs **lokalt på Joels
+laptop**; Joel bedömer det visuella på telefonen via GitHub Pages. (Molnsessioner provades
+2026-10-21 och föll på att Consats Claude-org saknar GitHub-connectorn — föreslå dem inte igen.)
+Läs **`v2/PLAN.md`** först i varje v2-session: teknikval, delmål, arbetssätt. `public/` är
+**v1, fryst som referens/facit** — läs `public/game.js` för kalibreringar och beteenden, men
+ändra aldrig där (undantag: om Joel uttryckligen ber om en v1-hotfix). Pipelinen i `tools/`
+delas; v2:s exportsteg är `tools/build_v2.py` → `v2/public/data/`. Regler: pusha till `main`
+vid varje delmål, `npm run build` måste gå igenom före push (varje push deployar), smoke-testa
+i preview men låt Joel bedöma det visuella på telefonen. **Laptopen har mätt uppkoppling** —
+fråga före `npm install`/nedladdningar och säg storlek.
 
 ## Struktur
 
@@ -35,8 +37,8 @@ visuella på telefonen. Setup-scriptet för molnmiljön ligger i `.claude/cloud-
   - `husfakta.js` — handförfattat: hur enskilda hus ser ut (farg/vaningar/tak/material/skylt)
   - `ortho.jpg` — Lantmäteriets ortofoto 0,16 m (CC BY 4.0), lat/lon-linjärt
 - `tools/lidar_1m.png` + `lidar_meta.json` — LiDAR 1 m som 16-bit PNG (committad källa;
-  `lidar_png.py pack/unpack`), `tools/osm_raw.json` — OSM-extraktet (committat) → molnet kan
-  köra pipelinen utan Lantmäteriet
+  `lidar_png.py pack/unpack`), `tools/osm_raw.json` — OSM-extraktet (committat) → pipelinen går i
+  vilken klon som helst utan Lantmäteriet
 - `tools/` — Python-datapipeline (OSM Overpass → terräng-tiles → ortofoto → `data.js`);
   venv i `tools/venv/`. Ordning: `bbox.py` (bbox = enda sanningen) → `fetch_tiles.py` →
   `fetch_ortho*.py` → `fetch_lidar.py` → `build_classmap.py` → `build_data2.py` → `build_flats.py`;
@@ -58,8 +60,8 @@ visuella på telefonen. Setup-scriptet för molnmiljön ligger i `.claude/cloud-
   **kör aldrig `graphify update .`** (drar in three.module.js + data.js och sväller grafen
   10×) — använd `python3 tools/rebuild_graph.py` som är gratis och kurerad.
   Fullständiga riktlinjer inkl. när det semantiska lagret ska byggas om: **`GRAFEN.md`**.
-- **Kör lokalt:** v1: `python3 -m http.server 8763 --directory public` (finns i `.claude/launch.json`);
-  v2: `cd v2 && npm install && npm run dev`
+- **Kör lokalt:** v1: `python3 -m http.server 8763 --directory public`; v2: `cd v2 && npm run dev`
+  (port 5173). Båda finns i `.claude/launch.json` (`kvarnbyn` resp. `v2`)
 - **Testa i preview:** rAF sover i headless — stega spelet med debughookarna
   `window.__frame(dt)`, `window.__game`, `window.__look(yaw,pitch)`, `window.__fire()`.
   Starta via klick-event på `#overlay` (preview_click når inte lyssnaren; använd
