@@ -1,0 +1,21 @@
+{
+  "name": "forsvara-kvarnbyn-v2",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Försvara Kvarnbyn v2 — ny grafikmotor (Three.js WebGPU/WebGL2, TypeScript, Vite)",
+  "scripts": {
+    "dev": "vite --host --port 5173",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host --port 5173",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.180.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}

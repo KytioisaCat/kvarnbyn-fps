@@ -13,15 +13,30 @@ Joels barndoms-FPS: försvara Kvarnbyn i Mölndal mot en invasion, byggt på rik
 kartdata. Ledstjärnan är **igenkänning** — Joel ska känna igen sig från barndomen.
 Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 
+## v2 — ny motor (från 2026-10-21)
+
+**Allt nytt arbete sker i `v2/`** (Three.js + TypeScript + Vite) och körs i **Claude Code
+cloud-sessioner** styrda från Joels telefon. Läs **`v2/PLAN.md`** först i varje v2-session:
+teknikval, delmål, arbetssätt. `public/` är **v1, fryst som referens/facit** — läs
+`public/game.js` för kalibreringar och beteenden, men ändra aldrig där (undantag: om Joel
+uttryckligen ber om en v1-hotfix). Pipelinen i `tools/` delas; v2 får ett eget exportsteg.
+Molnregler: pusha till `main` vid varje delmål (VM:en kan återvinnas), `npm run build` måste
+gå igenom före push (varje push deployar), smoke-testa headless men låt Joel bedöma det
+visuella på telefonen. Setup-scriptet för molnmiljön ligger i `.claude/cloud-setup.sh`.
+
 ## Struktur
 
-- `public/` — hela spelet, statiska filer utan byggsteg
+- `v2/` — **nya motorn** (Vite/TS/Three.js); deployas under `/v2/`; plan i `v2/PLAN.md`
+- `public/` — **v1**, hela gamla spelet, statiska filer utan byggsteg (fryst referens, deployas på roten)
   - `game.js` — all spellogik/rendering (Three.js, vendorerad `three.module.js`)
   - `data.js` — genererad kartdata (terräng, hus med takfärger + OSM-id/husfakta-taggar, vägar
     med OSM-id, murar, landmärken)
   - `flats.js` — genererade byggda plana ytor + brokedjor (med OSM-way-id:n)
   - `husfakta.js` — handförfattat: hur enskilda hus ser ut (farg/vaningar/tak/material/skylt)
   - `ortho.jpg` — Lantmäteriets ortofoto 0,16 m (CC BY 4.0), lat/lon-linjärt
+- `tools/lidar_1m.png` + `lidar_meta.json` — LiDAR 1 m som 16-bit PNG (committad källa;
+  `lidar_png.py pack/unpack`), `tools/osm_raw.json` — OSM-extraktet (committat) → molnet kan
+  köra pipelinen utan Lantmäteriet
 - `tools/` — Python-datapipeline (OSM Overpass → terräng-tiles → ortofoto → `data.js`);
   venv i `tools/venv/`. Ordning: `bbox.py` (bbox = enda sanningen) → `fetch_tiles.py` →
   `fetch_ortho*.py` → `fetch_lidar.py` → `build_classmap.py` → `build_data2.py` → `build_flats.py`;
@@ -43,7 +58,8 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
   **kör aldrig `graphify update .`** (drar in three.module.js + data.js och sväller grafen
   10×) — använd `python3 tools/rebuild_graph.py` som är gratis och kurerad.
   Fullständiga riktlinjer inkl. när det semantiska lagret ska byggas om: **`GRAFEN.md`**.
-- **Kör lokalt:** `python3 -m http.server 8763 --directory public` (finns i `.claude/launch.json`)
+- **Kör lokalt:** v1: `python3 -m http.server 8763 --directory public` (finns i `.claude/launch.json`);
+  v2: `cd v2 && npm install && npm run dev`
 - **Testa i preview:** rAF sover i headless — stega spelet med debughookarna
   `window.__frame(dt)`, `window.__game`, `window.__look(yaw,pitch)`, `window.__fire()`.
   Starta via klick-event på `#overlay` (preview_click når inte lyssnaren; använd
@@ -53,8 +69,9 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 - **Geometri-/gångytefel:** felsök med proben, inte ögat — `__game.groundInfoAt/bridgeChains/
   roadSegs` är exponerade; gå 1 m-steg längs vägar/kedjor med refY-spårning och räkna hopp
   (recept i ARKITEKTUR.md under Broar)
-- **Deploy:** committa + pusha till `main` (Joel har godkänt push); sajten:
-  https://kytioisacat.github.io/kvarnbyn-fps/ — repo: KytioisaCat/kvarnbyn-fps
+- **Deploy:** committa + pusha till `main` (Joel har godkänt push); workflowen bygger v2 och lägger
+  v1 på roten, v2 under `/v2/`; sajten: https://kytioisacat.github.io/kvarnbyn-fps/ (v2:
+  https://kytioisacat.github.io/kvarnbyn-fps/v2/) — repo: KytioisaCat/kvarnbyn-fps
   (Joels privata GitHub-konto, INTE jobbkontot; aldrig GitLab)
 
 ## Fällor (dyrt inlärda)

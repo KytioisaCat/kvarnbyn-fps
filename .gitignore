@@ -1,8 +1,8 @@
 # Python-pipeline: mellanfiler och miljö (genereras om via tools/, se README)
 tools/venv/
 tools/__pycache__/
+# lidar_full.npy återskapas ur tools/lidar_1m.png (python3 tools/lidar_png.py unpack)
 tools/*.npy
-tools/osm_raw.json
 tools/ortho_full.png
 tools/ortho_meta.json
 tools/ortho.jpg
@@ -19,4 +19,8 @@ tools/data.js
 graphify-out/cache/
 graphify-out/.graphify_*
 tools/cache/
-tools/lidar_meta.json
+
+# v2 (ny motor, Vite/TypeScript): beroenden och byggutdata
+v2/node_modules/
+v2/dist/
+v2/.vite/

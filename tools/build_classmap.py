@@ -84,7 +84,8 @@ sat = (mean.max(axis=2)-mean.min(axis=2))/(mean.max(axis=2)+1e-6)
 green = G - (R+B)/2
 
 # ---- LiDAR: lutning + lokal prominens ----
-dem = np.load('lidar_full.npy')                  # 1447x2144, 1 m, rad0=norr
+from lidar_png import load_dem
+dem = load_dem()                                 # 1 m, rad0=norr; npy om den finns, annars lidar_1m.png
 gy, gx = np.gradient(dem)
 slope1 = np.hypot(gx, gy)
 ri = np.clip((np.arange(ROWS)+0.5)*dem.shape[0]/ROWS, 0, dem.shape[0]-1).astype(int)

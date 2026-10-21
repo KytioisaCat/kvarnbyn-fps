@@ -1,5 +1,8 @@
 name: Deploy to GitHub Pages
 
+# v1 (public/) deployas på roten, v2 (v2/ byggd med Vite) under /v2/.
+# Byggfel i v2 stoppar hela deployen — då ligger förra lyckade versionen kvar.
+
 on:
   push:
     branches: [main]
@@ -24,16 +27,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Bygg v2
+        working-directory: v2
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+          npm run build
+
+      - name: Sätt ihop sajten (v1 på roten, v2 under /v2/)
+        run: |
+          rm -rf _site
+          cp -R public _site
+          mkdir -p _site/v2
+          cp -R v2/dist/. _site/v2/
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
-          # Aktiverar Pages automatiskt vid första körningen
           enablement: true
 
-      - name: Upload public/ as Pages artifact
+      - name: Upload _site as Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

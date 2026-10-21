@@ -194,6 +194,8 @@ Bärande delsystem och deras beslut:
 |---|---|
 | Three.js utan byggsteg, allt i en game.js | Iterationstakt slår struktur för ett hobbyprojekt; deploy = statiska filer |
 | Stanna i Three.js (inte UE5/Unity/Arma) tills vidare | Utvärderat: UE5+Cesium är rätt väg OM projektet växer; iterationstakten här är oslagbar. Datapipelinen återanvänds vid byte |
+| **2026-10-21: v2 = ny kod i samma repo** (`v2/`, Three.js+TS+Vite), v1 fryst i `public/` | "Ser verkligt ut" är hela arkitekturen (PBR, IBL, skuggor, asset-format), inte en renderare att byta i game.js. Nytt repo förkastat: pipeline, kalibreringar, husfakta, beslutslogg och v1 som facit bor här. Webben valt framför UE5/Godot: utvecklas i cloud-sessioner utan GPU, Joel spelar från länk på telefonen utan nedladdningar (mätt uppkoppling). Plan: `v2/PLAN.md` |
+| LiDAR-griden committad som 16-bit PNG + OSM-råfil committad | Molnsessioner klonar bara git; 2,7 GB Lantmäteriet-cache finns bara lokalt. 1 cm-kvantisering (4,9 MB) räcker för allt utom fetch_* |
 | Esri-ortofoto ersatt med Lantmäteriet | Esris villkor förbjuder redistribution av bakade tiles; LM är CC BY 4.0 och skarpare |
 | Terräng MeshBasic (oskuggad) | Fotot har ljuset inbakat; scenljus ovanpå blev blekt/blått |
 | Klasskarta offline i pipeline (inte runtime-klassning) | Vårfotots färger kräver flera signaler (textur, LiDAR-lutning, OSM); tungt att göra i JS varje load |

@@ -1,0 +1,13 @@
+{
+ "w": 3219,
+ "h": 2171,
+ "lon0": 11.999,
+ "lon1": 12.053,
+ "lat0": 57.64625,
+ "lat1": 57.66575,
+ "note": "rad 0 = norr (lat1), lat/lon-linjärt, meter över havet",
+ "png": "lidar_1m.png",
+ "png_offset_m": 10.0,
+ "png_scale": 100.0,
+ "png_note": "höjd_m = pixel / png_scale - png_offset_m; uint16 gråskala"
+}

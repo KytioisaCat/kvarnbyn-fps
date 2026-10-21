@@ -3,7 +3,14 @@
 Idébacklogg. En punkt i taget, ~30 min styck. Bocka av med `[x]` och flytta till
 Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md).
 
-## Backlogg (~30 min styck)
+## v2 — ny motor (aktivt arbete, i molnet)
+
+Delmålen M0–M5 och reglerna står i `v2/PLAN.md` — bocka av där och notera datum här.
+
+- [ ] M0 Skalet deployat till /v2/ och sett på Joels telefon
+- [ ] M1 Terrängen · M2 Husen · M3 Gatubild & vegetation · M4 Kväll · M5 Spelet (se PLAN.md)
+
+## v1-backlogg (FRYST 2026-10-21 — v1 är referens, bara hotfixar på Joels begäran)
 
 - [ ] **Husfakta: fyll i hjältehusen** — gå igenom `tools/husfakta_kandidater.md` (93 hus med
   Street View-länkar att TITTA på), skriv kulör/våningar/tak/material i `public/husfakta.js`
@@ -41,6 +48,12 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-10-21 — **Förberett för v2 i molnet**: `v2/` scaffold (Vite/TS/Three.js, `PLAN.md`),
+  deploy-workflow bygger v2 under `/v2/` med v1 kvar på roten, `.claude/cloud-setup.sh`,
+  LiDAR-griden committad som 16-bit PNG (`tools/lidar_1m.png`, 1 cm-kvantiserad, 4,9 MB) och
+  `tools/osm_raw.json` committad så pipelinen går utan Lantmäteriet; git-tagg `v1` på sista
+  rena v1-committen
 
 - [x] 2026-09-10 — **Broar & gångytor v2** (mätdrivet: probe som går 1 m-steg längs alla vägar och
   brodäck via debughookarna `__game.groundInfoAt/bridgeChains/roadSegs`): vägar kopplas till SIN

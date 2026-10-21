@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Försvara Kvarnbyn v2</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #0b0f14; color: #e8e6e0; font-family: system-ui, sans-serif; overflow: hidden; }
+    #app { position: fixed; inset: 0; }
+    #overlay { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; background: rgba(11,15,20,.85); cursor: pointer; }
+    #overlay small { opacity: .6; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="overlay"><div><h1>Försvara Kvarnbyn <small>v2</small></h1><p>Klicka eller tryck för att börja</p><p><small id="status">startar …</small></p></div></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
