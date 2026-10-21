@@ -1,6 +1,7 @@
 # v2 — ny grafikmotor: plan och spelregler för sessioner
 
-**Mål**: samma spel, samma by, men det ska *se verkligt ut*. Kraven står i `../KRAVSPEC.md`
+**Mål**: samma spel, samma by, men det ska *se verkligt ut* — "så likt Call of Duty som möjligt i
+en webbläsare". Vad det betyder och vägen dit: **`VISION.md`** (läs den före delmålen). Kraven står i `../KRAVSPEC.md`
 (teknikoberoende, utgå alltid från den). Dagens spel i `../public/` är **facit för känsla,
 balans och beteenden** — läs `../public/game.js` som referens, ändra det aldrig.
 Kalibreringar och dyrt inlärda fällor står i `../ARKITEKTUR.md` och gäller oavsett motor.

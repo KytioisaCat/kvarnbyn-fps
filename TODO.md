@@ -5,6 +5,9 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## v2 — ny motor (aktivt arbete, lokalt — Joel testar på telefonen via Pages)
 
+- [ ] **Beslut om väg (v2/VISION.md)**: splat-prov av ett kvarter (Gamla torget) — filmguide, Brush/
+  Scaniverse, Spark i v2, Joel-test på telefonen — eller procedurellt AAA-lite. Joel avgör.
+
 Delmålen M0–M5 och reglerna står i `v2/PLAN.md` — bocka av där och notera datum här.
 
 - [ ] M1 Terrängen: **byggd och pushad 2026-10-21, väntar på Joel-test på telefonen**
