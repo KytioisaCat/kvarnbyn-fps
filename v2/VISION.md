@@ -46,44 +46,52 @@ Esri CityEngine har gjort det i 15 år och resultatet är alltid "stad i ett sim
 *innehållet* — och det enda sättet att få Kvarnbyns innehåll utan en art-avdelning är att fotografera
 Kvarnbyn.
 
-## 3. Två vägar, och varför det blir en hybrid
+## 3. Joels korrigering (2026-10-21, kväll): vi kommer inte ha fotograferat innehåll
 
-| | **A. Fånga Kvarnbyn (splats)** | **B. Procedurellt AAA-lite** |
-|---|---|---|
-| Hur | Joel filmar kvarteren med telefonen (plus drönare för tak). Brush/Scaniverse → SPZ. Spark strömmar splats ovanpå vår LiDAR-terräng (kollisioner) och OSM-fotavtryck (väggar) | CC0 PBR-texturer med normalkartor, modulära fasadkit, skannade CC0-rekvisita (Poly Haven), instansierad vegetation, GTAO/SSR/TAA/bloom |
-| Igenkänning | **Maximal** — det är bokstavligen Kvarnbyn | Generisk: "ett svenskt villaområde" |
-| Tak | Fotoreal | Battlefield 3-nivå om allt går vägen, med månaders art-arbete |
-| Kostnad för Joel | ~1 dag filmning för kärnkvarteren, 25–50 MB per kvarter strömmat | Ingen filmning, men oändligt med texturjobb |
-| Svagheter | Ljuset är inlåst vid fångsttillfället (kväll = färggradering, inte riktiga lampor). Spelaren kastar ingen skugga på splats. Folk/bilar/registreringsskyltar som råkar komma med måste undvikas eller maskas | Ser aldrig ut som Kvarnbyn på nära håll |
-| Vad som är dynamiskt | Soldater, vapen, effekter, fordon är meshar med PBR och ljus matchat mot fångsten | Allt |
+Splat-demos (Grace Cathedral, Sumygins FPS) visar rätt *nivå*, men de bygger på högupplösta
+fångster som vi inte kommer att ha, inte i närheten. Våra förutsättningar är LiDAR 1 m (markmodell),
+OSM-polygoner, ortofoto 0,16–0,4 m och husfakta. **Vägen är därför att konstruera en digital
+representation: geometri.** Inte drapera ett foto över ett brusigt höjdfält, utan bygga banan som en
+level designer skulle — rena ytor, raka kanter, riktiga material — men genererat ur datan.
 
-**Hybrid** (rekommendation):
-- **Splats för miljön där spelaren går** — Gamla torget, Kvarnbygatan, Götaforsliden, Royens trappor,
-  hjältehusen. Det är där "Joel-testet" avgörs.
-- **Procedurell terräng + B-tekniken** utanför de fångade zonerna (kullarna, skogen, E6-sidan) och som
-  fallback medan fångsten pågår. Allt jag redan byggt (LiDAR-terräng, LOD, klasskarta) blir fysik- och
-  bakgrundslager — inget är bortkastat.
-- **En gemensam ljus-/efterbehandlingskedja** (WebGPU: TAA, GTAO på mesharna, bloom, färggradering,
-  dimma i åravinen) som binder ihop splat och mesh så sömmen inte syns.
-- **Mobilbudget**: ~1M splats synliga åt gången (Spark LoD), 4k-foto, halv upplösning på efterbehandling.
-  Mål 30 fps stabilt på Joels telefon, 60 på dator.
+### Principen: varje byggd yta är ett objekt, inte terräng
 
-## 4. Bevis före löfte: en veckas prov
+| Objekt | Datakälla | Vad som konstrueras | Mått (före/efter) |
+|---|---|---|---|
+| **Parkeringar, torg, planer, skolgårdar** | OSM-polygoner + **plandetektion i LiDAR** (RANSAC inom asfaltklass — fångar gårdar/uppfarter OSM saknar) | Minsta-kvadrat-plan med lutningsgräns (p-plats ≤ 3 %), egen mesh med kantsten 12 cm, terrängen skärs ner/blendas i ett band utanför | max avvikelse från planet inom polygonen → 0; inga 10–30 cm-bulor |
+| **Vägar** | OSM-centrumlinjer + klass | Tvärsnitt (körbana, kantsten, trottoar), längsprofil filtrerad längs vägen med max-lutning, korsningar lösta, terrängen konformerad till vägkanten (ingen "grön jord i gatan"), markeringar, brunnar, lyktor | steg längs centrumlinjen (v1:s probe), tvärfall |
+| **Trappor, stödmurar, murar** | OSM barrier/steps + LiDAR-steg | Riktiga trappsteg och murkrön som geometri, terrängen bruten vid muren | Royens trappor: stegantal/steghöjd rimliga |
+| **Hus** | Fotavtryck + våningar + roof:shape + husfakta | Väggar, riktiga tak (sadel/valm ur fotavtryckets form när OSM saknar), sockel, fönster-/dörrgrid per fasad ur husfakta, takfot, stuprör | hjältehusen igenkännbara |
+| **Mark som inte är byggd** | LiDAR + klasskarta | Terräng (det som finns i dag), gräs/berg/skogsbotten som rena PBR-material; ortofotot bara som färgvariation på håll | — |
+| **Vegetation, gatubild** | klasskarta, OSM, husfakta | instansierade träd/buskar, staket, häckar, bilar på p-platser, skyltar | — |
 
-Innan vi bestämmer oss gör vi ett prov på **ett kvarter** (förslag: Gamla torget med Kråkan):
+Det tekniska hjärtat är **terrängkonformering**: höjdfältet är inte längre sanningen, det är ett
+startvärde. Vägar, flats, murar och hus är *villkor*; höjdfältet räknas om så att det möter dem
+exakt (kantsten mot gata, gräs mot mur), med mjuk övergång utanför. v1 gjorde en enklare variant
+(flats plattades med mjuk kant); v2 gör det för allt byggt, i 1 m, och mäter.
 
-1. Joel filmar kvarteret med telefonen (4K, långsam gång, två varv på olika höjd, 5–10 min,
-   undvik folk och bilar). Jag skriver en filmguide på en sida.
-2. Jag tränar splats i Brush lokalt (eller Joel i Scaniverse direkt i telefonen), exporterar SPZ.
-3. Jag lägger in Spark i v2, positionerar splatten mot LiDAR + ortofoto (vi har exakta koordinater),
-   kollisioner från terrängen och fotavtrycken, soldater som meshar i samma scen.
-4. Joel går runt kvarteret på telefonen. Mått: fps, MB, och frågan *"är det här Kvarnbyn?"*
+### Varför det ger looken trots dåliga data
 
-Faller provet (fps, storlek, utseende) går vi väg B fullt ut och vet varför. Lyckas det har vi en
-pipeline: film → splat → spelbart kvarter, och kan ta ett kvarter i taget.
+CoD-banor är också "bara" geometri + tiled-material + ljus. Fotogrammetrin i §1 ger *materialen*,
+inte strukturen. Det som gör att en spelbana ser verklig ut på nära håll är: plana ytor är plana,
+kanter är skarpa, material har normalkartor, och det finns täthet (kantsten, markeringar, brunnar,
+lyktor, bilar). Allt det kan konstrueras. Det som INTE går att få ur datan är enskilda husens
+riktiga fasader — där är husfakta + Joels ögon enda källan, hus för hus, och hjältehusen tas först.
 
-## 5. Vad som INTE ändras
+### Ordning (ersätter M1–M3 i PLAN.md)
+
+1. **Flats + plandetektion + konformering** — p-platsen vid torget ska vara plan med kantsten. Mått före/efter.
+2. **Vägar som meshar** med tvärsnitt och konformering; markeringar.
+3. **Hus med riktiga tak och fasadgrid** ur husfakta; murar och trappor som geometri.
+4. **Material**: riktiga PBR-set med normalkartor (CC0, engångsnedladdning) på de konstruerade ytorna.
+5. **Ljus/efterbehandling** (WebGPU: TAA, GTAO, bloom, dimma) — binder ihop allt.
+6. **Täthet**: lyktor, bilar, staket, häckar, träd.
+
+Splat-spåret läggs på is. Om Joel någon gång filmar ett kvarter kan det läggas in som ett lager,
+men planen får inte vila på det.
+
+## 4. Vad som INTE ändras
 
 Spelmekaniken (KRAVSPEC.md), v1 som facit för känsla och kalibreringar, CC0/CC BY-regeln för
-nedladdade tillgångar (splats av Kvarnbyn är Joels egna), svenska i all speltext, mätt uppkoppling
-(fråga före nedladdning), telefonen som test-GPU.
+nedladdade tillgångar, svenska i all speltext, mätt uppkoppling (fråga före nedladdning), telefonen
+som test-GPU, mätdriven geometrifix (probe före/efter — ARKITEKTUR.md).

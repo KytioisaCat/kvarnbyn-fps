@@ -5,8 +5,9 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## v2 — ny motor (aktivt arbete, lokalt — Joel testar på telefonen via Pages)
 
-- [ ] **Beslut om väg (v2/VISION.md)**: splat-prov av ett kvarter (Gamla torget) — filmguide, Brush/
-  Scaniverse, Spark i v2, Joel-test på telefonen — eller procedurellt AAA-lite. Joel avgör.
+- [ ] **Vägen är geometri (v2/VISION.md §3)**: konstruera banan ur datan — flats med plandetektion
+  och terrängkonformering (p-platser plana, kantsten), vägar som meshar, hus med riktiga tak,
+  murar/trappor som geometri, sedan material/ljus/täthet. Splats på is (inga fångster att utgå från).
 
 Delmålen M0–M5 och reglerna står i `v2/PLAN.md` — bocka av där och notera datum här.
 
