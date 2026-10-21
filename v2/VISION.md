@@ -90,6 +90,28 @@ riktiga fasader — där är husfakta + Joels ögon enda källan, hus för hus, 
 Splat-spåret läggs på is. Om Joel någon gång filmar ett kvarter kan det läggas in som ett lager,
 men planen får inte vila på det.
 
+## 3b. Varför det inte blir v1 igen (Joels invändning: broarna)
+
+v1:s broar tog många iterationer och blev ändå dåliga. Det var inte otur, det var metoden:
+
+| | **v1 (game.js)** | **v2** |
+|---|---|---|
+| Var geometrin byggs | I webbläsaren vid laddning, ur rådata, med heuristik per objekt | **Offline i Python** (`tools/`), som en modelleringspipeline. Webbläsaren bara renderar |
+| Världsmodell | Ingen. Vägar = lösa polylinjer draperade på höjdfältet ("ribbons"), broar = specialfall med kedjor/knutar, flats = plattning av höjdfältet | **En topologisk modell**: vägnät som graf (noder/kanter med bredd, lager, lutning), korsningar som egna polygoner, ytor, murar, hus — som i en CAD/level-editor |
+| Höjder | Uppslag i höjdfältet per vertex, sedan lappar: "max över tvärsnittet", "lift cap", "+6 m i knutar", "grannens däckhöjd" | **En global lösning**: längsprofiler för hela vägnätet löses i ett svep (minsta kvadrat med villkor: jämnhet, maxlutning, lika höjd i korsningar, bro ≥ underliggande väg + fri höjd, landfästen = mark). Broar är inte specialfall, de är kanter med `layer=1` och ett villkor till |
+| Terrängen | Ett enda höjdfält som måste bära allt — därför smetas murar, kantstenar och brofästen ut | Höjdfältet gäller bara **utanför** byggda ytor. Byggda ytor klipps ur terrängen (2D-boolean, shapely) och gapet sluts med kantsten/slänt/mur som egen geometri. Vertikala språng är tillåtna |
+| Verktyg | Allt handskrivet i en 3 000-raders JS-fil | Beprövade bibliotek: shapely (buffer/boolean), scipy (gles lösare), earcut/triangle (triangulering med tvång), numpy |
+| Kontroll | Ögat, sedan proben (kom sent, hjälpte mycket) | **Mätgrindar i bygget**: varje körning skriver rapport (max bula i flats, max steg längs vägar, fri höjd under broar, tak-mot-mark-glipor) och **stoppar** om tröskeln bryts. Headless-renderade bilder per område |
+| Iteration | Ändra heuristik → ladda om → titta → gissa | Ändra villkor → kör pipeline → läs siffror → titta på bild |
+
+**Det som är lika**: indata (OSM, LiDAR, orto) och deras brister. OSM:s brolinjer slutar fel,
+tunnlar saknar taggar. Skillnaden är att v2 löser det med villkor och rapport i stället för
+ett lapp i taget i webbläsaren.
+
+**Bevis på det svåraste först**: första delmålet är inte p-platsen. Det är **Mölndals bro +
+vägnätet runt Gamla torget**, byggt offline med profil-lösaren, renderat som bild, med rapport.
+Om metoden klarar broarna klarar den resten. Klarar den inte broarna vet vi det på en vecka,
+inte efter tre månader.
 ## 4. Vad som INTE ändras
 
 Spelmekaniken (KRAVSPEC.md), v1 som facit för känsla och kalibreringar, CC0/CC BY-regeln för
