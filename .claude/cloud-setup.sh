@@ -1,29 +1,47 @@
 #!/bin/bash
-# Setup-script för Claude Code cloud-miljön "kvarnbyn".
-# Klistra in innehållet i miljöns "Setup script" på claude.ai/code (körs som root före varje
-# session, måste bli klart på ~5 min för att cachas). Nätverk: Full (CC0-texturer från
-# Poly Haven/ambientCG, OSM m.m. ligger utanför standardlistan).
-set -euo pipefail
+# Setup-script för Claude Code cloud-miljön "kvarnbyn" (körs som root före varje session,
+# måste bli klart på ~5 min för att cachas). Nätverk: Full.
+#
+# I miljöns "Setup script"-fält räcker EN rad (undviker klistringsfel med flerradig text):
+#   curl -fsSL https://raw.githubusercontent.com/KytioisaCat/kvarnbyn-fps/main/.claude/cloud-setup.sh | bash
+#
+# Allt är tolerant: ett misslyckat delsteg får aldrig stoppa sessionen (exit 0 alltid).
+set -u
 
-# Repo-rot: Claude Code klonar till arbetskatalogen; hitta den oavsett namn.
-ROOT="${CLAUDE_PROJECT_DIR:-$(pwd)}"
-cd "$ROOT"
+log() { echo "[cloud-setup] $*"; }
 
-# 1) v2 (Vite/TypeScript/Three.js)
-if [ -f v2/package.json ]; then
-  (cd v2 && if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi)
+# Repo-rot om repot redan är klonat (annars körs repo-stegen i sessionen i stället)
+REPO=""
+for d in "${CLAUDE_PROJECT_DIR:-}" "$PWD" /workspace/* /home/*/* /root/*; do
+  if [ -n "$d" ] && [ -f "$d/v2/package.json" ]; then REPO="$d"; break; fi
+done
+
+# 1) Headless Chromium för smoke-tester (mjukvaru-WebGL via SwiftShader — ingen GPU i VM:en)
+if npx --yes playwright@1.56.0 install --with-deps chromium >/dev/null 2>&1; then
+  log "playwright chromium ok"
+else
+  log "VARNING: playwright-install misslyckades (smoke-tester av)"
 fi
 
-# 2) Headless Chromium för smoke-tester (mjukvaru-WebGL via SwiftShader — ingen GPU i VM:en).
-#    Playwright hamnar i ~/.cache/ms-playwright; --with-deps drar systembibliotek via apt.
-npx --yes playwright@1.56.0 install --with-deps chromium >/dev/null 2>&1 || echo "VARNING: playwright-install misslyckades (smoke-tester av)"
+# 2) Python-pipelinen (tools/). rasterio behövs bara för fetch_* mot Lantmäteriet — hoppas över.
+pip install --break-system-packages --quiet numpy pillow shapely >/dev/null 2>&1 \
+  || pip3 install --quiet numpy pillow shapely >/dev/null 2>&1 \
+  || log "VARNING: pip-install misslyckades"
 
-# 3) Python-pipelinen (tools/). rasterio behövs bara för fetch_* mot Lantmäteriet — hoppas över.
-pip install --break-system-packages --quiet numpy pillow shapely 2>/dev/null || pip3 install --quiet numpy pillow shapely
-
-# 4) Återskapa LiDAR-griden ur den committade 16-bit-PNG:n (gitignorerad .npy)
-if [ -f tools/lidar_1m.png ] && [ ! -f tools/lidar_full.npy ]; then
-  python3 tools/lidar_png.py unpack
+# 3) Repo-beroende steg
+if [ -n "$REPO" ]; then
+  log "repo: $REPO"
+  if (cd "$REPO/v2" && { [ -f package-lock.json ] && npm ci --no-audit --no-fund || npm install --no-audit --no-fund; } >/dev/null 2>&1); then
+    log "npm install ok"
+  else
+    log "VARNING: npm install misslyckades — kör 'cd v2 && npm install' i sessionen"
+  fi
+  if [ -f "$REPO/tools/lidar_1m.png" ] && [ ! -f "$REPO/tools/lidar_full.npy" ]; then
+    python3 "$REPO/tools/lidar_png.py" unpack >/dev/null 2>&1 && log "lidar_full.npy återskapad" || log "VARNING: lidar unpack misslyckades"
+  fi
+else
+  log "repot inte klonat ännu — npm install/lidar unpack görs i sessionen"
 fi
 
-echo "cloud-setup klart: node $(node -v), python $(python3 --version)"
+log "klart"
+exit 0
