@@ -2,7 +2,7 @@
 // detalj, himmel/sol/skuggor) med FPS-kamera. Kalibreringar från v1 (public/game.js):
 // EXAG 1,2, ögonhöjd 1,7 m, gångfart 5,2 / sprint 8,2 m/s, spawn (447,53).
 import * as THREE from 'three';
-import { World, SPAWN, DATA_URL } from './world';
+import { World, SPAWN, DATA_URL, loadImage } from './world';
 import { Terrain, makeTerrainMaterial } from './terrain';
 import { Daylight } from './sky';
 import { FpsControls } from './controls';
@@ -48,13 +48,12 @@ let daylight: Daylight | null = null;
 async function init() {
   say(`three r${THREE.REVISION} · ${gpu}`);
   world = await World.load(say);
-  const loader = new THREE.TextureLoader();
-  const orthoFile = maxTex >= 8192 ? 'ortho_8k.jpg' : 'ortho_4k.jpg';
-  say(`laddar ${orthoFile} …`);
-  const [ortho, classmap] = await Promise.all([
-    loader.loadAsync(`${DATA_URL}${orthoFile}`),
-    loader.loadAsync(`${DATA_URL}${world.meta.classmap.file}`),
-  ]);
+  // 8k-fotot (8,8 MB) bara på dator: telefonen får 4k (2,9 MB) — mätt nät och GPU-minne
+  const orthoFile = !isMobile && maxTex >= 8192 ? 'ortho_8k.jpg' : 'ortho_4k.jpg';
+  const orthoImg = await loadImage(`${DATA_URL}${orthoFile}`, 'ortofoto', say);
+  const classImg = await loadImage(`${DATA_URL}${world.meta.classmap.file}`, 'klasskarta', say);
+  const ortho = new THREE.Texture(orthoImg), classmap = new THREE.Texture(classImg);
+  ortho.needsUpdate = classmap.needsUpdate = true;
   ortho.colorSpace = THREE.SRGBColorSpace;
   ortho.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
   ortho.generateMipmaps = true;

@@ -17,13 +17,42 @@ export const DATA_URL = `${import.meta.env.BASE_URL}data/`;
 // v1:s spawn (högsta gröna fläcken): data.js "spawn":[447.2,53.0]
 export const SPAWN: [number, number] = [447.2, 53.0];
 
-function loadImage(url: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(`kunde inte ladda ${url}`));
-    img.src = url;
-  });
+const MB = (n: number) => (n / 1048576).toFixed(1);
+
+/** hämta en fil med förlopp i MB (så ett långsamt mobilnät syns i statusraden) */
+export async function fetchBlob(url: string, label: string, progress: (s: string) => void): Promise<Blob> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${label}: HTTP ${res.status}`);
+  const total = Number(res.headers.get('content-length') || 0);
+  if (!res.body) { progress(`laddar ${label} …`); return res.blob(); }
+  const reader = res.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let got = 0, lastShown = -1;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value); got += value.length;
+    const shown = Math.floor(got / 262144);
+    if (shown !== lastShown) { lastShown = shown; progress(`laddar ${label} ${MB(got)}${total ? ` / ${MB(total)}` : ''} MB`); }
+  }
+  return new Blob(chunks as BlobPart[]);
+}
+
+/** bild via fetch (förlopp) + <img> (fungerar i alla mobilwebbläsare) */
+export async function loadImage(url: string, label: string, progress: (s: string) => void): Promise<HTMLImageElement> {
+  const blob = await fetchBlob(url, label, progress);
+  progress(`avkodar ${label} …`);
+  const objUrl = URL.createObjectURL(blob);
+  try {
+    return await new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error(`${label}: kunde inte avkoda bilden (${MB(blob.size)} MB)`));
+      img.src = objUrl;
+    });
+  } finally {
+    // objekt-URL:en frigörs först när bilden är använd — anroparen behåller img
+  }
 }
 
 export class World {
@@ -44,16 +73,22 @@ export class World {
 
   static async load(progress: (s: string) => void = () => {}): Promise<World> {
     progress('laddar meta.json …');
-    const meta = (await (await fetch(`${DATA_URL}meta.json`)).json()) as Meta;
-    progress(`laddar höjdkarta ${meta.height.w}×${meta.height.h} …`);
-    const img = await loadImage(`${DATA_URL}${meta.height.file}`);
+    const metaRes = await fetch(`${DATA_URL}meta.json`);
+    if (!metaRes.ok) throw new Error(`meta.json: HTTP ${metaRes.status}`);
+    const meta = (await metaRes.json()) as Meta;
+    const img = await loadImage(`${DATA_URL}${meta.height.file}`, 'höjdkarta', progress);
     const { w, h, offsetM, scale } = meta.height;
+    progress(`läser höjdkarta ${w}×${h} …`);
+    await new Promise((r) => setTimeout(r, 0));   // låt statusraden ritas innan den tunga loopen
     if (img.width !== w || img.height !== h) throw new Error(`height.png är ${img.width}×${img.height}, meta säger ${w}×${h}`);
     const cv = document.createElement('canvas');
     cv.width = w; cv.height = h;
-    const ctx = cv.getContext('2d', { willReadFrequently: true })!;
+    const ctx = cv.getContext('2d', { willReadFrequently: true });
+    if (!ctx) throw new Error(`canvas ${w}×${h} gick inte att skapa (minne?)`);
     ctx.drawImage(img, 0, 0);
     const px = ctx.getImageData(0, 0, w, h).data;
+    URL.revokeObjectURL(img.src);
+    cv.width = cv.height = 1;   // släpp canvasminnet (28 MB) direkt
     const raw = new Float32Array(w * h);
     let lo = Infinity, hi = -Infinity;
     for (let i = 0, j = 0; i < raw.length; i++, j += 4) {
