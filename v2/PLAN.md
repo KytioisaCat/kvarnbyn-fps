@@ -59,16 +59,33 @@ Mobil först: KTX2-texturer, Draco/meshopt, LOD, budget ~60 fps på Joels telefo
 - Ett delmål per pass. Uppdatera `../TODO.md` (avsnittet v2) och denna fil när beslut
   fattas. Rör aldrig `../public/` (v1 är fryst som referens).
 
-## Delmål (i ordning)
+## Delmål (i ordning) — omgjorda 2026-10-21 enligt VISION.md §3
 
-- [x] **M0 Skalet** (2026-10-21): `npm install`, lockfile committad, bygget deployar till `/v2/`.
-      (Joel ser skalet på telefonen — bekräftas i samband med M1.)
-- [ ] **M1 Terrängen**: `tools/build_v2.py` → höjdkarta + klasskarta (✓); terrängmesh med LOD,
-      ortofoto på håll + procedurell klassdetalj nära (riktiga PBR-texturer när nät finns),
-      FPS-kamera med WASD/touch, sol + himmel + skuggor + tonemapping (✓ byggt, smoke-testat
-      och pushat 2026-10-21 — 442 rutor, 0,77 M tri, 227 draw calls).
-      **Väntar på Joel-test**: "känns Götaforsliden lika brant?" Återstår i M1: CSM-skuggor,
-      riktiga PBR-texturer (CC0) när nät finns, åfåre-nedskärning + vatten (kan bli M3).
+- [x] **M0 Skalet** (2026-10-21): bygge, deploy under `/v2/`, lockfile.
+- [x] **M1a Terräng + bevis på metoden** (2026-10-21): LiDAR-terräng med LOD; offline-modellen
+      `tools/v2model/` bygger vägnätet som geometri (profil-lösare, kantsten, broar, konformering,
+      mätgrindar). Bevis: `docs/bevis-torget-2026-10-21/`.
+- [ ] **M1b Flats**: torg/parkeringar/planer som plan + kantsten + konformering (OSM-polygoner
+      + plandetektion i LiDAR); samma grindar. Joel-test: "är p-platsen vid torget platt?"
+- [ ] **M1c Hela kartan**: gles lösare (scipy) eller områdesvis; spelaren går på däck/trappor;
+      stödmurar där rapporten pekar; tunnelportaler.
+- [ ] **M2 Husen**: fotavtryck → väggar, riktiga tak, fasadgrid ur husfakta, sockel mot konformerad mark.
+- [ ] **M3 Material & gatubild**: PBR-texturer (CC0) med normalkartor på de konstruerade ytorna,
+      vägmarkeringar, lyktor, bilar, staket, häckar, träd.
+- [ ] **M4 Ljus**: WebGPU-efterbehandling (TAA, GTAO, bloom, dimma), kväll med riktiga lampor.
+- [ ] **M5 Spelet**: fysik/rörelse enligt KRAVSPEC (port av v1:s kalibreringar), zoner, AI,
+      vapen, HUD — tills v2 vinner Joel-testet. Då flyttas v1 till `/legacy/`.
+
+### Offline-modellen (`tools/v2model/`)
+
+    cd tools && venv/bin/python -m v2model.build --area torget   # ~1 min, exit 1 om grind bryts
+    venv/bin/python build_v2.py --no-ortho                        # höjdkarta ur lidar_conformed.npy
+    cd ../v2 && npm run build
+
+Beroenden i `tools/venv`: numpy, pillow, shapely, mapbox_earcut (`triangle` bygger inte på
+Python 3.14 — band + earcut i stället). Områden definieras i `v2model/common.py` (`AREAS`).
+Utdata: `v2/public/data/roads.{json,bin}`, `tools/lidar_conformed.npy` (gitignorerad; återskapas),
+rapport i `tools/v2model/out/`. Lösaren är tät numpy: ~7 000 okända på 7 s per varv, 10–20 varv.
 
 Moduler (`src/`): `world.ts` (meta + höjdfält, `heightAt` = rå × 1,2 som v1), `terrain.ts`
 (128 m-rutor, LOD 1/2/4/8/16 m efter avstånd 150/380/850/1600 m, kjolar mot sprickor, normaler
@@ -77,7 +94,8 @@ ur 1 m-fältet, CCW uppifrån; material = MeshStandard + `onBeforeCompile`-detal
 rakt av — blandningsformeln i shadern är också v1:s: klasstonat foto på håll, detalj × fotoljus
 nära 30–110 m, branta ytor → berg), `sky.ts` (three/addons `Sky`, sol 34° från SV, en skugg-
 kamera 220 m som följer spelaren — CSM senare), `controls.ts` (pointer lock + touch: vänster
-halva gå, höger titta), `main.ts`.
+halva gå, höger titta), `roads.ts` (laddar v2model-meshar per material), `main.ts`.
+Debughookar: `__frame(dt)`, `__look(yaw,pitch)`, `__tp(x,z)` (gå), `__fly(x,y,z)` (fri kamera), `__v2`.
 Debughookar: `__frame(dt)`, `__look(yaw,pitch)`, `__tp(x,z)`, `__v2.{world,terrain,player,…}`.
 - [ ] **M2 Husen**: fotavtryck → väggar/tak, fasadgenerator från husfakta, skuggor.
       Joel-test: hjältehusen igenkännbara.

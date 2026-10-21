@@ -55,6 +55,14 @@ Delmålen M0–M5 och reglerna står i `v2/PLAN.md` — bocka av där och notera
 
 ## Klart
 
+- [x] 2026-10-21 (kväll) — **Bevis: Mölndals bro + vägnätet runt Gamla torget byggt offline, alla
+  8 mätgrindar gröna** (`v2/docs/bevis-torget-2026-10-21/`). Ny pipeline `tools/v2model/`:
+  vägnätsgraf ur OSM (nodar korsningar utan nod), global profil-lösare (aktiv mängd: markband,
+  jämnhet inom/över noder, maxlutning, fri höjd per klass, däck över mark, tunnlar, trappor,
+  trottoar bunden till gata, lösa ändar snappade), band + korsningspolygoner + kantsten med kjol,
+  brodäck per brogrupp med sidor/undersida/räcken/pelare, terrängkonformering, rapport.
+  `v2/src/roads.ts` laddar mesharna; `__fly` för bevisbilder. VISION.md §3b: varför detta inte är v1.
+
 - [x] 2026-10-21 — **v2 lokalt i stället för molnet**: molnformuleringar bort ur docs, `v2`-server i
   `.claude/launch.json` (Vite 5173), `tools/build_v2.py` exporterar `height.png` (1 m, RGB hi/lo-
   byte), `classmap.png`, `ortho_8k/4k.jpg`, `meta.json` till `v2/public/data/` (committat, 19 MB);

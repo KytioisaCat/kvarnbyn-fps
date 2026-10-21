@@ -21,7 +21,7 @@ const MB = (n: number) => (n / 1048576).toFixed(1);
 
 /** hämta en fil med förlopp i MB (så ett långsamt mobilnät syns i statusraden) */
 export async function fetchBlob(url: string, label: string, progress: (s: string) => void): Promise<Blob> {
-  const res = await fetch(url);
+  const res = await fetch(url, { cache: 'no-cache' });   // revalidera alltid (datafiler byts utan namnbyte)
   if (!res.ok) throw new Error(`${label}: HTTP ${res.status}`);
   const total = Number(res.headers.get('content-length') || 0);
   if (!res.body) { progress(`laddar ${label} …`); return res.blob(); }
@@ -73,7 +73,7 @@ export class World {
 
   static async load(progress: (s: string) => void = () => {}): Promise<World> {
     progress('laddar meta.json …');
-    const metaRes = await fetch(`${DATA_URL}meta.json`);
+    const metaRes = await fetch(`${DATA_URL}meta.json`, { cache: 'no-cache' });
     if (!metaRes.ok) throw new Error(`meta.json: HTTP ${metaRes.status}`);
     const meta = (await metaRes.json()) as Meta;
     const img = await loadImage(`${DATA_URL}${meta.height.file}`, 'höjdkarta', progress);

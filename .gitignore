@@ -24,3 +24,6 @@ tools/cache/
 v2/node_modules/
 v2/dist/
 v2/.vite/
+# v2model: konformerad DEM återskapas av tools/v2model/build.py
+tools/lidar_conformed.npy
+tools/v2model/out/build_log.txt

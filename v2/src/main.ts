@@ -7,6 +7,7 @@ import { Terrain, makeTerrainMaterial } from './terrain';
 import { Daylight } from './sky';
 import { FpsControls } from './controls';
 import { makeGroundTextures } from './ground';
+import { loadRoads } from './roads';
 
 const app = document.getElementById('app')!;
 const overlay = document.getElementById('overlay')!;
@@ -67,6 +68,7 @@ async function init() {
   terrain = new Terrain(world, makeTerrainMaterial(world, ortho, classmap, ground));
   scene.add(terrain.group);
   daylight = new Daylight(renderer, scene, isMobile);
+  try { scene.add(await loadRoads(say)); } catch (e) { console.warn('inga vägar:', e); }
 
   player.pos.y = world.heightAt(player.pos.x, player.pos.z) + player.eyeY;
   camera.position.copy(player.pos);
@@ -86,6 +88,7 @@ addEventListener('resize', () => {
 });
 
 let running = false;
+let fly = false;
 overlay.addEventListener('click', () => {
   if (!overlay.classList.contains('ready')) return;
   overlay.style.display = 'none'; running = true; controls.lock();
@@ -100,8 +103,10 @@ function frame(dt: number) {
   const speed = controls.sprint ? player.sprint : player.walk;
   const nx = player.pos.x + tmpMove.x * speed * dt, nz = player.pos.z + tmpMove.z * speed * dt;
   if (world.inside(nx, nz, 4)) { player.pos.x = nx; player.pos.z = nz; }
-  const groundY = world.heightAt(player.pos.x, player.pos.z) + player.eyeY;
-  player.pos.y += (groundY - player.pos.y) * Math.min(1, dt * 14);
+  if (!fly) {
+    const groundY = world.heightAt(player.pos.x, player.pos.z) + player.eyeY;
+    player.pos.y += (groundY - player.pos.y) * Math.min(1, dt * 14);
+  }
   camera.position.copy(player.pos);
   controls.applyTo(camera);
   terrain.update(player.pos);
@@ -129,10 +134,12 @@ declare global {
     __frame: (dt: number) => void;
     __look: (yaw: number, pitch: number) => void;
     __tp: (x: number, z: number) => void;
+    __fly: (x: number, y: number, z: number) => void;
     __v2: Record<string, unknown>;
   }
 }
 window.__frame = (dt) => { running = true; frame(dt); };
 window.__look = (yaw, pitch) => { controls.yaw = yaw; controls.pitch = pitch; };
-window.__tp = (x, z) => { player.pos.x = x; player.pos.z = z; if (world) player.pos.y = world.heightAt(x, z) + player.eyeY; };
+window.__fly = (x, y, z) => { fly = true; player.pos.set(x, y, z); };
+window.__tp = (x, z) => { fly = false; player.pos.x = x; player.pos.z = z; if (world) player.pos.y = world.heightAt(x, z) + player.eyeY; };
 window.__v2 = { scene, camera, renderer, player, controls, get world() { return world; }, get terrain() { return terrain; }, get daylight() { return daylight; } };

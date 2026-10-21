@@ -52,8 +52,18 @@ def xz(lat, lon):
     return ((lon - CLON) * MLON, -(lat - CLAT) * MLAT)
 
 
+def load_dem_conformed():
+    """tools/lidar_conformed.npy (skriven av v2model.build: terrängen anpassad till vägarna) om
+    den finns, annars rå LiDAR."""
+    p = os.path.join(HERE, 'lidar_conformed.npy')
+    if os.path.exists(p):
+        print('höjdkarta: använder lidar_conformed.npy (v2model)')
+        return np.load(p)
+    return load_dem()
+
+
 def export_height():
-    dem = load_dem().astype(np.float64)              # (2171, 3219), rad 0 = norr
+    dem = load_dem_conformed().astype(np.float64)    # (2171, 3219), rad 0 = norr
     q = np.round((dem + OFFSET) * SCALE)
     assert q.min() >= 0 and q.max() <= 65535, (q.min(), q.max())
     q = q.astype(np.uint16)

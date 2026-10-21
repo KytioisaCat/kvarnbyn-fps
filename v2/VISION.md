@@ -110,8 +110,10 @@ ett lapp i taget i webbläsaren.
 
 **Bevis på det svåraste först**: första delmålet är inte p-platsen. Det är **Mölndals bro +
 vägnätet runt Gamla torget**, byggt offline med profil-lösaren, renderat som bild, med rapport.
-Om metoden klarar broarna klarar den resten. Klarar den inte broarna vet vi det på en vecka,
-inte efter tre månader.
+Om metoden klarar broarna klarar den resten.
+
+**Utfall 2026-10-21 (samma kväll)**: gjort, alla mätgrindar gröna — se
+`docs/bevis-torget-2026-10-21/README.md` (bilder, profil, rapport, vad som saknas).
 ## 4. Vad som INTE ändras
 
 Spelmekaniken (KRAVSPEC.md), v1 som facit för känsla och kalibreringar, CC0/CC BY-regeln för
