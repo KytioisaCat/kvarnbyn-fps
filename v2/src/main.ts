@@ -2,7 +2,11 @@
 // detalj, himmel/sol/skuggor) med FPS-kamera. Kalibreringar från v1 (public/game.js):
 // EXAG 1,2, ögonhöjd 1,7 m, gångfart 5,2 / sprint 8,2 m/s, spawn (447,53).
 import * as THREE from 'three';
-import { World, SPAWN, DATA_URL, loadImage } from './world';
+import { World, DATA_URL, loadImage } from './world';
+
+// Spawn: östra änden av Mölndals bro, blicken västerut över däcket (det som är bevisat hittills)
+const SPAWN: [number, number] = [-340, 9];   // mitt på däcket vid östra landfästet
+const SPAWN_YAW = 2.05;
 import { Terrain, makeTerrainMaterial } from './terrain';
 import { Daylight } from './sky';
 import { FpsControls } from './controls';
@@ -43,6 +47,27 @@ const player = {
 const controls = new FpsControls(renderer.domElement);
 
 let world: World | null = null;
+let roads: THREE.Group | null = null;
+let walkables: THREE.Object3D[] = [];
+const ray = new THREE.Raycaster();
+ray.far = 4.0;
+const down = new THREE.Vector3(0, -1, 0);
+const rayOrigin = new THREE.Vector3();
+
+/** markhöjd = vägyta/brodäck om det finns en strax under fötterna (raycast nedåt 4 m), annars terrängen */
+function groundAt(x: number, z: number, yNow: number, reach = 4.0): number {
+  const terr = world!.heightAt(x, z);
+  if (walkables.length) {
+    rayOrigin.set(x, yNow + 0.8, z);
+    ray.set(rayOrigin, down);
+    ray.far = reach + 0.8;
+    const hit = ray.intersectObjects(walkables, false)[0];
+    if (hit && hit.point.y > terr - 0.5) return Math.max(terr, hit.point.y);
+  }
+  return terr;
+}
+/** teleport: landa på högsta gångbara yta (däck eller mark) */
+function landAt(x: number, z: number): number { return groundAt(x, z, world!.heightAt(x, z) + 40, 45); }
 let terrain: Terrain | null = null;
 let daylight: Daylight | null = null;
 
@@ -68,12 +93,14 @@ async function init() {
   terrain = new Terrain(world, makeTerrainMaterial(world, ortho, classmap, ground));
   scene.add(terrain.group);
   daylight = new Daylight(renderer, scene, isMobile);
-  try { scene.add(await loadRoads(say)); } catch (e) { console.warn('inga vägar:', e); }
+  try { roads = await loadRoads(say); scene.add(roads); walkables = roads.children.filter((c) => c.userData.walkable); } catch (e) { console.warn('inga vägar:', e); }
 
-  player.pos.y = world.heightAt(player.pos.x, player.pos.z) + player.eyeY;
+  controls.yaw = SPAWN_YAW;
   camera.position.copy(player.pos);
   controls.applyTo(camera);
   say('bygger terräng …');
+  player.pos.y = landAt(player.pos.x, player.pos.z) + player.eyeY;
+  camera.position.copy(player.pos);
   terrain.update(player.pos, true);
   daylight.follow(player.pos);
   renderer.render(scene, camera);   // kompilera shaders före första riktiga bildrutan
@@ -104,7 +131,7 @@ function frame(dt: number) {
   const nx = player.pos.x + tmpMove.x * speed * dt, nz = player.pos.z + tmpMove.z * speed * dt;
   if (world.inside(nx, nz, 4)) { player.pos.x = nx; player.pos.z = nz; }
   if (!fly) {
-    const groundY = world.heightAt(player.pos.x, player.pos.z) + player.eyeY;
+    const groundY = groundAt(player.pos.x, player.pos.z, player.pos.y - player.eyeY) + player.eyeY;
     player.pos.y += (groundY - player.pos.y) * Math.min(1, dt * 14);
   }
   camera.position.copy(player.pos);
@@ -141,5 +168,5 @@ declare global {
 window.__frame = (dt) => { running = true; frame(dt); };
 window.__look = (yaw, pitch) => { controls.yaw = yaw; controls.pitch = pitch; };
 window.__fly = (x, y, z) => { fly = true; player.pos.set(x, y, z); };
-window.__tp = (x, z) => { fly = false; player.pos.x = x; player.pos.z = z; if (world) player.pos.y = world.heightAt(x, z) + player.eyeY; };
+window.__tp = (x, z) => { fly = false; player.pos.x = x; player.pos.z = z; if (world) player.pos.y = landAt(x, z) + player.eyeY; };
 window.__v2 = { scene, camera, renderer, player, controls, get world() { return world; }, get terrain() { return terrain; }, get daylight() { return daylight; } };

@@ -5,9 +5,9 @@
   "type": "module",
   "description": "Försvara Kvarnbyn v2 — ny grafikmotor (Three.js WebGPU/WebGL2, TypeScript, Vite)",
   "scripts": {
-    "dev": "vite --host --port 5173",
+    "dev": "vite --host --port 5187 --strictPort",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview --host --port 5173",
+    "preview": "vite preview --host --port 5187 --strictPort",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

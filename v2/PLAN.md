@@ -50,7 +50,7 @@ Mobil först: KTX2-texturer, Draco/meshopt, LOD, budget ~60 fps på Joels telefo
   Varje push deployar — skriv inte sönder bygget; `npm run build` ska gå igenom innan push.
 - **Mätt uppkoppling**: fråga Joel innan `npm install`, nya paket eller nedladdade tillgångar,
   och säg ungefärlig storlek. Håll beroendelistan kort.
-- **Smoke-test i preview** (`.claude/launch.json` → `v2`, Vite på port 5173): ladda sidan utan
+- **Smoke-test i preview** (`.claude/launch.json` → `v2`, Vite på port 5187): ladda sidan utan
   konsolfel, stega med `window.__frame(dt)`, ta screenshot. Det visuella omdömet är Joels, på
   telefonen via <https://kytioisacat.github.io/kvarnbyn-fps/v2/> — be om feedback i stället
   för att gissa.

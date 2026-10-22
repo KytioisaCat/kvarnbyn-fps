@@ -4,14 +4,25 @@
     {
       "name": "kvarnbyn",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8763", "--directory", "public"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8763",
+        "--directory",
+        "public"
+      ],
       "port": 8763
     },
     {
       "name": "v2",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "v2"],
-      "port": 5173
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "v2"
+      ],
+      "port": 5187
     }
   ]
 }

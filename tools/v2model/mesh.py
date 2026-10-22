@@ -171,7 +171,8 @@ class RoadModel:
             if data is None: continue
             strips[e.id] = (data, poly)
             layer = 'bridge' if e.bridge else 'ground'
-            polys_by_layer[layer].append(poly)
+            if not (e.steplike or e.stair or e.cls == 'steps'):   # trappor är strukturer PÅ marken: ingen konformering/kantsten
+                polys_by_layer[layer].append(poly)
             xy, hh, L, R = data
             base_mat = 'deck' if e.bridge else ('steps' if (e.steplike or e.stair) else ('path' if e.cls in ('footway', 'path', 'cycleway', 'track') else 'asphalt'))
             for i in range(len(xy) - 1):
@@ -261,11 +262,24 @@ class RoadModel:
                 return float(np.interp(e.line.project(p), e.s, self.h[e.vidx]))
             def gh_arr(xs, zs, gh=gh): return np.array([gh(x, z) for x, z in zip(xs, zs)])
             self.deck_groups.append((deck, ges))
+            # landfästen: gruppens noder där vägen fortsätter på mark (eller slutar) — där ska
+            # varken räcke eller däckvägg gå tvärs över körbanan
+            gids = {e.id for e in ges}
+            abut = []
+            for e in ges:
+                for nid in e.nodes:
+                    others = [o for o in incident.get(nid, []) if o.id not in gids]
+                    if others or len(incident.get(nid, [])) == 1:
+                        abut.append((np.array(net.V[net.node_vidx[nid]]), max([e.width] + [o.width for o in others]) / 2 + 1.5))
+            def at_end(p0, p1):
+                m = (np.asarray(p0) + np.asarray(p1)) / 2
+                return any(np.hypot(*(m - c)) < r for c, r in abut)
             for p in (deck.geoms if isinstance(deck, MultiPolygon) else [deck]):
                 ext = np.array(p.exterior.coords)
-                mb.add_wall('concrete', ext, gh, lambda x, z, gh=gh: gh(x, z) - DECK_T, outward=True)
-                mb.add_wall('rail', ext, lambda x, z, gh=gh: gh(x, z) + RAIL_H, gh, outward=True)
-                mb.add_wall('rail', ext, lambda x, z, gh=gh: gh(x, z) + RAIL_H, gh, outward=False)
+                for seg in _split_ring(ext, at_end):
+                    mb.add_wall('concrete', seg, gh, lambda x, z, gh=gh: gh(x, z) - DECK_T, outward=True)
+                    mb.add_wall('rail', seg, lambda x, z, gh=gh: gh(x, z) + RAIL_H, gh, outward=True)
+                    mb.add_wall('rail', seg, lambda x, z, gh=gh: gh(x, z) + RAIL_H, gh, outward=False)
                 tmp = MeshBuf()
                 tmp.add_polygon_top('x', p, lambda xs, zs, gh_arr=gh_arr: gh_arr(xs, zs) - DECK_T)
                 pos, idx = tmp.parts.get('x', ([], []))
@@ -285,6 +299,19 @@ class RoadModel:
                 _box(mb, 'concrete', x, z, 1.4, 1.4, gy - 1.0, top + 0.05); npier += 1
         log(f'  meshar: ' + ', '.join(f'{k} {len(v[0]) // 3} tri' for k, v in mb.arrays().items()) + f', {npier} pelare')
         return mb
+
+
+def _split_ring(ring, skip):
+    """dela en ring i delpolylinjer, utan segmenten där skip(p0, p1) är sant"""
+    out, cur = [], [ring[0]]
+    for p0, p1 in zip(ring[:-1], ring[1:]):
+        if skip(p0, p1):
+            if len(cur) > 1: out.append(np.array(cur))
+            cur = [p1]
+        else:
+            cur.append(p1)
+    if len(cur) > 1: out.append(np.array(cur))
+    return out
 
 
 def _seg_is_stair(e, p0, p1):

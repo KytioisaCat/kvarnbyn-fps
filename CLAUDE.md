@@ -61,7 +61,7 @@ fråga före `npm install`/nedladdningar och säg storlek.
   10×) — använd `python3 tools/rebuild_graph.py` som är gratis och kurerad.
   Fullständiga riktlinjer inkl. när det semantiska lagret ska byggas om: **`GRAFEN.md`**.
 - **Kör lokalt:** v1: `python3 -m http.server 8763 --directory public`; v2: `cd v2 && npm run dev`
-  (port 5173). Båda finns i `.claude/launch.json` (`kvarnbyn` resp. `v2`)
+  (port 5187). Båda finns i `.claude/launch.json` (`kvarnbyn` resp. `v2`)
 - **Testa i preview:** rAF sover i headless — stega spelet med debughookarna
   `window.__frame(dt)`, `window.__game`, `window.__look(yaw,pitch)`, `window.__fire()`.
   Starta via klick-event på `#overlay` (preview_click når inte lyssnaren; använd

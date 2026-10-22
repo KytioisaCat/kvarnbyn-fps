@@ -10,15 +10,15 @@ Nät: 562 kanter (73 bro, 1 tunnel), 457 korsningsnoder (2 nodade korsningar uta
 | fri höjd över korsad väg (min, normerad till 4,7 för gång 2,6) | 4.536 m | 4.5 | ✅ | footway över footway |
 | vanlig väg − LiDAR (p90) | 0.128 m | 0.6 | ✅ |  |
 | däck över mark (min) | 0.437 m | 0.3 | ✅ |  |
-| terräng över vägyta inne i asfalt (max) | 0.031 m | 0.05 | ✅ | 0.03 m vid (-99, -26), 0.03 m vid (-165, -243), 0.03 m vid (-101, -111) |
-| terräng över kantstenskrön vid ytterkanten (p99) | -0.004 m | 0.03 | ✅ | max 0.93 m vid (132, -233), 0.22 m vid (-270, -16), 0.17 m vid (128, -123) — kandidater för stödmur |
+| terräng över vägyta inne i asfalt (max) | 0.031 m | 0.05 | ✅ | 0.03 m vid (-99, -26), 0.03 m vid (-101, -111), 0.01 m vid (-138, -108) |
+| terräng över kantstenskrön vid ytterkanten (p99) | -0.004 m | 0.03 | ✅ | max 0.83 m vid (192, 60), 0.22 m vid (-270, -16), 0.17 m vid (-169, -203) — kandidater för stödmur |
 | terräng under kantstenskrön vid ytterkanten (p99) | 0.359 m | 0.5 | ✅ |  |
 
 **Resultat: ALLA GRINDAR OK**
 
-Meshar: asphalt 11574 tri, deck 2253 tri, path 4516 tri, steps 244 tri, kerb 77663 tri, concrete 3760 tri, rail 3664 tri
+Meshar: asphalt 11574 tri, deck 2253 tri, path 4516 tri, steps 244 tri, kerb 77372 tri, concrete 3450 tri, rail 3044 tri
 
-Konformering: cells_road 100192, cells_kerb 11910, cells_blend 176344, change_p50 0.11, change_p90 0.37, change_max 6.09
+Konformering: cells_road 99406, cells_kerb 11758, cells_blend 174652, change_p50 0.11, change_p90 0.36, change_max 6.09
 
 Profilbild: `v2model/out/profil_molndals_bro.png`
-Tid: 68 s
+Tid: 67 s
