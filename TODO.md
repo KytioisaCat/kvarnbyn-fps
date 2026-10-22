@@ -9,8 +9,9 @@ Joel underkände v2:s approach helt. Ny väg: datan tolkas till en stadsbeskrivn
 med riktiga verktyg och tillgångar (motor + vägverktyg + arketyp-kit + punktmoln), inget mer
 handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/tolkningsdelar.
 
-- [ ] **Beslut**: Unity 6 → webbläsare/telefon, eller Unreal 5 → PC (OMSTART.md §4). Joel avgör.
-- [ ] Nedladdningar på bra nät: motor, Blender, punktmolnsruta (CC0 ~100 MB), byggnadsvektor
+- [ ] **Beslut**: PoC-sekvens enligt `POC-PLANER.md` (rekommendation: Blender-innehåll → Godot webb
+  → Godot desktop; Unity/Unreal i reserv). Joel godkänner nedladdningslistan (~0,9 GB).
+- [ ] PoC 0 — innehåll i Blender: ett arketyp-kit + hjältehus + gata + träd + terräng, en bild
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
 - [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material
 - [ ] Första beviset: EN bild vid Gamla torget som ser ut som ett spel (hus, gata, träd, bakat ljus)
