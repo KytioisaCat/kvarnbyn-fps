@@ -55,6 +55,12 @@ Delmålen M0–M5 och reglerna står i `v2/PLAN.md` — bocka av där och notera
 
 ## Klart
 
+- [x] 2026-10-22 — **M1b flats + stödmurar + bergväggar** (alla 12 grindar gröna, bilder i
+  `v2/docs/bevis-torget-2026-10-21/` dag 2): `flats.py` (plan per OSM-yta, vägar bundna till
+  planet, egen mesh/kantsten, konformering), `walls.py` (stödmurar ur konformeringens resultat,
+  757 m), konformeringen blendar inte över terrasskanter, triplanär bergtextur på branta ytor,
+  räcken bara längs brosidor, gång på däck (raycast), spawn på bron, `?at=` startplatser, port 5187
+
 - [x] 2026-10-21 (kväll) — **Bevis: Mölndals bro + vägnätet runt Gamla torget byggt offline, alla
   8 mätgrindar gröna** (`v2/docs/bevis-torget-2026-10-21/`). Ny pipeline `tools/v2model/`:
   vägnätsgraf ur OSM (nodar korsningar utan nod), global profil-lösare (aktiv mängd: markband,

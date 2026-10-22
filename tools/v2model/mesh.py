@@ -96,8 +96,8 @@ def strip_polygon(xy, w):
 
 
 class RoadModel:
-    def __init__(self, net, h, ground):
-        self.net = net; self.h = h; self.ground = ground
+    def __init__(self, net, h, ground, flats=()):
+        self.net = net; self.h = h; self.ground = ground; self.flats = list(flats)
         self.edges_by_layer = {}
         for e in net.edges:
             if e.tunnel: continue
@@ -134,8 +134,12 @@ class RoadModel:
                 e = cands[0]
             else:                                 # korsning: närmaste av de anslutande kanterna
                 e = min(cands, key=lambda ee: ee.line.distance(p))
-            out[k] = np.interp(e.line.project(p), e.s, self.h[e.vidx])
+            out[k] = self._h_of(e, p)
         return out
+
+    def _h_of(self, e, p):
+        if hasattr(e, 'plane'): return float(e.h_at_xy(p.x, p.y))
+        return float(np.interp(e.line.project(p), e.s, self.h[e.vidx]))
 
     def _set_owners(self, layer, polys, owner_edges):
         self.owners = getattr(self, 'owners', {})
@@ -165,10 +169,14 @@ class RoadModel:
         trim = {nid: (max(x.width for x in es) / 2 + 0.5 if len(es) > 1 else 0.0) for nid, es in incident.items()}
         strips = {}
         polys_by_layer = {'ground': [], 'bridge': []}
+        flat_union = unary_union([f.poly for f in self.flats]).buffer(0) if self.flats else Polygon()
         for e in net.edges:
             if e.tunnel: continue                      # under mark: ritas inte (M3: underfart)
             data, poly = self.edge_strip_poly(e, trim)
             if data is None: continue
+            if not e.bridge and not flat_union.is_empty and poly.intersection(flat_union).area > 0.8 * poly.area:
+                e.in_flat = True                       # ytan (torget, p-platsen) äger vägen: inget eget band
+                continue
             strips[e.id] = (data, poly)
             layer = 'bridge' if e.bridge else 'ground'
             if not (e.steplike or e.stair or e.cls == 'steps'):   # trappor är strukturer PÅ marken: ingen konformering/kantsten
@@ -184,6 +192,10 @@ class RoadModel:
                 # CCW uppifrån: a(L_i) → d(L_i+1) → c(R_i+1) → b(R_i)?  kontrollera med kryssprodukt
                 mb.add_quad(mat, a, b, c, d) if _ccw_up(a, b, c) else mb.add_quad(mat, a, d, c, b)
         owner_polys = {'ground': [], 'bridge': []}; owner_edges = {'ground': [], 'bridge': []}
+        for f in self.flats:                               # byggda plana ytor: egna ägare med plan
+            owner_polys['ground'].append(f.poly); owner_edges['ground'].append([f])
+            polys_by_layer['ground'].append(f.poly)
+            mb.add_polygon_top(f.material, f.poly, lambda xs, zs, f=f: f.h_at_xy(xs, zs))
         for e in net.edges:
             if e.id in strips and not e.tunnel:
                 L_ = 'bridge' if e.bridge else 'ground'
@@ -192,7 +204,7 @@ class RoadModel:
         junction_polys = {'ground': [], 'bridge': []}
         pending_junctions = []
         for nid, es in incident.items():
-            es = [e for e in es if not e.tunnel]
+            es = [e for e in es if not e.tunnel and not getattr(e, 'in_flat', False)]
             if len(es) < 2: continue
             layer = 'bridge' if any(e.bridge for e in es) else 'ground'
             r = trim[nid] + max(e.width for e in es) / 2 + 1.0

@@ -70,3 +70,30 @@ resultatet av villkoren fri höjd, jämnhet och landfästen = mark.
 - **Spelaren går inte på däcken** ännu (terrängklamp) — `__fly` användes för bilderna. M5.
 - **Material**: enfärgad asfalt/betong; riktiga texturer och markeringar kommer med material-steget.
 - Tunnelportaler ritas inte (tunnelstigen döljs).
+
+## Dag 2 (2026-10-22): flats, stödmurar, bergväggar, gång på däck
+
+Joels bild från Forsebron kvällen innan visade en svart låda (räcke och däckvägg tvärs över
+broänden) och utsmetade "klippor". Åtgärdat och utökat, alla grindar gröna (nu 12):
+
+- **Flats** (`tools/v2model/flats.py`): torg, parkeringar, planer, lekplatser ur OSM-polygoner
+  får ett plan (robust minsta kvadrat mot LiDAR, lutning ≤ 6 % parkering / 4 % torg), egen mesh
+  och kantsten; vägar genom eller intill ytan binds till planet i lösaren; terrängen konformeras
+  till planet; vägband inne i ytan ritas inte (ytan äger dem). 20 ytor i området, Gamla Torget
+  (`highway=pedestrian area=yes`, gatsten) är en av dem.
+- **Stödmurar** (`walls.py`): där LiDAR-terrängen 1,6 m utanför kantstenen ligger > 0,6 m över
+  krönet reses en mur (757 m i området, högsta 5,5 m). Konformeringen blendar inte längre över
+  terrasskanter (> 1,5 m) — det var de utsmetade klipporna.
+- **Branta ytor** i terrängen (klippor, Forsåkers bergvägg) får bergtextur triplanärt på alla
+  avstånd i stället för foto uppifrån.
+- Räcken och däckväggar bara längs brosidorna; spelaren går på däck och vägytor (raycast);
+  start på Mölndals bro, `?at=torget` / `?at=forsebron` för andra platser.
+
+| | |
+|---|---|
+| ![](07-torget-sydvast-dag2.jpg) Gamla Torget: gatstensplan med kantsten, terrasserna som berg. | ![](08-torget-nordost-dag2.jpg) Samma plats mot nordost: gata, kantsten, Forsåkers bergvägg. |
+| ![](09-torget-uppifran-dag2.jpg) Torget snett uppifrån: skelettet — vägar, ytor, murar. Inga hus, inga material, ingen vegetation ännu. | ![](10-forsebron-joels-vy-dag2.jpg) Joels vy vid Forsebron: lådan borta, klipporna är berg. |
+
+**Ärligt**: det här är ett *skelett* som är rätt — plana ytor plana, kanter skarpa, broar riktiga.
+Att det ser verkligt ut kräver M2 (hus) och M3 (material, gatubild, vegetation). Utan hus ser
+inget torg ut som ett torg.

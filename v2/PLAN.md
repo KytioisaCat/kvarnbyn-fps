@@ -65,8 +65,9 @@ Mobil först: KTX2-texturer, Draco/meshopt, LOD, budget ~60 fps på Joels telefo
 - [x] **M1a Terräng + bevis på metoden** (2026-10-21): LiDAR-terräng med LOD; offline-modellen
       `tools/v2model/` bygger vägnätet som geometri (profil-lösare, kantsten, broar, konformering,
       mätgrindar). Bevis: `docs/bevis-torget-2026-10-21/`.
-- [ ] **M1b Flats**: torg/parkeringar/planer som plan + kantsten + konformering (OSM-polygoner
-      + plandetektion i LiDAR); samma grindar. Joel-test: "är p-platsen vid torget platt?"
+- [x] **M1b Flats + stödmurar** (2026-10-22): torg/parkeringar/planer som plan + kantsten +
+      konformering (OSM-polygoner), stödmurar automatiskt, bergtextur på branta ytor. Kvar:
+      plandetektion i LiDAR för ytor OSM saknar. Joel-test: `/v2/?at=torget`.
 - [ ] **M1c Hela kartan**: gles lösare (scipy) eller områdesvis; spelaren går på däck/trappor;
       stödmurar där rapporten pekar; tunnelportaler.
 - [ ] **M2 Husen**: fotavtryck → väggar, riktiga tak, fasadgrid ur husfakta, sockel mot konformerad mark.

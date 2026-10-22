@@ -13,13 +13,14 @@ STEP = 4.0
 
 class Edge:
     __slots__ = ('id', 'way', 'cls', 'width', 'maxgrade', 'bridge', 'tunnel', 'layer', 'name',
-                 'xy', 'vidx', 's', 'line', 'nodes', 'steplike', 'stair', 'stair_seg')
+                 'xy', 'vidx', 's', 'line', 'nodes', 'steplike', 'stair', 'stair_seg', 'in_flat')
 
     def __init__(self):
         self.vidx = []   # index i höjdvektorn per vertex (inkl. ändnoder)
         self.steplike = False
         self.stair = False
         self.stair_seg = None
+        self.in_flat = False
 
 
 class Network:

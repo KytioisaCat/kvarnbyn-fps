@@ -96,8 +96,8 @@ def find_crossings(net):
     return out
 
 
-def solve(net, ground, water_lines=None, log=print):
-    h, g, crossings = _solve(net, ground, water_lines, log)
+def solve(net, ground, water_lines=None, log=print, flats=()):
+    h, g, crossings = _solve(net, ground, water_lines, log, flats)
     stairs = 0
     for e in net.edges:
         if e.cls in PED and not e.steplike and e.s[-1] > 1.0 and (not e.bridge or e.s[-1] < 12.0):
@@ -107,7 +107,7 @@ def solve(net, ground, water_lines=None, log=print):
         if e.stair: e.bridge = False
     if stairs:
         log(f'  {stairs} gångkanter mellan nivåer → trappor (struktur, rak linje mellan noderna); löser om')
-        h, g, crossings = _solve(net, ground, water_lines, log)
+        h, g, crossings = _solve(net, ground, water_lines, log, flats)
     # segment på gångkanter som ändå måste klättra > 30 % är trappor (material + undantag i grindar)
     nseg = 0
     for e in net.edges:
@@ -119,7 +119,7 @@ def solve(net, ground, water_lines=None, log=print):
     return h, g, crossings
 
 
-def _solve(net, ground, water_lines=None, log=print):
+def _solve(net, ground, water_lines=None, log=print, flats=()):
     n = net.n
     V = np.array(net.V)
     g = ground.at(V[:, 0], V[:, 1])
@@ -176,6 +176,30 @@ def _solve(net, ground, water_lines=None, log=print):
                 w = (W_SMOOTH_PEDBRIDGE if e1.cls in PED else W_SMOOTH_BRIDGE) if (e1.bridge and e2.bridge) else W_SMOOTH
                 add([(prev, w), (mid, -2 * w), (nxt, w)], 0.0); ncross += 1
     log(f'  jämnhet över {ncross} nodövergångar')
+    # vägar inne i en byggd plan yta (parkering, torg) ligger PÅ planet
+    nflat = 0
+    if flats:
+        import shapely as _sh
+        for e in net.edges:
+            if e.bridge or e.tunnel: continue
+            reach = e.width / 2 + 0.5                       # även en gata vars band överlappar ytan
+            for i in e.vidx:
+                x, z = net.V[i]
+                for f in flats:
+                    if _sh.contains_xy(f.poly, x, z) or f.poly.distance(_sh.points(x, z)) <= reach:
+                        add([(i, 60.0)], 60.0 * float(f.h_at_xy(x, z))); nflat += 1
+                        break
+        log(f'  {nflat} vägvertex bundna till flats-plan')
+    # rampzon: vertex inom 8 m från en flat slipper markbandet (infarten får jämna ut skillnaden)
+    ramp_free = set()
+    if flats:
+        import shapely as _sh
+        for e in net.edges:
+            if e.bridge or e.tunnel: continue
+            for i in e.vidx:
+                x, z = net.V[i]
+                if any(f.poly.distance(_sh.points(x, z)) <= 8.0 for f in flats): ramp_free.add(i)
+    net.ramp_free = ramp_free
     from shapely.geometry import Point
     from shapely.strtree import STRtree
     glist = [e for e in net.edges if not e.bridge and not e.tunnel]
@@ -264,6 +288,7 @@ def _solve(net, ground, water_lines=None, log=print):
         for e in net.edges:                                   # markband för vanlig väg
             if e.bridge or e.tunnel or e.stair: continue
             for i in e.vidx:
+                if i in ramp_free: continue
                 d = h[i] - g[i]
                 key = ('m', i)
                 if d < -BAND + 1e-3:

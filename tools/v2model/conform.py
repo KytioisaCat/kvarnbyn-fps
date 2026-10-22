@@ -9,6 +9,7 @@ from .common import EXAG, X0, Z1
 from .mesh import KERB_H
 
 UNDER = 0.10     # asfaltens (och kantstensbandets) mark ligger så här långt under vägytan
+WALL = 1.5       # större höjdskillnad mellan vägkant och LiDAR utanför vägen = stödmur/terrass: blenda inte
 BLEND = 6.0      # m mjuk övergång utanför kantstenen
 
 
@@ -36,12 +37,19 @@ def conform(model, ground, log=print):
     tgt = np.where(in_road[idx], (t - UNDER) / EXAG, np.where(in_kerb[idx], (t - 0.25) / EXAG, (t + KERB_H) / EXAG))
     w = np.where(in_blend[idx], np.clip(dist[idx] / BLEND, 0, 1), 0.0)
     w = w * w * (3 - 2 * w)                                   # smoothstep
+    # utanför asfalten: en skillnad > WALL mellan målet och LiDAR:n är en stödmur/terrass —
+    # då lämnas terrängen (annars dras den upp till en utsmetad "klippa")
+    outside = (~in_road[idx]) & (~in_kerb[idx]) & (dist[idx] > 1.0)   # första metern utanför kantstenen följer den
+    wall = outside & (np.abs(tgt - old) * EXAG > WALL)
+    w = np.where(wall, 1.0, w)
     sub[idx] = tgt * (1 - w) + old * w
+    nwall = int(wall.sum())
     raw[r0:r1 + 1, c0:c1 + 1] = sub.reshape(rr.shape)
     changed = np.abs(sub[idx] - old) * EXAG
     log(f'  konformering: {in_road.sum()} celler asfalt, {in_kerb.sum()} kantsten, {in_blend.sum()} blend; '
         f'ändring p50 {np.percentile(changed, 50):.2f} p90 {np.percentile(changed, 90):.2f} max {changed.max():.2f} m')
-    stats = {'cells_road': int(in_road.sum()), 'cells_kerb': int(in_kerb.sum()), 'cells_blend': int(in_blend.sum()),
+    log(f'  {nwall} celler lämnade orörda vid stödmurs-höga skillnader (> {WALL} m)')
+    stats = {'wall_cells': nwall, 'cells_road': int(in_road.sum()), 'cells_kerb': int(in_kerb.sum()), 'cells_blend': int(in_blend.sum()),
              'change_p50': float(np.percentile(changed, 50)), 'change_p90': float(np.percentile(changed, 90)),
              'change_max': float(changed.max())}
     return raw, stats

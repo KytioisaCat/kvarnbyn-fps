@@ -5,8 +5,16 @@ import * as THREE from 'three';
 import { World, DATA_URL, loadImage } from './world';
 
 // Spawn: östra änden av Mölndals bro, blicken västerut över däcket (det som är bevisat hittills)
-const SPAWN: [number, number] = [-340, 9];   // mitt på däcket vid östra landfästet
-const SPAWN_YAW = 2.05;
+// Startplatser: ?at=bron (default), ?at=torget, ?at=forsebron, eller ?x=..&z=..
+const PLACES: Record<string, { x: number; z: number; yaw: number }> = {
+  bron: { x: -340, z: 9, yaw: 2.05 },          // mitt på Mölndals bro, blick västerut
+  torget: { x: 80, z: -103, yaw: 2.3 },        // Gamla Torget
+  forsebron: { x: 104, z: -61, yaw: -0.5 },
+};
+const qs = new URLSearchParams(location.search);
+const place = PLACES[qs.get('at') ?? 'bron'] ?? PLACES.bron;
+const SPAWN: [number, number] = [Number(qs.get('x') ?? place.x), Number(qs.get('z') ?? place.z)];
+const SPAWN_YAW = Number(qs.get('yaw') ?? place.yaw);
 import { Terrain, makeTerrainMaterial } from './terrain';
 import { Daylight } from './sky';
 import { FpsControls } from './controls';

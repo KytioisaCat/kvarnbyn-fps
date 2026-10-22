@@ -117,14 +117,16 @@ export function makeTerrainMaterial(world: World, ortho: THREE.Texture, classmap
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\nvarying float vSlope;')
+      .replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\nvarying float vSlope;\nvarying vec3 vWNor;')
       .replace('#include <begin_vertex>', `#include <begin_vertex>
 vWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
+vWNor = normalize(mat3(modelMatrix) * normal);
 vSlope = min(1.0, (1.0 - normal.y) * 2.2);`);
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
 varying vec3 vWPos;
 varying float vSlope;
+varying vec3 vWNor;
 uniform sampler2D uClass;
 uniform vec4 uBounds;
 uniform sampler2D detA, detG, detF, detR, detN;
@@ -144,6 +146,18 @@ vec4 kvW;   // klassvikter: asfalt, gräs, skog, berg`)
   vec3 photo = diffuseColor.rgb * farTint;
   float wNear = 1.0 - smoothstep(30.0, 110.0, length(vWPos - cameraPosition));
   diffuseColor.rgb = photo;
+  // branta ytor (klippor, terrasser, stödmurar i LiDAR:n): fotot är taget uppifrån och smetas ut
+  // på vertikala ytor — där används bergtexturen triplanärt på ALLA avstånd
+  float steep = smoothstep(0.45, 0.75, vSlope);
+  if (steep > 0.003) {
+    vec3 an = abs(vWNor);
+    vec2 uvS = (an.x > an.z) ? vWPos.zy / 2.6 : vWPos.xy / 2.6;
+    vec3 rockSide = texture2D(detR, uvS).rgb * (0.82 + 0.36 * texture2D(detN, uvS / 17.0).r);
+    float plS = dot(photo, vec3(0.299, 0.587, 0.114));
+    vec3 rockLit = rockSide * (0.55 + 0.9 * mix(plS, 0.5, 0.6));
+    diffuseColor.rgb = mix(diffuseColor.rgb, rockLit, steep);
+    photo = diffuseColor.rgb;
+  }
   if (wNear > 0.003) {
     vec2 duv = vWPos.xz / 2.6;                                    // 512 px ≈ 2,6 m
     vec3 d = vec3(0.0);

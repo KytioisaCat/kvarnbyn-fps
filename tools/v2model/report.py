@@ -2,6 +2,7 @@
 import os
 
 import numpy as np
+import shapely
 from PIL import Image, ImageDraw, ImageFont
 
 from .common import HERE
@@ -18,11 +19,13 @@ GATES = {
     'deck_above_ground': 0.3,     # däck över mark överallt (m)
     'terrain_under_road_max': 0.05, # terräng ≤ vägyta + 5 cm inne i asfalten (1 m-gridens interpolation; kantstenens vägg döljer 12 cm)
     'kerb_above_top_max': 0.03,   # terräng vid kantstenens ytterkant får inte sticka upp över krönet (m)
-    'kerb_below_skirt_p99': 0.50,  # … och inte ligga under kjolens underkant (m)
+    'kerb_below_skirt_p99': 0.50,
+    'flat_terrain_dev_max': 0.05,  # terräng mot flat-planet inne i ytan efter konformering (m)
+    'flat_road_dev_max': 0.06,     # vägyta inne i en flat mot planet (m)  # … och inte ligga under kjolens underkant (m)
 }
 
 
-def evaluate(net, h, g, crossings, model, conformed_ground, mesh_stats, conform_stats, log=print):
+def evaluate(net, h, g, crossings, model, conformed_ground, mesh_stats, conform_stats, log=print, flats=()):
     rows = []
     ok_all = True
 
@@ -55,6 +58,8 @@ def evaluate(net, h, g, crossings, model, conformed_ground, mesh_stats, conform_
             d2 = np.abs(np.diff(hh, 2))
             keep = ~(ss[:-1] | ss[1:])        # bula vid ett trappsegment räknas inte
             keep &= np.array([not (set(e.vidx[k:k + 3]) & portal) for k in range(len(e.vidx) - 2)])
+            ramp = getattr(net, 'ramp_free', set())        # ramper in/ut ur terrasserade ytor får bryta lutningen
+            keep &= np.array([not (set(e.vidx[k:k + 3]) & ramp) for k in range(len(e.vidx) - 2)])
             if keep.any():
                 kb = int(np.argmax(np.where(keep, d2, -1)))
                 if e.cls in PEDC:
@@ -101,7 +106,35 @@ def evaluate(net, h, g, crossings, model, conformed_ground, mesh_stats, conform_
     ring = ring[:: max(1, len(ring) // 3000)]
     kerb_y = model.height_at(ring[:, 0], ring[:, 1], 'ground') + 0.12
     terr_y = conformed_ground.at(ring[:, 0] , ring[:, 1])
+    if flats:
+        import shapely as _sh
+        worst_t = (0.0, None); worst_r = (0.0, None)
+        for f in flats:
+            minx, minz, maxx, maxz = f.poly.bounds
+            P = np.column_stack([rng.uniform(minx, maxx, 4000), rng.uniform(minz, maxz, 4000)])
+            P = P[_sh.contains_xy(f.poly.buffer(-0.7), P[:, 0], P[:, 1])][:800]
+            if not len(P): continue
+            plane = f.h_at_xy(P[:, 0], P[:, 1])
+            dt = float(np.max(np.abs(conformed_ground.at(P[:, 0], P[:, 1]) - (plane - 0.10))))
+            if dt > worst_t[0]: worst_t = (dt, f)
+            inroad = _sh.contains_xy(model.road_union, P[:, 0], P[:, 1])
+            if inroad.any():
+                dr = float(np.max(np.abs(model.height_at(P[inroad, 0], P[inroad, 1], 'ground') - plane[inroad])))
+                if dr > worst_r[0]: worst_r = (dr, f)
+        gate('flats: terräng mot planet inne i ytan (max)', worst_t[0], GATES['flat_terrain_dev_max'],
+             detail=f'{worst_t[1].kind} {worst_t[1].name!r} way {worst_t[1].way}' if worst_t[1] else '')
+        gate('flats: vägyta inne i ytan mot planet (max)', worst_r[0], GATES['flat_road_dev_max'],
+             detail=f'{worst_r[1].kind} {worst_r[1].name!r} way {worst_r[1].way}' if worst_r[1] else '')
+        sl = max(flats, key=lambda f: f.stats['slope'])
+        gate('flats: planets lutning (max)', sl.stats['slope'], 0.0605, unit='', detail=f'{sl.kind} {sl.name!r}; {sum(f.stats["clamped"] for f in flats)} klämda av {len(flats)}')
     over = terr_y - kerb_y
+    wm = getattr(model, 'wall_mask', [])
+    if wm:
+        from shapely.strtree import STRtree as _T
+        wt = _T(shapely.points(np.array(wm)))
+        near = wt.query(shapely.points(ring), predicate='dwithin', distance=2.5)
+        covered = np.zeros(len(ring), bool); covered[np.unique(near[0])] = True
+        over = np.where(covered, np.minimum(over, 0.0), over)   # bakom en mur täcks skillnaden av muren
     worst_i = np.argsort(over)[-3:][::-1]
     gate('terräng över kantstenskrön vid ytterkanten (p99)', float(np.percentile(over, 99)), GATES['kerb_above_top_max'],
          detail='max ' + ', '.join(f'{over[i]:.2f} m vid ({ring[i, 0]:.0f}, {ring[i, 1]:.0f})' for i in worst_i) + ' — kandidater för stödmur')

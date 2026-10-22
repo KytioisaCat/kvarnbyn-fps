@@ -13,6 +13,10 @@ const MATERIALS: Record<string, THREE.MeshStandardMaterial> = {
   kerb: new THREE.MeshStandardMaterial({ color: 0xb3b0a8, roughness: 0.8 }),
   deck: new THREE.MeshStandardMaterial({ color: 0x35373b, roughness: 0.92 }),
   concrete: new THREE.MeshStandardMaterial({ color: 0x9d9a93, roughness: 0.85 }),
+  wall: new THREE.MeshStandardMaterial({ color: 0x8f8a84, roughness: 0.9 }),
+  sett: new THREE.MeshStandardMaterial({ color: 0x8c8782, roughness: 0.9 }),
+  pitch: new THREE.MeshStandardMaterial({ color: 0x4f7a3a, roughness: 1.0 }),
+  playground: new THREE.MeshStandardMaterial({ color: 0xb9a98a, roughness: 1.0 }),
   rail: new THREE.MeshStandardMaterial({ color: 0xaeb3b8, roughness: 0.5, metalness: 0.5, side: THREE.DoubleSide, transparent: true, opacity: 0.85 }),
 };
 
@@ -33,7 +37,7 @@ export async function loadRoads(say: (s: string) => void): Promise<THREE.Group> 
     g.computeBoundingSphere();
     const mesh = new THREE.Mesh(g, MATERIALS[name] ?? MATERIALS.concrete);
     mesh.name = name;
-    mesh.userData.walkable = ['asphalt', 'deck', 'path', 'steps', 'kerb'].includes(name);
+    mesh.userData.walkable = ['asphalt', 'deck', 'path', 'steps', 'kerb', 'sett', 'pitch', 'playground'].includes(name);
     mesh.castShadow = name !== 'asphalt';
     mesh.receiveShadow = true;
     group.add(mesh);

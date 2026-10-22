@@ -9,7 +9,7 @@ import time
 
 import numpy as np
 
-from . import common, network, profile, mesh, conform, export, report
+from . import common, network, profile, mesh, conform, export, report, flats as flats_mod, walls
 
 
 def main():
@@ -23,10 +23,13 @@ def main():
     net = network.build(common.AREAS[args.area])
     log('  ' + network.stats(net))
     ground = common.Ground()
+    log('[1b/6] byggda plana ytor')
+    flats = flats_mod.load(common.AREAS[args.area])
+    flats_mod.fit_planes(flats, ground, log=log)
     log('[2/6] profil-lösare')
-    h, g, crossings = profile.solve(net, ground, log=log)
+    h, g, crossings = profile.solve(net, ground, log=log, flats=flats)
     log('[3/6] meshar')
-    model = mesh.RoadModel(net, h, ground)
+    model = mesh.RoadModel(net, h, ground, flats=flats)
     mb = model.build(log=log)
     arrays = mb.arrays()
     mesh_stats = {k: len(v[1]) // 3 for k, v in arrays.items()}
@@ -34,8 +37,12 @@ def main():
     raw_new, cstats = conform.conform(model, ground, log=log)
     g2 = common.Ground.__new__(common.Ground)
     g2.raw = raw_new; g2.h, g2.w = raw_new.shape; g2.sx, g2.sz = ground.sx, ground.sz
+    log('[4b/6] stödmurar')
+    cstats.update(walls.build(model, g2, mb, log=log))
+    arrays = mb.arrays()
+    mesh_stats = {k: len(v[1]) // 3 for k, v in arrays.items()}
     log('[5/6] mätgrindar')
-    rows, ok = report.evaluate(net, h, g, crossings, model, g2, mesh_stats, cstats, log=log)
+    rows, ok = report.evaluate(net, h, g, crossings, model, g2, mesh_stats, cstats, log=log, flats=flats)
     for name, v, lim, okk, unit, det in rows:
         log(f'  {"OK " if okk else "FEL"} {name}: {v:.3f} {unit} (gräns {lim}) {det}')
     png = report.profile_png(net, h, g, 'Mölndals bro', os.path.join(report.OUTDIR, 'profil_molndals_bro.png'), 'Mölndals bro')
