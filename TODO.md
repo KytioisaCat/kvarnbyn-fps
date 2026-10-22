@@ -3,18 +3,17 @@
 Idébacklogg. En punkt i taget, ~30 min styck. Bocka av med `[x]` och flytta till
 Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md).
 
-## v2 — ny motor (aktivt arbete, lokalt — Joel testar på telefonen via Pages)
+## Omstart 2026-10-22 (läs `OMSTART.md` först)
 
-- [ ] **Vägen är geometri (v2/VISION.md §3)**: konstruera banan ur datan — flats med plandetektion
-  och terrängkonformering (p-platser plana, kantsten), vägar som meshar, hus med riktiga tak,
-  murar/trappor som geometri, sedan material/ljus/täthet. Splats på is (inga fångster att utgå från).
+Joel underkände v2:s approach helt. Ny väg: datan tolkas till en stadsbeskrivning, världen byggs
+med riktiga verktyg och tillgångar (motor + vägverktyg + arketyp-kit + punktmoln), inget mer
+handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/tolkningsdelar.
 
-Delmålen M0–M5 och reglerna står i `v2/PLAN.md` — bocka av där och notera datum här.
-
-- [ ] M1 Terrängen: **byggd och pushad 2026-10-21, väntar på Joel-test på telefonen**
-  ("känns Götaforsliden lika brant?", fps, ser marken ut som mark?). Kvar i M1: CSM-skuggor,
-  riktiga PBR-texturer (CC0, kräver nedladdning), åfåran/vatten
-- [ ] M2 Husen · M3 Gatubild & vegetation · M4 Kväll · M5 Spelet (se PLAN.md)
+- [ ] **Beslut**: Unity 6 → webbläsare/telefon, eller Unreal 5 → PC (OMSTART.md §4). Joel avgör.
+- [ ] Nedladdningar på bra nät: motor, Blender, punktmolnsruta (CC0 ~100 MB), byggnadsvektor
+- [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
+- [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material
+- [ ] Första beviset: EN bild vid Gamla torget som ser ut som ett spel (hus, gata, träd, bakat ljus)
 
 ## v1-backlogg (FRYST 2026-10-21 — v1 är referens, bara hotfixar på Joels begäran)
 

@@ -1,3 +1,7 @@
+> **2026-10-22: ERSATT av `../OMSTART.md`.** Joel underkände resultatet av §3 (skelett av vägar,
+> broar, flats ur rådata). Diagnosen och den nya approachen (tolka → bygg med riktiga verktyg och
+> tillgångar → spela) står i OMSTART.md. Det här dokumentet behålls som historik.
+
 # Vad "ser verkligt ut" betyder — och hur vi tar oss dit (2026-10-21)
 
 Joels krav, med hans ord: *så likt Call of Duty som möjligt i en webbläsare, utan att det blir för

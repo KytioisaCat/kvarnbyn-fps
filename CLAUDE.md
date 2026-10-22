@@ -13,7 +13,12 @@ Joels barndoms-FPS: försvara Kvarnbyn i Mölndal mot en invasion, byggt på rik
 kartdata. Ledstjärnan är **igenkänning** — Joel ska känna igen sig från barndomen.
 Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 
-## v2 — ny motor (från 2026-10-21)
+## v2 — ny motor (från 2026-10-21) — OBS: omstart 2026-10-22, läs `OMSTART.md` först
+
+**2026-10-22**: Joel underkände v2:s sätt att rita rådata (terräng + vägband + flats). Ny approach
+i `OMSTART.md`: tolka datan till en stadsbeskrivning, bygg världen med riktig motor, vägverktyg,
+arketyp-kit och Lantmäteriets punktmoln. Bygg inte vidare på `v2/src` eller `tools/v2model/`
+som produkt. Stycket nedan är historik tills OMSTART-planen ersätter det.
 
 **Allt nytt arbete sker i `v2/`** (Three.js + TypeScript + Vite) och byggs **lokalt på Joels
 laptop**; Joel bedömer det visuella på telefonen via GitHub Pages. (Molnsessioner provades
