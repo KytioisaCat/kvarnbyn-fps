@@ -1,0 +1,117 @@
+{
+ "note": "Spelregler Fas B — siffror ur v1 (public/game.js), antal soldater nedskalat; justera här.",
+ "caps": [
+  {
+   "id": "A",
+   "name": "Gamla torget",
+   "position": [
+    -17.81,
+    -0.16,
+    -6.41
+   ],
+   "radius": 16
+  },
+  {
+   "id": "B",
+   "name": "Roten M",
+   "position": [
+    100.89,
+    24.68,
+    109.69
+   ],
+   "radius": 15
+  },
+  {
+   "id": "C",
+   "name": "Royens trappor",
+   "position": [
+    174.89,
+    21.11,
+    -1.01
+   ],
+   "radius": 15
+  }
+ ],
+ "base_cap": "C",
+ "player_spawn": [
+  339.99,
+  52.58,
+  153.19
+ ],
+ "enemy_entries": [
+  [
+   -2.51,
+   -1.83,
+   35.09
+  ],
+  [
+   -207.21,
+   -9.53,
+   392.19
+  ],
+  [
+   534.79,
+   64.59,
+   392.19
+  ],
+  [
+   -307.21,
+   29.4,
+   -289.81
+  ]
+ ],
+ "occupation": {
+  "count": 60,
+  "min_distance_from_spawn": 170,
+  "infiltrators": 6,
+  "garrison_share": 0.55
+ },
+ "reinforcements": {
+  "waves": 3,
+  "size": 14,
+  "interval_s": 50,
+  "max_alive": 90
+ },
+ "allies": {
+  "count": 9,
+  "guards": 3,
+  "respawn_interval_s": 45
+ },
+ "capture": {
+  "enemy_rate": 0.035,
+  "friendly_rate": 0.1,
+  "max_count": 3
+ },
+ "player": {
+  "hp": 100,
+  "regen_delay_s": 5,
+  "regen_per_s": 25,
+  "respawn_s": 5
+ },
+ "weapon": {
+  "name": "Ak 4C",
+  "mag": 30,
+  "rpm": 600,
+  "damage_body": 40,
+  "damage_head": 100,
+  "reload_s": 1.7,
+  "range_m": 400
+ },
+ "soldier": {
+  "hp": 100,
+  "speed": [
+   2.6,
+   3.5
+  ],
+  "sight_m": 75,
+  "engage_m": 70,
+  "fire_interval_s": [
+   0.75,
+   1.35
+  ],
+  "damage": [
+   6,
+   11
+  ]
+ }
+}

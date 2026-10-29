@@ -41,7 +41,7 @@ v1:s, till en spelbar version, och sedan förbättra miljön del för del, hus f
 - Godot desktop: Forward+, ljuskartor i delar (eller SDFGI), prestandamätning.
 - **Klart när:** man kan gå runt i hela zonen på datorn, allt har ett rimligt hus, inget är lådor.
 
-## Fas B — spelbart (1–2 pass)
+## Fas B — spelbart — KLAR 2026-10-29 (`../kvarnbyn/RESULTAT-FAS-B.md`)
 
 Porta v1:s spel till Godot: vapen (hitscan, rekyl, ammo, **reload**), **hopp**, fiender med
 navmesh och AI, zonerna med capture points, HUD, ljud. **Joel 2026-10-29: v1 är facit för

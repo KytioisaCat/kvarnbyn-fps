@@ -3,6 +3,7 @@
 # → macOS-app. Ingen ljusbake (realtids-GI). Kör från repots rot:
 #   v2/kvarnbyn/rebuild.sh              allt
 #   v2/kvarnbyn/rebuild.sh --no-export  hoppa över macOS-exporten
+#   v2/kvarnbyn/rebuild.sh --bot        kör också ett automatiskt spelprov (Fas B)
 # Kräver v2/.tools/ (Blender 4.5, Godot 4.7.2 + macOS-exportmall) och tools/venv.
 set -e
 ROOT=${0:A:h:h:h}
@@ -34,6 +35,10 @@ if grep -q "SCRIPT ERROR" $LOG/godot-import-2.log; then grep "SCRIPT ERROR" $LOG
 grep KVARNBYN_TREES $LOG/godot-import-2.log | tail -1
 step "Kontroll: kontroller och gångprov"
 $G --headless --path $P/godot --script res://scripts/verify_controller.gd 2>&1 | grep -E "KVARNBYN|PASS|FAIL" | tail -3 || true
+if [[ " $* " == *" --bot "* ]]; then
+  step "Spelprov: en hel omgång med bot (4× fart)"
+  timeout 1800 $G --headless --path $P/godot -- --bot --speed=4 --botlimit=1500 2>&1 | grep KVARNBYN_BOT | cut -c1-300
+fi
 if [[ " $* " != *" --no-export "* ]]; then
   step "macOS-app → desktop/Kvarnbyn.zip"
   mkdir -p $P/desktop

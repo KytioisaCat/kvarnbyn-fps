@@ -14,7 +14,9 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Joels dom 2026-10-29: grafiken är rätt; målplattform dator (mus+tangentbord)
 - [x] Beslut om `v2/poc/NASTA-FAS.md` (Joel ja 2026-10-29)
 - [ ] **Joels dom över Fas A** (`v2/kvarnbyn/RESULTAT.md`, appen i `v2/kvarnbyn/desktop/app/`)
-- [ ] **Fas B — spelbart**: vapen, reload, hopp, fiender, zoner, HUD (v1 facit för funktioner, inte känsla)
+- [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
+- [ ] **Joels dom över Fas B** — spela appen; känslan, svårigheten (träffar fienderna för lite?)
+- [ ] Fas B-brister: riktiga soldatmodeller med animationer (CC0, ~10–20 MB nedladdning — fråga först), vapenmodell, skydd för fiender, minimap/granater
 - [ ] **Fas C** — kvällsljus, husrundor (Street View som referens), staket/häckar/trädgårdar, järnväg
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
 - [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material

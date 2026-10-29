@@ -383,6 +383,77 @@ trees = [[round(float(x), 2), round(float(y), 2), round(float(z), 2), round(floa
          for x, y, z in zip(TX[idx], TY, TZ[idx])]
 log(f'träd: {len(trees)}')
 
+# ---------- vägnät för soldaterna (Fas B) + speldata ----------
+from common import HERE, V1_ORIGIN
+GA = HERE / 'godot/assets'; GA.mkdir(parents=True, exist_ok=True)
+nkey = {}; nodes_xyz = []; edges = set()
+inner = zone.buffer(-4)
+
+
+def node_at(x, z, y):
+    k = (round(x * 20), round(z * 20))
+    if k not in nkey:
+        nkey[k] = len(nodes_xyz); nodes_xyz.append([round(float(x), 2), round(float(y), 2), round(float(z), 2)])
+    return nkey[k]
+
+
+def deck_height(br, x, z):
+    P = np.array(br['points']); d = np.hypot(P[:, 0] - x, P[:, 2] - z); return float(P[int(np.argmin(d)), 1]) + Y_OFFSET
+
+
+bridge_by_id = {b['id']: b for b in bridges}
+for r in city['roads']:
+    if r['tunnel'] or r['kind'] in ('motorway', 'motorway_link', 'trunk', 'trunk_link'): continue
+    line = LineString(r['line_xz'])
+    if not line.intersects(inner): continue
+    c = r['line_xz']; xs_l, zs_l = [c[0][0]], [c[0][1]]
+    for (xa, za), (xb, zb) in zip(c, c[1:]):          # originalnoderna behålls (anslutningar mitt på)
+        k = max(1, int(math.ceil(math.hypot(xb - xa, zb - za) / 10.0)))
+        for i in range(1, k + 1):
+            xs_l.append(xa + (xb - xa) * i / k); zs_l.append(za + (zb - za) * i / k)
+    xs = np.array(xs_l); zs = np.array(zs_l)
+    if r['bridge'] and r['id'] in bridge_by_id:
+        ys = np.array([deck_height(bridge_by_id[r['id']], x, z) for x, z in zip(xs, zs)])
+    elif r['kind'] in ('steps', 'path', 'track') or not len(profiles):
+        ys = raw_height(xs, zs)
+    else:
+        ys = surface_height(xs, zs)
+    ids = []
+    for x, z, y in zip(xs, zs, ys):
+        ids.append(node_at(x, z, y - Y_OFFSET + 0.1) if inner.contains(Point(x, z)) else None)
+    for a, b in zip(ids, ids[1:]):
+        if a is not None and b is not None and a != b: edges.add((min(a, b), max(a, b)))
+nav = dict(note='Vägnät för soldaternas AI (AStar3D). Noder [x,y,z] lokala meter, y = mark + 0,1.', nodes=nodes_xyz, edges=sorted(edges))
+(GA / 'nav.json').write_text(json.dumps(nav, separators=(',', ':')))
+log(f'vägnät: {len(nodes_xyz)} noder, {len(edges)} kanter')
+
+
+def v1(x, z): return (x - V1_ORIGIN[0], z - V1_ORIGIN[1])
+
+
+def gy(x, z): return float(raw_height([x], [z])[0]) - Y_OFFSET
+
+
+caps = []
+for cid, name, (x, z), r_ in [('A', 'Gamla torget', v1(89.4, -106.6), 16), ('B', 'Roten M', v1(208.1, 9.5), 15), ('C', 'Royens trappor', v1(282.1, -101.2), 15)]:
+    caps.append(dict(id=cid, name=name, position=[round(x, 2), round(gy(x, z), 2), round(z, 2)], radius=r_))
+entries = []
+for x, z in [v1(104.7, -65.1), v1(-100, 350), v1(850, 300), v1(-200, -390)]:
+    x = min(max(x, ZONE[0] + 8), ZONE[2] - 8); z = min(max(z, ZONE[1] + 8), ZONE[3] - 8)
+    entries.append([round(x, 2), round(gy(x, z), 2), round(z, 2)])
+sx, sz = v1(447.2, 53.0)
+game = dict(note='Spelregler Fas B — siffror ur v1 (public/game.js), antal soldater nedskalat; justera här.',
+            caps=caps, base_cap='C', player_spawn=[round(sx, 2), round(gy(sx, sz), 2), round(sz, 2)], enemy_entries=entries,
+            occupation=dict(count=60, min_distance_from_spawn=170, infiltrators=6, garrison_share=0.55),
+            reinforcements=dict(waves=3, size=14, interval_s=50, max_alive=90),
+            allies=dict(count=9, guards=3, respawn_interval_s=45),
+            capture=dict(enemy_rate=0.035, friendly_rate=0.1, max_count=3),
+            player=dict(hp=100, regen_delay_s=5, regen_per_s=25, respawn_s=5),
+            weapon=dict(name='Ak 4C', mag=30, rpm=600, damage_body=40, damage_head=100, reload_s=1.7, range_m=400),
+            soldier=dict(hp=100, speed=[2.6, 3.5], sight_m=75, engage_m=70, fire_interval_s=[0.75, 1.35], damage=[6, 11]))
+(GA / 'game.json').write_text(json.dumps(game, ensure_ascii=False, indent=1))
+log('game.json: zoner ' + ', '.join(c['id'] + '@' + str(c['position']) for c in caps))
+
 site = dict(meta=dict(note='Markytor för Fas A, genererade av site.py. y = rå höjd − 18 m.', y_offset_m=Y_OFFSET, tile_m=TILE,
                       zone=list(ZONE), backdrop=list(BACKDROP)),
             terrain=fine, terrain_backdrop=coarse, meshes=meshes, kerbs=kerbs, river_walls=river_walls, bridges=bridges,

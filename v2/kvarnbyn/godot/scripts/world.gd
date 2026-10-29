@@ -4,6 +4,9 @@ const PlayerController = preload("res://scripts/player.gd")
 const OverlayController = preload("res://scripts/overlay.gd")
 const Lighting = preload("res://scripts/lighting.gd")
 const WaterShader = preload("res://shaders/water.gdshader")
+const GameManager = preload("res://scripts/game.gd")
+const HudController = preload("res://scripts/hud.gd")
+const Fx = preload("res://scripts/fx.gd")
 const WORLD_PATH := "res://assets/world.glb"
 const META_PATH := "res://assets/world_meta.json"
 const BAKED_PATH := "res://assets/baked_world.tscn"
@@ -26,6 +29,17 @@ var used_baked_world := false
 var prepared_bake_scene := false
 var spawn_position := Vector3.ZERO
 var base_render_scale := 1.0
+var game: Node
+var hud: Control
+var fx: Node3D
+var bot_mode := false
+var bot_path := PackedVector3Array()
+var bot_path_i := 0
+var bot_cap := ""
+var bot_last := Vector3.ZERO
+var bot_stuck := 0.0
+var bot_repath := 0.0
+var bot_timeout := 900.0
 
 func _ready() -> void:
 	var start_msec := Time.get_ticks_msec()
@@ -88,6 +102,10 @@ func _ready() -> void:
 	used_baked_world = has_baked_lighting(world_instance)
 	prepare_world()
 	player.camera.make_current()
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	player.process_mode = Node.PROCESS_MODE_PAUSABLE
+	if not options.has("explore"):
+		setup_combat()
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	reset_player()
@@ -114,6 +132,10 @@ func _ready() -> void:
 		run_physics_probe()
 	if options.has("walktest"):
 		run_walk_test()
+	if options.has("quality"):
+		set_quality(int(options["quality"]))
+	if options.has("bot"):
+		start_bot()
 
 func load_metadata() -> Dictionary:
 	if not FileAccess.file_exists(META_PATH):
@@ -277,9 +299,48 @@ func set_view(index: int) -> void:
 		# A chosen view stays still until the player moves or looks around.
 		overlay.status_override = "Gå eller dra för att utforska härifrån"
 
+func setup_combat() -> void:
+	fx = Fx.new()
+	fx.name = "Effekter"
+	fx.process_mode = Node.PROCESS_MODE_PAUSABLE
+	add_child(fx)
+	hud = HudController.new()
+	canvas_layer.add_child(hud)
+	canvas_layer.move_child(hud, 0)
+	game = GameManager.new()
+	game.name = "Spel"
+	game.process_mode = Node.PROCESS_MODE_PAUSABLE
+	add_child(game)
+	if not game.setup(self, player, fx, hud):
+		game.queue_free()
+		game = null
+		return
+	hud.player = player
+	hud.game = game
+	player.game = game
+	player.weapon.fx = fx
+	player.weapon.hud = hud
+	game.ended.connect(_on_game_ended)
+	hud.restart_requested.connect(_on_restart)
+
+func _on_game_ended(won: bool) -> void:
+	hud.show_end(won)
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	player.active = false
+
+func _on_restart() -> void:
+	hud.hide_end()
+	game.restart()
+	begin_walk()
+
 func begin_walk() -> void:
 	if world_instance == null:
 		return
+	if game != null and game.over:
+		return
+	get_tree().paused = false
+	if game != null and not game.started:
+		game.start()
 	started = true
 	player.active = true
 	player.input_suspended = false
@@ -289,6 +350,8 @@ func begin_walk() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func pause_walk() -> void:
+	if game != null and game.started:
+		get_tree().paused = true
 	player.active = false
 	player.reset_touches()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -301,8 +364,15 @@ func toggle_fullscreen() -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 func set_quality(index: int) -> void:
-	get_viewport().scaling_3d_scale = base_render_scale * (0.70 if index == 1 else 1.0)
+	# 0 = Normal: realtids-GI, SSIL, volymdimma. 1 = Lägre belastning: utan dem, 85 % upplösning.
+	get_viewport().scaling_3d_scale = base_render_scale * (0.85 if index == 1 else 1.0)
 	get_viewport().msaa_3d = Viewport.MSAA_DISABLED if index == 1 else Viewport.MSAA_2X
+	for we in find_children("*", "WorldEnvironment", true, false):
+		var env: Environment = we.environment
+		env.sdfgi_enabled = index == 0
+		env.ssil_enabled = index == 0
+		env.volumetric_fog_enabled = index == 0
+		env.ambient_light_energy = 0.6 if index == 0 else 0.9
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -312,7 +382,7 @@ func _input(event: InputEvent) -> void:
 			else:
 				begin_walk()
 			get_viewport().set_input_as_handled()
-		elif event.physical_keycode == KEY_R and started:
+		elif event.physical_keycode == KEY_R and started and game == null:
 			reset_player()
 		elif event.physical_keycode == KEY_F11:
 			toggle_fullscreen()
@@ -343,7 +413,9 @@ func snapshot() -> Dictionary:
 		"cpu_render_ms": RenderingServer.viewport_get_measured_render_time_cpu(get_viewport().get_viewport_rid()),
 		"gpu_render_ms": RenderingServer.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()),
 		"process_ms": Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0,
-		"static_memory_bytes": OS.get_static_memory_usage()}
+		"physics_ms": Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0,
+		"static_memory_bytes": OS.get_static_memory_usage(),
+		"game": game.state() if game != null else {}}
 
 func install_bridge() -> void:
 	if not OS.has_feature("web"):
@@ -384,7 +456,8 @@ func _bridge_command(arguments: Array) -> void:
 	publish_state()
 
 func capture_after_frames(path: String, frame_count: int) -> void:
-	player.input_suspended = true
+	if not options.has("bot"):
+		player.input_suspended = true
 	for frame in range(maxi(frame_count, 2)):
 		await get_tree().process_frame
 	await RenderingServer.frame_post_draw
@@ -428,3 +501,102 @@ func run_walk_test() -> void:
 	var result := {"points": points.size(), "landed": landed, "failed": fails.size(), "fails": fails.slice(0, 25)}
 	print("KVARNBYN_WALKTEST ", JSON.stringify(result))
 	get_tree().quit(0 if fails.is_empty() else 3)
+
+
+# ---------- bot: spelar en hel omgång automatiskt (spelprov utan människa) ----------
+## Tar zonerna i ordningen C → B → A längs vägnätet, siktar på närmaste synliga fiende inom 60 m
+## (med lite fel), skjuter, laddar om. Kör med --bot [--speed=3] [--botlimit=900] (sekunder speltid).
+
+func start_bot() -> void:
+	bot_mode = true
+	bot_timeout = float(options.get("botlimit", "900"))
+	Engine.time_scale = float(options.get("speed", "3"))
+	begin_walk()
+	player.bot_input = Vector2.ZERO
+	game.ended.connect(func(won: bool): _bot_finish("seger" if won else "förlust"))
+
+func _bot_finish(result: String) -> void:
+	print("KVARNBYN_BOT ", JSON.stringify({"result": result, "state": game.state()}))
+	Engine.time_scale = 1.0
+	get_tree().quit(0)
+
+func _physics_process(delta: float) -> void:
+	if not bot_mode or game == null or game.over:
+		return
+	if game.elapsed > bot_timeout:
+		_bot_finish("tidsgräns")
+		return
+	var w = player.weapon
+	w.bot_trigger = false
+	w.bot_ads = false
+	if not player.alive:
+		player.bot_input = Vector2.ZERO
+		bot_path = PackedVector3Array()
+		return
+	var eye: Vector3 = player.eye_position()
+	var target: Node3D = null
+	var best := 60.0
+	for e in game.enemies:
+		if not e.alive:
+			continue
+		var d: float = eye.distance_to(e.global_position)
+		if d < best:
+			var q := PhysicsRayQueryParameters3D.create(eye, e.global_position + Vector3.UP * 1.3, 1)
+			if get_world_3d().direct_space_state.intersect_ray(q).is_empty():
+				best = d
+				target = e
+	if target != null:
+		var aim: Vector3 = target.global_position + Vector3.UP * randf_range(1.1, 1.6) + Vector3(randf_range(-0.25, 0.25), 0, randf_range(-0.25, 0.25))
+		var dir := aim - eye
+		var want_yaw := atan2(-dir.x, -dir.z)
+		var want_pitch := atan2(dir.y, Vector2(dir.x, dir.z).length())
+		player.rotation.y = lerp_angle(player.rotation.y, want_yaw, minf(1.0, delta * 9.0))
+		player.camera.rotation.x = lerpf(player.camera.rotation.x, want_pitch, minf(1.0, delta * 9.0))
+		var off := absf(angle_difference(player.rotation.y, want_yaw))
+		w.bot_ads = best > 18.0
+		w.bot_trigger = off < 0.06
+		player.bot_input = Vector2(sin(game.elapsed * 1.3) * 0.6, 0.0) if best < 25.0 else Vector2.ZERO
+		player.bot_sprint = false
+		return
+	if w.mag < 12 and not w.reloading:
+		w.bot_reload = true
+	# mål: första zonen i C, B, A som inte är vår, annars C
+	var goal_cap: Dictionary = game.base_cap()
+	for id in ["C", "B", "A"]:
+		for c in game.caps:
+			if c["id"] == id and c["owner"] != "friendly" and goal_cap == game.base_cap() and game.base_cap()["owner"] == "friendly":
+				goal_cap = c
+	if game.base_cap()["owner"] != "friendly" or (game.base_cap()["contested"] and game.base_cap().get("enemies_in", 0) > 0):
+		goal_cap = game.base_cap()
+	var goal: Vector3 = goal_cap["pos"]
+	bot_repath -= delta
+	if str(goal_cap["id"]) != bot_cap or bot_path.is_empty() or bot_repath <= 0.0:
+		bot_cap = str(goal_cap["id"])
+		bot_path = game.nav.path(player.global_position, goal)
+		bot_path_i = 0
+		bot_repath = 20.0
+	var to := Vector3.ZERO
+	while bot_path_i < bot_path.size():
+		to = bot_path[bot_path_i] - player.global_position
+		to.y = 0
+		if to.length() < 2.0 and bot_path_i < bot_path.size() - 1:
+			bot_path_i += 1
+		else:
+			break
+	if Vector2(player.global_position.x - goal.x, player.global_position.z - goal.z).length() < goal_cap["radius"] * 0.6:
+		player.bot_input = Vector2.ZERO
+		player.rotation.y += delta * 0.8
+		return
+	if to.length() > 0.3:
+		player.rotation.y = lerp_angle(player.rotation.y, atan2(-to.x, -to.z), minf(1.0, delta * 6.0))
+		player.camera.rotation.x = lerpf(player.camera.rotation.x, 0.0, minf(1.0, delta * 4.0))
+	player.bot_input = Vector2(0, -1)
+	player.bot_sprint = true
+	bot_stuck += delta
+	if bot_stuck > 2.0:
+		if player.global_position.distance_to(bot_last) < 1.0:
+			player.jump_requested = true
+			player.bot_input = Vector2(1 if randf() < 0.5 else -1, -0.3)
+			bot_path = PackedVector3Array()
+		bot_stuck = 0.0
+		bot_last = player.global_position

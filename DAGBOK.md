@@ -31,6 +31,31 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-10-29 23:50 — Claude Code (Opus 5.5) — Fas B klar: spelbart i v2/kvarnbyn
+
+**Status:** klart (väntar på Joels bedömning)
+
+**Gjort:** v1:s funktioner i `v2/kvarnbyn/godot/` med ny känsla. Se `v2/kvarnbyn/RESULTAT-FAS-B.md`.
+- Nya skript: `game.gd` (zoner A/B/C, spawn, vågor, vinst/förlust), `soldier.gd` (v1:s AI, klossfigurer,
+  huvud/kropp-träffzoner, kinematisk rörelse > 90 m), `weapon.gd` (Ak 5, hitscan, ADS, rekyl, spridning,
+  omladdning), `hud.gd`, `fx.gd` (poolade effekter), `sfx.gd` (syntetiska ljud), `navgraph.gd` (AStar3D).
+- `player.gd` omskriven (HP, regen, hopp/huka/spring, gung); `world.gd`: strid, paus via
+  `get_tree().paused`, kvalitetsval, bot (`-- --bot --speed=4 --botlimit=1500`).
+- `pipeline/site.py` skriver `godot/assets/nav.json` (2 321 noder) och `game.json` (all balans).
+- Prestanda: 102–109 fps i strid (fysik 60 Hz, 3 ms/steg). Botomgång 25 min: tidsgräns, 72 dödade,
+  C+B tagna, A kvar hos fienden. Fiendens erövringstakt halverad (förlust på 2 min annars).
+
+**Läge nu:** Mac-appen exporterad i `v2/kvarnbyn/desktop/app/` (gitignorerad). `rebuild.sh --bot` kör allt.
+
+**Nästa:**
+1. Joels dom över Fas B (känsla, svårighet). Justera i `pipeline/site.py` → `game.json`.
+2. Riktiga soldat-/vapenmodeller (CC0, fråga Joel om nedladdning först).
+3. Fas C — kvällsljus, husrundor.
+
+**Varningar:** en gammal Godot-process (pid 14613) lämnades orörd — kan vara Joels/Codex editor.
+
+---
+
 ## 2026-10-29 21:00 — Claude Code (Opus 5.5) — Fas A klar: Kvarnbyn 900×700 m som Mac-app
 
 **Status:** klart (väntar på Joels bedömning)
