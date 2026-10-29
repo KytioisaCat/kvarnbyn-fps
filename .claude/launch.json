@@ -35,6 +35,15 @@
         "v2/poc/torget/web-mobil"
       ],
       "port": 8790
+    },
+    {
+      "name": "poc-webb-https",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "v2/poc/torget/serve_https.py",
+        "8791"
+      ],
+      "port": 8791
     }
   ]
 }

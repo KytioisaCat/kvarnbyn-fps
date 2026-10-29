@@ -31,6 +31,22 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-10-29 20:00 — Claude Code (Opus 5.5) — telefonprov kräver HTTPS
+
+**Status:** klart
+
+**Gjort:** Joel fick "Miljön kunde inte starta" på telefonen via `http://<IP>:8790`. Orsak: Godots
+webbmotor kräver säker sida (`isSecureContext`); localhost räknas som säker, LAN-IP över http inte.
+Nytt `v2/poc/torget/serve_https.py` (port 8791, självsignerat cert i `v2/.tools/lan-cert/`,
+gitignorerat) + `launch.json`-posten `poc-webb-https`. Verifierat: pck laddas över HTTPS på LAN.
+
+**Nästa:** Joel godkänner certifikatvarningen en gång i telefonen och testar. För test utanför
+hemnätet: HTTPS-hosting (GitHub Pages via release-tillgång) — kräver ~90 MB uppladdning, fråga först.
+
+**Varningar:** http-servern på 8790 fungerar bara på Macen själv (localhost), inte i telefonen.
+
+---
+
 ## 2026-10-29 19:45 — Claude Code (Opus 5.5) — slutförde Codex motorprov vid Gamla torget
 
 **Status:** klart (väntar på Joels telefonprov)
