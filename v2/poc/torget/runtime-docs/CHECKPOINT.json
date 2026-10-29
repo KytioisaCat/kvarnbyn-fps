@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-29",
+  "stage": "systemprov; slutmodell och slutbake återstår",
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "controller_check": {
+    "passed": true,
+    "walked_over_20cm_kerb": true,
+    "stopped_at_wall": true,
+    "pause_stops_movement": true,
+    "eye_height_1_65m": true,
+    "two_finger_move_and_look": true,
+    "release_look_keeps_walking": true,
+    "release_move_stops": true,
+    "note": "Fysikintegration headless. Pekgester skickas till samma handler; verklig telefon återstår."
+  },
+  "bake_system_check": {
+    "success": true,
+    "driver": "Vulkan/MoltenVK",
+    "device": "Apple M5",
+    "baked_meshes": 252,
+    "duration_seconds": 130.39,
+    "texel_size_m": 0.25,
+    "lightmap_source_mb": 44,
+    "note": "Systemprov före mobiloptimerad bakebudget och slutlig geometri. Metal fastnade i timeout waiting for fence."
+  },
+  "native_compatibility_check": {
+    "screenshot": "godot-krakan-baked-system.png",
+    "fps_vsync": 60,
+    "cpu_render_ms": 1.937,
+    "draw_calls": 256,
+    "render_triangles": 541794,
+    "gpu_render_ms": null,
+    "note": "OpenGL på M5. GPU-mätningen stöds inte här; noll ska inte tolkas som verklig GPU-tid."
+  },
+  "web_check": {
+    "browser": "IAB Chromium",
+    "rendering": "WebGL 2 / Compatibility",
+    "startup_success": true,
+    "baked_lightmaps_loaded": true,
+    "collision_bodies": 18,
+    "scene_load_after_engine_ms": 269,
+    "mobile_layout_viewport": [
+      844,
+      390
+    ],
+    "touch_ui_forced": true,
+    "start_button": true,
+    "keyboard_walk": true,
+    "pause_stops_movement": true,
+    "phone_hardware_tested": false,
+    "packaging_issue_found_and_fixed": "Selected scenes tappade preload-skript; explicit resurslista fungerar."
+  },
+  "next": [
+    "Importera slutlig optimerad world.glb",
+    "Verifiera vegetations- och kollisionsundantag för UV2",
+    "Baka om med 0.5m globalt och 2X hjältetäthet, dynamiska träd, probes4",
+    "Exportera och verifiera minskad ljuskart-/PCK-storlek",
+    "Slutbilder och faktiskt telefonprov med Joel"
+  ]
+}

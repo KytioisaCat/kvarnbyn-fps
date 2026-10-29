@@ -1,0 +1,630 @@
+{
+  "boundary": {
+    "area": 6525369.522,
+    "avg_pt_per_sq_unit": 1.183823541,
+    "avg_pt_spacing": 0.6281778359,
+    "boundary": "POLYGON ((322526.51 6392450.8,325014.14 6392450.8,325014.14 6395004.1,322538.03 6395024.0,322468.93 6394984.1,322457.41 6392530.5,322526.51 6392450.8))",
+    "boundary_json": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            6392450.75355551,
+            322526.51193532
+          ],
+          [
+            6392450.75355551,
+            325014.14454095
+          ],
+          [
+            6395004.06085305,
+            325014.14454095
+          ],
+          [
+            6395024.00856631,
+            322538.02875294
+          ],
+          [
+            6394984.11313979,
+            322468.92784723
+          ],
+          [
+            6392530.54440856,
+            322457.41102961
+          ],
+          [
+            6392450.75355551,
+            322526.51193532
+          ]
+        ]
+      ]
+    },
+    "density": 2.534164379,
+    "edge_length": 0,
+    "estimated_edge": 39.89542652,
+    "hex_offsets": "MULTIPOINT (0 0, -11.5168 19.9477, 0 39.8954, 23.0336 39.8954, 34.5505 19.9477, 23.0336 0)",
+    "sample_size": 5000,
+    "threshold": 15
+  },
+  "file_size": 90989680,
+  "filename": "/mnt/output/work/pointcloud/sls/19b002/19b002-63925_3225_25/y19b002-63925_3225_25.copc.laz",
+  "metadata": {
+    "comp_spatialreference": "COMPD_CS[\"ETRS89-SWE [SWEREF 99] TM + RH2000 height\",PROJCS[\"ETRS89-SWE [SWEREF 99 TM]\",GEOGCS[\"ETRS89-SWE [SWEREF 99]\",DATUM[\"SWEREF_99\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6619\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4619\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",15],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Northing\",NORTH],AXIS[\"Easting\",EAST],AUTHORITY[\"EPSG\",\"3006\"]],VERT_CS[\"RH2000 height\",VERT_DATUM[\"Rikets hojdsystem 2000\",2005,AUTHORITY[\"EPSG\",\"5208\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"5613\"]],AUTHORITY[\"EPSG\",\"5845\"]]",
+    "compressed": true,
+    "copc": true,
+    "copc_info": {
+      "center_x": 323749.995,
+      "center_y": 6393749.995,
+      "center_z": 1239.325,
+      "gpstime_maximum": 259152150.2,
+      "gpstime_minimum": 259065397.6,
+      "halfsize": 1249.995,
+      "root_hier_offset": 90935824,
+      "root_hier_size": 53856,
+      "spacing": 19.53117188
+    },
+    "count": 16536359,
+    "creation_doy": 321,
+    "creation_year": 2020,
+    "dataformat_id": 6,
+    "dataoffset": 1627,
+    "filesource_id": 0,
+    "global_encoding": 17,
+    "global_encoding_base64": "EQA=",
+    "header_size": 375,
+    "major_version": 1,
+    "maxx": 324999.99,
+    "maxy": 6394999.99,
+    "maxz": 141.54,
+    "minor_version": 4,
+    "minx": 322500,
+    "miny": 6392500,
+    "minz": -10.67,
+    "offset_x": 535000,
+    "offset_y": 6715000,
+    "offset_z": 0,
+    "point_length": 30,
+    "project_id": "00000000-0000-0000-0000-000000000000",
+    "scale_x": 0.01,
+    "scale_y": 0.01,
+    "scale_z": 0.01,
+    "software_id": "LASzip DLL 2.4 r0 (150731)",
+    "spatialreference": "COMPD_CS[\"ETRS89-SWE [SWEREF 99] TM + RH2000 height\",PROJCS[\"ETRS89-SWE [SWEREF 99 TM]\",GEOGCS[\"ETRS89-SWE [SWEREF 99]\",DATUM[\"SWEREF_99\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6619\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4619\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",15],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Northing\",NORTH],AXIS[\"Easting\",EAST],AUTHORITY[\"EPSG\",\"3006\"]],VERT_CS[\"RH2000 height\",VERT_DATUM[\"Rikets hojdsystem 2000\",2005,AUTHORITY[\"EPSG\",\"5208\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"5613\"]],AUTHORITY[\"EPSG\",\"5845\"]]",
+    "srs": {
+      "compoundwkt": "COMPD_CS[\"ETRS89-SWE [SWEREF 99] TM + RH2000 height\",PROJCS[\"ETRS89-SWE [SWEREF 99 TM]\",GEOGCS[\"ETRS89-SWE [SWEREF 99]\",DATUM[\"SWEREF_99\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6619\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4619\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",15],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Northing\",NORTH],AXIS[\"Easting\",EAST],AUTHORITY[\"EPSG\",\"3006\"]],VERT_CS[\"RH2000 height\",VERT_DATUM[\"Rikets hojdsystem 2000\",2005,AUTHORITY[\"EPSG\",\"5208\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"5613\"]],AUTHORITY[\"EPSG\",\"5845\"]]",
+      "horizontal": "PROJCS[\"ETRS89-SWE [SWEREF 99 TM]\",GEOGCS[\"ETRS89-SWE [SWEREF 99]\",DATUM[\"SWEREF_99\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6619\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4619\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",15],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Northing\",NORTH],AXIS[\"Easting\",EAST],AUTHORITY[\"EPSG\",\"3006\"]]",
+      "isgeocentric": false,
+      "isgeographic": false,
+      "json": {
+        "type": "CompoundCRS",
+        "name": "ETRS89-SWE [SWEREF 99] TM + RH2000 height",
+        "components": [
+          {
+            "type": "ProjectedCRS",
+            "name": "ETRS89-SWE [SWEREF 99 TM]",
+            "base_crs": {
+              "type": "GeographicCRS",
+              "name": "ETRS89-SWE [SWEREF 99]",
+              "datum": {
+                "type": "GeodeticReferenceFrame",
+                "name": "SWEREF 99",
+                "ellipsoid": {
+                  "name": "GRS 1980",
+                  "semi_major_axis": 6378137,
+                  "inverse_flattening": 298.257222101
+                }
+              },
+              "coordinate_system": {
+                "subtype": "ellipsoidal",
+                "axis": [
+                  {
+                    "name": "Geodetic latitude",
+                    "abbreviation": "Lat",
+                    "direction": "north",
+                    "unit": "degree"
+                  },
+                  {
+                    "name": "Geodetic longitude",
+                    "abbreviation": "Lon",
+                    "direction": "east",
+                    "unit": "degree"
+                  }
+                ]
+              },
+              "id": {
+                "authority": "EPSG",
+                "code": 4619
+              }
+            },
+            "conversion": {
+              "name": "UTM zone 33N",
+              "method": {
+                "name": "Transverse Mercator",
+                "id": {
+                  "authority": "EPSG",
+                  "code": 9807
+                }
+              },
+              "parameters": [
+                {
+                  "name": "Latitude of natural origin",
+                  "value": 0,
+                  "unit": "degree",
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 8801
+                  }
+                },
+                {
+                  "name": "Longitude of natural origin",
+                  "value": 15,
+                  "unit": "degree",
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 8802
+                  }
+                },
+                {
+                  "name": "Scale factor at natural origin",
+                  "value": 0.9996,
+                  "unit": "unity",
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 8805
+                  }
+                },
+                {
+                  "name": "False easting",
+                  "value": 500000,
+                  "unit": "metre",
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 8806
+                  }
+                },
+                {
+                  "name": "False northing",
+                  "value": 0,
+                  "unit": "metre",
+                  "id": {
+                    "authority": "EPSG",
+                    "code": 8807
+                  }
+                }
+              ]
+            },
+            "coordinate_system": {
+              "subtype": "Cartesian",
+              "axis": [
+                {
+                  "name": "Northing",
+                  "abbreviation": "N",
+                  "direction": "north",
+                  "unit": "metre"
+                },
+                {
+                  "name": "Easting",
+                  "abbreviation": "E",
+                  "direction": "east",
+                  "unit": "metre"
+                }
+              ]
+            }
+          },
+          {
+            "type": "VerticalCRS",
+            "name": "RH2000 height",
+            "datum": {
+              "type": "VerticalReferenceFrame",
+              "name": "Rikets hojdsystem 2000"
+            },
+            "coordinate_system": {
+              "subtype": "vertical",
+              "axis": [
+                {
+                  "name": "Gravity-related height",
+                  "abbreviation": "",
+                  "direction": "up",
+                  "unit": "metre"
+                }
+              ]
+            }
+          }
+        ],
+        "id": {
+          "authority": "EPSG",
+          "code": 5845
+        }
+      },
+      "prettycompoundwkt": "COMPD_CS[\"ETRS89-SWE [SWEREF 99] TM + RH2000 height\",\n    PROJCS[\"ETRS89-SWE [SWEREF 99 TM]\",\n        GEOGCS[\"ETRS89-SWE [SWEREF 99]\",\n            DATUM[\"SWEREF_99\",\n                SPHEROID[\"GRS 1980\",6378137,298.257222101,\n                    AUTHORITY[\"EPSG\",\"7019\"]],\n                AUTHORITY[\"EPSG\",\"6619\"]],\n            PRIMEM[\"Greenwich\",0,\n                AUTHORITY[\"EPSG\",\"8901\"]],\n            UNIT[\"degree\",0.0174532925199433,\n                AUTHORITY[\"EPSG\",\"9122\"]],\n            AUTHORITY[\"EPSG\",\"4619\"]],\n        PROJECTION[\"Transverse_Mercator\"],\n        PARAMETER[\"latitude_of_origin\",0],\n        PARAMETER[\"central_meridian\",15],\n        PARAMETER[\"scale_factor\",0.9996],\n        PARAMETER[\"false_easting\",500000],\n        PARAMETER[\"false_northing\",0],\n        UNIT[\"metre\",1,\n            AUTHORITY[\"EPSG\",\"9001\"]],\n        AXIS[\"Northing\",NORTH],\n        AXIS[\"Easting\",EAST],\n        AUTHORITY[\"EPSG\",\"3006\"]],\n    VERT_CS[\"RH2000 height\",\n        VERT_DATUM[\"Rikets hojdsystem 2000\",2005,\n            AUTHORITY[\"EPSG\",\"5208\"]],\n        UNIT[\"metre\",1,\n            AUTHORITY[\"EPSG\",\"9001\"]],\n        AXIS[\"Gravity-related height\",UP],\n        AUTHORITY[\"EPSG\",\"5613\"]],\n    AUTHORITY[\"EPSG\",\"5845\"]]",
+      "prettywkt": "PROJCS[\"ETRS89-SWE [SWEREF 99 TM]\",\n    GEOGCS[\"ETRS89-SWE [SWEREF 99]\",\n        DATUM[\"SWEREF_99\",\n            SPHEROID[\"GRS 1980\",6378137,298.257222101,\n                AUTHORITY[\"EPSG\",\"7019\"]],\n            AUTHORITY[\"EPSG\",\"6619\"]],\n        PRIMEM[\"Greenwich\",0,\n            AUTHORITY[\"EPSG\",\"8901\"]],\n        UNIT[\"degree\",0.0174532925199433,\n            AUTHORITY[\"EPSG\",\"9122\"]],\n        AUTHORITY[\"EPSG\",\"4619\"]],\n    PROJECTION[\"Transverse_Mercator\"],\n    PARAMETER[\"latitude_of_origin\",0],\n    PARAMETER[\"central_meridian\",15],\n    PARAMETER[\"scale_factor\",0.9996],\n    PARAMETER[\"false_easting\",500000],\n    PARAMETER[\"false_northing\",0],\n    UNIT[\"metre\",1,\n        AUTHORITY[\"EPSG\",\"9001\"]],\n    AXIS[\"Northing\",NORTH],\n    AXIS[\"Easting\",EAST],\n    AUTHORITY[\"EPSG\",\"3006\"]]",
+      "proj4": "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +vunits=m +no_defs",
+      "units": {
+        "horizontal": "metre",
+        "vertical": "metre"
+      },
+      "vertical": "VERT_CS[\"RH2000 height\",VERT_DATUM[\"Rikets hojdsystem 2000\",2005,AUTHORITY[\"EPSG\",\"5208\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"5613\"]]",
+      "wkt": "PROJCS[\"ETRS89-SWE [SWEREF 99 TM]\",GEOGCS[\"ETRS89-SWE [SWEREF 99]\",DATUM[\"SWEREF_99\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6619\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4619\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",15],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Northing\",NORTH],AXIS[\"Easting\",EAST],AUTHORITY[\"EPSG\",\"3006\"]]"
+    },
+    "system_id": "",
+    "vlr_0": {
+      "data": "Q09NUERfQ1NbIkVUUlM4OS1TV0UgW1NXRVJFRiA5OV0gVE0gKyBSSDIwMDAgaGVpZ2h0IixQUk9KQ1NbIkVUUlM4OS1TV0UgW1NXRVJFRiA5OSBUTV0iLEdFT0dDU1siRVRSUzg5LVNXRSBbU1dFUkVGIDk5XSIsREFUVU1bIlNXRVJFRl85OSIsU1BIRVJPSURbIkdSUyAxOTgwIiw2Mzc4MTM3LDI5OC4yNTcyMjIxMDEsQVVUSE9SSVRZWyJFUFNHIiwiNzAxOSJdXSxBVVRIT1JJVFlbIkVQU0ciLCI2NjE5Il1dLFBSSU1FTVsiR3JlZW53aWNoIiwwLEFVVEhPUklUWVsiRVBTRyIsIjg5MDEiXV0sVU5JVFsiZGVncmVlIiwwLjAxNzQ1MzI5MjUxOTk0MzMsQVVUSE9SSVRZWyJFUFNHIiwiOTEyMiJdXSxBVVRIT1JJVFlbIkVQU0ciLCI0NjE5Il1dLFBST0pFQ1RJT05bIlRyYW5zdmVyc2VfTWVyY2F0b3IiXSxQQVJBTUVURVJbImxhdGl0dWRlX29mX29yaWdpbiIsMF0sUEFSQU1FVEVSWyJjZW50cmFsX21lcmlkaWFuIiwxNV0sUEFSQU1FVEVSWyJzY2FsZV9mYWN0b3IiLDAuOTk5Nl0sUEFSQU1FVEVSWyJmYWxzZV9lYXN0aW5nIiw1MDAwMDBdLFBBUkFNRVRFUlsiZmFsc2Vfbm9ydGhpbmciLDBdLFVOSVRbIm1ldHJlIiwxLEFVVEhPUklUWVsiRVBTRyIsIjkwMDEiXV0sQVhJU1siTm9ydGhpbmciLE5PUlRIXSxBWElTWyJFYXN0aW5nIixFQVNUXSxBVVRIT1JJVFlbIkVQU0ciLCIzMDA2Il1dLFZFUlRfQ1NbIlJIMjAwMCBoZWlnaHQiLFZFUlRfREFUVU1bIlJpa2V0cyBob2pkc3lzdGVtIDIwMDAiLDIwMDUsQVVUSE9SSVRZWyJFUFNHIiwiNTIwOCJdXSxVTklUWyJtZXRyZSIsMSxBVVRIT1JJVFlbIkVQU0ciLCI5MDAxIl1dLEFYSVNbIkdyYXZpdHktcmVsYXRlZCBoZWlnaHQiLFVQXSxBVVRIT1JJVFlbIkVQU0ciLCI1NjEzIl1dLEFVVEhPUklUWVsiRVBTRyIsIjU4NDUiXV0=",
+      "description": "",
+      "record_id": 2112,
+      "user_id": "LASF_Projection"
+    },
+    "vlr_1": {
+      "data": "AwAAAAMEAwAAAAAA//////////////////////////8BAAoAHgADAA==",
+      "description": "lazperf variant",
+      "record_id": 22204,
+      "user_id": "laszip encoded"
+    }
+  },
+  "now": "2026-10-09T20:00:37+0200",
+  "pdal_version": "2.10.2 (git-version: 21d285)",
+  "reader": "readers.copc",
+  "schema": {
+    "dimensions": [
+      {
+        "name": "X",
+        "size": 8,
+        "type": "floating"
+      },
+      {
+        "name": "Y",
+        "size": 8,
+        "type": "floating"
+      },
+      {
+        "name": "Z",
+        "size": 8,
+        "type": "floating"
+      },
+      {
+        "name": "Intensity",
+        "size": 2,
+        "type": "unsigned"
+      },
+      {
+        "name": "ReturnNumber",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "NumberOfReturns",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "ScanDirectionFlag",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "EdgeOfFlightLine",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "Classification",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "Synthetic",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "KeyPoint",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "Withheld",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "Overlap",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "ScanAngleRank",
+        "size": 4,
+        "type": "floating"
+      },
+      {
+        "name": "UserData",
+        "size": 1,
+        "type": "unsigned"
+      },
+      {
+        "name": "PointSourceId",
+        "size": 2,
+        "type": "unsigned"
+      },
+      {
+        "name": "GpsTime",
+        "size": 8,
+        "type": "floating"
+      },
+      {
+        "name": "ScanChannel",
+        "size": 1,
+        "type": "unsigned"
+      }
+    ]
+  },
+  "stats": {
+    "bbox": {
+      "EPSG:4326": {
+        "bbox": {
+          "maxx": 12.06813036,
+          "maxy": 57.66319194,
+          "maxz": 141.54,
+          "minx": 12.02447432,
+          "miny": 57.63978793,
+          "minz": -10.67
+        },
+        "boundary": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                12.026310669529172,
+                57.63978793397539,
+                -10.67
+              ],
+              [
+                12.02447432284273,
+                57.66221395201209,
+                -10.67
+              ],
+              [
+                12.066319746860922,
+                57.66319194104341,
+                141.54
+              ],
+              [
+                12.068130359529071,
+                57.64076508117933,
+                141.54
+              ],
+              [
+                12.026310669529172,
+                57.63978793397539,
+                -10.67
+              ]
+            ]
+          ]
+        }
+      },
+      "native": {
+        "bbox": {
+          "maxx": 324999.99,
+          "maxy": 6394999.99,
+          "maxz": 141.54,
+          "minx": 322500,
+          "miny": 6392500,
+          "minz": -10.67
+        },
+        "boundary": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                322500.0,
+                6392500.0,
+                -10.67
+              ],
+              [
+                322500.0,
+                6394999.99,
+                -10.67
+              ],
+              [
+                324999.99,
+                6394999.99,
+                141.54
+              ],
+              [
+                324999.99,
+                6392500.0,
+                141.54
+              ],
+              [
+                322500.0,
+                6392500.0,
+                -10.67
+              ]
+            ]
+          ]
+        }
+      }
+    },
+    "statistic": [
+      {
+        "average": 323890.7915,
+        "count": 16536359,
+        "maximum": 324999.99,
+        "minimum": 322500,
+        "name": "X",
+        "position": 0,
+        "stddev": 755.0191003,
+        "variance": 570053.8418
+      },
+      {
+        "average": 6393837.19,
+        "count": 16536359,
+        "maximum": 6394999.99,
+        "minimum": 6392500,
+        "name": "Y",
+        "position": 1,
+        "stddev": 669.4205135,
+        "variance": 448123.8239
+      },
+      {
+        "average": 70.36401765,
+        "count": 16536359,
+        "maximum": 141.54,
+        "minimum": -10.67,
+        "name": "Z",
+        "position": 2,
+        "stddev": 26.06285914,
+        "variance": 679.2726264
+      },
+      {
+        "average": 3607.980824,
+        "count": 16536359,
+        "maximum": 65535,
+        "minimum": 0,
+        "name": "Intensity",
+        "position": 3,
+        "stddev": 4835.411541,
+        "variance": 23381204.77
+      },
+      {
+        "average": 1.316207818,
+        "count": 16536359,
+        "maximum": 5,
+        "minimum": 1,
+        "name": "ReturnNumber",
+        "position": 4,
+        "stddev": 0.5762930509,
+        "variance": 0.3321136805
+      },
+      {
+        "average": 1.632242382,
+        "count": 16536359,
+        "maximum": 5,
+        "minimum": 1,
+        "name": "NumberOfReturns",
+        "position": 5,
+        "stddev": 0.7615473537,
+        "variance": 0.5799543719
+      },
+      {
+        "average": 0.4959607493,
+        "count": 16536359,
+        "maximum": 1,
+        "minimum": 0,
+        "name": "ScanDirectionFlag",
+        "position": 6,
+        "stddev": 0.4999836993,
+        "variance": 0.2499836996
+      },
+      {
+        "average": 0.0002973447783,
+        "count": 16536359,
+        "maximum": 1,
+        "minimum": 0,
+        "name": "EdgeOfFlightLine",
+        "position": 7,
+        "stddev": 0.01724112474,
+        "variance": 0.0002972563823
+      },
+      {
+        "average": 1.867486065,
+        "count": 16536359,
+        "maximum": 17,
+        "minimum": 1,
+        "name": "Classification",
+        "position": 8,
+        "stddev": 1.613449619,
+        "variance": 2.603219674
+      },
+      {
+        "average": 3.829330555,
+        "count": 16536359,
+        "maximum": 19.00200081,
+        "minimum": -19.00200081,
+        "name": "ScanAngleRank",
+        "position": 9,
+        "stddev": 9.836550785,
+        "variance": 96.75773135
+      },
+      {
+        "average": 0.4807050935,
+        "count": 16536359,
+        "maximum": 1,
+        "minimum": 0,
+        "name": "UserData",
+        "position": 10,
+        "stddev": 0.499627583,
+        "variance": 0.2496277217
+      },
+      {
+        "average": 3405.459986,
+        "count": 16536359,
+        "maximum": 3418,
+        "minimum": 3404,
+        "name": "PointSourceId",
+        "position": 11,
+        "stddev": 3.40631799,
+        "variance": 11.60300225
+      },
+      {
+        "average": 259071720.9,
+        "count": 16536359,
+        "maximum": 259152150.2,
+        "minimum": 259065397.6,
+        "name": "GpsTime",
+        "position": 12,
+        "stddev": 21630.97548,
+        "variance": 467899100.3
+      },
+      {
+        "average": 0,
+        "count": 16536359,
+        "maximum": 0,
+        "minimum": 0,
+        "name": "ScanChannel",
+        "position": 13,
+        "stddev": 0,
+        "variance": 0
+      },
+      {
+        "average": 0,
+        "count": 16536359,
+        "maximum": 0,
+        "minimum": 0,
+        "name": "Synthetic",
+        "position": 14,
+        "stddev": 0,
+        "variance": 0
+      },
+      {
+        "average": 0,
+        "count": 16536359,
+        "maximum": 0,
+        "minimum": 0,
+        "name": "KeyPoint",
+        "position": 15,
+        "stddev": 0,
+        "variance": 0
+      },
+      {
+        "average": 0,
+        "count": 16536359,
+        "maximum": 0,
+        "minimum": 0,
+        "name": "Withheld",
+        "position": 16,
+        "stddev": 0,
+        "variance": 0
+      },
+      {
+        "average": 0,
+        "count": 16536359,
+        "maximum": 0,
+        "minimum": 0,
+        "name": "Overlap",
+        "position": 17,
+        "stddev": 0,
+        "variance": 0
+      }
+    ]
+  }
+}

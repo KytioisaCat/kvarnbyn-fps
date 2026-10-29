@@ -1,0 +1,27 @@
+{
+  "verified_source_files": 37,
+  "source_asset_bytes": 47286238,
+  "models": [
+    {
+      "path": "Broadleaf_A.glb",
+      "bytes": 4435384,
+      "triangles": 6102,
+      "alpha_mode": "MASK",
+      "embedded_images": 4
+    },
+    {
+      "path": "Broadleaf_B.glb",
+      "bytes": 4435396,
+      "triangles": 6102,
+      "alpha_mode": "MASK",
+      "embedded_images": 4
+    },
+    {
+      "path": "Broadleaf_C.glb",
+      "bytes": 4435392,
+      "triangles": 6102,
+      "alpha_mode": "MASK",
+      "embedded_images": 4
+    }
+  ]
+}

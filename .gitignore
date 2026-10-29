@@ -24,6 +24,31 @@ tools/cache/
 v2/node_modules/
 v2/dist/
 v2/.vite/
+v2/.tools/
+v2/poc/**/.godot/
+v2/poc/**/*.blend1
+v2/poc/**/downloads/
 # v2model: konformerad DEM återskapas av tools/v2model/build.py
 tools/lidar_conformed.npy
 tools/v2model/out/build_log.txt
+# PoC (Blender/Godot): stora genererade filer byggs om lokalt — se v2/poc/torget/runtime-docs/README.md.
+# Båda agenterna kör på samma laptop, så filerna finns kvar lokalt mellan passen.
+v2/poc/**/blender/*.glb
+v2/poc/**/blender/*.blend
+v2/poc/**/godot/assets/*.glb
+v2/poc/**/godot/assets/*.exr
+v2/poc/**/godot/assets/*.lmbake
+v2/poc/**/godot/assets/*.unwrap_cache
+v2/poc/**/godot/assets/world_*
+v2/poc/**/assets-src/materials/**/*.jpg
+v2/poc/**/assets-src/materials/**/*.png
+v2/poc/**/assets-src/vegetation/*.glb
+v2/poc/**/assets-src/vegetation/*.blend
+v2/poc/**/assets-src/finish/*.png
+v2/poc/**/evidence/*.png
+v2/poc/**/runtime-docs/*.png
+v2/poc/**/web/
+v2/poc/**/assets-src/vegetation/trees_preview.png
+v2/poc/**/assets-src/vegetation/textures/
+v2/poc/**/godot/assets/sky.hdr
+v2/poc/**/reference/qa-walk-*.json

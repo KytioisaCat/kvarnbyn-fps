@@ -1,0 +1,120 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://cri63gvr3aja3"
+path="res://.godot/imported/world.glb-4dd64d6f72db0e201b90e4d1fad48c08.scn"
+
+[deps]
+
+source_file="res://assets/world.glb"
+dest_files=["res://.godot/imported/world.glb-4dd64d6f72db0e201b90e4d1fad48c08.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=2
+meshes/lightmap_texel_size=0.5
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=false
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path="res://scripts/import_world.gd"
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"meshes": {
+"Broadleaf_A_Bark_mesh": {
+"generate/lightmap_uv": 2
+},
+"Broadleaf_A_Leaves_mesh": {
+"generate/lightmap_uv": 2
+},
+"Broadleaf_B_Bark_mesh": {
+"generate/lightmap_uv": 2
+},
+"Broadleaf_B_Leaves_mesh": {
+"generate/lightmap_uv": 2
+},
+"Broadleaf_C_Bark_mesh": {
+"generate/lightmap_uv": 2
+},
+"Broadleaf_C_Leaves_mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_ForsebronMesh": {
+"generate/lightmap_uv": 2
+},
+"COL_TerrainMesh": {
+"generate/lightmap_uv": 2
+},
+"COL_asphaltMesh": {
+"generate/lightmap_uv": 2
+},
+"COL_krakan_eastMesh": {
+"generate/lightmap_uv": 2
+},
+"COL_krakan_linkMesh": {
+"generate/lightmap_uv": 2
+},
+"COL_krakan_westMesh": {
+"generate/lightmap_uv": 2
+},
+"COL_sidewalkMesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w629220976Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w629220977Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w797670920Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w92332039Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w92332089Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w92332096Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w92332103Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w92332107Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w92332122Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w92332145Mesh": {
+"generate/lightmap_uv": 2
+},
+"COL_w942672063Mesh": {
+"generate/lightmap_uv": 2
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1
+gltf/texture_map_mode=1

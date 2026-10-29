@@ -1,0 +1,63 @@
+{
+  "asset_id": "kloofendal_48d_partly_cloudy_puresky",
+  "name": "Kloofendal 48d Partly Cloudy (Pure Sky)",
+  "file": "sky.hdr",
+  "source_page": "https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky",
+  "source_metadata_api": "https://api.polyhaven.com/info/kloofendal_48d_partly_cloudy_puresky",
+  "source_file_api": "https://api.polyhaven.com/files/kloofendal_48d_partly_cloudy_puresky",
+  "source_url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/kloofendal_48d_partly_cloudy_puresky_1k.hdr",
+  "license": "CC0-1.0",
+  "license_url": "https://polyhaven.com/license",
+  "authors": {
+    "Greg Zaal": "Original",
+    "Jarod Guest": "Sky edits"
+  },
+  "source_white_balance_kelvin": 5400,
+  "source_categories": [
+    "outdoor",
+    "skies",
+    "nature",
+    "midday",
+    "partly cloudy",
+    "high contrast",
+    "natural light",
+    "pure skies"
+  ],
+  "source_capture_coords": [
+    -26.14066228,
+    27.89984354
+  ],
+  "retrieved_at": "2026-10-29T17:03:14.441172+00:00",
+  "bytes": 1435119,
+  "md5": "c69498687e876bf68d2a8b8a62234eb9",
+  "sha256": "fd94c84997b8a3c353b62c2125a9b44e19509956986a126e472684432a02d798",
+  "resolution": "1k",
+  "format": "Radiance HDR, linear high dynamic range",
+  "use": "Generic blue daytime sky/clouds and environment lighting proxy, no photographic terrain or location backdrop.",
+  "limits": [
+    "This is a generic sky proxy, not the actual sky above Kvarnbyn.",
+    "Original capture is South Africa, not Sweden; white balance is neutral daylight at 5400K.",
+    "Pure-sky edit removes the geographic horizon. The HDRI contains a bright sun, so align or balance it with the scene directional sun to avoid conflicting light directions.",
+    "The preview is tone mapped for inspection; use the .hdr source for lighting and Godot PanoramaSkyMaterial."
+  ],
+  "dimensions": [
+    1024,
+    512
+  ],
+  "projection": "equirectangular panorama",
+  "source_color_space_in_blender": "Linear Rec.709",
+  "preview": "sky_preview_agx.png",
+  "preview_color_management": {
+    "view": "AgX",
+    "look": "Medium High Contrast",
+    "exposure_stops": -0.5
+  },
+  "brightest_pixel_uv_bottom_up": [
+    0.59521484375,
+    0.7666015625
+  ],
+  "approx_brightest_elevation_deg": 47.99,
+  "max_linear_channel_value": 61184.0,
+  "all_source_pixels_finite": true,
+  "runtime_use": "Generic cloud background and reflections only. Neutral colour supplies diffuse ambient and GI; directional sunlight is separate."
+}

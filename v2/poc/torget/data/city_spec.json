@@ -1,0 +1,3105 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "created": "2026-10-29",
+    "name": "Gamla torget — Kvarnbyn, Mölndal",
+    "origin": {
+      "lat": 57.6569,
+      "lon": 12.0278,
+      "world_x": 107.208,
+      "world_z": -100.188,
+      "height_raw_m": 18.057,
+      "y_offset_m": 18.0
+    },
+    "projection": {
+      "x_m_per_lon_degree": 59560.0,
+      "z_m_per_lat_degree": -111320.0,
+      "world_origin_lon": 12.026,
+      "world_origin_lat": 57.656,
+      "local_formula": "x=(lon-origin.lon)*59560; z=-(lat-origin.lat)*111320; y=h_raw-y_offset_m",
+      "axis": "x east, y up, z south",
+      "vertical_exaggeration": 1.0
+    },
+    "bounds": {
+      "min_x": -60.0,
+      "max_x": 60.0,
+      "min_z": -60.0,
+      "max_z": 60.0
+    },
+    "data_sources": [
+      {
+        "path": "tools/osm_raw.json",
+        "license": "ODbL",
+        "snapshot": "2026-09-03T13:16:30Z"
+      },
+      {
+        "path": "tools/lidar_1m.png",
+        "license": "CC0",
+        "meaning": "DTM ground, NOT point cloud or roof heights"
+      },
+      {
+        "path": "tools/ortho8k.jpg",
+        "license": "CC BY 4.0",
+        "year": 2024
+      }
+    ],
+    "reference_policy": "Wikimedia photographs are observation references only; no source pixels, textures or copied meshes are exported into the game.",
+    "limitations": [
+      "OSM and orthophoto predate/overlap the2022–2024 street works. The PoC intentionally reconstructs a stable historical-looking square, not2024 roadworks.",
+      "Kråkan, Corpus, Musikskolan and the adjoining brick building have visually reviewed facade characteristics. All metric wall/roof heights remain estimates.",
+      "No point-cloud-derived roofs or trees in this specification."
+    ]
+  },
+  "buildings": [
+    {
+      "name": "Kråkans Krog",
+      "priority": "hero",
+      "archetype": "white_timber_inn",
+      "base_height_raw_m": 17.25,
+      "levels": 2,
+      "wall_height_m": 5.9,
+      "roof_rise_m": 1.65,
+      "roof_shape": "hipped",
+      "roof_material": "standing_seam_metal",
+      "facade_material": "horizontal_timber",
+      "facade_color": "#eeeae0",
+      "trim_color": "#1c5545",
+      "roof_color": "#30343a",
+      "sign": "KRÅKANS KROG",
+      "evidence": [
+        {
+          "source": "https://commons.wikimedia.org/wiki/File:G%C3%B6taforsliden_1_i_M%C3%B6lndal_01.JPG",
+          "observed": "Två våningar i västra huvudvolymen; vit liggande träpanel, gröna foder och dörrar, vita spröjs, blå markiser, mörkt låglutande valmat plåttak.",
+          "confidence": "high"
+        },
+        {
+          "source": "public/husfakta.js; OSM POI 463940899",
+          "observed": "Namn och byggnadsmatchning.",
+          "confidence": "high"
+        },
+        {
+          "source": "https://commons.wikimedia.org/wiki/File:G%C3%B6taforsliden_1_i_M%C3%B6lndal_02.JPG",
+          "observed": "Tre takvolymer samt gatufasadens rytm, observerat i foto taget2013.",
+          "confidence": "high"
+        },
+        {
+          "source": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=57.65652,12.02796&heading=10&pitch=5&fov=85",
+          "observed": "Manuellt visuellt granskat i Google Maps Street View2026-10-29. Bildinsamling maj2026. Se reference/OBSERVATIONER.md för fasad- och gaturumsnoteringar.",
+          "confidence": "high_for_appearance_not_metric_dimensions"
+        }
+      ],
+      "notes": "OSM-fotavtrycket omfattar flera sammanbyggda volymer. Huvudvolymen i väster har valmat tak; östra delen har lägre mellandel och sadeltak. Ingen inmätt takhöjd. Gör INTE ett enda likformigt hus av hela polygonen.",
+      "id": "w92331981",
+      "osm_way_id": 92331981,
+      "osm_tags": {
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          47.219,
+          17.11
+        ],
+        [
+          50.209,
+          25.826
+        ],
+        [
+          35.003,
+          30.869
+        ],
+        [
+          28.166,
+          32.572
+        ],
+        [
+          19.792,
+          34.287
+        ],
+        [
+          13.472,
+          35.222
+        ],
+        [
+          2.37,
+          32.494
+        ],
+        [
+          3.306,
+          29.155
+        ],
+        [
+          27.993,
+          22.242
+        ]
+      ],
+      "centroid_xz": [
+        27.797,
+        27.159
+      ],
+      "rectangle_xz": [
+        [
+          47.838,
+          16.945
+        ],
+        [
+          1.52,
+          29.308
+        ],
+        [
+          4.136,
+          39.108
+        ],
+        [
+          50.454,
+          26.745
+        ]
+      ],
+      "major_axis_xz": [
+        0.966,
+        -0.258
+      ],
+      "major_length_m": 47.94,
+      "minor_width_m": 10.143,
+      "base_y_m": -0.75,
+      "ground_vertex_heights_raw_m": [
+        16.366,
+        18.042,
+        17.507,
+        17.371,
+        17.121,
+        17.182,
+        17.472,
+        16.479,
+        16.306
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true,
+      "volumes": [
+        {
+          "id": "krakan_west",
+          "footprint_xz": [
+            [
+              2.37,
+              32.49
+            ],
+            [
+              3.31,
+              29.15
+            ],
+            [
+              17.9,
+              25.07
+            ],
+            [
+              19.79,
+              34.29
+            ],
+            [
+              13.47,
+              35.22
+            ]
+          ],
+          "levels": 2,
+          "base_height_raw_m": 17.25,
+          "wall_height_m": 5.9,
+          "roof_rise_m": 1.65,
+          "roof_shape": "hipped",
+          "roof_material": "standing_seam_metal",
+          "confidence": "photo_shape_high_dimensions_estimated",
+          "notes": "Västra huvudvolymen. Två sneda gatufasader:11.4m med4 nedre och3 övre axlar;6.4m med2 nedre och2 övre axlar."
+        },
+        {
+          "id": "krakan_link",
+          "footprint_xz": [
+            [
+              17.9,
+              25.07
+            ],
+            [
+              27.99,
+              22.24
+            ],
+            [
+              28.17,
+              32.57
+            ],
+            [
+              19.79,
+              34.29
+            ]
+          ],
+          "levels": 1,
+          "base_height_raw_m": 17.65,
+          "wall_height_m": 3.55,
+          "roof_rise_m": 1.65,
+          "roof_shape": "gabled_with_front_dormer",
+          "roof_material": "standing_seam_metal",
+          "confidence": "photo_shape_high_dimensions_estimated",
+          "notes": "Lägre mellandel, med frontespis/dörrparti på gatusidan. Höjden ska bryta av tydligt mot huvudhusets takfot."
+        },
+        {
+          "id": "krakan_east",
+          "footprint_xz": [
+            [
+              27.99,
+              22.24
+            ],
+            [
+              47.22,
+              17.11
+            ],
+            [
+              50.21,
+              25.83
+            ],
+            [
+              35.0,
+              30.87
+            ],
+            [
+              28.17,
+              32.57
+            ]
+          ],
+          "levels": 2,
+          "base_height_raw_m": 18.1,
+          "wall_height_m": 5.25,
+          "roof_rise_m": 2.1,
+          "roof_shape": "gabled_with_front_dormers",
+          "roof_material": "standing_seam_metal",
+          "confidence": "photo_shape_high_dimensions_estimated",
+          "notes": "Östra sadeltaksdelen. Två tydliga små frontespiser mot gatan, gröna foder, vita spröjs; ett fönster högt i östgaveln."
+        }
+      ],
+      "street_facades": [
+        {
+          "volume": "krakan_west",
+          "edge_xz": [
+            [
+              2.37,
+              32.49
+            ],
+            [
+              13.47,
+              35.22
+            ]
+          ],
+          "lower_bays": [
+            "green_door",
+            "window",
+            "glazed_door",
+            "window"
+          ],
+          "upper_bays": 3,
+          "blue_awnings": 3,
+          "evidence": "Wikimedia photos01+02,2013"
+        },
+        {
+          "volume": "krakan_west",
+          "edge_xz": [
+            [
+              13.47,
+              35.22
+            ],
+            [
+              19.79,
+              34.29
+            ]
+          ],
+          "lower_bays": [
+            "window",
+            "window"
+          ],
+          "upper_bays": 2,
+          "blue_awnings": 2,
+          "evidence": "Wikimedia photos01+02,2013"
+        },
+        {
+          "volume": "krakan_link",
+          "edge_xz": [
+            [
+              19.79,
+              34.29
+            ],
+            [
+              28.17,
+              32.57
+            ]
+          ],
+          "lower_bays": [
+            "window",
+            "glazed_door",
+            "window"
+          ],
+          "front_dormers": 1,
+          "evidence": "Wikimedia photo02,2013"
+        },
+        {
+          "volume": "krakan_east",
+          "edge_xz": [
+            [
+              28.17,
+              32.57
+            ],
+            [
+              50.21,
+              25.83
+            ]
+          ],
+          "lower_bays": [
+            "window",
+            "door",
+            "window",
+            "door"
+          ],
+          "upper_bays": 4,
+          "front_dormers": 2,
+          "evidence": "Wikimedia photo02,2013"
+        }
+      ]
+    },
+    {
+      "name": "Götaforsliden 6",
+      "priority": "context",
+      "archetype": "historic_timber_cottage",
+      "levels": 1,
+      "wall_height_m": 3.2,
+      "roof_rise_m": 2.2,
+      "roof_shape": "gabled",
+      "roof_material": "clay_tile",
+      "facade_material": "timber_unconfirmed",
+      "facade_color": "#eeeae0",
+      "trim_color": "#ddd8ca",
+      "roof_color": "#9b4f35",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "tools/osm_raw.json; tools/ortho8k.jpg (Lantmäteriet, 2024, CC BY 4.0)",
+          "observed": "Adress och fotavtryck bekräftade; litet hus med rött tak på sydsidan av Götaforsliden.",
+          "confidence": "medium"
+        }
+      ],
+      "notes": "Fasadkulör/höjd uppskattade; ej hjältehus.",
+      "id": "w92332039",
+      "osm_way_id": 92332039,
+      "osm_tags": {
+        "addr:country": "SE",
+        "addr:housenumber": "6",
+        "addr:street": "Götaforsliden",
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          25.015,
+          40.209
+        ],
+        [
+          30.304,
+          38.572
+        ],
+        [
+          30.566,
+          39.418
+        ],
+        [
+          39.59,
+          36.635
+        ],
+        [
+          42.579,
+          46.298
+        ],
+        [
+          38.631,
+          47.523
+        ],
+        [
+          39.244,
+          49.493
+        ],
+        [
+          38.637,
+          49.682
+        ],
+        [
+          38.899,
+          50.528
+        ],
+        [
+          36.29,
+          51.33
+        ],
+        [
+          36.534,
+          52.12
+        ],
+        [
+          33.175,
+          53.166
+        ],
+        [
+          30.352,
+          44.027
+        ],
+        [
+          26.558,
+          45.196
+        ]
+      ],
+      "centroid_xz": [
+        34.651,
+        43.965
+      ],
+      "rectangle_xz": [
+        [
+          43.697,
+          49.91
+        ],
+        [
+          39.325,
+          35.781
+        ],
+        [
+          25.015,
+          40.209
+        ],
+        [
+          29.387,
+          54.339
+        ]
+      ],
+      "major_axis_xz": [
+        0.955,
+        -0.296
+      ],
+      "major_length_m": 14.98,
+      "minor_width_m": 14.791,
+      "base_height_raw_m": 18.419,
+      "base_y_m": 0.419,
+      "ground_vertex_heights_raw_m": [
+        16.551,
+        17.454,
+        17.386,
+        17.95,
+        18.431,
+        18.308,
+        18.448,
+        18.456,
+        18.507,
+        18.41,
+        18.483,
+        18.163,
+        16.914,
+        16.404
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Götaforsliden 4",
+      "priority": "context",
+      "archetype": "historic_timber_cottage",
+      "levels": 2,
+      "wall_height_m": 5.4,
+      "roof_rise_m": 2.1,
+      "roof_shape": "gabled",
+      "roof_material": "clay_tile",
+      "facade_material": "timber_unconfirmed",
+      "facade_color": "#e8e4dc",
+      "trim_color": "#d5d1c8",
+      "roof_color": "#9c5138",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "tools/osm_raw.json; tools/ortho8k.jpg (Lantmäteriet, 2024, CC BY 4.0)",
+          "observed": "Adress och fotavtryck bekräftade; rött tak på sydsidan av Götaforsliden.",
+          "confidence": "medium"
+        }
+      ],
+      "notes": "Fasadkulör/höjd uppskattade; ej hjältehus.",
+      "id": "w92332089",
+      "osm_way_id": 92332089,
+      "osm_tags": {
+        "addr:country": "SE",
+        "addr:housenumber": "4",
+        "addr:street": "Götaforsliden",
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          17.064,
+          49.882
+        ],
+        [
+          29.661,
+          46.298
+        ],
+        [
+          32.818,
+          57.397
+        ],
+        [
+          29.071,
+          58.465
+        ],
+        [
+          29.798,
+          61.026
+        ],
+        [
+          24.759,
+          62.451
+        ],
+        [
+          24.068,
+          60.024
+        ],
+        [
+          20.256,
+          61.104
+        ]
+      ],
+      "centroid_xz": [
+        25.099,
+        54.235
+      ],
+      "rectangle_xz": [
+        [
+          17.064,
+          49.882
+        ],
+        [
+          20.95,
+          63.543
+        ],
+        [
+          33.547,
+          59.959
+        ],
+        [
+          29.661,
+          46.298
+        ]
+      ],
+      "major_axis_xz": [
+        0.274,
+        0.962
+      ],
+      "major_length_m": 14.203,
+      "minor_width_m": 13.097,
+      "base_height_raw_m": 19.192,
+      "base_y_m": 1.192,
+      "ground_vertex_heights_raw_m": [
+        16.908,
+        16.741,
+        18.982,
+        18.823,
+        19.364,
+        19.793,
+        18.807,
+        19.808
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Gamla brandstationen / Viktualieföreningens hus",
+      "priority": "landmark",
+      "archetype": "historic_brick_civic",
+      "base_height_raw_m": 18.0,
+      "levels": 2,
+      "wall_height_m": 6.0,
+      "roof_rise_m": 2.0,
+      "roof_shape": "gabled",
+      "roof_material": "clay_tile",
+      "facade_material": "brick",
+      "facade_color": "#a65e43",
+      "trim_color": "#bcb5a5",
+      "roof_color": "#8e4530",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "https://commons.wikimedia.org/wiki/File:Gamla_stadshuset_i_M%C3%B6lndal.JPG",
+          "observed": "Lägre rött tegelhus i direkt anslutning till Musikskolans sydvästgavel; ljusa tegel-/stenband kring fönster och rött tegeltak.",
+          "confidence": "medium"
+        },
+        {
+          "source": "https://digitaltmuseum.se/011014739586/gamla-torget-i-molndal-1970-tal-fran-vanster-kvarnbygatan-41-viktualieforeningens",
+          "observed": "Byggnadsordning och identitet:41 gamla brandstationen,43 Musikskolan,45 öster därom.",
+          "confidence": "high"
+        },
+        {
+          "source": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=57.65688,12.02745&heading=300&pitch=10&fov=90",
+          "observed": "Manuellt visuellt granskat i Google Maps Street View2026-10-29. Bildinsamling maj2026. Se reference/OBSERVATIONER.md för fasad- och gaturumsnoteringar.",
+          "confidence": "high_for_appearance_not_metric_dimensions"
+        }
+      ],
+      "notes": "Ligger delvis utanför den exakta120m-rutan men bör behållas helt som västlig kuliss.",
+      "id": "w92332096",
+      "osm_way_id": 92332096,
+      "osm_tags": {
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          -56.88,
+          3.941
+        ],
+        [
+          -46.564,
+          8.661
+        ],
+        [
+          -51.502,
+          19.436
+        ],
+        [
+          -61.466,
+          14.872
+        ],
+        [
+          -59.447,
+          10.464
+        ],
+        [
+          -61.18,
+          9.674
+        ],
+        [
+          -59.81,
+          6.679
+        ],
+        [
+          -58.422,
+          7.314
+        ]
+      ],
+      "centroid_xz": [
+        -54.307,
+        11.559
+      ],
+      "rectangle_xz": [
+        [
+          -63.199,
+          14.078
+        ],
+        [
+          -51.5,
+          19.437
+        ],
+        [
+          -46.564,
+          8.661
+        ],
+        [
+          -58.263,
+          3.302
+        ]
+      ],
+      "major_axis_xz": [
+        0.909,
+        0.416
+      ],
+      "major_length_m": 12.868,
+      "minor_width_m": 11.853,
+      "base_y_m": 0.0,
+      "ground_vertex_heights_raw_m": [
+        18.838,
+        17.567,
+        17.405,
+        18.296,
+        18.754,
+        19.05,
+        19.008,
+        19.056
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Corpus Pizzeria",
+      "priority": "secondary_hero",
+      "archetype": "historic_timber_shop",
+      "base_height_raw_m": 18.2,
+      "levels": 2,
+      "wall_height_m": 6.1,
+      "roof_rise_m": 2.2,
+      "roof_shape": "hipped",
+      "roof_material": "dark_profiled_metal_estimated",
+      "facade_material": "stucco",
+      "facade_color": "#e8e3d5",
+      "trim_color": "#dedbd0",
+      "roof_color": "#535559",
+      "sign": "CORPUS PIZZA",
+      "evidence": [
+        {
+          "source": "public/husfakta.js; OSM POI463940910",
+          "observed": "Huset innehåller Corpus; Gamla torget45B.",
+          "confidence": "high"
+        },
+        {
+          "source": "tools/ortho8k.jpg (Lantmäteriet, 2024, CC BY 4.0)",
+          "observed": "L-format/knäckt fotavtryck med mörkgrå takytor.",
+          "confidence": "high"
+        },
+        {
+          "source": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=57.65688,12.02745&heading=300&pitch=10&fov=90",
+          "observed": "Manuellt visuellt granskat i Google Maps Street View2026-10-29. Bildinsamling maj2026. Se reference/OBSERVATIONER.md för fasad- och gaturumsnoteringar.",
+          "confidence": "high_for_appearance_not_metric_dimensions"
+        }
+      ],
+      "notes": "INTE gamla stadshuset. Google Street View maj2026 visuellt granskat2026-10-29: ljus puts, två våningar, mörkt valmat tak, vita enkla foder, svart skylt med vit text CORPUS PIZZA. Exakta höjder fortfarande uppskattade.",
+      "id": "w92332103",
+      "osm_way_id": 92332103,
+      "osm_tags": {
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          -12.371,
+          -41.411
+        ],
+        [
+          -7.671,
+          -38.506
+        ],
+        [
+          -15.015,
+          -28.253
+        ],
+        [
+          -12.966,
+          -26.383
+        ],
+        [
+          -11.34,
+          -25.949
+        ],
+        [
+          -12.198,
+          -28.086
+        ],
+        [
+          -4.848,
+          -32.105
+        ],
+        [
+          0.274,
+          -22.787
+        ],
+        [
+          -10.745,
+          -15.785
+        ],
+        [
+          -13.306,
+          -16.13
+        ],
+        [
+          -23.669,
+          -23.232
+        ],
+        [
+          -25.521,
+          -24.502
+        ],
+        [
+          -23.86,
+          -26.761
+        ],
+        [
+          -20.185,
+          -31.47
+        ],
+        [
+          -16.51,
+          -36.179
+        ],
+        [
+          -13.538,
+          -39.908
+        ]
+      ],
+      "centroid_xz": [
+        -12.546,
+        -26.533
+      ],
+      "rectangle_xz": [
+        [
+          -12.036,
+          -41.912
+        ],
+        [
+          -25.585,
+          -24.551
+        ],
+        [
+          -8.659,
+          -11.341
+        ],
+        [
+          4.89,
+          -28.702
+        ]
+      ],
+      "major_axis_xz": [
+        0.615,
+        -0.788
+      ],
+      "major_length_m": 22.022,
+      "minor_width_m": 21.471,
+      "base_y_m": 0.2,
+      "ground_vertex_heights_raw_m": [
+        19.94,
+        19.554,
+        18.201,
+        18.067,
+        18.005,
+        18.073,
+        17.846,
+        17.769,
+        17.606,
+        17.645,
+        18.195,
+        18.768,
+        19.676,
+        20.02,
+        19.893,
+        19.831
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Bakgrundshus 92332107",
+      "priority": "context",
+      "archetype": "background_residential",
+      "levels": 2,
+      "wall_height_m": 6.0,
+      "roof_rise_m": 2.0,
+      "roof_shape": "gabled",
+      "roof_material": "unconfirmed",
+      "facade_material": "unconfirmed",
+      "facade_color": "#e7e2d7",
+      "trim_color": "#d0c7b6",
+      "roof_color": "#87584a",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "tools/osm_raw.json",
+          "observed": "Fotavtryck och läge; övriga husparametrar schabloner.",
+          "confidence": "low"
+        }
+      ],
+      "notes": "Kuliss; ej bekräftad fasad eller takhöjd.",
+      "id": "w92332107",
+      "osm_way_id": 92332107,
+      "osm_tags": {
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          90.942,
+          22.654
+        ],
+        [
+          95.153,
+          34.042
+        ],
+        [
+          83.831,
+          38.227
+        ],
+        [
+          84.254,
+          39.352
+        ],
+        [
+          70.626,
+          44.394
+        ],
+        [
+          72.276,
+          48.847
+        ],
+        [
+          63.586,
+          52.064
+        ],
+        [
+          59.066,
+          39.853
+        ],
+        [
+          62.705,
+          38.506
+        ],
+        [
+          60.281,
+          31.949
+        ],
+        [
+          78.744,
+          25.114
+        ],
+        [
+          79.411,
+          26.917
+        ]
+      ],
+      "centroid_xz": [
+        75.433,
+        35.711
+      ],
+      "rectangle_xz": [
+        [
+          90.273,
+          20.846
+        ],
+        [
+          56.639,
+          33.297
+        ],
+        [
+          63.586,
+          52.064
+        ],
+        [
+          97.22,
+          39.613
+        ]
+      ],
+      "major_axis_xz": [
+        0.938,
+        -0.347
+      ],
+      "major_length_m": 35.865,
+      "minor_width_m": 20.012,
+      "base_height_raw_m": 21.273,
+      "base_y_m": 3.273,
+      "ground_vertex_heights_raw_m": [
+        21.371,
+        21.996,
+        21.183,
+        21.23,
+        21.255,
+        22.72,
+        23.251,
+        18.999,
+        19.165,
+        18.576,
+        19.819,
+        20.109
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Gamla stadshuset / Musikskolan",
+      "priority": "landmark",
+      "archetype": "historic_timber_civic",
+      "base_height_raw_m": 18.1,
+      "levels": 3,
+      "wall_height_m": 10.3,
+      "roof_rise_m": 2.2,
+      "roof_shape": "gabled",
+      "roof_material": "clay_tile",
+      "facade_material": "horizontal_timber",
+      "facade_color": "#e6dfcd",
+      "trim_color": "#8c4639",
+      "roof_color": "#8b4938",
+      "sign": "MUSIKSKOLAN",
+      "evidence": [
+        {
+          "source": "https://commons.wikimedia.org/wiki/File:Gamla_stadshuset_i_M%C3%B6lndal.JPG",
+          "observed": "Gamla stadshuset, Gamla torget43/Kvarnbygatan43: hög ljus träfasad med rödbruna foder, tre huvudvåningar över låg butikssockel; röda takpannor, regelbundet vertikalt fönsterraster och klocka på gatufasaden.",
+          "confidence": "high"
+        },
+        {
+          "source": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=57.65688,12.02745&heading=300&pitch=10&fov=90",
+          "observed": "Manuellt visuellt granskat i Google Maps Street View2026-10-29. Bildinsamling maj2026. Se reference/OBSERVATIONER.md för fasad- och gaturumsnoteringar.",
+          "confidence": "high_for_appearance_not_metric_dimensions"
+        }
+      ],
+      "notes": "Byggnadsmatchning genom långsmal form väster om Corpus, anslutande tegelbyggnad i sydväst samt ortofoto. Mått/höjder är visuella uppskattningar. Modellera klocka, höga kopplade fönster och våningsband för igenkänning.",
+      "id": "w92332122",
+      "osm_way_id": 92332122,
+      "osm_tags": {
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          -41.221,
+          -27.886
+        ],
+        [
+          -29.72,
+          -21.195
+        ],
+        [
+          -46.635,
+          7.87
+        ],
+        [
+          -55.921,
+          2.471
+        ],
+        [
+          -51.305,
+          -5.466
+        ],
+        [
+          -53.515,
+          -6.757
+        ]
+      ],
+      "centroid_xz": [
+        -43.329,
+        -10.444
+      ],
+      "rectangle_xz": [
+        [
+          -41.221,
+          -27.887
+        ],
+        [
+          -58.135,
+          1.183
+        ],
+        [
+          -46.634,
+          7.875
+        ],
+        [
+          -29.72,
+          -21.195
+        ]
+      ],
+      "major_axis_xz": [
+        0.503,
+        -0.864
+      ],
+      "major_length_m": 33.632,
+      "minor_width_m": 13.305,
+      "base_y_m": 0.1,
+      "ground_vertex_heights_raw_m": [
+        21.345,
+        18.652,
+        17.659,
+        18.793,
+        19.811,
+        20.145
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Bakgrundshus 92332145",
+      "priority": "context",
+      "archetype": "background_residential",
+      "levels": 2,
+      "wall_height_m": 6.0,
+      "roof_rise_m": 2.0,
+      "roof_shape": "gabled",
+      "roof_material": "unconfirmed",
+      "facade_material": "unconfirmed",
+      "facade_color": "#e7e2d7",
+      "trim_color": "#d0c7b6",
+      "roof_color": "#87584a",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "tools/osm_raw.json",
+          "observed": "Fotavtryck och läge; övriga husparametrar schabloner.",
+          "confidence": "low"
+        }
+      ],
+      "notes": "Kuliss; ej bekräftad fasad eller takhöjd.",
+      "id": "w92332145",
+      "osm_way_id": 92332145,
+      "osm_tags": {
+        "building": "office"
+      },
+      "footprint_xz": [
+        [
+          -30.37,
+          28.787
+        ],
+        [
+          -23.866,
+          34.843
+        ],
+        [
+          -35.76,
+          47.923
+        ],
+        [
+          -43.229,
+          56.128
+        ],
+        [
+          -44.771,
+          55.192
+        ],
+        [
+          -46.403,
+          57.419
+        ],
+        [
+          -47.261,
+          57.163
+        ],
+        [
+          -48.547,
+          56.05
+        ],
+        [
+          -48.887,
+          54.502
+        ],
+        [
+          -47.517,
+          53.133
+        ],
+        [
+          -49.834,
+          49.871
+        ]
+      ],
+      "centroid_xz": [
+        -37.378,
+        43.082
+      ],
+      "rectangle_xz": [
+        [
+          -30.37,
+          28.787
+        ],
+        [
+          -52.321,
+          52.566
+        ],
+        [
+          -45.637,
+          58.736
+        ],
+        [
+          -23.685,
+          34.958
+        ]
+      ],
+      "major_axis_xz": [
+        0.678,
+        -0.735
+      ],
+      "major_length_m": 32.362,
+      "minor_width_m": 9.097,
+      "base_height_raw_m": 16.568,
+      "base_y_m": -1.432,
+      "ground_vertex_heights_raw_m": [
+        17.192,
+        17.435,
+        13.86,
+        12.994,
+        13.859,
+        13.9,
+        16.102,
+        16.637,
+        16.499,
+        15.907,
+        17.082
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Bakgrundshus 629220976",
+      "priority": "context",
+      "archetype": "background_residential",
+      "levels": 2,
+      "wall_height_m": 6.0,
+      "roof_rise_m": 2.0,
+      "roof_shape": "gabled",
+      "roof_material": "unconfirmed",
+      "facade_material": "unconfirmed",
+      "facade_color": "#e7e2d7",
+      "trim_color": "#d0c7b6",
+      "roof_color": "#87584a",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "tools/osm_raw.json",
+          "observed": "Fotavtryck och läge; övriga husparametrar schabloner.",
+          "confidence": "low"
+        }
+      ],
+      "notes": "Kuliss; ej bekräftad fasad eller takhöjd.",
+      "id": "w629220976",
+      "osm_way_id": 629220976,
+      "osm_tags": {
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          47.946,
+          -49.404
+        ],
+        [
+          49.768,
+          -36.858
+        ],
+        [
+          54.789,
+          -37.582
+        ],
+        [
+          52.961,
+          -50.139
+        ]
+      ],
+      "centroid_xz": [
+        51.367,
+        -43.495
+      ],
+      "rectangle_xz": [
+        [
+          54.789,
+          -37.582
+        ],
+        [
+          52.961,
+          -50.139
+        ],
+        [
+          47.941,
+          -49.408
+        ],
+        [
+          49.769,
+          -36.851
+        ]
+      ],
+      "major_axis_xz": [
+        0.144,
+        0.99
+      ],
+      "major_length_m": 12.689,
+      "minor_width_m": 5.073,
+      "base_height_raw_m": 21.815,
+      "base_y_m": 3.815,
+      "ground_vertex_heights_raw_m": [
+        20.574,
+        20.18,
+        21.88,
+        22.319
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Bakgrundshus 629220977",
+      "priority": "context",
+      "archetype": "background_residential",
+      "levels": 2,
+      "wall_height_m": 6.0,
+      "roof_rise_m": 2.0,
+      "roof_shape": "gabled",
+      "roof_material": "unconfirmed",
+      "facade_material": "unconfirmed",
+      "facade_color": "#e7e2d7",
+      "trim_color": "#d0c7b6",
+      "roof_color": "#87584a",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "tools/osm_raw.json",
+          "observed": "Fotavtryck och läge; övriga husparametrar schabloner.",
+          "confidence": "low"
+        }
+      ],
+      "notes": "Kuliss; ej bekräftad fasad eller takhöjd.",
+      "id": "w629220977",
+      "osm_way_id": 629220977,
+      "osm_tags": {
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          46.23,
+          -45.174
+        ],
+        [
+          47.166,
+          -36.602
+        ],
+        [
+          31.531,
+          -34.899
+        ],
+        [
+          30.596,
+          -43.47
+        ]
+      ],
+      "centroid_xz": [
+        38.881,
+        -40.036
+      ],
+      "rectangle_xz": [
+        [
+          46.232,
+          -45.174
+        ],
+        [
+          30.596,
+          -43.47
+        ],
+        [
+          31.53,
+          -34.899
+        ],
+        [
+          47.166,
+          -36.602
+        ]
+      ],
+      "major_axis_xz": [
+        0.994,
+        -0.108
+      ],
+      "major_length_m": 15.728,
+      "minor_width_m": 8.622,
+      "base_height_raw_m": 19.843,
+      "base_y_m": 1.843,
+      "ground_vertex_heights_raw_m": [
+        19.874,
+        19.991,
+        18.926,
+        19.246
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Bakgrundshus 797670920",
+      "priority": "context",
+      "archetype": "background_residential",
+      "levels": 2,
+      "wall_height_m": 6.0,
+      "roof_rise_m": 2.0,
+      "roof_shape": "gabled",
+      "roof_material": "unconfirmed",
+      "facade_material": "unconfirmed",
+      "facade_color": "#e7e2d7",
+      "trim_color": "#d0c7b6",
+      "roof_color": "#87584a",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "tools/osm_raw.json",
+          "observed": "Fotavtryck och läge; övriga husparametrar schabloner.",
+          "confidence": "low"
+        }
+      ],
+      "notes": "Kuliss; ej bekräftad fasad eller takhöjd.",
+      "id": "w797670920",
+      "osm_way_id": 797670920,
+      "osm_tags": {
+        "addr:city": "Mölndal",
+        "addr:country": "SE",
+        "addr:housenumber": "9",
+        "addr:postcode": "43134",
+        "addr:street": "Samuel Norbergs gata",
+        "building": "apartments"
+      },
+      "footprint_xz": [
+        [
+          -21.162,
+          -68.729
+        ],
+        [
+          -12.71,
+          -83.913
+        ],
+        [
+          -9.5,
+          -85.494
+        ],
+        [
+          -2.716,
+          -74.328
+        ],
+        [
+          -5.289,
+          -72.558
+        ],
+        [
+          -2.871,
+          -69.007
+        ],
+        [
+          -0.81,
+          -70.8
+        ],
+        [
+          5.908,
+          -59.434
+        ],
+        [
+          2.406,
+          -56.951
+        ],
+        [
+          -16.028,
+          -53.968
+        ],
+        [
+          -18.642,
+          -57.842
+        ],
+        [
+          -16.224,
+          -59.122
+        ]
+      ],
+      "centroid_xz": [
+        -9.077,
+        -67.181
+      ],
+      "rectangle_xz": [
+        [
+          6.105,
+          -59.093
+        ],
+        [
+          -9.382,
+          -85.84
+        ],
+        [
+          -28.458,
+          -74.795
+        ],
+        [
+          -12.971,
+          -48.048
+        ]
+      ],
+      "major_axis_xz": [
+        0.501,
+        0.865
+      ],
+      "major_length_m": 30.907,
+      "minor_width_m": 22.044,
+      "base_height_raw_m": 25.061,
+      "base_y_m": 7.061,
+      "ground_vertex_heights_raw_m": [
+        25.83,
+        25.776,
+        25.586,
+        24.368,
+        25.413,
+        24.404,
+        23.911,
+        21.34,
+        20.798,
+        22.762,
+        24.999,
+        24.859
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    },
+    {
+      "name": "Bakgrundshus 942672063",
+      "priority": "context",
+      "archetype": "background_residential",
+      "levels": 2,
+      "wall_height_m": 6.0,
+      "roof_rise_m": 2.0,
+      "roof_shape": "gabled",
+      "roof_material": "unconfirmed",
+      "facade_material": "unconfirmed",
+      "facade_color": "#e7e2d7",
+      "trim_color": "#d0c7b6",
+      "roof_color": "#87584a",
+      "sign": "",
+      "evidence": [
+        {
+          "source": "tools/osm_raw.json",
+          "observed": "Fotavtryck och läge; övriga husparametrar schabloner.",
+          "confidence": "low"
+        }
+      ],
+      "notes": "Kuliss; ej bekräftad fasad eller takhöjd.",
+      "id": "w942672063",
+      "osm_way_id": 942672063,
+      "osm_tags": {
+        "building": "yes"
+      },
+      "footprint_xz": [
+        [
+          0.822,
+          -50.639
+        ],
+        [
+          6.093,
+          -54.157
+        ],
+        [
+          7.987,
+          -51.319
+        ],
+        [
+          2.716,
+          -47.801
+        ]
+      ],
+      "centroid_xz": [
+        4.404,
+        -50.979
+      ],
+      "rectangle_xz": [
+        [
+          2.716,
+          -47.801
+        ],
+        [
+          7.987,
+          -51.319
+        ],
+        [
+          6.093,
+          -54.157
+        ],
+        [
+          0.822,
+          -50.639
+        ]
+      ],
+      "major_axis_xz": [
+        0.832,
+        -0.555
+      ],
+      "major_length_m": 6.337,
+      "minor_width_m": 3.413,
+      "base_height_raw_m": 20.231,
+      "base_y_m": 2.231,
+      "ground_vertex_heights_raw_m": [
+        20.021,
+        20.289,
+        20.24,
+        20.046
+      ],
+      "height_confidence": "estimated_from_reference_not_lidar_roof",
+      "closed_ring": true
+    }
+  ],
+  "roads": [
+    {
+      "id": "w34930250",
+      "osm_way_id": 34930250,
+      "name": "",
+      "kind": "path",
+      "width_m": 2.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -60.0,
+          53.379
+        ],
+        [
+          -57.97,
+          50.951
+        ],
+        [
+          -47.666,
+          38.773
+        ],
+        [
+          -37.999,
+          29.912
+        ],
+        [
+          -33.628,
+          26.55
+        ],
+        [
+          -31.072,
+          25.904
+        ],
+        [
+          -28.893,
+          25.904
+        ],
+        [
+          -23.925,
+          22.709
+        ],
+        [
+          -16.992,
+          18.691
+        ],
+        [
+          -10.441,
+          14.817
+        ],
+        [
+          9.798,
+          4.364
+        ],
+        [
+          25.724,
+          -3.106
+        ],
+        [
+          60.0,
+          -19.092
+        ]
+      ],
+      "raw_heights_m": [
+        17.427,
+        17.348,
+        17.163,
+        17.178,
+        17.243,
+        17.31,
+        17.398,
+        17.561,
+        17.533,
+        17.633,
+        17.992,
+        18.571,
+        21.401
+      ],
+      "osm_tags": {
+        "bicycle": "designated",
+        "foot": "designated",
+        "highway": "path",
+        "segregated": "no",
+        "surface": "asphalt",
+        "traffic_sign": "SE:D7"
+      }
+    },
+    {
+      "id": "w44573288",
+      "osm_way_id": 44573288,
+      "name": "Forsebron",
+      "kind": "residential",
+      "width_m": 5.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": true,
+      "line_xz": [
+        [
+          0.75,
+          37.571
+        ],
+        [
+          -2.519,
+          35.066
+        ],
+        [
+          -15.313,
+          27.952
+        ]
+      ],
+      "raw_heights_m": [
+        17.634,
+        16.152,
+        17.685
+      ],
+      "osm_tags": {
+        "bridge": "yes",
+        "bridge:name": "Forsebron",
+        "highway": "residential",
+        "layer": "1",
+        "maxspeed": "40",
+        "name": "Forsebron",
+        "priority_road": "designated",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w44573289",
+      "osm_way_id": 44573289,
+      "name": "Norra Forsåkersgatan",
+      "kind": "residential",
+      "width_m": 5.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -18.559,
+          26.305
+        ],
+        [
+          -23.925,
+          22.709
+        ],
+        [
+          -30.328,
+          15.574
+        ]
+      ],
+      "raw_heights_m": [
+        17.649,
+        17.561,
+        17.577
+      ],
+      "osm_tags": {
+        "highway": "residential",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Norra Forsåkersgatan",
+        "priority_road": "designated",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w63073062",
+      "osm_way_id": 63073062,
+      "name": "Norra Forsåkersgatan",
+      "kind": "residential",
+      "width_m": 5.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -1.348,
+          60.0
+        ],
+        [
+          0.798,
+          53.222
+        ],
+        [
+          2.633,
+          45.574
+        ],
+        [
+          2.668,
+          40.454
+        ]
+      ],
+      "raw_heights_m": [
+        17.168,
+        17.278,
+        17.479,
+        17.576
+      ],
+      "osm_tags": {
+        "cycleway:left": "track",
+        "cycleway:left:segregated": "no",
+        "cycleway:right": "no",
+        "highway": "residential",
+        "maxspeed": "40",
+        "name": "Norra Forsåkersgatan",
+        "priority_road": "designated",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w63073063",
+      "osm_way_id": 63073063,
+      "name": "Norra Forsåkersgatan",
+      "kind": "residential",
+      "width_m": 5.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          2.668,
+          40.454
+        ],
+        [
+          0.75,
+          37.571
+        ]
+      ],
+      "raw_heights_m": [
+        17.576,
+        17.634
+      ],
+      "osm_tags": {
+        "highway": "residential",
+        "maxspeed": "40",
+        "name": "Norra Forsåkersgatan",
+        "priority_road": "designated",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w209835513",
+      "osm_way_id": 209835513,
+      "name": "A",
+      "kind": "platform",
+      "width_m": 2.3,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -55.254,
+          26.917
+        ],
+        [
+          -60.0,
+          31.586
+        ]
+      ],
+      "raw_heights_m": [
+        17.253,
+        17.149
+      ],
+      "osm_tags": {
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "highway": "platform",
+        "name": "A",
+        "network": "Västtrafik",
+        "public_transport": "platform",
+        "ref": "A",
+        "shelter": "yes"
+      }
+    },
+    {
+      "id": "w209835517",
+      "osm_way_id": 209835517,
+      "name": "Kvarnbygatan",
+      "kind": "tertiary",
+      "width_m": 7.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -60.0,
+          43.043
+        ],
+        [
+          -59.798,
+          42.892
+        ]
+      ],
+      "raw_heights_m": [
+        17.079,
+        17.078
+      ],
+      "osm_tags": {
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Kvarnbygatan",
+        "priority_road": "designated",
+        "ref": "O 533",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w209835518",
+      "osm_way_id": 209835518,
+      "name": "Kvarnbygatan",
+      "kind": "tertiary",
+      "width_m": 7.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -59.798,
+          42.892
+        ],
+        [
+          -45.891,
+          29.945
+        ],
+        [
+          -41.12,
+          25.57
+        ],
+        [
+          -30.328,
+          15.574
+        ]
+      ],
+      "raw_heights_m": [
+        17.078,
+        17.234,
+        17.372,
+        17.577
+      ],
+      "osm_tags": {
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "30",
+        "name": "Kvarnbygatan",
+        "priority_road": "designated",
+        "ref": "O 533",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w223301747",
+      "osm_way_id": 223301747,
+      "name": "Kvarnbygatan",
+      "kind": "tertiary",
+      "width_m": 7.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -30.328,
+          15.574
+        ],
+        [
+          -23.473,
+          10.575
+        ],
+        [
+          -8.082,
+          2.215
+        ],
+        [
+          8.88,
+          -5.933
+        ]
+      ],
+      "raw_heights_m": [
+        17.577,
+        17.7,
+        17.961,
+        18.459
+      ],
+      "osm_tags": {
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "30",
+        "name": "Kvarnbygatan",
+        "priority_road": "designated",
+        "ref": "O 533",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w268588415",
+      "osm_way_id": 268588415,
+      "name": "Kvarnbygatan",
+      "kind": "tertiary",
+      "width_m": 7.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          8.88,
+          -5.933
+        ],
+        [
+          18.72,
+          -10.497
+        ],
+        [
+          51.603,
+          -24.468
+        ],
+        [
+          60.0,
+          -27.345
+        ]
+      ],
+      "raw_heights_m": [
+        18.459,
+        18.756,
+        20.894,
+        21.631
+      ],
+      "osm_tags": {
+        "highway": "tertiary",
+        "lanes": "2",
+        "lit": "yes",
+        "maxspeed": "40",
+        "name": "Kvarnbygatan",
+        "priority_road": "designated",
+        "ref": "O 533",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w368138680",
+      "osm_way_id": 368138680,
+      "name": "",
+      "kind": "footway",
+      "width_m": 2.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          17.219,
+          -19.804
+        ],
+        [
+          56.713,
+          -34.743
+        ],
+        [
+          60.0,
+          -29.372
+        ]
+      ],
+      "raw_heights_m": [
+        18.725,
+        21.715,
+        21.708
+      ],
+      "osm_tags": {
+        "highway": "footway",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w368138682",
+      "osm_way_id": 368138682,
+      "name": "Gamla Torget",
+      "kind": "residential",
+      "width_m": 5.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "sett",
+      "bridge": false,
+      "line_xz": [
+        [
+          16.957,
+          -26.561
+        ],
+        [
+          12.359,
+          -25.014
+        ],
+        [
+          10.774,
+          -23.422
+        ],
+        [
+          -9.804,
+          -8.627
+        ],
+        [
+          -22.103,
+          -0.479
+        ],
+        [
+          -27.695,
+          7.581
+        ],
+        [
+          -30.328,
+          15.574
+        ]
+      ],
+      "raw_heights_m": [
+        18.593,
+        18.335,
+        18.296,
+        17.815,
+        17.854,
+        17.739,
+        17.577
+      ],
+      "osm_tags": {
+        "highway": "residential",
+        "maxspeed": "30",
+        "name": "Gamla Torget",
+        "oneway": "yes",
+        "surface": "sett"
+      }
+    },
+    {
+      "id": "w394752536",
+      "osm_way_id": 394752536,
+      "name": "Samuel Norbergs gata",
+      "kind": "residential",
+      "width_m": 5.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          18.72,
+          -10.497
+        ],
+        [
+          17.219,
+          -19.804
+        ],
+        [
+          16.957,
+          -26.561
+        ],
+        [
+          17.118,
+          -32.505
+        ],
+        [
+          18.749,
+          -40.398
+        ],
+        [
+          19.065,
+          -46.487
+        ],
+        [
+          18.672,
+          -52.677
+        ],
+        [
+          17.153,
+          -59.3
+        ],
+        [
+          16.854,
+          -60.0
+        ]
+      ],
+      "raw_heights_m": [
+        18.756,
+        18.725,
+        18.593,
+        18.477,
+        18.959,
+        19.468,
+        19.888,
+        20.214,
+        20.252
+      ],
+      "osm_tags": {
+        "alt_name": "Samuel Norbergsgatan",
+        "highway": "residential",
+        "maxspeed": "10",
+        "name": "Samuel Norbergs gata",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w456066440",
+      "osm_way_id": 456066440,
+      "name": "",
+      "kind": "steps",
+      "width_m": 1.8,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "paving_stones",
+      "bridge": false,
+      "line_xz": [
+        [
+          -27.934,
+          -22.72
+        ],
+        [
+          -29.417,
+          -23.856
+        ],
+        [
+          -30.608,
+          -24.758
+        ]
+      ],
+      "raw_heights_m": [
+        18.386,
+        19.22,
+        19.784
+      ],
+      "osm_tags": {
+        "handrail": "yes",
+        "highway": "steps",
+        "incline": "up",
+        "surface": "paving_stones"
+      }
+    },
+    {
+      "id": "w456066446",
+      "osm_way_id": 456066446,
+      "name": "",
+      "kind": "footway",
+      "width_m": 2.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "sett",
+      "bridge": false,
+      "line_xz": [
+        [
+          -27.934,
+          -22.72
+        ],
+        [
+          -9.804,
+          -8.627
+        ]
+      ],
+      "raw_heights_m": [
+        18.386,
+        17.815
+      ],
+      "osm_tags": {
+        "highway": "footway",
+        "surface": "sett"
+      }
+    },
+    {
+      "id": "w600391751",
+      "osm_way_id": 600391751,
+      "name": "",
+      "kind": "path",
+      "width_m": 2.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -55.969,
+          26.238
+        ],
+        [
+          -47.445,
+          18.312
+        ],
+        [
+          -41.12,
+          25.57
+        ],
+        [
+          -37.999,
+          29.912
+        ]
+      ],
+      "raw_heights_m": [
+        17.295,
+        17.392,
+        17.372,
+        17.178
+      ],
+      "osm_tags": {
+        "bicycle": "designated",
+        "foot": "designated",
+        "highway": "path",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w633047965",
+      "osm_way_id": 633047965,
+      "name": "",
+      "kind": "path",
+      "width_m": 2.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          12.359,
+          -25.014
+        ],
+        [
+          11.126,
+          -30.034
+        ],
+        [
+          12.323,
+          -31.147
+        ],
+        [
+          13.359,
+          -33.229
+        ],
+        [
+          13.919,
+          -35.867
+        ],
+        [
+          14.402,
+          -40.498
+        ],
+        [
+          15.039,
+          -46.009
+        ],
+        [
+          14.878,
+          -52.242
+        ],
+        [
+          13.282,
+          -58.309
+        ],
+        [
+          12.635,
+          -60.0
+        ]
+      ],
+      "raw_heights_m": [
+        18.335,
+        18.268,
+        18.335,
+        18.439,
+        18.567,
+        18.961,
+        19.439,
+        19.921,
+        20.299,
+        20.411
+      ],
+      "osm_tags": {
+        "bicycle": "designated",
+        "foot": "designated",
+        "highway": "path",
+        "segregated": "no",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w633047967",
+      "osm_way_id": 633047967,
+      "name": "Bos gränd",
+      "kind": "service",
+      "width_m": 3.2,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          9.695,
+          -60.0
+        ],
+        [
+          3.02,
+          -55.872
+        ],
+        [
+          -1.697,
+          -53.111
+        ],
+        [
+          -5.009,
+          -50.884
+        ],
+        [
+          -12.71,
+          -45.352
+        ],
+        [
+          -16.159,
+          -42.669
+        ],
+        [
+          -26.736,
+          -28.053
+        ]
+      ],
+      "raw_heights_m": [
+        20.44,
+        20.274,
+        19.984,
+        20.033,
+        20.151,
+        20.227,
+        20.103
+      ],
+      "osm_tags": {
+        "highway": "service",
+        "maxspeed": "10",
+        "name": "Bos gränd"
+      }
+    },
+    {
+      "id": "w633047968",
+      "osm_way_id": 633047968,
+      "name": "",
+      "kind": "service",
+      "width_m": 3.2,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -5.009,
+          -50.884
+        ],
+        [
+          -3.746,
+          -49.292
+        ],
+        [
+          4.259,
+          -37.348
+        ],
+        [
+          6.486,
+          -34.031
+        ]
+      ],
+      "raw_heights_m": [
+        20.033,
+        19.993,
+        19.688,
+        19.588
+      ],
+      "osm_tags": {
+        "highway": "service",
+        "service": "parking_aisle"
+      }
+    },
+    {
+      "id": "w663559111",
+      "osm_way_id": 663559111,
+      "name": "Samuel Norbergs gata",
+      "kind": "service",
+      "width_m": 3.2,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          38.712,
+          -60.0
+        ],
+        [
+          39.292,
+          -57.608
+        ],
+        [
+          41.019,
+          -54.892
+        ],
+        [
+          43.544,
+          -52.888
+        ],
+        [
+          46.582,
+          -51.808
+        ],
+        [
+          49.804,
+          -51.797
+        ],
+        [
+          52.86,
+          -52.832
+        ],
+        [
+          55.403,
+          -54.803
+        ],
+        [
+          57.166,
+          -57.497
+        ],
+        [
+          57.79,
+          -60.0
+        ]
+      ],
+      "raw_heights_m": [
+        21.498,
+        21.357,
+        21.333,
+        21.458,
+        21.655,
+        21.928,
+        22.175,
+        22.355,
+        22.473,
+        22.535
+      ],
+      "osm_tags": {
+        "alt_name": "Samuel Norbergsgatan",
+        "highway": "service",
+        "maxspeed": "10",
+        "name": "Samuel Norbergs gata",
+        "oneway": "yes"
+      }
+    },
+    {
+      "id": "w843661072",
+      "osm_way_id": 843661072,
+      "name": "Samuel Norbergs gata",
+      "kind": "service",
+      "width_m": 3.2,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          18.672,
+          -52.677
+        ],
+        [
+          29.518,
+          -54.981
+        ],
+        [
+          39.292,
+          -57.608
+        ]
+      ],
+      "raw_heights_m": [
+        19.888,
+        20.448,
+        21.357
+      ],
+      "osm_tags": {
+        "alt_name": "Samuel Norbergsgatan",
+        "highway": "service",
+        "maxspeed": "10",
+        "name": "Samuel Norbergs gata"
+      }
+    },
+    {
+      "id": "w843661075",
+      "osm_way_id": 843661075,
+      "name": "",
+      "kind": "footway",
+      "width_m": 2.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -33.659,
+          -60.0
+        ],
+        [
+          -35.682,
+          -48.959
+        ],
+        [
+          -37.916,
+          -37.537
+        ],
+        [
+          -37.517,
+          -33.786
+        ],
+        [
+          -36.284,
+          -30.991
+        ],
+        [
+          -33.324,
+          -27.362
+        ],
+        [
+          -30.608,
+          -24.758
+        ]
+      ],
+      "raw_heights_m": [
+        24.567,
+        23.0,
+        21.356,
+        20.942,
+        20.672,
+        20.233,
+        19.784
+      ],
+      "osm_tags": {
+        "highway": "footway",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w942671995",
+      "osm_way_id": 942671995,
+      "name": "",
+      "kind": "footway",
+      "width_m": 2.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -29.417,
+          -23.856
+        ],
+        [
+          -26.736,
+          -28.053
+        ]
+      ],
+      "raw_heights_m": [
+        19.22,
+        20.103
+      ],
+      "osm_tags": {
+        "highway": "footway"
+      }
+    },
+    {
+      "id": "w942672065",
+      "osm_way_id": 942672065,
+      "name": "",
+      "kind": "footway",
+      "width_m": 2.0,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -55.254,
+          26.917
+        ],
+        [
+          -55.969,
+          26.238
+        ]
+      ],
+      "raw_heights_m": [
+        17.253,
+        17.295
+      ],
+      "osm_tags": {
+        "highway": "footway",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w1197238917",
+      "osm_way_id": 1197238917,
+      "name": "Götaforsliden",
+      "kind": "unclassified",
+      "width_m": 4.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          8.279,
+          39.374
+        ],
+        [
+          10.393,
+          39.096
+        ],
+        [
+          43.765,
+          31.47
+        ],
+        [
+          60.0,
+          26.085
+        ]
+      ],
+      "raw_heights_m": [
+        17.557,
+        17.502,
+        17.909,
+        18.473
+      ],
+      "osm_tags": {
+        "highway": "unclassified",
+        "lane_markings": "no",
+        "maxspeed": "30",
+        "name": "Götaforsliden",
+        "narrow": "yes",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w1227769455",
+      "osm_way_id": 1227769455,
+      "name": "Götaforsliden",
+      "kind": "unclassified",
+      "width_m": 4.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          2.668,
+          40.454
+        ],
+        [
+          8.279,
+          39.374
+        ]
+      ],
+      "raw_heights_m": [
+        17.576,
+        17.557
+      ],
+      "osm_tags": {
+        "highway": "unclassified",
+        "maxspeed": "30",
+        "name": "Götaforsliden",
+        "narrow": "yes",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w1227769459",
+      "osm_way_id": 1227769459,
+      "name": "",
+      "kind": "path",
+      "width_m": 2.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          3.607,
+          60.0
+        ],
+        [
+          3.669,
+          59.79
+        ],
+        [
+          8.422,
+          46.409
+        ],
+        [
+          8.279,
+          39.374
+        ]
+      ],
+      "raw_heights_m": [
+        17.267,
+        17.274,
+        17.536,
+        17.557
+      ],
+      "osm_tags": {
+        "bicycle": "designated",
+        "foot": "designated",
+        "highway": "path",
+        "segregated": "no",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w1235619589",
+      "osm_way_id": 1235619589,
+      "name": "Forsebron",
+      "kind": "residential",
+      "width_m": 5.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -15.313,
+          27.952
+        ],
+        [
+          -18.559,
+          26.305
+        ]
+      ],
+      "raw_heights_m": [
+        17.685,
+        17.649
+      ],
+      "osm_tags": {
+        "highway": "residential",
+        "maxspeed": "40",
+        "name": "Forsebron",
+        "priority_road": "designated",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w1456369580",
+      "osm_way_id": 1456369580,
+      "name": "",
+      "kind": "path",
+      "width_m": 2.5,
+      "width_confidence": "estimated_from_class_and_ortho",
+      "surface": "asphalt",
+      "bridge": false,
+      "line_xz": [
+        [
+          -60.0,
+          30.179
+        ],
+        [
+          -55.969,
+          26.238
+        ]
+      ],
+      "raw_heights_m": [
+        17.235,
+        17.295
+      ],
+      "osm_tags": {
+        "bicycle": "designated",
+        "foot": "designated",
+        "highway": "path",
+        "segregated": "no",
+        "surface": "asphalt"
+      }
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "w843661073",
+      "name": "Parkering",
+      "kind": "parking",
+      "surface": "asphalt",
+      "polygon_xz": [
+        [
+          0.774,
+          -30.201
+        ],
+        [
+          4.592,
+          -32.761
+        ],
+        [
+          2.37,
+          -36.09
+        ],
+        [
+          4.259,
+          -37.348
+        ],
+        [
+          11.626,
+          -42.279
+        ],
+        [
+          7.302,
+          -48.736
+        ],
+        [
+          -1.34,
+          -42.958
+        ],
+        [
+          -4.86,
+          -48.213
+        ],
+        [
+          -9.297,
+          -45.252
+        ]
+      ],
+      "ground_plane_raw": [
+        -0.010144,
+        -0.031998,
+        18.523
+      ],
+      "ground_plane_formula": "h_raw=a*x+b*z+c",
+      "evidence": "OSM polygon; plane fitted to raw DTM boundary; maximum slope8%",
+      "osm_tags": {
+        "amenity": "parking",
+        "parking": "surface"
+      }
+    },
+    {
+      "id": "w843661074",
+      "name": "Parkering",
+      "kind": "parking",
+      "surface": "asphalt",
+      "polygon_xz": [
+        [
+          -30.239,
+          -29.923
+        ],
+        [
+          -19.994,
+          -44.161
+        ],
+        [
+          -24.574,
+          -47.456
+        ],
+        [
+          -34.819,
+          -33.218
+        ]
+      ],
+      "ground_plane_raw": [
+        -0.05898,
+        -0.05405,
+        16.955
+      ],
+      "ground_plane_formula": "h_raw=a*x+b*z+c",
+      "evidence": "OSM polygon; plane fitted to raw DTM boundary; maximum slope8%",
+      "osm_tags": {
+        "amenity": "parking",
+        "orientation": "perpendicular",
+        "parking": "street_side",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "id": "w942672064",
+      "name": "Gamla Torget",
+      "kind": "square",
+      "surface": "sett",
+      "polygon_xz": [
+        [
+          -23.55,
+          -6.0
+        ],
+        [
+          -18.374,
+          -12.011
+        ],
+        [
+          -21.888,
+          -14.305
+        ],
+        [
+          -26.171,
+          -17.377
+        ],
+        [
+          -40.489,
+          8.115
+        ],
+        [
+          -34.289,
+          6.457
+        ]
+      ],
+      "ground_plane_raw": [
+        -0.004065,
+        -0.011889,
+        17.495
+      ],
+      "ground_plane_formula": "h_raw=a*x+b*z+c",
+      "evidence": "OSM polygon; plane fitted to raw DTM boundary; maximum slope8%",
+      "osm_tags": {
+        "area": "yes",
+        "highway": "pedestrian",
+        "name": "Gamla Torget",
+        "surface": "sett"
+      }
+    }
+  ],
+  "waterways": [
+    {
+      "id": "w149191998",
+      "name": "Mölndalsån / Götaforsen",
+      "line_xz": [
+        [
+          60.0,
+          0.28
+        ],
+        [
+          58.399,
+          0.98
+        ],
+        [
+          54.295,
+          5.188
+        ],
+        [
+          48.661,
+          10.531
+        ],
+        [
+          42.931,
+          12.913
+        ],
+        [
+          8.291,
+          21.195
+        ],
+        [
+          2.323,
+          24.112
+        ],
+        [
+          -2.424,
+          27.118
+        ],
+        [
+          -16.111,
+          41.166
+        ],
+        [
+          -19.804,
+          46.242
+        ],
+        [
+          -22.24,
+          55.371
+        ],
+        [
+          -22.49,
+          60.0
+        ]
+      ],
+      "channel_width_m": 8.5,
+      "width_confidence": "estimated_from_2024_orthophoto",
+      "raw_heights_m": [
+        16.999,
+        16.791,
+        16.662,
+        17.327,
+        15.896,
+        15.073,
+        14.828,
+        14.708,
+        13.776,
+        12.867,
+        12.701,
+        12.683
+      ],
+      "notes": "River centreline only. Build banks and bridge as authored structures. Raw DTM samples may be bed/bank/water and are NOT a measured water surface."
+    }
+  ],
+  "barriers": [
+    {
+      "id": "w90143431",
+      "kind": "wall",
+      "line_xz": [
+        [
+          -58.575,
+          60.0
+        ],
+        [
+          -55.236,
+          57.007
+        ]
+      ],
+      "osm_tags": {
+        "barrier": "wall"
+      }
+    }
+  ],
+  "recommended_cameras": [
+    {
+      "id": "krakan",
+      "position_xz": [
+        -10,
+        47
+      ],
+      "look_at_xz": [
+        20,
+        28
+      ],
+      "eye_height_m": 1.7,
+      "notes": "Från Forsebron/sydväst mot Kråkans gatufasad; undvik att stå i vattenrännan."
+    },
+    {
+      "id": "torget",
+      "position_xz": [
+        -3,
+        10
+      ],
+      "look_at_xz": [
+        -39,
+        -9
+      ],
+      "eye_height_m": 1.7,
+      "notes": "Från torg/gata mot Musikskolans höga fasad och tegelhuset."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "asset_id": "rock_01",
+  "name": "Rock 01",
+  "source_page": "https://polyhaven.com/a/rock_01",
+  "source_api": "https://api.polyhaven.com/files/rock_01",
+  "license": "CC0-1.0",
+  "license_url": "https://polyhaven.com/license",
+  "authors": {
+    "Rob Tuytel": "All"
+  },
+  "resolution": "1k",
+  "tile_size_m": [
+    1.5,
+    1.5
+  ],
+  "notes": "Natural weathered grey solid rock, not masonry. Generic Swedish-like bedrock surface proxy; no measured on-site geology claim.",
+  "retrieved_at": "2026-10-29T17:14:11.872891+00:00",
+  "maps": {
+    "albedo": {
+      "path": "materials/natural_rock/rock_01_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_01/rock_01_diff_1k.jpg",
+      "size": 688083,
+      "md5": "5897cd4496982b03cad0c3e2358486c0",
+      "sha256": "0b5f0418eb1e686190c5d33bb54c400b1f9ed58813b5e34aa5e573a5197302b5",
+      "color_space": "sRGB"
+    },
+    "roughness": {
+      "path": "materials/natural_rock/rock_01_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_01/rock_01_rough_1k.jpg",
+      "size": 383709,
+      "md5": "d524d822733ce9958a74ef89285ca99b",
+      "sha256": "e98b9c8ffb35513bd7b36a8730bf9745d05325376a85fae87ebf56a7c071a123",
+      "color_space": "Non-Color"
+    },
+    "normal": {
+      "path": "materials/natural_rock/rock_01_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_01/rock_01_nor_gl_1k.jpg",
+      "size": 798807,
+      "md5": "d5a1d0797aaeb1ac3520504911058903",
+      "sha256": "7a7146f51159a7667233c2c14c34ff18a9f4374cc8869d53a1162648d0941023",
+      "color_space": "Non-Color"
+    }
+  }
+}

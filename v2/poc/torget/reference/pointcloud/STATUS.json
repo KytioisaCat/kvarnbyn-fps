@@ -1,0 +1,56 @@
+{
+  "checked_at_utc": "2026-10-29T15:48:12Z",
+  "status": "blocked_missing_environment_auth",
+  "auth_environment": {
+    "LM_USER_present": false,
+    "LM_PASS_present": false
+  },
+  "metadata_access": "public_HTTP_200",
+  "raw_asset_unauthenticated_HEAD_status": 401,
+  "raw_data_downloaded_bytes": 0,
+  "roof_measurements_performed": false,
+  "city_spec_changed": false,
+  "packages_installed": [],
+  "api": "https://api.lantmateriet.se/stac-hojd/v1",
+  "collection": "dsm-skoglig-copc",
+  "item_id": "19b002-63925_3225_25",
+  "asset": {
+    "href": "https://dl1.lantmateriet.se/hojd/data/pointcloud/sls/19b002/y19b002-63925_3225_25.copc.laz",
+    "type": "application/vnd.laszip+copc",
+    "roles": [
+      "data"
+    ],
+    "title": "y19b002-63925_3225_25.copc.laz",
+    "file:size": 90989680,
+    "proj:bbox": [
+      322500.0,
+      6392500.0,
+      325000.0,
+      6395000.0
+    ],
+    "proj:code": "EPSG:5845",
+    "file:checksum": "12209a099c4ba9adb87c444cde79044e0c4387b966d0094d3523f8b49bc349b3c2e5"
+  },
+  "scan_date": "2019-11-29T12:00:00Z",
+  "point_count": 16536359,
+  "nominal_point_density_per_m2": 1.2,
+  "projected_bbox": [
+    322500.0,
+    6392500.0,
+    325000.0,
+    6395000.0
+  ],
+  "crs": "EPSG:5845",
+  "license": "CC BY 4.0 according to official use terms2026-05-20§3.1; STACcollection labels license other and links to these terms",
+  "license_source": "https://www.lantmateriet.se/globalassets/geodata/geodataprodukter/anvandningsvillkor-for-laserdata-nedladdning-skog.pdf",
+  "measurement_targets": [
+    "w92331981",
+    "w92332103",
+    "w92332122",
+    "w92332096",
+    "w92332039",
+    "w92332089",
+    "w629220976",
+    "w629220977"
+  ]
+}

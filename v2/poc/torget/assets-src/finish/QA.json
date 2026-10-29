@@ -1,0 +1,35 @@
+{
+  "geometry_mutation_by_finish": false,
+  "glb_export_bytes": 2518488,
+  "materials": [
+    {
+      "name": "Painted_clapboard",
+      "base_color_texture": true,
+      "roughness_texture": true,
+      "normal_texture": true
+    },
+    {
+      "name": "Standing_seam_roof",
+      "base_color_texture": true,
+      "roughness_texture": true,
+      "normal_texture": false
+    }
+  ],
+  "exported_image_names": [
+    "white_plaster_rough_01_nor_gl_1k",
+    "paint_offwhite_1k",
+    "white_plaster_rough_01_rough_1k",
+    "painted_metal_albedo_1k",
+    "painted_metal_roughness_1k"
+  ],
+  "qa_renders": [
+    "after_krakan.png",
+    "after_oversikt.png",
+    "material_comparison.png"
+  ],
+  "limits": [
+    "Thin room/curtain geometry and façade frame proportions are outside this finish pass.",
+    "Grass is a seasonal color interpretation, not on-site classification.",
+    "QA renders use a copy of the previously saved scene; root is correcting separate geometry issues."
+  ]
+}

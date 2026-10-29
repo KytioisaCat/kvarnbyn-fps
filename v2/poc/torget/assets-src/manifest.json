@@ -1,0 +1,473 @@
+{
+  "schema_version": 1,
+  "retrieved_at": "2026-10-29T15:38:36.316289+00:00",
+  "purpose": "Kvarnbyn Gamla torget Blender/Godot proof of concept",
+  "source_license": {
+    "id": "CC0-1.0",
+    "url": "https://polyhaven.com/license"
+  },
+  "normal_convention": "OpenGL (+Y)",
+  "texture_dimensions_unit": "meters (source API dimensions are millimeters)",
+  "materials": {
+    "wood_painted": {
+      "asset_id": "wood_plank_wall",
+      "name": "Wood Plank Wall",
+      "source_page": "https://polyhaven.com/a/wood_plank_wall",
+      "source_api": "https://api.polyhaven.com/files/wood_plank_wall",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Dimitrios Savva": "All"
+      },
+      "resolution": "2k",
+      "tile_size_m": [
+        1.0,
+        1.0
+      ],
+      "notes": "Use normal/roughness with off-white base color for painted cladding; source albedo is bare wood.",
+      "maps": {
+        "albedo": {
+          "path": "materials/wood_painted/wood_plank_wall_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/wood_plank_wall/wood_plank_wall_diff_2k.jpg",
+          "size": 2161450,
+          "md5": "fde7d33dd66366feddc8323b79a516ac",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/wood_painted/wood_plank_wall_rough_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/wood_plank_wall/wood_plank_wall_rough_2k.jpg",
+          "size": 1683686,
+          "md5": "9e0be5e2fcce1c989ba1ceb382296d1e",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/wood_painted/wood_plank_wall_nor_gl_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/wood_plank_wall/wood_plank_wall_nor_gl_2k.jpg",
+          "size": 3099721,
+          "md5": "733dc1f3d84cfb58b61d23ca2019cb5b",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "plaster": {
+      "asset_id": "white_plaster_rough_01",
+      "name": "White Plaster Rough 01",
+      "source_page": "https://polyhaven.com/a/white_plaster_rough_01",
+      "source_api": "https://api.polyhaven.com/files/white_plaster_rough_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "resolution": "1k",
+      "tile_size_m": [
+        1.0,
+        1.0
+      ],
+      "notes": "Small-scale rough plaster; choose façade base color from house reference.",
+      "maps": {
+        "albedo": {
+          "path": "materials/plaster/white_plaster_rough_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_rough_01/white_plaster_rough_01_diff_1k.jpg",
+          "size": 628421,
+          "md5": "c0964b0628920619f0364f19f2d9973d",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/plaster/white_plaster_rough_01_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_rough_01/white_plaster_rough_01_rough_1k.jpg",
+          "size": 594450,
+          "md5": "6a4f00696f958e42ad7bf3b1d48794d5",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/plaster/white_plaster_rough_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_rough_01/white_plaster_rough_01_nor_gl_1k.jpg",
+          "size": 384190,
+          "md5": "a45f7354cab5014e5167e63ddbf9c571",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "brick": {
+      "asset_id": "red_bricks_04",
+      "name": "Red Bricks 04",
+      "source_page": "https://polyhaven.com/a/red_bricks_04",
+      "source_api": "https://api.polyhaven.com/files/red_bricks_04",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "resolution": "1k",
+      "tile_size_m": [
+        2.5,
+        2.5
+      ],
+      "notes": "Historic red brick walls and chimney faces.",
+      "maps": {
+        "albedo": {
+          "path": "materials/brick/red_bricks_04_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_bricks_04/red_bricks_04_diff_1k.jpg",
+          "size": 283965,
+          "md5": "c372b17ae66518decc602b7f5c98da5f",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/brick/red_bricks_04_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_bricks_04/red_bricks_04_rough_1k.jpg",
+          "size": 234867,
+          "md5": "89de3afd3e3a15e35681813fe8b03928",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/brick/red_bricks_04_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_bricks_04/red_bricks_04_nor_gl_1k.jpg",
+          "size": 339216,
+          "md5": "3a0013fd51c1188f69d6bf4b02486814",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "roof_tiles": {
+      "asset_id": "clay_roof_tiles_02",
+      "name": "Clay Roof Tiles 02",
+      "source_page": "https://polyhaven.com/a/clay_roof_tiles_02",
+      "source_api": "https://api.polyhaven.com/files/clay_roof_tiles_02",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "resolution": "2k",
+      "tile_size_m": [
+        2.5,
+        2.5
+      ],
+      "notes": "Weathered clay roof tiles; orient UV rows down roof slope.",
+      "maps": {
+        "albedo": {
+          "path": "materials/roof_tiles/clay_roof_tiles_02_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/clay_roof_tiles_02/clay_roof_tiles_02_diff_2k.jpg",
+          "size": 3459427,
+          "md5": "0a1350644116c58a19908b22f569bf8e",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/roof_tiles/clay_roof_tiles_02_rough_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/clay_roof_tiles_02/clay_roof_tiles_02_rough_2k.jpg",
+          "size": 1392056,
+          "md5": "a6d3dfd7f495213fa7cf6620f4982422",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/roof_tiles/clay_roof_tiles_02_nor_gl_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/clay_roof_tiles_02/clay_roof_tiles_02_nor_gl_2k.jpg",
+          "size": 3526539,
+          "md5": "1ccc234195df3d48107490a7f7f03e59",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "asphalt": {
+      "asset_id": "asphalt_02",
+      "name": "Asphalt 02",
+      "source_page": "https://polyhaven.com/a/asphalt_02",
+      "source_api": "https://api.polyhaven.com/files/asphalt_02",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "resolution": "2k",
+      "tile_size_m": [
+        3.0,
+        3.0
+      ],
+      "notes": "Road asphalt; source captures a 3 m square.",
+      "maps": {
+        "albedo": {
+          "path": "materials/asphalt/asphalt_02_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_diff_2k.jpg",
+          "size": 3075676,
+          "md5": "336af399fd98a39ab986d8b3bf73b4ff",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/asphalt/asphalt_02_rough_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_rough_2k.jpg",
+          "size": 2230457,
+          "md5": "6fe669ab38640ef2009d6a28d1ad5ee9",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/asphalt/asphalt_02_nor_gl_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_nor_gl_2k.jpg",
+          "size": 4943950,
+          "md5": "77ebd1cc0b020ccaa1c6b58f103d1f75",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "cobblestone": {
+      "asset_id": "cobblestone_floor_04",
+      "name": "Cobblestone Floor 04",
+      "source_page": "https://polyhaven.com/a/cobblestone_floor_04",
+      "source_api": "https://api.polyhaven.com/files/cobblestone_floor_04",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "resolution": "2k",
+      "tile_size_m": [
+        1.5,
+        1.5
+      ],
+      "notes": "Small granite paving; source captures a 1.5 m square.",
+      "maps": {
+        "albedo": {
+          "path": "materials/cobblestone/cobblestone_floor_04_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/cobblestone_floor_04/cobblestone_floor_04_diff_2k.jpg",
+          "size": 2261344,
+          "md5": "6fd3d5dbaca10c763d813f1b9d532f1b",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/cobblestone/cobblestone_floor_04_rough_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/cobblestone_floor_04/cobblestone_floor_04_rough_2k.jpg",
+          "size": 1697046,
+          "md5": "1be55c1917663ff6bca05276a7915a56",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/cobblestone/cobblestone_floor_04_nor_gl_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/cobblestone_floor_04/cobblestone_floor_04_nor_gl_2k.jpg",
+          "size": 2937425,
+          "md5": "051fb80cac9f261e1d21f10b2a664245",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "grass": {
+      "asset_id": "grass_ground",
+      "name": "Grass Ground",
+      "source_page": "https://polyhaven.com/a/grass_ground",
+      "source_api": "https://api.polyhaven.com/files/grass_ground",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Charlotte Baglioni": "All"
+      },
+      "resolution": "1k",
+      "tile_size_m": [
+        2.51,
+        2.51
+      ],
+      "notes": "Mixed grass/ground around rock and garden edges.",
+      "maps": {
+        "albedo": {
+          "path": "materials/grass/grass_ground_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_diff_1k.jpg",
+          "size": 876584,
+          "md5": "299047258586c762735b7284d3c662c3",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/grass/grass_ground_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_rough_1k.jpg",
+          "size": 328190,
+          "md5": "2e6afca246cf6b80bdb53f46fe7e5ce5",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/grass/grass_ground_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_nor_gl_1k.jpg",
+          "size": 1310516,
+          "md5": "d518c5b2af6f2c0297bc807b351f511f",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "rock": {
+      "asset_id": "granite_wall",
+      "name": "Granite Wall",
+      "source_page": "https://polyhaven.com/a/granite_wall",
+      "source_api": "https://api.polyhaven.com/files/granite_wall",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Dimitrios Savva": "All"
+      },
+      "resolution": "1k",
+      "tile_size_m": [
+        1.9,
+        1.9
+      ],
+      "notes": "Granite block foundation/retaining wall, not raw bedrock.",
+      "maps": {
+        "albedo": {
+          "path": "materials/rock/granite_wall_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/granite_wall/granite_wall_diff_1k.jpg",
+          "size": 957272,
+          "md5": "9f9883bcb534a840ad29f4e26c0b3589",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/rock/granite_wall_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/granite_wall/granite_wall_rough_1k.jpg",
+          "size": 380892,
+          "md5": "14707c440dd8d6e3373144b82767c4c1",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/rock/granite_wall_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/granite_wall/granite_wall_nor_gl_1k.jpg",
+          "size": 1145994,
+          "md5": "d092f22db76388680e9de19832d355a2",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "bark": {
+      "asset_id": "bark_willow",
+      "name": "Bark Willow",
+      "source_page": "https://polyhaven.com/a/bark_willow",
+      "source_api": "https://api.polyhaven.com/files/bark_willow",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Dario Barresi": "Processing",
+        "Dimitrios Savva": "Photography"
+      },
+      "resolution": "1k",
+      "tile_size_m": [
+        1.0,
+        1.0
+      ],
+      "notes": "Willow bark used on generic broadleaf tree assets; not a species or position measurement.",
+      "maps": {
+        "albedo": {
+          "path": "materials/bark/bark_willow_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_willow/bark_willow_diff_1k.jpg",
+          "size": 779438,
+          "md5": "792d4f8467fe360092eee335ee60b698",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/bark/bark_willow_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_willow/bark_willow_rough_1k.jpg",
+          "size": 372597,
+          "md5": "794115a3942e6e435274aabfa0967818",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/bark/bark_willow_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_willow/bark_willow_nor_gl_1k.jpg",
+          "size": 1438304,
+          "md5": "91ffa6e3a1ba8cccb714908ef50122d5",
+          "color_space": "Non-Color"
+        }
+      }
+    },
+    "natural_rock": {
+      "asset_id": "rock_01",
+      "name": "Rock 01",
+      "source_page": "https://polyhaven.com/a/rock_01",
+      "source_api": "https://api.polyhaven.com/files/rock_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "resolution": "1k",
+      "tile_size_m": [
+        1.5,
+        1.5
+      ],
+      "notes": "Natural weathered grey solid rock, not masonry. Generic Swedish-like bedrock surface proxy; no measured on-site geology claim.",
+      "retrieved_at": "2026-10-29T17:14:11.872891+00:00",
+      "maps": {
+        "albedo": {
+          "path": "materials/natural_rock/rock_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_01/rock_01_diff_1k.jpg",
+          "size": 688083,
+          "md5": "5897cd4496982b03cad0c3e2358486c0",
+          "sha256": "0b5f0418eb1e686190c5d33bb54c400b1f9ed58813b5e34aa5e573a5197302b5",
+          "color_space": "sRGB"
+        },
+        "roughness": {
+          "path": "materials/natural_rock/rock_01_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_01/rock_01_rough_1k.jpg",
+          "size": 383709,
+          "md5": "d524d822733ce9958a74ef89285ca99b",
+          "sha256": "e98b9c8ffb35513bd7b36a8730bf9745d05325376a85fae87ebf56a7c071a123",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "path": "materials/natural_rock/rock_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_01/rock_01_nor_gl_1k.jpg",
+          "size": 798807,
+          "md5": "d5a1d0797aaeb1ac3520504911058903",
+          "sha256": "7a7146f51159a7667233c2c14c34ff18a9f4374cc8869d53a1162648d0941023",
+          "color_space": "Non-Color"
+        }
+      }
+    }
+  },
+  "foliage_atlas": {
+    "asset_id": "tree_small_02",
+    "source_page": "https://polyhaven.com/a/tree_small_02",
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "authors": {
+      "Rico Cilliers": "All"
+    },
+    "notes": "Photographed leaf/branch atlas only, not the multi-million-polygon full tree. Source species is Burkea africana. Generic foliage proxy, not a measured Swedish species.",
+    "maps": {
+      "leaf_albedo": {
+        "path": "vegetation/textures/tree_small_02_leaves_diff_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_diff_1k.jpg",
+        "size": 340003,
+        "md5": "315cbc2cebfb399e649ccd39112c109a"
+      },
+      "leaf_alpha": {
+        "path": "vegetation/textures/tree_small_02_leaves_alpha_1k.png",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/tree_small_02/tree_small_02_leaves_alpha_1k.png",
+        "size": 264711,
+        "md5": "63199ba87a9e8928424bd8c3b8017bd0"
+      },
+      "leaf_roughness": {
+        "path": "vegetation/textures/tree_small_02_leaves_rough_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_rough_1k.jpg",
+        "size": 307562,
+        "md5": "df8afe55f9d3de3b179a41496645a4f9"
+      },
+      "leaf_normal": {
+        "path": "vegetation/textures/tree_small_02_leaves_nor_gl_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_nor_gl_1k.jpg",
+        "size": 681604,
+        "md5": "b06c87e73f54d9654f66d67e9de7aa85"
+      },
+      "branch_albedo": {
+        "path": "vegetation/textures/tree_small_02_branch_diff_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_diff_1k.jpg",
+        "size": 449977,
+        "md5": "88b531469f5dba2fc44ca85df3776e7c"
+      },
+      "branch_roughness": {
+        "path": "vegetation/textures/tree_small_02_branch_rough_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_rough_1k.jpg",
+        "size": 266513,
+        "md5": "c06234172d5155971fab2a90436739d5"
+      },
+      "branch_normal": {
+        "path": "vegetation/textures/tree_small_02_branch_nor_gl_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_nor_gl_1k.jpg",
+        "size": 581596,
+        "md5": "00a3eed0d4d28e7e890d9ec6ac0619af"
+      }
+    }
+  },
+  "download_bytes": 47286238
+}

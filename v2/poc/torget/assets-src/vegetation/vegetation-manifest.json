@@ -1,0 +1,29 @@
+{
+  "generated_by": "build_vegetation.py; Blender 4.5",
+  "geometry_license": "CC0-1.0 (authored for this project)",
+  "texture_sources": [
+    "https://polyhaven.com/a/bark_willow",
+    "https://polyhaven.com/a/tree_small_02"
+  ],
+  "botanical_status": "Generic broadleaf proxies, not surveyed species or measured trees.",
+  "assets": [
+    {
+      "name": "Broadleaf_A",
+      "triangles": 6102,
+      "height_m": 7.8,
+      "file": "Broadleaf_A.glb"
+    },
+    {
+      "name": "Broadleaf_B",
+      "triangles": 6102,
+      "height_m": 6.5,
+      "file": "Broadleaf_B.glb"
+    },
+    {
+      "name": "Broadleaf_C",
+      "triangles": 6102,
+      "height_m": 8.6,
+      "file": "Broadleaf_C.glb"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "variants": [
+    {
+      "variant": "partial_curtain",
+      "triangles": 122,
+      "back_depth_m": -0.08,
+      "curtain_front_depth_m": 0.005,
+      "label": "Delvis gardin"
+    },
+    {
+      "variant": "partial_blind",
+      "triangles": 40,
+      "back_depth_m": -0.08,
+      "curtain_front_depth_m": 0.005,
+      "label": "Delvis persienn"
+    },
+    {
+      "variant": "dark_clear",
+      "triangles": 10,
+      "back_depth_m": -0.08,
+      "curtain_front_depth_m": 0.005,
+      "label": "Mörkt klart"
+    },
+    {
+      "variant": "dark_clear",
+      "triangles": 10,
+      "back_depth_m": -0.08,
+      "curtain_front_depth_m": 0.005,
+      "label": "Butiksdörr · ingen gardin"
+    }
+  ],
+  "glass": "single-sided alpha 0.20, roughness 0.10; verify blending/sorting and shadows on phone",
+  "geometry": "Real wall openings in this independent QA wall; no original scene loaded or saved.",
+  "batching": "kit.window_batch_name can merge all opaque interiors into shared material batches across buildings.",
+  "limits": "Only an 8cm visual cavity, not enterable rooms or a complete physical window assembly."
+}

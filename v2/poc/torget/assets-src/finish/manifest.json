@@ -1,0 +1,143 @@
+{
+  "license": "CC0-1.0; derived from the attributed CC0 source maps in ../manifest.json",
+  "method": "Offline photographic luminance/pigment separation; all delivered maps are ordinary 1k images.",
+  "geometry_change": false,
+  "source_pages": [
+    "https://polyhaven.com/a/white_plaster_rough_01",
+    "https://polyhaven.com/a/asphalt_02",
+    "https://polyhaven.com/a/grass_ground"
+  ],
+  "variants": [
+    {
+      "file": "paint_offwhite_1k.png",
+      "size_bytes": 222670,
+      "rgb_min": [
+        232,
+        228,
+        218
+      ],
+      "rgb_mean": [
+        238.199,
+        234.193,
+        224.162
+      ],
+      "rgb_max": [
+        244,
+        240,
+        229
+      ],
+      "purpose": "panel",
+      "source_asset": "white_plaster_rough_01",
+      "source_map": "albedo",
+      "target_srgb": "#eeeae0",
+      "linear_brightness_variation": [
+        -0.055,
+        0.055
+      ]
+    },
+    {
+      "file": "paint_cream_1k.png",
+      "size_bytes": 224858,
+      "rgb_min": [
+        217,
+        210,
+        190
+      ],
+      "rgb_mean": [
+        222.172,
+        215.168,
+        195.171
+      ],
+      "rgb_max": [
+        227,
+        220,
+        200
+      ],
+      "purpose": "cream",
+      "source_asset": "white_plaster_rough_01",
+      "source_map": "albedo",
+      "target_srgb": "#ded7c3",
+      "linear_brightness_variation": [
+        -0.055,
+        0.055
+      ]
+    },
+    {
+      "file": "paint_warm_plaster_1k.png",
+      "size_bytes": 274123,
+      "rgb_min": [
+        225,
+        218,
+        201
+      ],
+      "rgb_mean": [
+        232.224,
+        225.197,
+        207.191
+      ],
+      "rgb_max": [
+        239,
+        231,
+        213
+      ],
+      "purpose": "plaster",
+      "source_asset": "white_plaster_rough_01",
+      "source_map": "albedo",
+      "target_srgb": "#e8e1cf",
+      "linear_brightness_variation": [
+        -0.065,
+        0.065
+      ]
+    },
+    {
+      "file": "painted_metal_albedo_1k.png",
+      "size_bytes": 24937,
+      "rgb_min": [
+        50,
+        57,
+        62
+      ],
+      "rgb_mean": [
+        52.143,
+        59.165,
+        64.16
+      ],
+      "rgb_max": [
+        54,
+        61,
+        66
+      ],
+      "purpose": "painted standing-seam roof",
+      "source_asset": "asphalt_02",
+      "source_map": "albedo, heavily low-pass filtered and neutralized",
+      "target_srgb": "#343b40",
+      "linear_brightness_variation": [
+        -0.075,
+        0.075
+      ]
+    },
+    {
+      "file": "grass_early_summer_1k.png",
+      "size_bytes": 1869853,
+      "rgb_min": [
+        52,
+        75,
+        34
+      ],
+      "rgb_mean": [
+        98.842,
+        113.018,
+        63.165
+      ],
+      "rgb_max": [
+        146,
+        158,
+        93
+      ],
+      "purpose": "moderate early-summer grass proxy",
+      "source_asset": "grass_ground",
+      "source_map": "albedo",
+      "limitation": "Seasonal color interpretation; not measured on-site vegetation or a classified soil map."
+    }
+  ]
+}

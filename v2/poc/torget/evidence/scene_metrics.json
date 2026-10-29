@@ -1,0 +1,100 @@
+{
+  "objects": 369,
+  "meshes": 186,
+  "triangles": 691734,
+  "raw_glb_bytes": 83109220,
+  "blender_version": "4.5.9 LTS",
+  "cameras": [
+    {
+      "id": "krakan",
+      "name": "Kråkans krog",
+      "position": [
+        8.0,
+        1.3725999999999998,
+        48.0
+      ],
+      "target": [
+        11,
+        2.2,
+        30
+      ],
+      "fov_degrees": 43.7791135398094
+    },
+    {
+      "id": "torget",
+      "name": "Gamla torget",
+      "position": [
+        -8.5,
+        2.1928,
+        8
+      ],
+      "target": [
+        -40,
+        4.5,
+        -8
+      ],
+      "fov_degrees": 38.73952406980271
+    },
+    {
+      "id": "corpus",
+      "name": "Corpus",
+      "position": [
+        3,
+        2.0813091162447117,
+        -7
+      ],
+      "target": [
+        -15,
+        2.6,
+        -25
+      ],
+      "fov_degrees": 38.73952406980271
+    },
+    {
+      "id": "forsen",
+      "name": "Forsen från Forsebron",
+      "position": [
+        -8,
+        1.489999999999999,
+        30
+      ],
+      "target": [
+        45,
+        -2.0,
+        12
+      ],
+      "fov_degrees": 38.73952406980271
+    },
+    {
+      "id": "gatan",
+      "name": "Längs Götaforsliden",
+      "position": [
+        -1,
+        1.3572405769230769,
+        43
+      ],
+      "target": [
+        65,
+        6.5,
+        23
+      ],
+      "fov_degrees": 38.73952406980271
+    },
+    {
+      "id": "oversikt",
+      "name": "Överblick",
+      "position": [
+        68,
+        44,
+        90
+      ],
+      "target": [
+        -6,
+        2,
+        0
+      ],
+      "free_flight": true,
+      "fov_degrees": 29.990158258351972
+    }
+  ]
+}

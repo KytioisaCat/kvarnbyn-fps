@@ -1,6 +1,10 @@
 # Försvara Kvarnbyn — projektinstruktioner
 
-**Läs `TODO.md` först** vid varje sessionstart — den är projektets backlogg och
+**Läs `DAGBOK.md` allra först** (de tre senaste inläggen): flera AI-agenter (Claude Code, Codex)
+jobbar omväxlande och lämnar över där. Skriv ett inlägg när du börjar och innan du tar slut.
+`AGENTS.md` är en exakt kopia av denna fil för Codex — ändra här och kör `cp CLAUDE.md AGENTS.md`.
+
+**Läs sedan `TODO.md`** vid varje sessionstart — den är projektets backlogg och
 statusminne. Bocka av utfört arbete där (flytta till Klart med datum) och lägg
 nya idéer i backloggen i stället för att hålla dem i huvudet.
 **Läs sedan `ARKITEKTUR.md`** — arkitektur, datakällor/licenser, gameplay-design
@@ -13,27 +17,22 @@ Joels barndoms-FPS: försvara Kvarnbyn i Mölndal mot en invasion, byggt på rik
 kartdata. Ledstjärnan är **igenkänning** — Joel ska känna igen sig från barndomen.
 Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 
-## v2 — ny motor (från 2026-10-21) — OBS: omstart 2026-10-22, läs `OMSTART.md` först
+## Aktiv väg (från 2026-10-29): PoC i Blender + Godot
 
-**2026-10-22**: Joel underkände v2:s sätt att rita rådata (terräng + vägband + flats). Ny approach
-i `OMSTART.md`: tolka datan till en stadsbeskrivning, bygg världen med riktig motor, vägverktyg,
-arketyp-kit och Lantmäteriets punktmoln. Bygg inte vidare på `v2/src` eller `tools/v2model/`
-som produkt. Stycket nedan är historik tills OMSTART-planen ersätter det.
-
-**Allt nytt arbete sker i `v2/`** (Three.js + TypeScript + Vite) och byggs **lokalt på Joels
-laptop**; Joel bedömer det visuella på telefonen via GitHub Pages. (Molnsessioner provades
-2026-10-21 och föll på att Consats Claude-org saknar GitHub-connectorn — föreslå dem inte igen.)
-Läs **`v2/PLAN.md`** först i varje v2-session: teknikval, delmål, arbetssätt. `public/` är
-**v1, fryst som referens/facit** — läs `public/game.js` för kalibreringar och beteenden, men
-ändra aldrig där (undantag: om Joel uttryckligen ber om en v1-hotfix). Pipelinen i `tools/`
-delas; v2:s exportsteg är `tools/build_v2.py` → `v2/public/data/`. Regler: pusha till `main`
-vid varje delmål, `npm run build` måste gå igenom före push (varje push deployar), smoke-testa
-i preview men låt Joel bedöma det visuella på telefonen. **Laptopen har mätt uppkoppling** —
-fråga före `npm install`/nedladdningar och säg storlek.
+Efter omstarten (`OMSTART.md` → `POC-PLANER.md`) byggs ett provkvarter vid Gamla torget i
+**`v2/poc/torget/`**: Blender-scen ur skript (`scripts/build_scene.py`, kit i `modelkit.py`,
+CC0-material i `assets-src/`) → glTF → **Godot 4.7** (Compatibility/WebGL 2, bakade
+ljuskartor) → webbexport + macOS. Verktygen ligger lokalt och gitignorerat i `v2/.tools/`.
+Läs `v2/poc/torget/BRIEF.md` och `runtime-docs/README.md` före arbete där.
+Three.js-spåret (`v2/src`, `tools/v2model/`) är historik och byggs inte vidare som produkt.
+`public/` är v1, fryst som facit för spelkänsla och kalibreringar.
+**Laptopen har mätt uppkoppling** — stora nedladdningar och pushar planeras; stora genererade
+binärer (GLB, EXR, .blend, exporter) committas inte.
 
 ## Struktur
 
-- `v2/` — **nya motorn** (Vite/TS/Three.js); deployas under `/v2/`; plan i `v2/PLAN.md`
+- `v2/poc/torget/` — **aktiva provet** (Blender + Godot), se ovan
+- `v2/` övrigt — Three.js-spåret (historik); deployas fortfarande under `/v2/`
 - `public/` — **v1**, hela gamla spelet, statiska filer utan byggsteg (fryst referens, deployas på roten)
   - `game.js` — all spellogik/rendering (Three.js, vendorerad `three.module.js`)
   - `data.js` — genererad kartdata (terräng, hus med takfärger + OSM-id/husfakta-taggar, vägar

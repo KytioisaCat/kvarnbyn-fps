@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-29",
+  "identification": {
+    "candidate_w92332107_is_stora_gotafors": false,
+    "correct_osm_id": "w92332174",
+    "correct_osm_way_id": 92332174,
+    "name": "Stora Götafors",
+    "address": "Götaforsliden 13",
+    "confidence": "high",
+    "reason": "Den långa industrivolymen omedelbart öster om Nymans kvarn, på norra sidan av Götaforsliden. Ortofotots långa tak och Wikimediafotots namngivna höga tegelvästgavel matchar. w92332107 ligger söder om gatan och ska inte byta identitet."
+  },
+  "geography": {
+    "coordinate_system": "Local x east/z south, origin lat 57.65690 lon 12.02780; heights are absolute raw metres above sea level unless labelled local.",
+    "centroid_xz": [
+      130.954,
+      -11.071
+    ],
+    "footprint_xz": [
+      [
+        159.323,
+        -31.114
+      ],
+      [
+        165.511,
+        -14.605
+      ],
+      [
+        102.58,
+        8.972
+      ],
+      [
+        96.398,
+        -7.536
+      ]
+    ],
+    "rectangle_xz": [
+      [
+        102.58,
+        8.972
+      ],
+      [
+        165.511,
+        -14.605
+      ],
+      [
+        159.326,
+        -31.115
+      ],
+      [
+        96.395,
+        -7.537
+      ]
+    ],
+    "major_axis_xz": [
+      0.936,
+      -0.351
+    ],
+    "major_length_m": 67.203,
+    "minor_width_m": 17.63,
+    "footprint_area_m2": 1184.7,
+    "entirely_outside_120m_proof_area": true,
+    "keep_whole_as_backdrop": true,
+    "west_end_edge_xz": [
+      [
+        96.398,
+        -7.536
+      ],
+      [
+        102.58,
+        8.972
+      ]
+    ],
+    "neighbour_west": "w92332035 — Nymans kvarn/Götaforsliden 11, litet tegelhus med pyramid-/valmtak framför fabrikens västgavel",
+    "unrelated_nearby_candidate": "w92332107, centroid[75.43,35.71], söder om Götaforsliden; fasad ännu ej verifierad"
+  },
+  "authored_volume_estimate": {
+    "base_height_raw_m": 21.0,
+    "base_y_m_if_offset18": 3.0,
+    "wall_height_m": 24.5,
+    "eave_height_raw_m": 45.5,
+    "reasonable_eave_height_raw_range_m": [
+      44,
+      48
+    ],
+    "roof_rise_m": 0.8,
+    "roof_shape": "flat_looking_very_shallow_roof_with_parapet_and_clerestory",
+    "roof_material": "grey_metal_or_sheet_unconfirmed",
+    "roof_color": "#727b7a",
+    "facade_material": "red_brown_brick",
+    "facade_color": "#985a43",
+    "trim_material": "brick_pilasters_dark_metal_and_pale_window_frames",
+    "window_frame_color": "#b5c0ab",
+    "visible_levels_river_side_approx": 7,
+    "height_confidence": "low_metric_estimate_from_current_facade_proportions_not_lidar_roof_measurement",
+    "notes": [
+      "Höga smala hörnpilastrar med profilerade tegelkrön skjuter över den nästan plana taklinjen.",
+      "Ingen hög bostadshussadelgavel och inga vita panelväggar.",
+      "Fabriken ligger på sluttning; ett konstant absolut takplan med varierande exponerad nedervåning är rimligare än en volym som följer marken i trappsteg."
+    ]
+  },
+  "facade_identity": {
+    "west_end": {
+      "edge_xz": [
+        [
+          96.398,
+          -7.536
+        ],
+        [
+          102.58,
+          8.972
+        ]
+      ],
+      "facing": "west_southwest_toward_Krakan",
+      "large_blank_brick_panel": true,
+      "sign_text": "STORA GÖTAFORS",
+      "sign_appearance": "Mörka fristående bokstäver högt på den stora släta tegelgaveln, direkt under översta glasade raden.",
+      "upper_clerestory_bays": 4,
+      "upper_window_height_m_estimate": 2.1,
+      "upper_window_pattern": "Breda industrifönster med många små rutor; mörka vertikala stolpar mellan grupperna.",
+      "lower_window_rows": "Gavelns stora mittparti är huvudsakligen BLANKT tegel, inte ett generiskt raster över hela ytan."
+    },
+    "northwest_river_long_side": {
+      "level_rows_estimate": 7,
+      "bays_estimate_range": [
+        14,
+        18
+      ],
+      "window_appearance": "Småspröjsade, relativt breda fabriksfönster, tät regelbunden rytm; ljusgrå/gröna foder mot rödbrunt tegel.",
+      "notes": "Exakt axelantal räknades inte säkert i perspektivfotot. Kulissen kan förenklas, men västgavelns stora blanka fält och översta fönsterrad ska behållas."
+    }
+  },
+  "evidence": [
+    {
+      "source": "https://commons.wikimedia.org/wiki/File:G%C3%B6tafors_i_M%C3%B6lndals_Kvarnby_04.JPG",
+      "author": "Historiker",
+      "date": "2013-04-05",
+      "license": "CC BY-SA 3.0",
+      "visually_inspected": true,
+      "temporary_local_reference": "/private/tmp/gotafors04_reference.jpg",
+      "supports": "Namnet i bilden; hög tegelvolym, blank västgavel, 4 översta glasgrupper, småspröjsat fabriksraster och krönpilastrar."
+    },
+    {
+      "source": "https://commons.wikimedia.org/wiki/File:G%C3%B6taforsliden_1_i_M%C3%B6lndal_02.JPG",
+      "author": "Historiker",
+      "date": "2013-04-05",
+      "visually_inspected": true,
+      "supports": "Den höga tegelvästgaveln med översta fönsterraden och STORA GÖTAFORS syns i fonden bakom Kråkans östra del."
+    },
+    {
+      "source": "https://www.kvarnbyn.net/lediga-lokaler",
+      "kind": "property_owner_primary_source",
+      "supports": "Fastighetsägaren identifierar Stora Götafors på Götaforsliden 13."
+    },
+    {
+      "source": "https://www.prismavg.se/exhibits/show/kvarnbyn-m--lndal/stora-g--tafors",
+      "kind": "museum_curated_history",
+      "supports": "Industribyggnad i tegel, senare ombyggd till kontor. Historisk ursprungsuppgift om 3 våningar ska inte användas som dagens synliga våningsantal."
+    },
+    {
+      "source": "tools/osm_raw.json + tools/ortho8k.jpg",
+      "supports": "Fotavtryck och grannskapsordning; w92332174 är långsmala huvudhuset, w92332035 ligger direkt framför västgaveln, medan w92332107 ligger på andra sidan gatan."
+    }
+  ],
+  "application": [
+    "Lägg till w92332174 som separat hel kuliss utanför 120 m-rutan; ersätt inte w92332107.",
+    "Använd befintligt tegelmaterial och en enkel låg takprofil, med särskilt författad västgavel.",
+    "Behåll material/fasad/takhöjd som uppskattade tills metriskt fasad- eller punktmolnsunderlag finns.",
+    "Inga referensbildpixlar ska exporteras som fasadtexturer. city_spec.json har inte ändrats under pågående bygge."
+  ]
+}

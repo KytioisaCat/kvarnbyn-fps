@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "authored_at": "2026-10-29",
+  "coordinate_system": "Local x east/z south in metres; origin lat 57.65690 lon 12.02780. Only 2D contours: no heights or gradients.",
+  "status": "Authored ground proposal for PoC; observed hardscape character, estimated boundaries.",
+  "evidence": [
+    {
+      "source": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=57.65688,12.02745&heading=300&pitch=10&fov=90",
+      "inspection": "Manually visually inspected 2026-10-29; imagery May 2026. Full Music facade/forecourt, then panorama turned toward Corpus and across Kvarnbygatan."
+    },
+    {
+      "source": "reference/OBSERVATIONER.md",
+      "inspection": "Recorded primary observations and material distinctions."
+    },
+    {
+      "source": "tools/ortho8k.jpg",
+      "inspection": "Lantmäteriet 2024; used for broad footprint/riverbank alignment. Contains roadworks and does not alone prove final 2026 ground material."
+    },
+    {
+      "source": "/private/tmp/torget_top.png",
+      "inspection": "Existing PoC top view used to identify missing constructed spaces, not as a source for real-world appearance."
+    }
+  ],
+  "application_rules": [
+    "Union the pavement polygons with existing sidewalks/square polygons before triangulation, so their shared borders do not create internal kerbs.",
+    "Subtract all building footprints and the authored water/bank corridor from pavement. Do not cover roofs, river or canal bank cap stones.",
+    "Keep existing Kvarnbygatan asphalt driving corridors with higher material priority than this added pavement. The GamlaTorget loop can share the stone surface.",
+    "Subtract planter polygons from pavement, then fill them with soil/low plants and add low kerbs only around their perimeters.",
+    "All contour elevations and grading are deliberately left to the existing authored-site solver; these contours contain no height samples."
+  ],
+  "pavement_polygons": [
+    {
+      "id": "torget_connected_forecourt",
+      "name": "Sammanhängande stenlagd förgård framför Musikskolan och Corpus",
+      "material": "sidewalk",
+      "surface": "grey_warm_granite_setts",
+      "priority": 10,
+      "polygon_xz": [
+        [
+          -50,
+          10
+        ],
+        [
+          -46.635,
+          7.87
+        ],
+        [
+          -29.72,
+          -21.195
+        ],
+        [
+          -25.521,
+          -24.502
+        ],
+        [
+          -23.669,
+          -23.232
+        ],
+        [
+          -13.306,
+          -16.13
+        ],
+        [
+          -10.745,
+          -15.785
+        ],
+        [
+          0.274,
+          -22.787
+        ],
+        [
+          4,
+          -21
+        ],
+        [
+          15,
+          -25
+        ],
+        [
+          19,
+          -25
+        ],
+        [
+          19,
+          -16
+        ],
+        [
+          8,
+          -10
+        ],
+        [
+          -9,
+          -1
+        ],
+        [
+          -22,
+          6
+        ],
+        [
+          -28,
+          12
+        ],
+        [
+          -35,
+          20
+        ],
+        [
+          -46,
+          25
+        ],
+        [
+          -52,
+          21
+        ],
+        [
+          -54,
+          19
+        ]
+      ],
+      "observation": "Street View maj 2026 visar ett sammanhängande smågatstensbelagt torg framför butiksvåningen och fram till Corpus. Gaturum med planteringar och bänkar, inte parallella trottoarband åtskilda av gräs.",
+      "confidence": {
+        "surface_and_continuity": "high",
+        "authored_boundary": "medium",
+        "exact_2026_landscape_layout": "low"
+      },
+      "notes": [
+        "Följ husens verkliga fasadliv och klipp bort husfotavtrycken; polygonens kontaktpunkter är avsiktligt nära fasaderna.",
+        "Låt befintliga asfaltskörbanor för Kvarnbygatan ligga kvar med högre materialprioritet. Torgloopen är däremot gatsten enligt OSM+Street View.",
+        "Polygonytan bör möta befintliga torg- och gångytor utan interna kantstenar. Lägg kantsten bara längs kvarvarande asfalt-/planteringskanter."
+      ],
+      "area_m2": 1444.18,
+      "validation": {
+        "polygon_valid": true,
+        "overlap_with_4_3m_water_buffer_m2": 0.0,
+        "overlap_with_building_footprints_m2": 27.642,
+        "requires_cutouts": true
+      }
+    },
+    {
+      "id": "river_north_bank_hardscape",
+      "name": "Hårdgjord förplats och promenad norr om forsen",
+      "material": "sidewalk",
+      "surface": "grey_granite_setts_or_paving_slabs",
+      "priority": 9,
+      "polygon_xz": [
+        [
+          -25,
+          16
+        ],
+        [
+          -21,
+          14
+        ],
+        [
+          -5.5,
+          5.2
+        ],
+        [
+          10.5,
+          -2.8
+        ],
+        [
+          20.2,
+          -7.3
+        ],
+        [
+          53.1,
+          -21.2
+        ],
+        [
+          60,
+          -23.8
+        ],
+        [
+          60,
+          -4.0
+        ],
+        [
+          56.7,
+          -2.9
+        ],
+        [
+          51.3,
+          2.1
+        ],
+        [
+          46.2,
+          7.0
+        ],
+        [
+          41.8,
+          8.75
+        ],
+        [
+          7.1,
+          17.05
+        ],
+        [
+          0.24,
+          20.35
+        ],
+        [
+          -5.35,
+          23.96
+        ],
+        [
+          -13,
+          26.5
+        ],
+        [
+          -18,
+          24.5
+        ],
+        [
+          -22,
+          21.5
+        ]
+      ],
+      "observation": "Street View maj 2026 från torgsidan över Kvarnbygatan visar byggd hållplats-/förplatsmiljö, kantstenar och hårdgjorda ytor vid norra åbanken. Området är inte en sammanhängande grässlätt.",
+      "confidence": {
+        "hardscape_instead_of_meadow": "medium_high",
+        "authored_boundary": "medium_low",
+        "exact_surface_partition": "low"
+      },
+      "notes": [
+        "Det här är en medvetet förenklad komplett hårdgjord bas för PoC. Exakt fördelning asfalt/sten/plattor mellan nya hållplatsytor har inte kartlagts.",
+        "Behåll Kvarnbygatans befintliga asfalt och trafikytor med högre materialprioritet; klipp även bort åns vatten- och bankkorridor så ingen stenplatta går ut över vattnet.",
+        "Den södra konturen följer ungefär den norra åbanken; dess läge är tolkat ur centrumlinje och ortofoto, inte inmätt banklinje.",
+        "I Maps finns en liten byggd anläggning/tegelvolym och nya hållplatsdetaljer i denna zon som ännu saknas i PoC; undvik att påstå exakt 2026-rekonstruktion."
+      ],
+      "area_m2": 1657.89,
+      "validation": {
+        "polygon_valid": true,
+        "overlap_with_4_3m_water_buffer_m2": 2.629,
+        "overlap_with_building_footprints_m2": 0.0,
+        "requires_cutouts": true
+      }
+    }
+  ],
+  "planter_polygons": [
+    {
+      "id": "music_planter_east",
+      "name": "Östra planteringsön framför Musikskolan",
+      "material": "soil_and_low_planting",
+      "priority": 30,
+      "polygon_xz": [
+        [
+          -27.4,
+          -11.4
+        ],
+        [
+          -22.1,
+          -8.8
+        ],
+        [
+          -24.5,
+          -4.1
+        ],
+        [
+          -29.3,
+          -6.6
+        ]
+      ],
+      "tree_reference_xz": [
+        -24,
+        -8
+      ],
+      "confidence": "low_for_exact_shape_medium_for_presence",
+      "notes": "En låg planteringsö kring ett av de visuellt observerade unga gatuträden; formen är författad, inte fotogrammetriskt rekonstruerad.",
+      "area_m2": 29.47,
+      "contained_in_forecourt": true
+    },
+    {
+      "id": "music_planter_middle",
+      "name": "Mellersta planteringsön framför Musikskolan",
+      "material": "soil_and_low_planting",
+      "priority": 30,
+      "polygon_xz": [
+        [
+          -32.8,
+          -1.5
+        ],
+        [
+          -27.3,
+          1.0
+        ],
+        [
+          -29.5,
+          5.0
+        ],
+        [
+          -34.8,
+          2.5
+        ]
+      ],
+      "tree_reference_xz": [
+        -30,
+        2
+      ],
+      "confidence": "low_for_exact_shape_medium_for_presence",
+      "notes": "Unga träd och planterade ytor är observerade. Använd denna separata ö för att bryta upp den sammanhängande gatstensytan; slå ihop med grannö om bildjämförelsen kräver det.",
+      "area_m2": 26.85,
+      "contained_in_forecourt": true
+    },
+    {
+      "id": "music_planter_west",
+      "name": "Västra planteringsön framför Musikskolan",
+      "material": "soil_and_low_planting",
+      "priority": 30,
+      "polygon_xz": [
+        [
+          -39.7,
+          7.0
+        ],
+        [
+          -34.5,
+          9.2
+        ],
+        [
+          -36.4,
+          13.4
+        ],
+        [
+          -41.7,
+          11.0
+        ]
+      ],
+      "tree_reference_xz": [
+        -37,
+        10
+      ],
+      "confidence": "low_for_exact_shape_medium_for_presence",
+      "notes": "Låg granitkant mot stenläggningen. Låt inte planteringen bli en bred gräsremsa längs hela fasaden.",
+      "area_m2": 26.01,
+      "contained_in_forecourt": true
+    }
+  ],
+  "limitations": [
+    "The original subjective suspicion that the central water was missing was corrected after the top-down view; the broad adjacent uncovered bank space is the hardscape issue.",
+    "Three separate planter-island shapes are an explicit design approximation around observed young trees. Street View supports planted islands, not these exact cadastral outlines.",
+    "No new Google Maps inspection was possible in this short follow-up because browser inventory was empty; the proposal uses the earlier actual visual inspection in this same session."
+  ]
+}

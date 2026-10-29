@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://dq8cdwphlkm10"]
+
+[ext_resource type="PackedScene" uid="uid://cri63gvr3aja3" path="res://assets/world.glb" id="1_ntg10"]
+[ext_resource type="LightmapGIData" uid="uid://bg0fb6e65c5ll" path="res://assets/torget.lmbake" id="2_j3d2x"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fx3kp"]
+sky_top_color = Color(0.47058824, 0.5921569, 0.7137255, 1)
+sky_horizon_color = Color(0.8509804, 0.8784314, 0.8627451, 1)
+sky_curve = 0.2
+ground_bottom_color = Color(0.32156864, 0.38431373, 0.35686275, 1)
+ground_horizon_color = Color(0.8509804, 0.8784314, 0.8627451, 1)
+sun_angle_max = 7.0
+sun_curve = 0.18
+
+[sub_resource type="Sky" id="Sky_86hhm"]
+sky_material = SubResource("ProceduralSkyMaterial_fx3kp")
+
+[sub_resource type="Environment" id="Environment_al6b0"]
+background_mode = 2
+sky = SubResource("Sky_86hhm")
+ambient_light_source = 3
+ambient_light_color = Color(0.7764706, 0.8156863, 0.84313726, 1)
+ambient_light_sky_contribution = 0.75
+ambient_light_energy = 0.35
+tonemap_mode = 2
+tonemap_white = 6.0
+fog_enabled = true
+fog_light_color = Color(0.7607843, 0.8156863, 0.827451, 1)
+fog_light_energy = 0.55
+fog_density = 0.0018
+fog_sky_affect = 0.06
+adjustment_enabled = true
+adjustment_contrast = 1.045
+adjustment_saturation = 0.97
+
+[node name="BakedWorld" type="Node3D" unique_id=1921364979]
+
+[node name="World" parent="." unique_id=1817316177 instance=ExtResource("1_ntg10")]
+
+[node name="Dagsljus" type="WorldEnvironment" parent="." unique_id=790013938]
+environment = SubResource("Environment_al6b0")
+
+[node name="Eftermiddagssol" type="DirectionalLight3D" parent="." unique_id=791673558]
+transform = Transform3D(0.7431448, 0.40269282, -0.5343915, 0, 0.79863554, 0.601815, 0.6691306, -0.44723567, 0.59350187, 0, 0, 0)
+light_color = Color(1, 0.9411765, 0.84705883, 1)
+light_energy = 1.35
+light_angular_distance = 0.8
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 1.0
+directional_shadow_mode = 1
+directional_shadow_fade_start = 0.85
+
+[node name="BakatLjus" type="LightmapGI" parent="." unique_id=984515730]
+bounces = 2
+max_texture_size = 4096
+light_data = ExtResource("2_j3d2x")
+
+[node name="Förhandskamera" type="Camera3D" parent="." unique_id=1501879502]
+transform = Transform3D(0.95358264, -0.018665299, -0.3005523, 0, 0.99807715, -0.061983913, 0.30113134, 0.059106782, 0.951749, 8, 0.9626, 48)

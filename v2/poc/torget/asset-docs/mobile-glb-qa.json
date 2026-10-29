@@ -1,0 +1,770 @@
+{
+  "input": "/Users/joel/Workspace/kvarnbyn/v2/poc/torget/godot/assets/world.glb",
+  "output": "/private/tmp/torget_mobile.glb",
+  "source_bytes": 73585660,
+  "output_bytes": 29557864,
+  "reduction_percent": 59.83,
+  "image_source_bytes": 53999250,
+  "image_output_bytes": 9971470,
+  "image_count": 27,
+  "material_count": 23,
+  "texture_count": 32,
+  "accessor_count": 577,
+  "preserved_geometry_buffer_views": 577,
+  "verification": "All non-image bufferViews byte-identical; scene, accessor, mesh, material, texture and node dictionaries equal; image references and world bounds unchanged; all views four-byte aligned.",
+  "source_world_bounds": {
+    "min": [
+      -140.0,
+      -11.274700164794922,
+      -140.0
+    ],
+    "max": [
+      140.0,
+      55.924021203980374,
+      140.0
+    ]
+  },
+  "output_world_bounds": {
+    "min": [
+      -140.0,
+      -11.274700164794922,
+      -140.0
+    ],
+    "max": [
+      140.0,
+      55.924021203980374,
+      140.0
+    ]
+  },
+  "max_texture_dimension": 1024,
+  "requested_jpeg_quality": 88,
+  "images": [
+    {
+      "name": "bark_willow_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1438304,
+      "output_bytes": 719058,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 33.081,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 3.558,
+        "p95": 8.048,
+        "max": 24.476
+      },
+      "image_indices": [
+        0
+      ]
+    },
+    {
+      "name": "bark_willow_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 779438,
+      "output_bytes": 257110,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 37.196,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        1
+      ]
+    },
+    {
+      "name": "bark_willow_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 773224,
+      "output_bytes": 62986,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 48.311,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        2
+      ]
+    },
+    {
+      "name": "foliage_rgba_1k",
+      "roles": [
+        "baseColorTexture",
+        "emissiveTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1016177,
+      "output_bytes": 1016177,
+      "output_mime_type": "image/png",
+      "alpha_preserved": true,
+      "jpeg_quality": null,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": "lossless",
+      "normal_angle_degrees": null,
+      "image_indices": [
+        3
+      ]
+    },
+    {
+      "name": "grass_ground_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1310516,
+      "output_bytes": 601577,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 33.426,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 4.073,
+        "p95": 9.405,
+        "max": 19.964
+      },
+      "image_indices": [
+        4
+      ]
+    },
+    {
+      "name": "grass_ground_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 876584,
+      "output_bytes": 282618,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 35.942,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        5
+      ]
+    },
+    {
+      "name": "grass_ground_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 723473,
+      "output_bytes": 43150,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 50.431,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        6
+      ]
+    },
+    {
+      "name": "granite_wall_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1145994,
+      "output_bytes": 518760,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 35.007,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 2.784,
+        "p95": 6.155,
+        "max": 12.869
+      },
+      "image_indices": [
+        7
+      ]
+    },
+    {
+      "name": "granite_wall_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 957272,
+      "output_bytes": 341005,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 35.582,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        8
+      ]
+    },
+    {
+      "name": "granite_wall_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 763309,
+      "output_bytes": 90914,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 47.672,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        9
+      ]
+    },
+    {
+      "name": "asphalt_02_nor_gl_2k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 4943950,
+      "output_bytes": 717529,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 30.122,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 4.786,
+        "p95": 9.69,
+        "max": 19.492
+      },
+      "image_indices": [
+        10
+      ]
+    },
+    {
+      "name": "asphalt_02_diff_2k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 3075676,
+      "output_bytes": 464416,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 34.378,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        11
+      ]
+    },
+    {
+      "name": "asphalt_02_rough_2k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 4926616,
+      "output_bytes": 550863,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 33.209,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        12
+      ]
+    },
+    {
+      "name": "cobblestone_floor_04_nor_gl_2k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 2937425,
+      "output_bytes": 537145,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 32.645,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 3.088,
+        "p95": 7.967,
+        "max": 23.507
+      },
+      "image_indices": [
+        13
+      ]
+    },
+    {
+      "name": "cobblestone_floor_04_diff_2k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 2261344,
+      "output_bytes": 328304,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 34.577,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        14
+      ]
+    },
+    {
+      "name": "cobblestone_floor_04_rough_2k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 4369280,
+      "output_bytes": 390873,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 36.783,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        15
+      ]
+    },
+    {
+      "name": "white_plaster_rough_01_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 384190,
+      "output_bytes": 201556,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 40.503,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 1.359,
+        "p95": 3.193,
+        "max": 12.667
+      },
+      "image_indices": [
+        16
+      ]
+    },
+    {
+      "name": "white_plaster_rough_01_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1276688,
+      "output_bytes": 556806,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 33.441,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        17
+      ]
+    },
+    {
+      "name": "clay_roof_tiles_02_nor_gl_2k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 3526539,
+      "output_bytes": 469918,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 34.883,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 2.563,
+        "p95": 5.779,
+        "max": 16.288
+      },
+      "image_indices": [
+        18
+      ]
+    },
+    {
+      "name": "clay_roof_tiles_02_diff_2k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 3459427,
+      "output_bytes": 290867,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 35.23,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        19
+      ]
+    },
+    {
+      "name": "clay_roof_tiles_02_rough_2k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 2927868,
+      "output_bytes": 96833,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 49.04,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        20
+      ]
+    },
+    {
+      "name": "red_bricks_04_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 339216,
+      "output_bytes": 339216,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": "original",
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": "lossless",
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "image_indices": [
+        21
+      ]
+    },
+    {
+      "name": "red_bricks_04_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 283965,
+      "output_bytes": 283965,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": "original",
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": "lossless",
+      "normal_angle_degrees": null,
+      "image_indices": [
+        22
+      ]
+    },
+    {
+      "name": "red_bricks_04_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1052111,
+      "output_bytes": 373985,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 38.842,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        23
+      ]
+    },
+    {
+      "name": "wood_plank_wall_nor_gl_2k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 3099721,
+      "output_bytes": 229552,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 38.753,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 1.769,
+        "p95": 3.792,
+        "max": 16.452
+      },
+      "image_indices": [
+        24
+      ]
+    },
+    {
+      "name": "wood_plank_wall_diff_2k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 2161450,
+      "output_bytes": 114347,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 42.223,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        25
+      ]
+    },
+    {
+      "name": "wood_plank_wall_rough_2k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 3189493,
+      "output_bytes": 91940,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 47.327,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        26
+      ]
+    }
+  ],
+  "elapsed_seconds": 1.141,
+  "independent_import_check": {
+    "engine": "Godot 4.7.2 stable official ed1daf0bf",
+    "temporary_project": "/private/tmp/kvarnbyn-glb-qa",
+    "result": "Headless editor GLB import completed with exit code 0; no parser, texture or scene import errors."
+  }
+}
