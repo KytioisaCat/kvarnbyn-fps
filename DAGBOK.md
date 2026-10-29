@@ -31,6 +31,24 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-10-29 20:20 — Claude Code (Opus 5.5) — Joels dom över PoC:n, förslag på nästa fas
+
+**Status:** klart (väntar på Joels beslut)
+
+**Joels dom:** grafiken är rätt typ ("svar ja"); med stämningsljus och skjutmekanik är vi hemma.
+**Målplattform är dator med mus och tangentbord**, telefonen bara bonus. Han vill ha en större
+värld närmare v1:s, till spelbart, och sedan förbättra hus för hus. Han föreslog Street View-bilder
+som underlag; jag föreslår Street View som *referens* (observationer i city_spec), inte pixlar
+(Googles villkor + publik sajt).
+
+**Gjort:** `v2/poc/NASTA-FAS.md` — tre beslut (Godot desktop Forward+, 900×700 m ≈ 370 hus,
+Street View som referens) och faserna A (större värld, automatisk tolkning), B (spelbart:
+v1:s spel portat), C (stämning + husrundor). Räknat hus i OSM per rutstorlek.
+
+**Nästa:** vänta på Joels ja till besluten i NASTA-FAS.md, skriv sedan brief för Fas A och kör.
+
+---
+
 ## 2026-10-29 20:00 — Claude Code (Opus 5.5) — telefonprov kräver HTTPS
 
 **Status:** klart

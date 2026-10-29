@@ -11,7 +11,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 
 - [ ] **Beslut**: PoC-sekvens enligt `POC-PLANER.md` (rekommendation: Blender-innehåll → Godot webb
   → Godot desktop; Unity/Unreal i reserv). Joel godkänner nedladdningslistan (~0,9 GB).
-- [ ] **Joels telefonprov av PoC Gamla torget** (`v2/poc/torget/RESULTAT.md`) — avgör nästa steg
+- [x] Joels dom 2026-10-29: grafiken är rätt; målplattform dator (mus+tangentbord)
+- [ ] **Beslut om `v2/poc/NASTA-FAS.md`** (desktop Forward+, 900×700 m, Street View som referens) → Fas A
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
 - [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material
 - [ ] Första beviset: EN bild vid Gamla torget som ser ut som ett spel (hus, gata, träd, bakat ljus)
