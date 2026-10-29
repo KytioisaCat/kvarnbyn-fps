@@ -1,0 +1,9 @@
+{
+ "objects": 9644,
+ "meshes": 4923,
+ "materials": 138,
+ "triangles_excl_trees": 2112868,
+ "trees": 1570,
+ "raw_glb_mb": 225.3,
+ "seconds": 19.4
+}

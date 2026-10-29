@@ -1,4 +1,4 @@
-# Nästa fas efter PoC Gamla torget (förslag 2026-10-29)
+# Nästa fas efter PoC Gamla torget (beslutad 2026-10-29: Joel sa ja, Fas A körs först)
 
 ## Joels dom över PoC:n (2026-10-29)
 
@@ -31,7 +31,7 @@ v1:s, till en spelbar version, och sedan förbättra miljön del för del, hus f
    `city_spec.json`; utseendet byggs med kit + CC0-material. Joels egna foton får användas som
    pixlar om han vill.
 
-## Fas A — större värld, automatisk tolkning (1–2 pass)
+## Fas A — större värld, automatisk tolkning — KLAR 2026-10-29 (`../kvarnbyn/RESULTAT.md`)
 
 - `city_spec` för ~370 hus automatiskt: fotavtryck (OSM), **arketyp** ur form/storlek/läge
   (trävilla, arbetarbostad 1800-tal, lamellhus, tegelindustri, garage, kvarngård), takfärg och
@@ -43,9 +43,11 @@ v1:s, till en spelbar version, och sedan förbättra miljön del för del, hus f
 
 ## Fas B — spelbart (1–2 pass)
 
-Porta v1:s spel till Godot: vapen (hitscan, rekyl, ammo), fiender med navmesh och AI, zonerna
-med capture points, HUD, ljud. v1 (`public/game.js`, `ARKITEKTUR.md`) är facit för känsla och
-kalibreringar. **Klart när:** en runda går att spela från start till seger/förlust.
+Porta v1:s spel till Godot: vapen (hitscan, rekyl, ammo, **reload**), **hopp**, fiender med
+navmesh och AI, zonerna med capture points, HUD, ljud. **Joel 2026-10-29: v1 är facit för
+*funktionerna* (fiender, vapen, reload, hopp m.m. ska med), men INTE för känslan** — han tyckte
+inte att v1:s känsla satt. Känslan (rörelse, vapentyngd, ljud, träffåterkoppling) designas om
+mot moderna FPS-referenser. **Klart när:** en runda går att spela från start till seger/förlust.
 
 ## Fas C — iterera (löpande, när det finns tokens)
 

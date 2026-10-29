@@ -31,6 +31,34 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-10-29 21:00 — Claude Code (Opus 5.5) — Fas A klar: Kvarnbyn 900×700 m som Mac-app
+
+**Status:** klart (väntar på Joels bedömning)
+
+**Gjort:** nytt projekt **`v2/kvarnbyn/`** (torget-provet fryst som referens; samma origo).
+- `pipeline/interpret.py` → `data/city.json` (committad): 381 hus i zonen med hustyp och källmärkta
+  värden, 1 734 kulisshus, gator, ytor, ån, barriärer, skog. Hjältehusen hämtas ur torget-provet.
+- `pipeline/site.py` → `data/site.json` (gitignorerad, 8 s): terräng 2 m konformerad mot gator och å,
+  gatuprofiler, asfalt/gatsten (bara kring torget)/gångbana, kantsten, åmurar, 16 broar, 23 trappor,
+  gatlyktor, 1 570 träd.
+- `blender/build_world.py` + `houses.py` (hus per hustyp) + `heroes.py` (Codex hjältehus) → GLB (19 s).
+- `godot/`: Forward+ (SDFGI, SSAO, SSIL, glow, volymetrisk dimma, AgX), ingen ljusbake; träd som
+  MultiMesh per 100 m-ruta; `--walktest` (180/180 landar); macOS-export (ETC2/ASTC, universal).
+- `rebuild.sh`: allt i ett kommando (~1,5 min med export). `RESULTAT.md`: bilder och mätningar.
+
+**Läge nu:** Mac-appen ligger uppackad i `v2/kvarnbyn/desktop/app/` (gitignorerad), 111–120 fps.
+
+**Nästa:**
+1. Joels dom över Fas A (spela appen).
+2. Fas B (spelbart): vapen, reload, hopp, fiender, zoner, HUD — v1 facit för funktioner, inte känsla.
+3. Fas C: kvällsljus, husrundor med Street View som referens, staket/häckar/trädgårdar.
+
+**Varningar:** Godots exportmall måste ligga i `v2/.tools/editor_data/export_templates/4.7.2.stable/`
+(symlänk skapad). Pekskärmsgestens kontrollertest är rött (inte mål). Ändra inte i `v2/poc/torget/`
+— den är referens, och `v2/kvarnbyn/` läser material och träd därifrån.
+
+---
+
 ## 2026-10-29 20:20 — Claude Code (Opus 5.5) — Joels dom över PoC:n, förslag på nästa fas
 
 **Status:** klart (väntar på Joels beslut)

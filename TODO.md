@@ -12,7 +12,10 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] **Beslut**: PoC-sekvens enligt `POC-PLANER.md` (rekommendation: Blender-innehåll → Godot webb
   → Godot desktop; Unity/Unreal i reserv). Joel godkänner nedladdningslistan (~0,9 GB).
 - [x] Joels dom 2026-10-29: grafiken är rätt; målplattform dator (mus+tangentbord)
-- [ ] **Beslut om `v2/poc/NASTA-FAS.md`** (desktop Forward+, 900×700 m, Street View som referens) → Fas A
+- [x] Beslut om `v2/poc/NASTA-FAS.md` (Joel ja 2026-10-29)
+- [ ] **Joels dom över Fas A** (`v2/kvarnbyn/RESULTAT.md`, appen i `v2/kvarnbyn/desktop/app/`)
+- [ ] **Fas B — spelbart**: vapen, reload, hopp, fiender, zoner, HUD (v1 facit för funktioner, inte känsla)
+- [ ] **Fas C** — kvällsljus, husrundor (Street View som referens), staket/häckar/trädgårdar, järnväg
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
 - [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material
 - [ ] Första beviset: EN bild vid Gamla torget som ser ut som ett spel (hus, gata, träd, bakat ljus)
@@ -68,6 +71,9 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-10-29 — **Fas A: Kvarnbyn 900×700 m som Mac-app** (`v2/kvarnbyn/`): 381 tolkade hus +
+  hjältehus, gator, ån, broar, Royens trappor, träd, realtids-GI, 111–120 fps, gångtest 180/180.
 
 - [x] 2026-10-29 — **PoC Gamla torget: Blender-innehåll + Godot-webbprov** (Codex byggde, Claude
   slutförde): Kråkan, Corpus, Musikskolan m.fl. ur kit med CC0-material, egna träd, bakat ljus,

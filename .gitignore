@@ -53,3 +53,12 @@ v2/poc/**/assets-src/vegetation/textures/
 v2/poc/**/godot/assets/sky.hdr
 v2/poc/**/reference/qa-walk-*.json
 v2/poc/**/web-mobil/
+v2/kvarnbyn/blender/*.glb
+v2/kvarnbyn/blender/*.blend*
+v2/kvarnbyn/godot/.godot/
+v2/kvarnbyn/godot/assets/world*
+v2/kvarnbyn/godot/assets/sky.hdr
+v2/kvarnbyn/desktop/
+v2/kvarnbyn/data/site.json
+v2/kvarnbyn/evidence/*.log
+v2/kvarnbyn/evidence/shots/*.png

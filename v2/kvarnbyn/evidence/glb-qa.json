@@ -1,0 +1,945 @@
+{
+  "input": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/blender/world_raw.glb",
+  "output": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/godot/assets/world.glb",
+  "source_bytes": 225343576,
+  "output_bytes": 190995344,
+  "reduction_percent": 15.24,
+  "image_source_bytes": 56232829,
+  "image_output_bytes": 21885193,
+  "image_count": 34,
+  "material_count": 131,
+  "texture_count": 118,
+  "accessor_count": 16446,
+  "preserved_geometry_buffer_views": 16446,
+  "verification": "All non-image bufferViews byte-identical; scene, accessor, mesh, material, texture and node dictionaries equal; image references and world bounds unchanged; all views four-byte aligned.",
+  "source_world_bounds": {
+    "min": [
+      -1218.6099853515625,
+      -30.0,
+      -829.5570068359375
+    ],
+    "max": [
+      1319.0989990234375,
+      110.0,
+      922.7650146484375
+    ]
+  },
+  "output_world_bounds": {
+    "min": [
+      -1218.6099853515625,
+      -30.0,
+      -829.5570068359375
+    ],
+    "max": [
+      1319.0989990234375,
+      110.0,
+      922.7650146484375
+    ]
+  },
+  "max_texture_dimension": 2048,
+  "requested_jpeg_quality": 88,
+  "images": [
+    {
+      "name": "bark_willow_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1438304,
+      "output_bytes": 719058,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 33.081,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 3.558,
+        "p95": 8.048,
+        "max": 24.476
+      },
+      "image_indices": [
+        0
+      ]
+    },
+    {
+      "name": "bark_willow_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 779438,
+      "output_bytes": 257110,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 37.196,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        1
+      ]
+    },
+    {
+      "name": "bark_willow_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 773224,
+      "output_bytes": 62986,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 48.311,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        2
+      ]
+    },
+    {
+      "name": "foliage_rgba_1k",
+      "roles": [
+        "baseColorTexture",
+        "emissiveTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1016177,
+      "output_bytes": 1016177,
+      "output_mime_type": "image/png",
+      "alpha_preserved": true,
+      "jpeg_quality": null,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": "lossless",
+      "normal_angle_degrees": null,
+      "image_indices": [
+        3
+      ]
+    },
+    {
+      "name": "grass_ground_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1310516,
+      "output_bytes": 601577,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 33.426,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 4.073,
+        "p95": 9.405,
+        "max": 19.964
+      },
+      "image_indices": [
+        4
+      ]
+    },
+    {
+      "name": "grass_early_summer_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1869853,
+      "output_bytes": 294217,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 35.497,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        5
+      ]
+    },
+    {
+      "name": "grass_ground_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 723473,
+      "output_bytes": 43150,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 50.431,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        6
+      ]
+    },
+    {
+      "name": "rock_01_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 798807,
+      "output_bytes": 361116,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 32.653,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 3.565,
+        "p95": 7.729,
+        "max": 24.996
+      },
+      "image_indices": [
+        7
+      ]
+    },
+    {
+      "name": "rock_01_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 688083,
+      "output_bytes": 381175,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 34.236,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        8
+      ]
+    },
+    {
+      "name": "rock_01_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1051730,
+      "output_bytes": 240491,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 39.288,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        9
+      ]
+    },
+    {
+      "name": "asphalt_02_nor_gl_2k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 4943950,
+      "output_bytes": 2653751,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 30.316,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 3.838,
+        "p95": 8.301,
+        "max": 21.676
+      },
+      "image_indices": [
+        10
+      ]
+    },
+    {
+      "name": "asphalt_02_diff_2k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 3075676,
+      "output_bytes": 1855893,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 34.233,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        11
+      ]
+    },
+    {
+      "name": "asphalt_02_rough_2k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 4926616,
+      "output_bytes": 2080942,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 34.716,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        12
+      ]
+    },
+    {
+      "name": "cobblestone_floor_04_nor_gl_2k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 2937425,
+      "output_bytes": 1686775,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 34.484,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 2.707,
+        "p95": 6.806,
+        "max": 37.92
+      },
+      "image_indices": [
+        13
+      ]
+    },
+    {
+      "name": "cobblestone_floor_04_diff_2k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 2261344,
+      "output_bytes": 1108385,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 35.972,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        14
+      ]
+    },
+    {
+      "name": "cobblestone_floor_04_rough_2k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 4369280,
+      "output_bytes": 1413409,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 38.099,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        15
+      ]
+    },
+    {
+      "name": "granite_wall_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1145994,
+      "output_bytes": 518760,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 35.007,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 2.784,
+        "p95": 6.155,
+        "max": 12.869
+      },
+      "image_indices": [
+        16
+      ]
+    },
+    {
+      "name": "granite_wall_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 957272,
+      "output_bytes": 341005,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 35.582,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        17
+      ]
+    },
+    {
+      "name": "granite_wall_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 763309,
+      "output_bytes": 90914,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 47.672,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        18
+      ]
+    },
+    {
+      "name": "wood_plank_wall_nor_gl_2k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 3099721,
+      "output_bytes": 1032166,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 38.439,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 1.607,
+        "p95": 3.369,
+        "max": 12.902
+      },
+      "image_indices": [
+        19
+      ]
+    },
+    {
+      "name": "wood_plank_wall_rough_2k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 3189493,
+      "output_bytes": 377733,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 46.085,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        20
+      ]
+    },
+    {
+      "name": "clay_roof_tiles_02_nor_gl_2k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 3526539,
+      "output_bytes": 1520216,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 38.713,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 1.794,
+        "p95": 3.933,
+        "max": 24.226
+      },
+      "image_indices": [
+        21
+      ]
+    },
+    {
+      "name": "clay_roof_tiles_02_rough_2k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 2927868,
+      "output_bytes": 314111,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 48.875,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        22
+      ]
+    },
+    {
+      "name": "red_bricks_04_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 339216,
+      "output_bytes": 339216,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": "original",
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": "lossless",
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "image_indices": [
+        23
+      ]
+    },
+    {
+      "name": "red_bricks_04_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 283965,
+      "output_bytes": 283965,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": "original",
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": "lossless",
+      "normal_angle_degrees": null,
+      "image_indices": [
+        24
+      ]
+    },
+    {
+      "name": "red_bricks_04_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1052111,
+      "output_bytes": 373985,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 38.842,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        25
+      ]
+    },
+    {
+      "name": "white_plaster_rough_01_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 384190,
+      "output_bytes": 201556,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 40.503,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 1.359,
+        "p95": 3.193,
+        "max": 12.667
+      },
+      "image_indices": [
+        26
+      ]
+    },
+    {
+      "name": "white_plaster_rough_01_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1276688,
+      "output_bytes": 556806,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 33.441,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        27
+      ]
+    },
+    {
+      "name": "paint_offwhite_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 222670,
+      "output_bytes": 20933,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 51.307,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        28
+      ]
+    },
+    {
+      "name": "painted_metal_albedo_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 24937,
+      "output_bytes": 8820,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 49.904,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        29
+      ]
+    },
+    {
+      "name": "painted_metal_roughness_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 116552,
+      "output_bytes": 28288,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 53.266,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        30
+      ]
+    },
+    {
+      "name": "clay_roof_tiles_02_diff_2k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        2048,
+        2048
+      ],
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "source_bytes": 3459427,
+      "output_bytes": 1058115,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 37.156,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        31
+      ]
+    },
+    {
+      "name": "paint_warm_plaster_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 274123,
+      "output_bytes": 22527,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 54.856,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        32
+      ]
+    },
+    {
+      "name": "paint_cream_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 224858,
+      "output_bytes": 19865,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 50.98,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        33
+      ]
+    }
+  ],
+  "elapsed_seconds": 2.038
+}

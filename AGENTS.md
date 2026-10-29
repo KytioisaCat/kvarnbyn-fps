@@ -19,8 +19,9 @@ Realism slår alltid teknisk elegans; svenska i all speltext och UI.
 
 ## Aktiv väg (från 2026-10-29): PoC i Blender + Godot
 
-Efter omstarten (`OMSTART.md` → `POC-PLANER.md`) byggs ett provkvarter vid Gamla torget i
-**`v2/poc/torget/`**: Blender-scen ur skript (`scripts/build_scene.py`, kit i `modelkit.py`,
+**Spelet byggs i `v2/kvarnbyn/`** (Fas A klar 2026-10-29: hela kärnan 900×700 m som Godot-datorapp,
+Forward+ med realtids-GI; `rebuild.sh`, `RESULTAT.md`; faser i `v2/poc/NASTA-FAS.md`). Det bygger på
+provkvarteret vid Gamla torget i **`v2/poc/torget/`** (fryst referens, levererar material/träd/kit): Blender-scen ur skript (`scripts/build_scene.py`, kit i `modelkit.py`,
 CC0-material i `assets-src/`) → glTF → **Godot 4.7** (Compatibility/WebGL 2, bakade
 ljuskartor) → webbexport + macOS. Verktygen ligger lokalt och gitignorerat i `v2/.tools/`.
 Läs `v2/poc/torget/BRIEF.md` och `runtime-docs/README.md` före arbete där.
