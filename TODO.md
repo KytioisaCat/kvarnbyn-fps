@@ -16,6 +16,19 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material
 - [ ] Första beviset: EN bild vid Gamla torget som ser ut som ett spel (hus, gata, träd, bakat ljus)
 
+### Föreslagna kontrollprov efter lägesgenomgång 2026-10-29
+
+- [ ] **Exportprov tidigt i PoC 0–1**: ett igenkännbart hus + gatan framför i Blender;
+  prova samma modell/material via glTF i Godot Compatibility med bakat ljus. Jämför från
+  samma kamera och ögonhöjd på telefonen. En fin Cycles-bild bevisar inte spelversionens look.
+- [ ] **Terräng på webben separat**: Terrain3D:s webbexport beskrivs fortfarande som
+  experimentell av projektet. Börja motorprovet med en liten statisk terrängmodell ur vår
+  LiDAR; testa Terrain3D separat på Joels telefon innan hela kvarteret byggs kring tillägget.
+  Källa: https://terrain3d.readthedocs.io/en/stable/docs/platforms.html
+- [ ] **Punktmoln i liten skala före helautomatik**: testa takhöjd/takform på 5–10 hus mot
+  referenser och märk osäkra slutsatser. Utvärdera trädposition/höjd separat; artbestämning
+  och exakt nockriktning ska inte förutsättas fungera från glesa punkter.
+
 ## v1-backlogg (FRYST 2026-10-21 — v1 är referens, bara hotfixar på Joels begäran)
 
 - [ ] **Husfakta: fyll i hjältehusen** — gå igenom `tools/husfakta_kandidater.md` (93 hus med
@@ -54,6 +67,12 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-10-29 — **Lägesgenomgång efter omstarten**: senaste incheckade riktningen är
+  `OMSTART.md` → `POC-PLANER.md` (2026-10-22), inte de gamla Three.js-delmålen.
+  Inga PoC-leveranser eller Blender-/Godot-projekt hittades i repot. `v2/PLAN.md` märkt
+  som historik; kontrollprov för export, webbterräng och punktmoln tillagda som förslag.
+  Inget motorval fastslaget och inga nedladdningar gjorda i denna genomgång.
 
 - [x] 2026-10-22 — **M1b flats + stödmurar + bergväggar** (alla 12 grindar gröna, bilder i
   `v2/docs/bevis-torget-2026-10-21/` dag 2): `flats.py` (plan per OSM-yta, vägar bundna till

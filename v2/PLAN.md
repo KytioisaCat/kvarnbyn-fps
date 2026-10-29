@@ -1,3 +1,8 @@
+> **Historik efter omstarten 2026-10-22.** Läs `../OMSTART.md` och därefter
+> `../POC-PLANER.md` för den senaste riktningen. Three.js-spåret och delmålen nedan
+> är inte den aktiva produktplanen. Blender-innehåll först och därefter Godot webb
+> är ett föreslaget PoC-spår; motorvalet är ännu inte avgjort. Status: `../TODO.md`.
+
 # v2 — ny grafikmotor: plan och spelregler för sessioner
 
 **Mål**: samma spel, samma by, men det ska *se verkligt ut* — "så likt Call of Duty som möjligt i
