@@ -29,12 +29,12 @@ func prepare_node(node: Node, collision_parent: bool, scene_root: Node) -> void:
 					collider.owner = scene_root
 		else:
 			var node_name := str(node.name).to_lower()
-			if "broadleaf" in node_name:
+			if "broadleaf" in node_name or node_name.ends_with("_boards") or "_boards_" in node_name:
 				node.gi_mode = GeometryInstance3D.GI_MODE_DYNAMIC
 			else:
 				node.gi_mode = GeometryInstance3D.GI_MODE_STATIC
 				if node_name.begins_with("krakan_") or node_name.begins_with("w92332103") or node_name.begins_with("w92332122"):
-					node.lightmap_texel_scale = 2.0
+					node.gi_lightmap_texel_scale = 2.0
 	if node is Camera3D:
 		node.current = false
 	if node is Light3D:

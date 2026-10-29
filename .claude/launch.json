@@ -23,6 +23,18 @@
         "v2"
       ],
       "port": 5187
+    },
+    {
+      "name": "poc-webb",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8790",
+        "--directory",
+        "v2/poc/torget/web-mobil"
+      ],
+      "port": 8790
     }
   ]
 }

@@ -11,7 +11,7 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 
 - [ ] **Beslut**: PoC-sekvens enligt `POC-PLANER.md` (rekommendation: Blender-innehåll → Godot webb
   → Godot desktop; Unity/Unreal i reserv). Joel godkänner nedladdningslistan (~0,9 GB).
-- [ ] PoC 0 — innehåll i Blender: ett arketyp-kit + hjältehus + gata + träd + terräng, en bild
+- [ ] **Joels telefonprov av PoC Gamla torget** (`v2/poc/torget/RESULTAT.md`) — avgör nästa steg
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
 - [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material
 - [ ] Första beviset: EN bild vid Gamla torget som ser ut som ett spel (hus, gata, träd, bakat ljus)
@@ -67,6 +67,12 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-10-29 — **PoC Gamla torget: Blender-innehåll + Godot-webbprov** (Codex byggde, Claude
+  slutförde): Kråkan, Corpus, Musikskolan m.fl. ur kit med CC0-material, egna träd, bakat ljus,
+  FPS-kontroller dator/touch, webbexport 51 MB för telefon, 120 fps på M5. Se
+  `v2/poc/torget/RESULTAT.md`. Telefonprov och Joels bedömning återstår. `DAGBOK.md` infört
+  för överlämning mellan agenter.
 
 - [x] 2026-10-29 — **Lägesgenomgång efter omstarten**: senaste incheckade riktningen är
   `OMSTART.md` → `POC-PLANER.md` (2026-10-22), inte de gamla Three.js-delmålen.

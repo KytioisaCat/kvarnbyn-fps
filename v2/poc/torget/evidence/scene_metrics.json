@@ -1,8 +1,8 @@
 {
-  "objects": 369,
-  "meshes": 186,
+  "objects": 381,
+  "meshes": 198,
   "triangles": 691734,
-  "raw_glb_bytes": 83109220,
+  "raw_glb_bytes": 83061228,
   "blender_version": "4.5.9 LTS",
   "cameras": [
     {

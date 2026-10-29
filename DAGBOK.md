@@ -31,17 +31,37 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
-## 2026-10-29 19:30 — Claude Code (Opus 5.5) — tar över efter Codex, slutför motorprovet
+## 2026-10-29 19:45 — Claude Code (Opus 5.5) — slutförde Codex motorprov vid Gamla torget
 
-**Status:** pågår
+**Status:** klart (väntar på Joels telefonprov)
 
-**Gjort hittills:** kartlagt Codex pass (inlägget nedan), skapat denna dagbok, synkat
-AGENTS.md med CLAUDE.md.
+**Gjort:**
+- Kartlade Codex pass (inlägget nedan), skapade denna dagbok, synkade AGENTS.md = CLAUDE.md.
+  Commit `c24aa25`: Codex arbete + dagbok (19 MB källor; stora binärer gitignorerade).
+- **Fixat** `godot/scripts/import_world.gd`: `lightmap_texel_scale` finns inte i Godot 4.7 →
+  `gi_lightmap_texel_scale`. 2× ljuskartstäthet på hjältehusen har alltså aldrig fungerat förut.
+- **Fixat** strimmor på panelfasader: brädorna (en låda per 16,5 cm-bräda, <1 ljuskartstexel)
+  ligger nu i egna `<hus>_Boards`-objekt (`scripts/modelkit.py`), dynamisk GI i Godot
+  (`import_world.gd`), utan UV2 (`configure_import.gd`).
+- Ny exportpreset **"Webb mobil"** (bara ETC2/ASTC): pck 50,5 MB (37,8 gzip) mot Codex 165 MB.
+- Nytt **`v2/poc/torget/rebuild.sh`**: hela kedjan Blender → GLB → import → bake → webb i ett
+  kommando (~2 min, bake öppnar Godot-fönstret ~1 min). Loggar i `runtime-docs/*.log`.
+- `RESULTAT.md` med jämförelsebilder Blender mot Godot webb (`evidence/godot_webb_*.jpg`),
+  mätningar och kvarstående punkter. `runtime-docs/CHECKPOINT.json` uppdaterad.
+- `.claude/launch.json`: `poc-webb` serverar `web-mobil/` på port 8790.
 
-**Plan för passet:** (1) optimera nya `blender/world_raw.glb` → `godot/assets/world.glb`,
-(2) importera + UV2 + baka om med 0,5 m texel och 2× på hjältehusen (Vulkan),
-(3) webbexport och mät `.pck`-storleken, (4) jämförelsebilder Godot mot Blender från samma vy,
-(5) `RESULTAT.md`, (6) gitignore för stora binärer, committa källor och dokumentation.
+**Läge nu:** allt i `web-mobil/` fungerar i webbläsaren med bakat ljus, 120 fps på M5.
+Genererade filer (GLB, EXR, export) finns bara lokalt — bygg om med `rebuild.sh`.
+
+**Nästa:**
+1. Joels telefonprov (LAN: `python3 -m http.server 8790 --directory v2/poc/torget/web-mobil`,
+   öppna `http://<laptopens IP>:8790` i telefonen på samma wifi). Vänta på hans dom.
+2. Om han godkänner looken: Musikskolans gråa fasad i Godot, bättre indirekt ljus på brädorna,
+   bergmaterialet, hosting för telefon utanför hemnätet.
+3. Punktmolnsprovet när `LM_USER`/`LM_PASS` är satta (av Joel, aldrig i chatten).
+
+**Varningar:** baka bara med Vulkan. `Webb`-presetet (båda texturformaten) är 87 MB — använd
+`Webb mobil` för telefon. Committa inte `web-mobil/` (gitignorerad).
 
 ---
 

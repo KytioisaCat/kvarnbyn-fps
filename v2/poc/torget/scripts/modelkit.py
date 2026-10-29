@@ -192,7 +192,9 @@ def facade(kit,name,a,b,base,height,wallmat,trim,glass,white,levels=2,bays=None,
             ends=sorted([0,length]+[max(0,min(length,e)) for pair in holes for e in pair])
             for l,r in zip(ends,ends[1:]):
                 if r-l<.02 or any(l+.001>=p and r-.001<=q for p,q in holes):continue
-                kit.box(name,wallmat,pos((l+r)/2,.095,(low+high)/2),(r-l,.055,high-low),u)
+                # Egna objekt: brädorna är för smala för ljuskartan (<1 texel) och belyses
+                # dynamiskt i Godot (sol + prober); väggen bakom behåller ljuskartan.
+                kit.box(name+'_Boards',wallmat,pos((l+r)/2,.095,(low+high)/2),(r-l,.055,high-low),u)
     for s,bottom,ww,hh,door,floor,i in rows:
         has_awning=floor==0 and (not lower_types or lower_types[i]!='green_door')
         closed=floor==0 and lower_types and lower_types[i]=='green_door'

@@ -25,7 +25,7 @@ func _initialize() -> void:
 	var meshes: Dictionary = overrides.get("meshes", {})
 	for mesh in document.get("meshes", []):
 		var mesh_name := str(mesh.get("name", ""))
-		if "broadleaf" in mesh_name.to_lower() or mesh_name.to_upper().begins_with("COL_"):
+		if "broadleaf" in mesh_name.to_lower() or "_boards" in mesh_name.to_lower() or mesh_name.to_upper().begins_with("COL_"):
 			var mesh_options: Dictionary = meshes.get(mesh_name, {})
 			mesh_options["generate/lightmap_uv"] = 2
 			meshes[mesh_name] = mesh_options

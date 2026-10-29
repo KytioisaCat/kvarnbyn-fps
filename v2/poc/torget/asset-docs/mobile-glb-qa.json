@@ -1,16 +1,16 @@
 {
-  "input": "/Users/joel/Workspace/kvarnbyn/v2/poc/torget/godot/assets/world.glb",
-  "output": "/private/tmp/torget_mobile.glb",
-  "source_bytes": 73585660,
-  "output_bytes": 29557864,
-  "reduction_percent": 59.83,
-  "image_source_bytes": 53999250,
-  "image_output_bytes": 9971470,
-  "image_count": 27,
-  "material_count": 23,
-  "texture_count": 32,
-  "accessor_count": 577,
-  "preserved_geometry_buffer_views": 577,
+  "input": "/Users/joel/Workspace/kvarnbyn/v2/poc/torget/blender/world_raw.glb",
+  "output": "/Users/joel/Workspace/kvarnbyn/v2/poc/torget/godot/assets/world.glb",
+  "source_bytes": 83061228,
+  "output_bytes": 37289056,
+  "reduction_percent": 55.11,
+  "image_source_bytes": 55855659,
+  "image_output_bytes": 10083502,
+  "image_count": 32,
+  "material_count": 32,
+  "texture_count": 37,
+  "accessor_count": 736,
+  "preserved_geometry_buffer_views": 736,
   "verification": "All non-image bufferViews byte-identical; scene, accessor, mesh, material, texture and node dictionaries equal; image references and world bounds unchanged; all views four-byte aligned.",
   "source_world_bounds": {
     "min": [
@@ -19,8 +19,8 @@
       -140.0
     ],
     "max": [
-      140.0,
-      55.924021203980374,
+      180.0,
+      54.129343892855104,
       140.0
     ]
   },
@@ -31,8 +31,8 @@
       -140.0
     ],
     "max": [
-      140.0,
-      55.924021203980374,
+      180.0,
+      54.129343892855104,
       140.0
     ]
   },
@@ -176,7 +176,7 @@
       ]
     },
     {
-      "name": "grass_ground_diff_1k",
+      "name": "grass_early_summer_1k",
       "roles": [
         "baseColorTexture"
       ],
@@ -188,13 +188,13 @@
         1024,
         1024
       ],
-      "source_bytes": 876584,
-      "output_bytes": 282618,
+      "source_bytes": 1869853,
+      "output_bytes": 294217,
       "output_mime_type": "image/jpeg",
       "alpha_preserved": false,
       "jpeg_quality": 88,
       "jpeg_chroma_subsampling": "4:2:0",
-      "psnr_db_against_resized_source": 35.942,
+      "psnr_db_against_resized_source": 35.497,
       "normal_angle_degrees": null,
       "image_indices": [
         5
@@ -226,86 +226,6 @@
       ]
     },
     {
-      "name": "granite_wall_nor_gl_1k",
-      "roles": [
-        "normalTexture"
-      ],
-      "original_dimensions": [
-        1024,
-        1024
-      ],
-      "dimensions": [
-        1024,
-        1024
-      ],
-      "source_bytes": 1145994,
-      "output_bytes": 518760,
-      "output_mime_type": "image/jpeg",
-      "alpha_preserved": false,
-      "jpeg_quality": 88,
-      "jpeg_chroma_subsampling": "4:4:4",
-      "psnr_db_against_resized_source": 35.007,
-      "normal_angle_degrees": {
-        "sample_count": 16384,
-        "mean": 2.784,
-        "p95": 6.155,
-        "max": 12.869
-      },
-      "image_indices": [
-        7
-      ]
-    },
-    {
-      "name": "granite_wall_diff_1k",
-      "roles": [
-        "baseColorTexture"
-      ],
-      "original_dimensions": [
-        1024,
-        1024
-      ],
-      "dimensions": [
-        1024,
-        1024
-      ],
-      "source_bytes": 957272,
-      "output_bytes": 341005,
-      "output_mime_type": "image/jpeg",
-      "alpha_preserved": false,
-      "jpeg_quality": 88,
-      "jpeg_chroma_subsampling": "4:2:0",
-      "psnr_db_against_resized_source": 35.582,
-      "normal_angle_degrees": null,
-      "image_indices": [
-        8
-      ]
-    },
-    {
-      "name": "granite_wall_rough_1k",
-      "roles": [
-        "metallicRoughnessTexture"
-      ],
-      "original_dimensions": [
-        1024,
-        1024
-      ],
-      "dimensions": [
-        1024,
-        1024
-      ],
-      "source_bytes": 763309,
-      "output_bytes": 90914,
-      "output_mime_type": "image/jpeg",
-      "alpha_preserved": false,
-      "jpeg_quality": 88,
-      "jpeg_chroma_subsampling": "4:4:4",
-      "psnr_db_against_resized_source": 47.672,
-      "normal_angle_degrees": null,
-      "image_indices": [
-        9
-      ]
-    },
-    {
       "name": "asphalt_02_nor_gl_2k",
       "roles": [
         "normalTexture"
@@ -332,7 +252,7 @@
         "max": 19.492
       },
       "image_indices": [
-        10
+        7
       ]
     },
     {
@@ -357,7 +277,7 @@
       "psnr_db_against_resized_source": 34.378,
       "normal_angle_degrees": null,
       "image_indices": [
-        11
+        8
       ]
     },
     {
@@ -382,7 +302,7 @@
       "psnr_db_against_resized_source": 33.209,
       "normal_angle_degrees": null,
       "image_indices": [
-        12
+        9
       ]
     },
     {
@@ -412,7 +332,7 @@
         "max": 23.507
       },
       "image_indices": [
-        13
+        10
       ]
     },
     {
@@ -437,7 +357,7 @@
       "psnr_db_against_resized_source": 34.577,
       "normal_angle_degrees": null,
       "image_indices": [
-        14
+        11
       ]
     },
     {
@@ -460,6 +380,86 @@
       "jpeg_quality": 88,
       "jpeg_chroma_subsampling": "4:4:4",
       "psnr_db_against_resized_source": 36.783,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        12
+      ]
+    },
+    {
+      "name": "granite_wall_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1145994,
+      "output_bytes": 518760,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 35.007,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 2.784,
+        "p95": 6.155,
+        "max": 12.869
+      },
+      "image_indices": [
+        13
+      ]
+    },
+    {
+      "name": "granite_wall_diff_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 957272,
+      "output_bytes": 341005,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 35.582,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        14
+      ]
+    },
+    {
+      "name": "granite_wall_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 763309,
+      "output_bytes": 90914,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 47.672,
       "normal_angle_degrees": null,
       "image_indices": [
         15
@@ -496,6 +496,31 @@
       ]
     },
     {
+      "name": "paint_offwhite_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 222670,
+      "output_bytes": 20933,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 51.307,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        17
+      ]
+    },
+    {
       "name": "white_plaster_rough_01_rough_1k",
       "roles": [
         "metallicRoughnessTexture"
@@ -517,7 +542,57 @@
       "psnr_db_against_resized_source": 33.441,
       "normal_angle_degrees": null,
       "image_indices": [
-        17
+        18
+      ]
+    },
+    {
+      "name": "painted_metal_albedo_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 24937,
+      "output_bytes": 8820,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 49.904,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        19
+      ]
+    },
+    {
+      "name": "painted_metal_roughness_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 116552,
+      "output_bytes": 28288,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 53.266,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        20
       ]
     },
     {
@@ -547,7 +622,7 @@
         "max": 16.288
       },
       "image_indices": [
-        18
+        21
       ]
     },
     {
@@ -572,7 +647,7 @@
       "psnr_db_against_resized_source": 35.23,
       "normal_angle_degrees": null,
       "image_indices": [
-        19
+        22
       ]
     },
     {
@@ -597,7 +672,7 @@
       "psnr_db_against_resized_source": 49.04,
       "normal_angle_degrees": null,
       "image_indices": [
-        20
+        23
       ]
     },
     {
@@ -627,7 +702,7 @@
         "max": 0.0
       },
       "image_indices": [
-        21
+        24
       ]
     },
     {
@@ -652,7 +727,7 @@
       "psnr_db_against_resized_source": "lossless",
       "normal_angle_degrees": null,
       "image_indices": [
-        22
+        25
       ]
     },
     {
@@ -677,7 +752,57 @@
       "psnr_db_against_resized_source": 38.842,
       "normal_angle_degrees": null,
       "image_indices": [
-        23
+        26
+      ]
+    },
+    {
+      "name": "paint_warm_plaster_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 274123,
+      "output_bytes": 22527,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 54.856,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        27
+      ]
+    },
+    {
+      "name": "paint_cream_1k",
+      "roles": [
+        "baseColorTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 224858,
+      "output_bytes": 19865,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:2:0",
+      "psnr_db_against_resized_source": 50.98,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        28
       ]
     },
     {
@@ -707,7 +832,7 @@
         "max": 16.452
       },
       "image_indices": [
-        24
+        29
       ]
     },
     {
@@ -732,7 +857,7 @@
       "psnr_db_against_resized_source": 42.223,
       "normal_angle_degrees": null,
       "image_indices": [
-        25
+        30
       ]
     },
     {
@@ -757,14 +882,9 @@
       "psnr_db_against_resized_source": 47.327,
       "normal_angle_degrees": null,
       "image_indices": [
-        26
+        31
       ]
     }
   ],
-  "elapsed_seconds": 1.141,
-  "independent_import_check": {
-    "engine": "Godot 4.7.2 stable official ed1daf0bf",
-    "temporary_project": "/private/tmp/kvarnbyn-glb-qa",
-    "result": "Headless editor GLB import completed with exit code 0; no parser, texture or scene import errors."
-  }
+  "elapsed_seconds": 1.462
 }

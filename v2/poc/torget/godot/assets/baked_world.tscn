@@ -1,27 +1,24 @@
-[gd_scene format=3 uid="uid://dq8cdwphlkm10"]
+[gd_scene format=3 uid="uid://catsc3mbhhdko"]
 
-[ext_resource type="PackedScene" uid="uid://cri63gvr3aja3" path="res://assets/world.glb" id="1_ntg10"]
-[ext_resource type="LightmapGIData" uid="uid://bg0fb6e65c5ll" path="res://assets/torget.lmbake" id="2_j3d2x"]
+[ext_resource type="PackedScene" uid="uid://cri63gvr3aja3" path="res://assets/world.glb" id="1_j3d2x"]
+[ext_resource type="Texture2D" uid="uid://bxp3yxm7tuxt1" path="res://assets/sky.hdr" id="2_fx3kp"]
+[ext_resource type="LightmapGIData" uid="uid://bg0fb6e65c5ll" path="res://assets/torget.lmbake" id="3_86hhm"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fx3kp"]
-sky_top_color = Color(0.47058824, 0.5921569, 0.7137255, 1)
-sky_horizon_color = Color(0.8509804, 0.8784314, 0.8627451, 1)
-sky_curve = 0.2
-ground_bottom_color = Color(0.32156864, 0.38431373, 0.35686275, 1)
-ground_horizon_color = Color(0.8509804, 0.8784314, 0.8627451, 1)
-sun_angle_max = 7.0
-sun_curve = 0.18
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_al6b0"]
+panorama = ExtResource("2_fx3kp")
 
-[sub_resource type="Sky" id="Sky_86hhm"]
-sky_material = SubResource("ProceduralSkyMaterial_fx3kp")
+[sub_resource type="Sky" id="Sky_lnjr2"]
+sky_material = SubResource("PanoramaSkyMaterial_al6b0")
 
-[sub_resource type="Environment" id="Environment_al6b0"]
+[sub_resource type="Environment" id="Environment_kmxmg"]
 background_mode = 2
-sky = SubResource("Sky_86hhm")
-ambient_light_source = 3
+background_energy_multiplier = 1.1
+sky = SubResource("Sky_lnjr2")
+ambient_light_source = 2
 ambient_light_color = Color(0.7764706, 0.8156863, 0.84313726, 1)
-ambient_light_sky_contribution = 0.75
+ambient_light_sky_contribution = 0.0
 ambient_light_energy = 0.35
+reflected_light_source = 2
 tonemap_mode = 2
 tonemap_white = 6.0
 fog_enabled = true
@@ -33,14 +30,14 @@ adjustment_enabled = true
 adjustment_contrast = 1.045
 adjustment_saturation = 0.97
 
-[node name="BakedWorld" type="Node3D" unique_id=1921364979]
+[node name="BakedWorld" type="Node3D" unique_id=175780873]
 
-[node name="World" parent="." unique_id=1817316177 instance=ExtResource("1_ntg10")]
+[node name="World" parent="." unique_id=1380425662 instance=ExtResource("1_j3d2x")]
 
-[node name="Dagsljus" type="WorldEnvironment" parent="." unique_id=790013938]
-environment = SubResource("Environment_al6b0")
+[node name="Dagsljus" type="WorldEnvironment" parent="." unique_id=251438172]
+environment = SubResource("Environment_kmxmg")
 
-[node name="Eftermiddagssol" type="DirectionalLight3D" parent="." unique_id=791673558]
+[node name="Eftermiddagssol" type="DirectionalLight3D" parent="." unique_id=1169994504]
 transform = Transform3D(0.7431448, 0.40269282, -0.5343915, 0, 0.79863554, 0.601815, 0.6691306, -0.44723567, 0.59350187, 0, 0, 0)
 light_color = Color(1, 0.9411765, 0.84705883, 1)
 light_energy = 1.35
@@ -51,10 +48,14 @@ shadow_normal_bias = 1.0
 directional_shadow_mode = 1
 directional_shadow_fade_start = 0.85
 
-[node name="BakatLjus" type="LightmapGI" parent="." unique_id=984515730]
+[node name="BakatLjus" type="LightmapGI" parent="." unique_id=1032556273]
 bounces = 2
 max_texture_size = 4096
-light_data = ExtResource("2_j3d2x")
+environment_mode = 3
+environment_custom_color = Color(0.7764706, 0.8156863, 0.84313726, 1)
+environment_custom_energy = 0.35
+generate_probes_subdiv = 1
+light_data = ExtResource("3_86hhm")
 
-[node name="Förhandskamera" type="Camera3D" parent="." unique_id=1501879502]
-transform = Transform3D(0.95358264, -0.018665299, -0.3005523, 0, 0.99807715, -0.061983913, 0.30113134, 0.059106782, 0.951749, 8, 0.9626, 48)
+[node name="Förhandskamera" type="Camera3D" parent="." unique_id=1001816543]
+transform = Transform3D(0.95358264, -0.01249402, -0.30087206, 0, 0.9991389, -0.041490264, 0.30113137, 0.039564397, 0.95276153, 8, 1.3726, 48)

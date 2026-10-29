@@ -1,6 +1,6 @@
 {
   "date": "2026-10-29",
-  "stage": "systemprov; slutmodell och slutbake återstår",
+  "stage": "slutmodell importerad, bakad och webbexporterad 2026-10-29 (Claude); telefonprov återstår",
   "godot": "4.7.2.stable.official.ed1daf0bf",
   "controller_check": {
     "passed": true,
@@ -51,10 +51,34 @@
     "packaging_issue_found_and_fixed": "Selected scenes tappade preload-skript; explicit resurslista fungerar."
   },
   "next": [
-    "Importera slutlig optimerad world.glb",
-    "Verifiera vegetations- och kollisionsundantag för UV2",
-    "Baka om med 0.5m globalt och 2X hjältetäthet, dynamiska träd, probes4",
-    "Exportera och verifiera minskad ljuskart-/PCK-storlek",
-    "Slutbilder och faktiskt telefonprov med Joel"
-  ]
+    "Joel: telefonprov via LAN (rebuild.sh, http.server 8790) — fps, laddtid, utseende",
+    "Musikskolans fasad gråare än i Blender i Godot (skuggsida + proberna): jämför med telefonen innan åtgärd",
+    "Hosting för telefon utanför hemnätet: 51 MB pck ryms under GitHubs 100 MB-gräns men bör inte committas vid varje bygge",
+    "Punktmolnsprov när Joel satt LM_USER/LM_PASS"
+  ],
+  "bake_final": {
+    "success": true,
+    "driver": "Vulkan/MoltenVK",
+    "static_meshes_baked": 165,
+    "duration_seconds": 46,
+    "texel_size_m": 0.5,
+    "hero_texel_scale": 2.0,
+    "lightmap_source_mb": 18.3,
+    "note": "gi_lightmap_texel_scale (rättat namn) ger 2× på Kråkan/Corpus/Musikskolan. Panelbrädor i egna *_Boards-objekt, dynamisk GI."
+  },
+  "web_mobile_check": {
+    "preset": "Webb mobil",
+    "texture_formats": "ETC2/ASTC",
+    "pck_mb": 50.5,
+    "pck_gzip_mb": 37.8,
+    "wasm_mb": 39.5,
+    "wasm_gzip_mb": 10.1,
+    "browser": "Claude-förhandsvisning (Chromium) på M5",
+    "fps": 120,
+    "draw_calls": 337,
+    "render_triangles": 851905,
+    "scene_load_after_engine_ms": 469,
+    "baked_lightmaps_loaded": true,
+    "phone_hardware_tested": false
+  }
 }
