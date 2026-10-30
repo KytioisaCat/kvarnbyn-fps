@@ -31,6 +31,21 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-10-30 07:40 — Claude Code (Opus 5.5) — Joels dom över Fas B + raket/flygläge
+
+**Status:** klart
+
+**Gjort:**
+- Joel: "bättre än version 1 … lite mer action". Vill ha snabb förflyttning för testfasen.
+- Blå skärm i Mac-appen: exporten saknade de nya skripten → `include_filter` tar med `scripts/*.gd`.
+- `player.gd`: v1:s raketdubbelhopp (mellanslag i luften, håll; 0,45 s bränsle, lyft 30, 17 m/s framåt;
+  laddas om vid landning) och flygläge på F (22 m/s, Shift 60 m/s, dit kameran tittar, genom väggar,
+  ingen skada). Kontrolltestet prövar båda (raket 10,7 m upp / 12,5 m fram).
+
+**Nästa:** Joels svar på styrfrågorna (fienderna, soldatmodeller, Fas C) — se chatten 2026-10-30.
+
+---
+
 ## 2026-10-29 23:50 — Claude Code (Opus 5.5) — Fas B klar: spelbart i v2/kvarnbyn
 
 **Status:** klart (väntar på Joels bedömning)

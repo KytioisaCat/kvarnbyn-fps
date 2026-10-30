@@ -118,7 +118,7 @@ func build_panel() -> void:
 	begin_button.add_theme_color_override("font_hover_color", INK)
 	begin_button.add_theme_font_size_override("font_size", 19)
 	column.add_child(begin_button)
-	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nVänster mus: skjut    Höger mus: sikta    R: ladda om    Esc: paus", 14, Color("afc2b8"))
+	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nVänster mus: skjut    Höger mus: sikta    R: ladda om    Esc: paus\nMellanslag i luften: raket (håll)    F: flygläge för test (Shift = fort)", 14, Color("afc2b8"))
 	column.add_child(instruction_label)
 	settings_row = HBoxContainer.new()
 	settings_row.add_theme_constant_override("separation", 10)

@@ -18,6 +18,13 @@ const MOUSE_SENSITIVITY := 0.0021
 const TOUCH_SENSITIVITY := 0.0032
 const STEP_HEIGHT := 0.23
 const BASE_FOV := 72.0
+# raketdubbelhopp (v1): mellanslag i luften tänder raketen, håll för mer kraft
+const ROCKET_FUEL := 0.45
+const ROCKET_LIFT := 30.0
+const ROCKET_DASH := 17.0
+# flygläge (felsökning, F): fritt genom väggar, ingen skada
+const FLY_SPEED := 22.0
+const FLY_FAST := 60.0
 
 signal died
 
@@ -53,11 +60,15 @@ var was_on_floor := true
 var step_t := 0.0
 var recoil := Vector2.ZERO          # (yaw, pitch) som ännu inte återhämtats
 var sprinting := false
+var rocket_used := false
+var rocket_fuel := 0.0
+var space_was_down := false
 # bot (automatiskt spelprov)
 var bot_input = null               # Vector2 eller null
 var bot_sprint := false
 var footstep: AudioStreamPlayer
 var hurt_voice: AudioStreamPlayer
+var rocket_voice: AudioStreamPlayer
 var shape: CapsuleShape3D
 var collision: CollisionShape3D
 
@@ -93,11 +104,19 @@ func _ready() -> void:
 	hurt_voice.stream = SFX.get_sound("hurt")
 	hurt_voice.volume_db = -4.0
 	add_child(hurt_voice)
+	rocket_voice = AudioStreamPlayer.new()
+	rocket_voice.stream = SFX.get_sound("shot_far")
+	rocket_voice.volume_db = -8.0
+	rocket_voice.pitch_scale = 0.55
+	add_child(rocket_voice)
 	set_process_unhandled_input(true)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not active or input_suspended or not alive:
 		return
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F:
+		free_flight = not free_flight
+		velocity = Vector3.ZERO
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		var sens: float = MOUSE_SENSITIVITY * (1.0 - 0.45 * weapon.ads)
 		look(event.relative * sens)
@@ -174,7 +193,7 @@ func _process(delta: float) -> void:
 		hp = minf(max_hp, hp + regen_rate * delta)
 
 func damage(amount: float, from_pos: Vector3) -> void:
-	if not alive or not combat_enabled:
+	if not alive or not combat_enabled or free_flight:
 		return
 	hp -= amount
 	last_hurt = Time.get_ticks_msec() / 1000.0
@@ -234,16 +253,37 @@ func _physics_process(delta: float) -> void:
 	if direction.length_squared() < 0.01 and grounded:
 		accel = 14.0
 	var weight := minf(delta * accel, 1.0)
-	velocity.x = lerpf(velocity.x, direction.x * speed, weight)
-	velocity.z = lerpf(velocity.z, direction.z * speed, weight)
+	var space_down := jump_requested or (bot_input == null and alive and Input.is_physical_key_pressed(KEY_SPACE))
 	if free_flight:
-		velocity.y = 0.0
+		# flyger dit kameran tittar; Shift = mycket fort
+		var fly_speed := FLY_FAST if Input.is_physical_key_pressed(KEY_SHIFT) else FLY_SPEED
+		var look_dir := camera.global_transform.basis * Vector3(input_vector.x, 0.0, input_vector.y)
+		var target := look_dir * fly_speed
 		if Input.is_physical_key_pressed(KEY_SPACE):
-			velocity.y += speed
+			target.y += fly_speed * 0.6
 		if Input.is_physical_key_pressed(KEY_C) or Input.is_physical_key_pressed(KEY_CTRL):
-			velocity.y -= speed
+			target.y -= fly_speed * 0.6
+		velocity = velocity.lerp(target, minf(delta * 6.0, 1.0))
 		global_position += velocity * delta
 	else:
+		if space_down and not space_was_down and not grounded and not rocket_used and alive:
+			rocket_used = true
+			rocket_fuel = ROCKET_FUEL
+			velocity.y = maxf(velocity.y + 4.0, 6.0)
+			rocket_voice.play()
+		if rocket_fuel > 0.0 and space_down and not grounded:
+			# raketen brinner: lyft och fart framåt dit man tittar
+			rocket_fuel -= delta
+			velocity.y += ROCKET_LIFT * delta
+			var forward := -basis.z * ROCKET_DASH
+			var dash_weight := minf(delta * 6.0, 1.0)
+			velocity.x = lerpf(velocity.x, forward.x, dash_weight)
+			velocity.z = lerpf(velocity.z, forward.z, dash_weight)
+		else:
+			if not space_down:
+				rocket_fuel = 0.0
+			velocity.x = lerpf(velocity.x, direction.x * speed, weight)
+			velocity.z = lerpf(velocity.z, direction.z * speed, weight)
 		if not grounded:
 			velocity.y -= GRAVITY * delta
 		elif alive and (jump_requested or (bot_input == null and Input.is_physical_key_pressed(KEY_SPACE))) and not crouching:
@@ -262,6 +302,10 @@ func _physics_process(delta: float) -> void:
 			land_dip = clampf(-falling * 0.018, 0.03, 0.14)
 			footstep.play()
 		was_on_floor = is_on_floor()
+		if was_on_floor:
+			rocket_used = false
+			rocket_fuel = 0.0
+	space_was_down = space_down
 	jump_requested = false
 
 func reset_touches() -> void:
