@@ -195,7 +195,7 @@ func set_open(value: bool, first_time := false) -> void:
 	if not value:
 		has_started = true
 	main_panel.visible = value
-	begin_button.text = "Gå runt" if first_time else "Fortsätt"
+	begin_button.text = "Spela" if first_time else "Fortsätt"
 	pause_button.visible = not value
 	jump_button.visible = touch_mode and not value
 	touch_hint.visible = touch_mode and not value and not touch_hint_dismissed
