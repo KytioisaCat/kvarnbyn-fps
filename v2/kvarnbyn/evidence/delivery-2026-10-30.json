@@ -1,0 +1,201 @@
+{
+  "date": "2026-10-30",
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "zip_bytes": 238023460,
+  "zip_sha256": "7b1fd8f58bb90da9e21fbb2ec1f0e4dba2577770077fd002785220af049dac27",
+  "engine": "Godot 4.7.2 stable",
+  "renderer": "Forward+/Metal (Apple M5)",
+  "combat_capture": {
+    "baked_lightmaps": false,
+    "cpu_render_ms": 1.69400000572205,
+    "draw_calls": 3699.0,
+    "fps": 75.0,
+    "game": {
+      "allies": 9,
+      "caps": [
+        {
+          "enemies_in": 0,
+          "friends_in": 0,
+          "id": "A",
+          "owner": "enemy",
+          "progress": 1.0
+        },
+        {
+          "enemies_in": 0,
+          "friends_in": 0,
+          "id": "B",
+          "owner": "enemy",
+          "progress": 1.0
+        },
+        {
+          "enemies_in": 0,
+          "friends_in": 0,
+          "id": "C",
+          "owner": "enemy",
+          "progress": 1.0
+        }
+      ],
+      "deaths": 0,
+      "elapsed_s": 3.3,
+      "enemies": 66,
+      "headshots": 0,
+      "kills": 0,
+      "over": false,
+      "player_alive": true,
+      "player_hp": 100.0,
+      "reinforcements_left": 3,
+      "running": true,
+      "victory": false
+    },
+    "gpu_render_ms": 0.0,
+    "load_ms": 5125,
+    "physics_ms": 2.238,
+    "player": {
+      "active": true,
+      "alive": true,
+      "eye": [
+        339.989990234375,
+        54.430004119873,
+        153.190002441406
+      ],
+      "fov_degrees": 71.9999771118164,
+      "free_flight": false,
+      "hp": 100.0,
+      "on_floor": false,
+      "pitch": 0.0,
+      "position": [
+        339.989990234375,
+        52.7800025939941,
+        153.190002441406
+      ],
+      "yaw": 0.819522082805634
+    },
+    "prepared_bake_scene": false,
+    "process_ms": 13.5,
+    "ready": true,
+    "render_triangles": 3386491.0,
+    "static_memory_bytes": 0,
+    "title": "Kvarnbyn",
+    "touch": false,
+    "view": 0,
+    "world": {
+      "colliders": 450,
+      "explicit_collision_meshes": 450,
+      "meshes": 4491,
+      "triangles": 2246828,
+      "vegetation_mesh_instances": 3194
+    }
+  },
+  "torget_capture": {
+    "baked_lightmaps": false,
+    "cpu_render_ms": 1.38100004196167,
+    "draw_calls": 1961.0,
+    "fps": 68.0,
+    "game": {},
+    "gpu_render_ms": 0.0,
+    "load_ms": 5156,
+    "physics_ms": 0.048,
+    "player": {
+      "active": false,
+      "alive": true,
+      "eye": [
+        -8.5,
+        1.52699995040894,
+        8.0
+      ],
+      "fov_degrees": 71.9999771118164,
+      "free_flight": false,
+      "hp": 100.0,
+      "on_floor": false,
+      "pitch": 0.0839502885937691,
+      "position": [
+        -8.5,
+        -0.123000025749207,
+        8.0
+      ],
+      "yaw": 1.10081970691681
+    },
+    "prepared_bake_scene": false,
+    "process_ms": 15.587,
+    "ready": true,
+    "render_triangles": 2011112.0,
+    "static_memory_bytes": 0,
+    "title": "Kvarnbyn",
+    "touch": false,
+    "view": 1,
+    "world": {
+      "colliders": 450,
+      "explicit_collision_meshes": 450,
+      "meshes": 4491,
+      "triangles": 2246828,
+      "vegetation_mesh_instances": 3194
+    }
+  },
+  "controller": {
+    "eye_height_1_65m": true,
+    "final_position": [
+      40.0,
+      0.000838596024550498,
+      0.012919008731842
+    ],
+    "fly_mode": true,
+    "maximum_height": 0.229167863726616,
+    "passed": true,
+    "pause_stops_movement": true,
+    "release_look_keeps_walking": true,
+    "release_move_stops": true,
+    "rocket_distance": 12.49831199646,
+    "rocket_height": 10.7191953659058,
+    "rocket_jump": true,
+    "stopped_at_wall": true,
+    "two_finger_move_and_look": true,
+    "walked_over_20cm_kerb": true
+  },
+  "walk": {
+    "failed": 0,
+    "fails": [],
+    "landed": 180,
+    "points": 180
+  },
+  "vegetation": {
+    "bad": 0,
+    "groups": 478,
+    "mesh_instances": 3194,
+    "passed": true,
+    "scope": "serialized CPU placement and runtime restore; visibility also checked in native captures"
+  },
+  "torg": {
+    "label": "after",
+    "actual_blend": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-torg-20261030/after/world.blend",
+    "spacing_m": 0.5,
+    "pavement_samples": 3757,
+    "holes": 0,
+    "render_collision_mismatch": 0,
+    "max_render_collision_delta_m": 0.0,
+    "samples_without_paving": 0,
+    "unintended_hops_over_022m": 0,
+    "max_hop_m": 0.1831,
+    "first_holes": [],
+    "first_mismatches": [],
+    "first_hops": [],
+    "authored_tree_count": 3,
+    "shrub_count": 24,
+    "asphalt_triangles_unchanged": true,
+    "water_triangles_unchanged": true,
+    "bridge_decks_unchanged": true,
+    "comparison_camera": {
+      "position": [
+        -8.5,
+        1.5265,
+        8
+      ],
+      "actual_floor_y_m": -0.1734619140625,
+      "eye_height_over_COL_m": 1.7
+    },
+    "pass": true
+  },
+  "native_performance": "soldiers-warm-trees-2026-10-30.json",
+  "test_audio": "Dummy driver + muted Master bus",
+  "binaries_in_git": false,
+  "soldier_visual_passed": true
+}

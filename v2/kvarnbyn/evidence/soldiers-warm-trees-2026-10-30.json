@@ -1,0 +1,76 @@
+{
+	"ai_cpu_ms_per_physics_frame": 0.401014444444444,
+	"cpu_render_ms_p50": 1.22800004482269,
+	"display_server": "macOS",
+	"extra_enemies_near_player": 10,
+	"fps_p05": 70.0,
+	"fps_p50": 72.0,
+	"game": {
+		"allies": 9,
+		"caps": [
+			{
+				"enemies_in": 2,
+				"friends_in": 0,
+				"id": "A",
+				"owner": "enemy",
+				"progress": 1.0
+			},
+			{
+				"enemies_in": 0,
+				"friends_in": 0,
+				"id": "B",
+				"owner": "enemy",
+				"progress": 1.0
+			},
+			{
+				"enemies_in": 9,
+				"friends_in": 1,
+				"id": "C",
+				"owner": "enemy",
+				"progress": 0.95
+			}
+		],
+		"deaths": 0,
+		"elapsed_s": 40.0,
+		"enemies": 76,
+		"headshots": 0,
+		"kills": 0,
+		"over": false,
+		"player_alive": true,
+		"player_hp": 98801.8,
+		"reinforcements_left": 3,
+		"running": true,
+		"victory": false
+	},
+	"gpu_render_ms_p50": 0.0,
+	"gpu_render_ms_p95": 0.0,
+	"moving_fraction_when_firing": 0.845952886999645,
+	"near_wall_crossings": 0,
+	"near_wall_segment_checks": 2344,
+	"passed": true,
+	"physics_ms_p50": 4.482,
+	"physics_ms_p95": 5.197,
+	"process_ms_p50": 14.305,
+	"process_ms_p95": 15.464,
+	"renderer": "forward_plus",
+	"scenario": "stationary immortal player on the road near C; ten extra enemies; normal game simulation",
+	"simulated_s": 30.0,
+	"totals": {
+		"blocked_shots": 0.0,
+		"combat_s": 376.400000000002,
+		"cover_moves": 0.0,
+		"cpu_usec": 721826.0,
+		"decisions": 153.0,
+		"escapes": 82.0,
+		"flanks": 143.0,
+		"moving_combat_s": 318.416666666668,
+		"rays": 11313.0,
+		"search_moves": 5.0,
+		"shots": 371.0,
+		"travel_m": 7133.85563026768
+	},
+	"tracked_soldiers": 85,
+	"wall_clock_s": 30.159104,
+	"warmup_s": 10.0,
+	"warmup_wall_s": 10.514333
+}

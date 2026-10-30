@@ -40,6 +40,9 @@ func instance_trees(scene: Node) -> void:
 		var mmi := MultiMeshInstance3D.new()
 		mmi.name = "Trad_" + str(key).replace("|", "_")
 		mmi.multimesh = mm
+		# Headless import uses the dummy RenderingServer, which cannot round-trip
+		# GPU MultiMesh buffers. Keep CPU transforms in the imported scene too.
+		mmi.set_meta("instance_transforms", g["xf"])
 		mmi.gi_mode = GeometryInstance3D.GI_MODE_DYNAMIC
 		mmi.visibility_range_end = 320.0
 		mmi.visibility_range_end_margin = 30.0

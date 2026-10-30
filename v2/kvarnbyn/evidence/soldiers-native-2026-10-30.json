@@ -1,0 +1,73 @@
+{
+  "ai_cpu_ms_per_physics_frame": 1.50033277777778,
+  "display_server": "macOS",
+  "extra_enemies_near_player": 10,
+  "fps_p05": 4.0,
+  "fps_p50": 114.0,
+  "game": {
+    "allies": 9,
+    "caps": [
+      {
+        "enemies_in": 4,
+        "friends_in": 0,
+        "id": "A",
+        "owner": "enemy",
+        "progress": 1.0
+      },
+      {
+        "enemies_in": 0,
+        "friends_in": 0,
+        "id": "B",
+        "owner": "enemy",
+        "progress": 1.0
+      },
+      {
+        "enemies_in": 10,
+        "friends_in": 1,
+        "id": "C",
+        "owner": "enemy",
+        "progress": 1.0
+      }
+    ],
+    "deaths": 0,
+    "elapsed_s": 60.3,
+    "enemies": 89,
+    "headshots": 0,
+    "kills": 0,
+    "over": false,
+    "player_alive": true,
+    "player_hp": 99169.3,
+    "reinforcements_left": 2,
+    "running": true,
+    "victory": false
+  },
+  "moving_fraction_when_firing": 0.849015849015847,
+  "near_wall_crossings": 0,
+  "near_wall_segment_checks": 4631,
+  "passed": true,
+  "physics_ms_p50": 5.451,
+  "physics_ms_p95": 26.697,
+  "process_ms_p50": 11.696,
+  "process_ms_p95": 34.774,
+  "renderer": "forward_plus",
+  "simulated_s": 60.0,
+  "totals": {
+    "blocked_shots": 46.0,
+    "combat_s": 617.283333333333,
+    "cover_moves": 2.0,
+    "cpu_usec": 5401198.0,
+    "decisions": 361.0,
+    "escapes": 282.0,
+    "flanks": 193.0,
+    "moving_combat_s": 524.083333333332,
+    "rays": 27348.0,
+    "search_moves": 134.0,
+    "shots": 534.0,
+    "travel_m": 13816.7602675055
+  },
+  "tracked_soldiers": 99,
+  "wall_clock_s": 90.991488,
+  "current_render_load": false,
+  "superseded_for_performance_by": "soldiers-warm-trees-2026-10-30.json",
+  "note": "Measured before vegetation placement buffers were restored; not representative of final visible scene."
+}

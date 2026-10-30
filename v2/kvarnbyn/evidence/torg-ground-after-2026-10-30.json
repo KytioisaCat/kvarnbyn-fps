@@ -1,0 +1,30 @@
+{
+  "label": "after",
+  "actual_blend": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-torg-20261030/after/world.blend",
+  "spacing_m": 0.5,
+  "pavement_samples": 3757,
+  "holes": 0,
+  "render_collision_mismatch": 0,
+  "max_render_collision_delta_m": 0.0,
+  "samples_without_paving": 0,
+  "unintended_hops_over_022m": 0,
+  "max_hop_m": 0.1831,
+  "first_holes": [],
+  "first_mismatches": [],
+  "first_hops": [],
+  "authored_tree_count": 3,
+  "shrub_count": 24,
+  "asphalt_triangles_unchanged": true,
+  "water_triangles_unchanged": true,
+  "bridge_decks_unchanged": true,
+  "comparison_camera": {
+    "position": [
+      -8.5,
+      1.5265,
+      8
+    ],
+    "actual_floor_y_m": -0.1734619140625,
+    "eye_height_over_COL_m": 1.7
+  },
+  "pass": true
+}

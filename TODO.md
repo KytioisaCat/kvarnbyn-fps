@@ -77,6 +77,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 
 ## Klart
 
+- [x] 2026-10-30 — **Torgförgården återkopplad**: 940 m² sten, 82 m² planteringar, tre unga träd och 24 buskproxyer; 3 757 actual-mesh-prov utan hål/höjdspikar. Även skogsträdens tappade placeringar efter Godot-import rättade och visuellt kontrollerade i Mac-exporten. Nordbanken återstår som separat platsprov.
+
 - [x] 2026-10-30 — **Soldater och Ak 5**: riggad Quaternius CC0-modell (62 ben/24 klipp), bakad gevärsfattning, flank-/skyddsmål och färsk mynningssikt; ny egen Blender-Ak 5 med sikt- och omladdningsprov. Fiendens eldintervall ×0,92 och träffchans ×1,08 ligger i `site.py` → `game.json`. Resultat: `v2/kvarnbyn/RESULTAT-SOLDATER.md`.
 - [x] 2026-10-30 — **Tysta agentprov**: Dummy-ljuddrivrutin och automatisk mute i provskript/capture/bot. Regeln står i CLAUDE.md/AGENTS.md.
 

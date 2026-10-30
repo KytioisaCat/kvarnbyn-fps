@@ -196,6 +196,17 @@ func excluded_from_fallback_collision(mesh_instance: MeshInstance3D) -> bool:
 	return false
 
 func prepare_world() -> void:
+	# Restore procedural MultiMesh buffers after headless import/export.
+	# This runs once with the real renderer before the first visible frame.
+	var vegetation_instances := 0
+	for group in world_instance.find_children("*", "MultiMeshInstance3D", true, false):
+		if group.multimesh == null or not group.has_meta("instance_transforms"):
+			continue
+		var transforms: Array = group.get_meta("instance_transforms")
+		for index in range(transforms.size()):
+			group.multimesh.set_instance_transform(index, transforms[index])
+		vegetation_instances += transforms.size()
+	world_stats["vegetation_mesh_instances"] = vegetation_instances
 	var meshes: Array[MeshInstance3D] = []
 	mesh_nodes(world_instance, meshes)
 	var explicit: Array[MeshInstance3D] = []

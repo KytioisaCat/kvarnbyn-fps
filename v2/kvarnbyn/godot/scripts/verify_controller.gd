@@ -7,6 +7,7 @@ const PlayerController = preload("res://scripts/player.gd")
 var controller
 
 func _initialize() -> void:
+	AudioServer.set_bus_mute(0, true)
 	call_deferred("verify")
 
 func solid(parent: Node3D, location: Vector3, dimensions: Vector3) -> void:

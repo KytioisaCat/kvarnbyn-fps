@@ -89,7 +89,7 @@
   "respawn_s": 5
  },
  "weapon": {
-  "name": "Ak 4C",
+  "name": "Ak 5",
   "mag": 30,
   "rpm": 600,
   "damage_body": 40,
@@ -112,6 +112,8 @@
   "damage": [
    6,
    11
-  ]
+  ],
+  "enemy_fire_interval_scale": 0.92,
+  "enemy_accuracy_scale": 1.08
  }
 }

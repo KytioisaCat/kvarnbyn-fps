@@ -1,16 +1,16 @@
 {
   "input": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/blender/world_raw.glb",
   "output": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/godot/assets/world.glb",
-  "source_bytes": 225343576,
-  "output_bytes": 190995344,
-  "reduction_percent": 15.24,
+  "source_bytes": 225953152,
+  "output_bytes": 191604872,
+  "reduction_percent": 15.2,
   "image_source_bytes": 56232829,
   "image_output_bytes": 21885193,
   "image_count": 34,
-  "material_count": 131,
-  "texture_count": 118,
-  "accessor_count": 16446,
-  "preserved_geometry_buffer_views": 16446,
+  "material_count": 132,
+  "texture_count": 120,
+  "accessor_count": 16506,
+  "preserved_geometry_buffer_views": 16506,
   "verification": "All non-image bufferViews byte-identical; scene, accessor, mesh, material, texture and node dictionaries equal; image references and world bounds unchanged; all views four-byte aligned.",
   "source_world_bounds": {
     "min": [
@@ -941,5 +941,5 @@
       ]
     }
   ],
-  "elapsed_seconds": 2.038
+  "elapsed_seconds": 2.103
 }

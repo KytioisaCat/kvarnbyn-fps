@@ -35,12 +35,14 @@ step "Godot: import (två varv: importinställningar emellan)"
 $G --audio-driver Dummy --headless --path $P/godot --editor --import --quit > $LOG/godot-import-1.log 2>&1
 $G --audio-driver Dummy --headless --path $P/godot --script res://scripts/configure_import.gd 2>&1 | grep KVARNBYN
 $G --audio-driver Dummy --headless --path $P/godot --editor --import --quit > $LOG/godot-import-2.log 2>&1
-if grep -q "SCRIPT ERROR" $LOG/godot-import-2.log; then grep "SCRIPT ERROR" $LOG/godot-import-2.log | sort | uniq -c; exit 2; fi
+if grep -qE "SCRIPT ERROR|ERROR:" $LOG/godot-import-1.log $LOG/godot-import-2.log; then grep -E "SCRIPT ERROR|ERROR:" $LOG/godot-import-1.log $LOG/godot-import-2.log | sort | uniq -c; exit 2; fi
 awk '/KVARNBYN_TREES/ { last=$0 } END { if (last != "") print last }' $LOG/godot-import-1.log $LOG/godot-import-2.log
 step "Kontroll: kontroller och gångprov"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_controller.gd 2>&1 | grep -E "KVARNBYN|PASS|FAIL" | tail -3
 step "Kontroll: gångytor över hela världen"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --walktest > $LOG/walk-check.log 2>&1
+step "Kontroll: trädplaceringar efter import"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_trees.gd -- --explore > $LOG/tree-check.log 2>&1
 step "Kontroll: soldatmodell och stridsfysik"
 $G --audio-driver Dummy --headless --path $P/godot --script res://scripts/verify_soldier_visual.gd > $LOG/soldier-visual.log 2>&1
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_soldiers.gd > $LOG/soldier-tactics.log 2>&1

@@ -31,22 +31,46 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
-## 2026-10-30 08:22 — ChatGPT Codex — soldater, Ak 5 och återkopplat torgunderlag
+## 2026-10-30 14:14 — ChatGPT Codex — soldater, Ak 5 och torgförgård levererade
 
-**Status:** pågår — soldat/vapenprov gröna, slutprofilering och torganslutningar återstår.
+**Status:** klart — ny lokal Mac-app verifierad; Joels bedömning av denna version återstår.
 **Gjort:**
-- Läst Opus överlämning. Brief `v2/kvarnbyn/BRIEF-SOLDATER.md`; allt i aktiva datorprojektet.
-- Quaternius CC0-soldatkälla 3,37 MB (licens/hash i `assets-src/soldier/`), 62 ben/24 klipp;
-  Blender-bakad tvåhandsfattning och gemensam Ak 5. `soldier_visual.gd` + riktiga benföljande huvudträffzoner.
-- AI i `soldier_tactics.gd`: prövade flank-/skyddsmål, kort målminne, färsk huvud- och mynningssikt.
-  Arena grön: 6/6 flyttar >3 m, skydd efter träff, inga väggpenetrationer; full värld 45 s utan scriptfel.
-- Ak 5 från egen Blender-modell, kalibrerat ADS och rörligt magasin/mantel. Vapenproven gröna.
-- Miljögranskning hittade att `authored_ground` ignorerades. Torgpass byggs staged och anslutningar provas mot faktisk COL-geometri.
-- Joel förtydligade att små nedladdningar är fria; stäm av först vid några hundra MB till cirka 1 GB.
-- **Joels tester ska vara tysta:** `--audio-driver Dummy`, testskript mutar masterbussen, `world.gd`
-  mutar capture/bot/probe/walktest. Sparat i CLAUDE.md och identisk AGENTS.md.
-**Nästa:** färdigt torgprov → full återbyggnad/kontroller → tyst macOS-exportprov → resultat, dagbok och commit.
-**Varningar:** inga nya stora genererade binärer i Git. Ingen annan agents/användares Godot-process ska stängas generellt.
+- `v2/kvarnbyn/RESULTAT-SOLDATER.md` och ny README samlar resultat/spela/återbyggnad.
+- Quaternius CC0-källa 3,37 MB versionshanterad med licens/hash; `build_soldier.py` bakar
+  tvåhandsfattning, 62 ben/24 klipp. `soldier_visual.gd` väljer rörelse-/dödsanimation och
+  huvudträffzonen följer benet. Delade lagmaterial. Samma egenbyggda Ak 5 som i förstaperson.
+- `soldier_tactics.gd`: golv-/kapselprövade flank-/skyddsmål, kort målminne, fastna-flykt;
+  varje skott kräver aktuell huvud- och mynningssikt. Arena: 6/6 flyttar >3 m, skydd efter träff,
+  0 väggpenetrationer på 6 135 prov. Lite högre fiendetryck styrs i site.py → game.json.
+- `build_ak5.py` + `weapon.gd`: äldre grön Ak 5, namngivna sikten/mynning, rörligt magasin/mantel.
+  13 teknikprov gröna; ADS 0 px i isolerat prov; reload inom ett 60 Hz-steg från 1,7/2,2 s.
+- Förgården framför Musikskolan/Corpus återkopplad i `authored_ground.py`/site/build_world:
+  940 m² sten, 82 m² planteringar, tre unga träd och 24 låga buskproxyer. Konturer/höjder uppskattade.
+  3 757 actual-mesh-prov: 0 hål/mismatch/saknad sten; höjdändringar >22 cm/0,5 m 93→0.
+  Asfalt/vatten/brodäck oförändrade. Nordbanken uppskjuten, grov kontur kräver eget platsprov.
+- **Viktig importfix:** träden syntes i Blender men inte i Godot! MultiMesh GPU-data tappades
+  vid headless-import. Importören sparar nu CPU-transformer på noden, runtime återställer.
+  `verify_trees.gd`: 478 grupper/3 194 meshinstanser. Skog + planteringar syns i exportens bild.
+  `configure_import.gd` rensar endast världens genererade cache så andra importen kör aktuell kod.
+- Full återbyggnad, kontroller/raket/flyg, 180/180 gångpunkter, soldat/vapen/trädprov gröna.
+  `npm run build` grönt. Mac-exporten (238 MB ZIP) startad utan editor, strid och torget verifierade.
+- Slutlig ensam native-mätning **med synliga träd**: 10 s uppvärmning +30 s, M5/Forward+/Metal,
+  85 följda soldater, median72 FPS /p05 70; fysik4,48/p95 5,20 ms; AI0,40ms/steg.
+  Tidigare95/114-FPS-prov utan träd är märkta ersatta. GPU-timern gav inga användbara värden.
+- **Joels tester är tysta:** Dummy-ljuddrivrutin + master-mute i tester och automatiska
+  capture/bot/probe/walktest; sparat i CLAUDE.md och identisk AGENTS.md. Alla egna prov avslutade.
+
+**Läge nu:** app i `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app`; stora genererade filer
+bara lokalt. Återbygg med `v2/kvarnbyn/rebuild.sh` (bygger även modeller/prov/export/packar upp).
+Kvitto och små bilder i `evidence/delivery-2026-10-30.json`, `app_*_final.jpg`.
+**Nästa:**
+1. Joels dom över soldaternas utseende/rörelse, vapnet och svårigheten.
+2. Nästa platsprov: Roten M 29–31, 50×55 m. Verifiera murkrön/murfötter/gårdsnivåer/häckar visuellt
+   innan konstruktion av plana tomtterrasser och stödmurar. Se `evidence/world-review-2026-10-30.md`.
+3. Kvällsljus efter modellpasset; vidare husrundor. Nordbanken separat, inte räknad som klar.
+**Varningar:** grafindexet täcker främst v1; faktisk Godot-kod är facit. Telefon är bonus,
+aktuell leverans är datorappen. Ny full botomgång/svårighetsbedömning är inte gjord; nativeprovet
+använder odödlig stationär testspelare och är ett belastningsstickprov. Rör aldrig andra Godot-processer generellt.
 
 ---
 

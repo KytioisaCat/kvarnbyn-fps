@@ -14,7 +14,8 @@ Regler:
 
     tools/venv/bin/python v2/kvarnbyn/pipeline/site.py
 """
-import json, math, time
+import argparse, json, math, time
+from pathlib import Path
 import numpy as np
 import shapely
 from shapely.geometry import LineString, Polygon, Point, box, MultiPolygon
@@ -23,6 +24,13 @@ from shapely.strtree import STRtree
 import mapbox_earcut as earcut
 
 from common import ZONE, BACKDROP, DATA, Y_OFFSET, raw_height, land_class
+from authored_ground import AuthoredGround, SurfaceReference
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--stage-dir', type=Path, help='Write site/nav/game here, without touching active Godot assets.')
+options = parser.parse_args()
+OUTPUT = options.stage_dir.resolve() if options.stage_dir else DATA
+OUTPUT.mkdir(parents=True, exist_ok=True)
 
 T0 = time.time()
 city = json.loads((DATA / 'city.json').read_text())
@@ -151,6 +159,16 @@ trail = trail.difference(asphalt).difference(paving_all).difference(other_u).dif
 pitch_u = unary_union([p for s, p, _ in surfaces if s['kind'] == 'pitch']).difference(cut).intersection(work) if surfaces else Polygon()
 play_u = unary_union([p for s, p, _ in surfaces if s['kind'] == 'playground']).difference(cut).intersection(work) if surfaces else Polygon()
 urban = unary_union([asphalt, paving_all, pitch_u, play_u])
+# Restore the observed Torget ground description lost in the first large-world pass.
+# Existing asphalt, bridges, buildings, water and other authored OSM surfaces win.
+original_urban = urban
+authored = AuthoredGround(city.get('authored_ground'), cut.union(asphalt).union(other_u), original_urban, work, asphalt)
+paving_all = paving_all.union(authored.paving).difference(authored.soil)
+paving = paving.union(authored.paving).difference(authored.soil)
+walkway = walkway.difference(authored.coverage)
+trail = trail.difference(authored.coverage)
+urban = unary_union([asphalt, paving_all, pitch_u, play_u, authored.soil])
+log(f'handgranskat torg: {authored.paving.area:.0f} m² sten + {authored.soil.area:.0f} m² planteringsöar (uppskattade konturer)')
 log(f'ytor: asfalt {asphalt.area:.0f} m², gatsten {paving.area:.0f} m², gångbana {walkway.area:.0f} m², stig {trail.area:.0f} m², å {channel.area:.0f} m²')
 
 # ---------- höjd för en byggd yta i punkter ----------
@@ -158,7 +176,7 @@ road_lines = [line for _, line, _, _ in profiles]
 road_tree = STRtree(road_lines)
 
 
-def surface_height(x, z):
+def base_surface_height(x, z):
     """Höjd (rå m ö.h.) för gator/ytor i punkterna: plan om i en yta, annars närmaste gatuprofil."""
     x = np.atleast_1d(np.asarray(x, float)); z = np.atleast_1d(np.asarray(z, float))
     pts = shapely.points(x, z)
@@ -175,6 +193,48 @@ def surface_height(x, z):
             sel = ri[idx == k]; _, line, s, h = profiles[k]
             out[sel] = np.interp(shapely.line_locate_point(line, pts[sel]), s, h)
     return out
+
+
+def triangulate(geom, height_fn, lift):
+    """Polygoner → trianglar med höjd, klippta i 2 m-celler så att ytan följer profilen."""
+    out = {}
+    for poly in polys_of(geom):
+        minx, minz, maxx, maxz = poly.bounds
+        gx = np.arange(math.floor(minx / 2) * 2, maxx, 2.0); gz = np.arange(math.floor(minz / 2) * 2, maxz, 2.0)
+        if len(gx) == 0 or len(gz) == 0: continue
+        GX, GZ = np.meshgrid(gx, gz)
+        cells = shapely.box(GX.ravel(), GZ.ravel(), GX.ravel() + 2, GZ.ravel() + 2)
+        hit = shapely.intersects(cells, poly)
+        pieces = shapely.intersection(cells[hit], poly)
+        for piece in pieces:
+            for pp in polys_of(piece):
+                if pp.area < 1e-4: continue
+                rings = [np.array(pp.exterior.coords)[:-1]] + [np.array(r.coords)[:-1] for r in pp.interiors]
+                verts = np.vstack(rings)
+                ends = np.cumsum([len(r) for r in rings]).astype(np.uint32)
+                tri = earcut.triangulate_float64(verts, ends).reshape(-1, 3)
+                if len(tri) == 0: continue
+                y = height_fn(verts[:, 0], verts[:, 1]) + lift - Y_OFFSET
+                cx, cz = verts[:, 0].mean(), verts[:, 1].mean()
+                key = '%d_%d' % (math.floor(cx / TILE), math.floor(cz / TILE))
+                bucket = out.setdefault(key, [])
+                for a, b, c in tri:
+                    bucket.append([[round(float(verts[i, 0]), 3), round(float(y[i]), 3), round(float(verts[i, 1]), 3)] for i in (a, b, c)])
+    return out
+
+
+
+# Tie new paving to the actual triangulated road surface. Nearest-profile height
+# can switch to an uphill footpath even at a street edge, creating a false hump.
+connection_reference = SurfaceReference(triangulate(original_urban, base_surface_height, 0.),
+                                     base_surface_height, Y_OFFSET, 0.,
+                                     authored.coverage.bounds if not authored.coverage.is_empty else None)
+authored.fit(base_surface_height, connection_reference.height)
+
+
+def surface_height(x, z):
+    x = np.atleast_1d(np.asarray(x, float)); z = np.atleast_1d(np.asarray(z, float))
+    return authored.height(x, z, base_surface_height(x, z))
 
 
 def distance_to(geom, x, z):
@@ -226,49 +286,64 @@ coarse = terrain_grid(BACKDROP, 8.0, False)
 log(f'terräng kuliss: {coarse["nx"]}×{coarse["nz"]} punkter à 8 m')
 
 # ---------- trianglar för byggda ytor, per 100 m-ruta ----------
-def triangulate(geom, height_fn, lift):
-    """Polygoner → trianglar med höjd, klippta i 2 m-celler så att ytan följer profilen."""
-    out = {}
-    for poly in polys_of(geom):
-        minx, minz, maxx, maxz = poly.bounds
-        gx = np.arange(math.floor(minx / 2) * 2, maxx, 2.0); gz = np.arange(math.floor(minz / 2) * 2, maxz, 2.0)
-        if len(gx) == 0 or len(gz) == 0: continue
-        GX, GZ = np.meshgrid(gx, gz)
-        cells = shapely.box(GX.ravel(), GZ.ravel(), GX.ravel() + 2, GZ.ravel() + 2)
-        hit = shapely.intersects(cells, poly)
-        pieces = shapely.intersection(cells[hit], poly)
-        for piece in pieces:
-            for pp in polys_of(piece):
-                if pp.area < 1e-4: continue
-                rings = [np.array(pp.exterior.coords)[:-1]] + [np.array(r.coords)[:-1] for r in pp.interiors]
-                verts = np.vstack(rings)
-                ends = np.cumsum([len(r) for r in rings]).astype(np.uint32)
-                tri = earcut.triangulate_float64(verts, ends).reshape(-1, 3)
-                if len(tri) == 0: continue
-                y = height_fn(verts[:, 0], verts[:, 1]) + lift - Y_OFFSET
-                cx, cz = verts[:, 0].mean(), verts[:, 1].mean()
-                key = '%d_%d' % (math.floor(cx / TILE), math.floor(cz / TILE))
-                bucket = out.setdefault(key, [])
-                for a, b, c in tri:
-                    bucket.append([[round(float(verts[i, 0]), 3), round(float(y[i]), 3), round(float(verts[i, 1]), 3)] for i in (a, b, c)])
-    return out
-
 
 def plane_height(x, z):
     return surface_height(x, z)
 
 
+# Grading boundaries must be explicit mesh edges. A unified polygon otherwise
+# lets a triangle carry an old uphill-profile vertex across the new paving.
+paving_mesh = triangulate(paving.difference(authored.coverage), surface_height, .13)
+for tile, triangles in triangulate(authored.paving, surface_height, .13).items():
+    paving_mesh.setdefault(tile, []).extend(triangles)
+
 meshes = {
-    'asphalt': triangulate(asphalt, surface_height, 0.03),
-    'paving': triangulate(paving, surface_height, 0.13),
+    'asphalt': triangulate(asphalt, base_surface_height, 0.03),
+    'paving': paving_mesh,
     'walkway': triangulate(walkway, surface_height, 0.12),
     'trail': triangulate(trail, lambda x, z: raw_height(x, z), 0.05),
     'pitch': triangulate(pitch_u, surface_height, 0.05),
     'playground': triangulate(play_u, surface_height, 0.05),
+    'soil': triangulate(authored.soil, surface_height, 0.08),
 }
 if river_prof:
     meshes['water'] = triangulate(channel, lambda x, z: water_level(x, z), 0.0)
 log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m in meshes.items()))
+
+# Exact terrain cuts under the new surfaces prevent 2 m grass triangles crossing
+# a pavement edge. Replacement triangles keep the original cell interpolation.
+terrain_overrides = {}
+if not authored.coverage.is_empty:
+    H = np.asarray(fine['heights']).reshape(fine['nz'], fine['nx'])
+    minx, minz, maxx, maxz = authored.coverage.bounds
+    for k in range(max(0, int((minz - fine['z0']) // 2)), min(fine['nz'] - 1, int((maxz - fine['z0']) // 2) + 1)):
+        for i in range(max(0, int((minx - fine['x0']) // 2)), min(fine['nx'] - 1, int((maxx - fine['x0']) // 2) + 1)):
+            xa, za = fine['x0'] + i * 2, fine['z0'] + k * 2
+            cell = box(xa, za, xa + 2, za + 2)
+            if not cell.intersects(authored.coverage): continue
+            def cell_height(x, z):
+                tx, tz = (x - xa) / 2, (z - za) / 2
+                return (H[k, i] * (1-tx) + H[k, i+1] * tx) * (1-tz) + (H[k+1, i] * (1-tx) + H[k+1, i+1] * tx) * tz + Y_OFFSET
+            replacement = triangulate(cell.difference(authored.coverage), cell_height, 0.)
+            terrain_overrides[str(k * (fine['nx'] - 1) + i)] = [tri for bucket in replacement.values() for tri in bucket]
+
+# Fill outer edges down into the terrain. These are foundations, not invented
+# garden retaining walls; no internal kerbs are made at shared paving borders.
+supports, planter_kerbs = [], []
+for poly in polys_of(authored.coverage):
+    for ring in [poly.exterior] + list(poly.interiors):
+        q = np.asarray(ring.segmentize(1.).coords)
+        tops = surface_height(q[:, 0], q[:, 1]) + .13 - Y_OFFSET
+        bottoms = np.minimum(raw_height(q[:, 0], q[:, 1]) - Y_OFFSET - .35, tops - .35)
+        for j in range(len(q) - 1):
+            supports.append([*q[j], tops[j], bottoms[j], *q[j+1], tops[j+1], bottoms[j+1]])
+for poly in polys_of(authored.soil):
+    for ring in [poly.exterior] + list(poly.interiors):
+        q = np.asarray(ring.segmentize(.5).coords)
+        ys = surface_height(q[:, 0], q[:, 1]) - Y_OFFSET
+        for j in range(len(q) - 1):
+            planter_kerbs.append([q[j, 0], ys[j], q[j, 1], q[j+1, 0], ys[j+1], q[j+1, 1]])
+authored_trees, shrubs = authored.planting(surface_height, Y_OFFSET)
 
 # ---------- kantsten mellan asfalt och trottoar, fundament runt upphöjda ytor ----------
 kerbs = []
@@ -385,7 +460,7 @@ log(f'träd: {len(trees)}')
 
 # ---------- vägnät för soldaterna (Fas B) + speldata ----------
 from common import HERE, V1_ORIGIN
-GA = HERE / 'godot/assets'; GA.mkdir(parents=True, exist_ok=True)
+GA = OUTPUT if options.stage_dir else HERE / 'godot/assets'; GA.mkdir(parents=True, exist_ok=True)
 nkey = {}; nodes_xyz = []; edges = set()
 inner = zone.buffer(-4)
 
@@ -449,14 +524,16 @@ game = dict(note='Spelregler Fas B — siffror ur v1 (public/game.js), antal sol
             allies=dict(count=9, guards=3, respawn_interval_s=45),
             capture=dict(enemy_rate=0.035, friendly_rate=0.1, max_count=3),
             player=dict(hp=100, regen_delay_s=5, regen_per_s=25, respawn_s=5),
-            weapon=dict(name='Ak 4C', mag=30, rpm=600, damage_body=40, damage_head=100, reload_s=1.7, range_m=400),
-            soldier=dict(hp=100, speed=[2.6, 3.5], sight_m=75, engage_m=70, fire_interval_s=[0.75, 1.35], damage=[6, 11]))
+            weapon=dict(name='Ak 5', mag=30, rpm=600, damage_body=40, damage_head=100, reload_s=1.7, range_m=400),
+            soldier=dict(hp=100, speed=[2.6, 3.5], sight_m=75, engage_m=70, fire_interval_s=[0.75, 1.35], damage=[6, 11], enemy_fire_interval_scale=.92, enemy_accuracy_scale=1.08))
 (GA / 'game.json').write_text(json.dumps(game, ensure_ascii=False, indent=1))
 log('game.json: zoner ' + ', '.join(c['id'] + '@' + str(c['position']) for c in caps))
 
 site = dict(meta=dict(note='Markytor för Fas A, genererade av site.py. y = rå höjd − 18 m.', y_offset_m=Y_OFFSET, tile_m=TILE,
                       zone=list(ZONE), backdrop=list(BACKDROP)),
             terrain=fine, terrain_backdrop=coarse, meshes=meshes, kerbs=kerbs, river_walls=river_walls, bridges=bridges,
-            lamps=lamps, trees=trees, stairs=stairs, surfaces=[dict(id=s['id'], kind=s['kind'], plane_raw=[round(float(v), 6) for v in pl]) for s, _, pl in surfaces])
-(DATA / 'site.json').write_text(json.dumps(site, separators=(',', ':')))
-log(f'site.json {((DATA / "site.json").stat().st_size / 1e6):.1f} MB')
+            lamps=lamps, trees=trees, stairs=stairs, surfaces=[dict(id=s['id'], kind=s['kind'], plane_raw=[round(float(v), 6) for v in pl]) for s, _, pl in surfaces],
+            authored_ground=authored.metadata(), terrain_overrides=terrain_overrides, authored_supports=supports,
+            planter_kerbs=planter_kerbs, authored_trees=authored_trees, shrubs=shrubs)
+(OUTPUT / 'site.json').write_text(json.dumps(site, separators=(',', ':')))
+log(f'site.json {((OUTPUT / "site.json").stat().st_size / 1e6):.1f} MB → {OUTPUT}')

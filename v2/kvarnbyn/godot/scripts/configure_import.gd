@@ -15,5 +15,10 @@ func _initialize() -> void:
 	configuration.set_value("params", "import_script/path", "res://scripts/import_world.gd")
 	configuration.set_value("params", "animation/import", false)
 	error = configuration.save(path)
+	# A changed post-import script is not reliably tracked as a GLB dependency.
+	# Remove only this generated scene cache so the second import always runs it.
+	var generated_scene: String = configuration.get_value("remap", "path", "")
+	if generated_scene.begins_with("res://.godot/imported/world.glb-"):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(generated_scene))
 	print("KVARNBYN_IMPORT_CONFIG ", error)
 	quit(error)

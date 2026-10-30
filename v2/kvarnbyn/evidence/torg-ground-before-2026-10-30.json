@@ -1,0 +1,301 @@
+{
+  "label": "before",
+  "actual_blend": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-torg-20261030/before/world.blend",
+  "spacing_m": 0.5,
+  "pavement_samples": 3757,
+  "holes": 0,
+  "render_collision_mismatch": 0,
+  "max_render_collision_delta_m": 0.0,
+  "samples_without_paving": 2705,
+  "unintended_hops_over_022m": 93,
+  "max_hop_m": 0.4232,
+  "first_holes": [],
+  "first_mismatches": [],
+  "first_hops": [
+    {
+      "x": -22.25,
+      "z": -7.75,
+      "step_m": 0.4232,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -22.25,
+      "z": -7.75,
+      "step_m": 0.4217,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -22.75,
+      "z": -7.25,
+      "step_m": 0.4084,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -22.75,
+      "z": -7.25,
+      "step_m": 0.4046,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -26.75,
+      "z": -22.75,
+      "step_m": 0.3314,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -25.25,
+      "z": -4.25,
+      "step_m": 0.3241,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -26.25,
+      "z": -3.25,
+      "step_m": 0.312,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -26.25,
+      "z": -3.25,
+      "step_m": 0.3103,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -3.75,
+      "z": -5.75,
+      "step_m": 0.3082,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -4.25,
+      "z": -5.75,
+      "step_m": 0.3027,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -28.25,
+      "z": -21.75,
+      "step_m": 0.3011,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -4.75,
+      "z": -5.25,
+      "step_m": 0.2962,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -3.75,
+      "z": -5.75,
+      "step_m": 0.2948,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -4.75,
+      "z": -5.25,
+      "step_m": 0.2867,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -3.25,
+      "z": -6.25,
+      "step_m": 0.2839,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -32.75,
+      "z": 12.25,
+      "step_m": 0.2829,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -19.75,
+      "z": -12.75,
+      "step_m": 0.2811,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": 5.75,
+      "z": -10.25,
+      "step_m": 0.2761,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -19.25,
+      "z": -12.75,
+      "step_m": 0.2742,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -26.25,
+      "z": -20.25,
+      "step_m": 0.271,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -2.25,
+      "z": -6.25,
+      "step_m": 0.2683,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -2.75,
+      "z": -6.25,
+      "step_m": 0.2675,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": 6.25,
+      "z": -10.75,
+      "step_m": 0.267,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -7.75,
+      "z": -3.75,
+      "step_m": 0.2647,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -5.25,
+      "z": -5.25,
+      "step_m": 0.2643,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -33.25,
+      "z": 12.75,
+      "step_m": 0.2626,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -26.75,
+      "z": -20.75,
+      "step_m": 0.2617,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -27.75,
+      "z": -21.75,
+      "step_m": 0.2615,
+      "direction": [
+        0,
+        1
+      ]
+    },
+    {
+      "x": -25.75,
+      "z": -3.75,
+      "step_m": 0.26,
+      "direction": [
+        1,
+        0
+      ]
+    },
+    {
+      "x": -25.75,
+      "z": -3.75,
+      "step_m": 0.2598,
+      "direction": [
+        0,
+        1
+      ]
+    }
+  ],
+  "authored_tree_count": 0,
+  "shrub_count": 0,
+  "asphalt_triangles_unchanged": true,
+  "water_triangles_unchanged": true,
+  "bridge_decks_unchanged": true,
+  "comparison_camera": {
+    "position": [
+      -8.5,
+      1.5265,
+      8
+    ],
+    "actual_floor_y_m": -0.1734619140625,
+    "eye_height_over_COL_m": 1.7
+  },
+  "pass": false
+}

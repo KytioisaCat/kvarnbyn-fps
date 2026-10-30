@@ -42,11 +42,6 @@
 			"test": "charging_handle"
 		},
 		{
-			"details": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/evidence/weapon/ak5_hip.png",
-			"pass": true,
-			"test": "native_capture_hip"
-		},
-		{
 			"details": {
 				"ads": 1.0,
 				"asset": "res://assets/weapons/ak5_view.glb",
@@ -81,11 +76,6 @@
 			"test": "muzzle_below_sight_axis"
 		},
 		{
-			"details": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/evidence/weapon/ak5_ads.png",
-			"pass": true,
-			"test": "native_capture_ads"
-		},
-		{
 			"details": {
 				"mag": 21,
 				"shots_in_one_second": 9
@@ -97,11 +87,6 @@
 			"details": null,
 			"pass": true,
 			"test": "magazine_moves_during_reload"
-		},
-		{
-			"details": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/evidence/weapon/ak5_reload.png",
-			"pass": true,
-			"test": "native_capture_reload"
 		},
 		{
 			"details": {

@@ -207,6 +207,12 @@ från triangulerad befintlig mark och exakt terrängklippning. Detta pass omfatt
 tre planteringsöar; den grövre nordbanksytan behöver eget platsprov. Höjder/konturer är
 uppskattade, medan förekomst av stenläggning och tre unga träd är visuellt observerad.
 
+**Importfälla:** MultiMesh-data från en headless import kan tappa GPU-buffertens placeringar.
+Importören sparar därför även CPU-transformer på noden; runtime återställer bufferten en gång.
+`configure_import.gd` rensar bara världens genererade scen-cache så pass två verkligen kör det
+aktuella importskriptet. `verify_trees.gd` kontrollerar de sparade placeringarna, och nativebilden
+måste också visa grönskan. Tidiga FPS-mätningar utan synliga träd ersattes med ett nytt prov.
+
 Alla agentkörda Godot-prov ska vara ljudlösa (`--audio-driver Dummy` och mutad masterbuss).
 Vanlig manuell spelstart har ljud. Provflaggorna capture/bot/probe/walktest mutar automatiskt.
 

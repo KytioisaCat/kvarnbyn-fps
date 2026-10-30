@@ -4,7 +4,7 @@ blender/world_raw.glb + godot-metadata. Återanvänder torget-provets kit, mater
     v2/.tools/Blender.app/Contents/MacOS/Blender -b --python v2/kvarnbyn/blender/build_world.py
 """
 from pathlib import Path
-import json, math, sys, time, zlib
+import argparse, json, math, sys, time, zlib
 import bpy, bmesh
 
 HERE = Path(__file__).resolve().parents[1]           # v2/kvarnbyn
@@ -20,10 +20,16 @@ import houses, heroes
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
 
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--stage-dir', type=Path, help='Read site.json and write model/metadata here; leave active Godot assets intact.')
+parser.add_argument('--save-blend', action='store_true', help='Save the staged scene for geometry probes.')
+options = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
 CITY = json.loads((HERE / 'data/city.json').read_text())
-SITE = json.loads((HERE / 'data/site.json').read_text())
+OUT = options.stage_dir.resolve() if options.stage_dir else HERE / 'blender'
+OUT.mkdir(parents=True, exist_ok=True)
+SITE = json.loads(((OUT if options.stage_dir else HERE / 'data') / 'site.json').read_text())
 OFFSET = CITY['meta']['origin']['y_offset_m']
-OUT = HERE / 'blender'; GODOT = HERE / 'godot/assets'; GODOT.mkdir(parents=True, exist_ok=True)
+GODOT = OUT if options.stage_dir else HERE / 'godot/assets'; GODOT.mkdir(parents=True, exist_ok=True)
 TILE = SITE['meta']['tile_m']
 
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
@@ -68,6 +74,7 @@ M.update({
     'chimney': pbr('brick', 'Chimney_brick', None, .6), 'sign_dark': solid_material('Sign_dark', color('#1c2224'), .8),
     'trim_light': solid_material('Trim_light', color('#ece8de'), .65), 'trim_dark': solid_material('Trim_darkgreen', color('#2f4a3a'), .6),
     'lamp_glass': solid_material('Lamp_glass', color('#f4ead2'), .3),
+    'soil': pbr('grass', 'Planter_soil', '#413b2e', .35),
 })
 _cache = {}
 
@@ -133,11 +140,14 @@ for k in range(NZ - 1):
         land = [sum(TL[j][c] for j in ids) / 4 for c in range(4)]
         slope = (max(ys) - min(ys)) / ST
         mat = M['rock'] if (land[3] > 0.5 or slope > 0.95) else M['forest'] if land[2] > 0.6 else M['grass']
-        pts = [(x, -z, y) for x, y, z in zip(xs, ys, zs)][::-1]
         t = tile_of(xs[0], zs[0])
         tile_m = mat.get('tile_size_m', 2.5)
-        K.face('Terrain' + t, mat, pts, [(p[0] / tile_m, p[1] / tile_m) for p in pts])
-        K.face('COL_Terrain' + t, M['collision'], pts)
+        replacement = SITE.get('terrain_overrides', {}).get(str(k * (NX - 1) + i))
+        faces = [[(x, -z, y) for x, y, z in tri][::-1] for tri in replacement] if replacement is not None else [[(x, -z, y) for x, y, z in zip(xs, ys, zs)][::-1]]
+        for pts in faces:
+            if (pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0]) < 0: pts.reverse()
+            K.face('Terrain' + t, mat, pts, [(p[0] / tile_m, p[1] / tile_m) for p in pts])
+            K.face('COL_Terrain' + t, M['collision'], pts)
 log(f'terräng zon: {(NX - 1) * (NZ - 1)} rutor')
 C = SITE['terrain_backdrop']; CX, CZ, CX0, CZ0, CS = C['nx'], C['nz'], C['x0'], C['z0'], C['step']; CH = C['heights']
 fx0, fz0, fx1, fz1 = X0 + ST, Z0 + ST, X0 + (NX - 2) * ST, Z0 + (NZ - 2) * ST
@@ -152,7 +162,7 @@ for k in range(CZ - 1):
 log('terräng kuliss klar')
 
 # ---------- byggda ytor ----------
-MAT = {'asphalt': M['asphalt'], 'paving': M['paving'], 'walkway': M['walkway'], 'trail': M['trail'], 'pitch': M['pitch'], 'playground': M['playground'], 'water': M['water']}
+MAT = {'asphalt': M['asphalt'], 'paving': M['paving'], 'walkway': M['walkway'], 'trail': M['trail'], 'pitch': M['pitch'], 'playground': M['playground'], 'water': M['water'], 'soil': M['soil']}
 for kind, tiles in SITE['meshes'].items():
     mat = MAT[kind]; tm = mat.get('tile_size_m', 3)
     for t, tris in tiles.items():
@@ -167,6 +177,27 @@ for x1, y1, z1, x2, y2, z2 in SITE['kerbs']:
     u = ((x2 - x1) / L, -(z2 - z1) / L)
     K.box('Kerbs' + tile_of(x1, z1), M['curb'], ((x1 + x2) / 2, -(z1 + z2) / 2, (y1 + y2) / 2 - .1), (L + .02, .14, .22), u)
 log('gator, kantsten klara')
+
+# Authored Torget surfaces are cut into the ground and have filled edge faces.
+# The foundations meet terrain below; they are not unsupported floating slabs.
+for xa, za, ta, ba, xb, zb, tb, bb in SITE.get('authored_supports', []):
+    pts = [(xa, -za, ba), (xb, -zb, bb), (xb, -zb, tb), (xa, -za, ta)]
+    t = tile_of(xa, za)
+    K.face('Paving_foundation' + t, M['stone'], pts)
+    K.face('Paving_foundation' + t, M['stone'], pts[::-1])
+    K.face('COL_Paving_foundation' + t, M['collision'], pts)
+for xa, ya, za, xb, yb, zb in SITE.get('planter_kerbs', []):
+    L = math.hypot(xb - xa, zb - za)
+    if L < .01: continue
+    u = ((xb - xa) / L, -(zb - za) / L)
+    centre = ((xa + xb) / 2, -(za + zb) / 2, (ya + yb) / 2 + .08)
+    size = (L + .015, .18, .26)
+    t = tile_of(xa, za)
+    K.box('Planter_kerb' + t, M['curb'], centre, size, u)
+    K.box('COL_Planter_kerb' + t, M['collision'], centre, size, u)
+for x, y, z, s, v, yaw in SITE.get('authored_trees', []):
+    # Only the young street-tree trunks block walking; foliage is permeable.
+    K.beam('COL_Young_tree' + tile_of(x, z), M['collision'], (x, -z, y - .05), (x, -z, y + 2.1), .09, 8)
 
 # ---------- åmurar ----------
 for w in SITE['river_walls']:
@@ -279,7 +310,12 @@ log(f'objekt: {len(objects)}')
 names = ['Broadleaf_A', 'Broadleaf_B', 'Broadleaf_C']
 for n, (x, y, z, s, v, yaw) in enumerate(SITE['trees']):
     place_tree(names[v], location=(x, -z, y), scale=s, yaw=yaw, name='Tree_%d' % n)
-log(f'träd: {len(SITE["trees"])}')
+for n, (x, y, z, s, v, yaw) in enumerate(SITE.get('authored_trees', [])):
+    place_tree(names[v], location=(x, -z, y), scale=s, yaw=yaw, name='Young_tree_%d' % n)
+for n, (x, y, z, horizontal, vertical, v, yaw) in enumerate(SITE.get('shrubs', [])):
+    root = place_tree(names[v], location=(x, -z, y), scale=1., yaw=yaw, name='Planter_shrub_%d' % n)
+    root.scale = (horizontal, horizontal, vertical)
+log(f'träd: {len(SITE["trees"])} skog + {len(SITE.get("authored_trees", []))} gatuträd + {len(SITE.get("shrubs", []))} låga buskproxyer')
 
 # ---------- metadata för Godot ----------
 pts = CITY['meta']['v1_points']
@@ -288,9 +324,24 @@ pts = CITY['meta']['v1_points']
 def eye(x, z, up=1.7): return [round(x, 2), round(ground(x, z) + up, 2), round(z, 2)]
 
 
+def paved_eye(x, z):
+    """Torget's review camera is 1.7 m above the rendered/COL floor, not buried terrain."""
+    floor = ground(x, z)
+    for kind in ('asphalt', 'paving', 'walkway', 'soil'):
+        for tiles in SITE['meshes'].get(kind, {}).values():
+            for a, b, c in tiles:
+                if not min(a[0], b[0], c[0]) - .001 <= x <= max(a[0], b[0], c[0]) + .001 or not min(a[2], b[2], c[2]) - .001 <= z <= max(a[2], b[2], c[2]) + .001: continue
+                den = (b[2]-c[2])*(a[0]-c[0]) + (c[0]-b[0])*(a[2]-c[2])
+                if abs(den) < 1e-10: continue
+                u = ((b[2]-c[2])*(x-c[0]) + (c[0]-b[0])*(z-c[2])) / den
+                v = ((c[2]-a[2])*(x-c[0]) + (a[0]-c[0])*(z-c[2])) / den
+                if min(u, v, 1-u-v) >= -1e-6: floor = max(floor, u*a[1] + v*b[1] + (1-u-v)*c[1])
+    return [round(x, 2), round(floor + 1.7, 3), round(z, 2)]
+
+
 views = [
     dict(id='spawn', name='Görjelycksgatan (start)', position=eye(*pts['spawn']), target=[pts['spawn'][0] - 60, ground(*pts['spawn']) + 4, pts['spawn'][1] - 70]),
-    dict(id='torget', name='Gamla torget', position=eye(-8.5, 8), target=[-40, 4.5, -8]),
+    dict(id='torget', name='Gamla torget', position=paved_eye(-8.5, 8), target=[-40, 4.5, -8]),
     dict(id='krakan', name='Kråkans krog', position=eye(8, 48), target=[11, 2.2, 30]),
     dict(id='roten', name='Roten M', position=eye(pts['cap_B'][0] + 14, pts['cap_B'][1] + 12), target=[pts['cap_B'][0] - 30, ground(*pts['cap_B']) + 3, pts['cap_B'][1] - 25]),
     dict(id='royen', name='Royens trappor', position=eye(*pts['cap_C']), target=[pts['cap_C'][0] - 50, ground(*pts['cap_C']) + 2, pts['cap_C'][1] + 30]),
@@ -313,10 +364,12 @@ meta = dict(title='Kvarnbyn', probe_points=probe, spawn=dict(position=[round(pts
             notes=['Fas A: tolkade hus (assumed) + handgranskade hjältehus vid torget (observed).'])
 (GODOT / 'world_meta.json').write_text(json.dumps(meta, ensure_ascii=False, indent=1))
 
+if options.save_blend:
+    bpy.ops.wm.save_as_mainfile(filepath=str(OUT / 'world.blend'))
 bpy.ops.export_scene.gltf(filepath=str(OUT / 'world_raw.glb'), export_format='GLB', export_cameras=False, export_lights=False, export_apply=True,
                           export_yup=True, export_extras=True, export_image_format='AUTO', export_materials='EXPORT')
 tris = sum(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in bpy.data.objects if o.type == 'MESH' and not o.name.startswith('COL_') and o.users_collection and not o.name.startswith(('Broadleaf',)) and '_Bark' not in o.name and '_Leaves' not in o.name)
 report = dict(objects=len(bpy.data.objects), meshes=len(bpy.data.meshes), materials=len(bpy.data.materials), triangles_excl_trees=tris,
-              trees=len(SITE['trees']), raw_glb_mb=round((OUT / 'world_raw.glb').stat().st_size / 1e6, 1), seconds=round(time.time() - T0, 1))
-(HERE / 'evidence/scene_metrics.json').write_text(json.dumps(report, indent=1))
+              trees=len(SITE['trees']), authored_trees=len(SITE.get('authored_trees', [])), shrubs=len(SITE.get('shrubs', [])), raw_glb_mb=round((OUT / 'world_raw.glb').stat().st_size / 1e6, 1), seconds=round(time.time() - T0, 1))
+((OUT if options.stage_dir else HERE / 'evidence') / 'scene_metrics.json').write_text(json.dumps(report, indent=1))
 print('SCENE_METRICS', json.dumps(report))
