@@ -49,6 +49,11 @@ navmesh och AI, zonerna med capture points, HUD, ljud. **Joel 2026-10-29: v1 är
 inte att v1:s känsla satt. Känslan (rörelse, vapentyngd, ljud, träffåterkoppling) designas om
 mot moderna FPS-referenser. **Klart när:** en runda går att spela från start till seger/förlust.
 
+**Joels dom 2026-10-30:** "substantiellt bättre än version 1", mer action. Fortsätt med samma
+arbetsmetod. Prioritet: 1) riktiga animerade soldater som rör sig mer, 2) ett snyggt vapen (före fler
+vapentyper), 3) ljussättning. Världen är kärnan: träd/buskar, terrasserade tomter med stödmurar.
+Framtid: pacing med Gamla torget som lugn bas, anfall mot Mölndals centrum (berget, dyka genom ån).
+
 ## Fas C — iterera (löpande, när det finns tokens)
 
 - Stämning: kvällsljus, gatlyktor som lyser, dimma i åravinen, bloom.

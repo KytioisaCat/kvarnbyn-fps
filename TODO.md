@@ -16,7 +16,11 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] **Joels dom över Fas A** (`v2/kvarnbyn/RESULTAT.md`, appen i `v2/kvarnbyn/desktop/app/`)
 - [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
-- [ ] Fas B-brister: riktiga soldatmodeller med animationer (CC0, ~10–20 MB nedladdning — fråga först), vapenmodell, skydd för fiender, minimap/granater
+- [ ] **1. Riktiga soldater** (Joels prio 2026-10-30): animerade CC0-modeller (nedladdning — fråga först), fiender som rör sig/flankerar/söker skydd, lite svårare
+- [ ] **2. Snyggt vapen**: en bra Ak 5-modell före fler vapentyper
+- [ ] **3. Ljussättning**: kvällsljus, gatlyktor
+- [ ] **Världen (kärnan)**: mycket mer träd och buskar; terrasserade tomter med plana nivåer och stödmurar; gränser stödmur/gräs/gatsten
+- [ ] Framtid: pacing (Gamla torget som lugn bas med NPC:er, anfall mot Mölndals centrum via berget/ån), världen ut till Mölndals centrum och Götaforsliden
 - [ ] **Fas C** — kvällsljus, husrundor (Street View som referens), staket/häckar/trädgårdar, järnväg
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
 - [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material

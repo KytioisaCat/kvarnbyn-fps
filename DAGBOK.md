@@ -31,6 +31,45 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-10-30 08:10 — Claude Code (Opus 5.5) — Joels prioriteringar efter Fas B (läs detta, Codex)
+
+**Status:** klart — inget halvfärdigt, allt committat. Joel kör vidare med Codex i dag.
+
+**Joels dom:** "Substantiellt bättre än version 1" — det var målet med rundan. **Fortsätt med samma
+arbetsmetod** (Blender-skript + Godot, `v2/kvarnbyn/`, pass med brief → resultat → dagbok).
+Han känner inte igen sig än, men "vi är väldigt tidigt".
+
+**Prioritetsordning (Joels ord):**
+1. **Riktiga soldater** — "kommer göra en stor skillnad". Animerade modeller i stället för klossfigurer,
+   fiender som rör sig mer (de står mest stilla nu), gärna lite svårare (han dog en gång, spelade med
+   styrplatta så svårigheten är osäker). CC0-modeller kräver nedladdning: **fråga Joel och säg storlek först**.
+2. **Ett snyggt vapen** — bättre utseende på det vapen som finns är viktigare än fler vapentyper.
+3. **Ljussättning** (kvällsljus m.m.) — gör skillnad, men efter 1–2.
+
+**Kärnan, som allt annat ska stödja:** få Kvarnbyn och området runt omkring att se verkligt ut och
+leva, och kunna springa runt och skjuta fiender där. Det Joel saknar i världen:
+- **Mycket mer träd och buskar** — Kvarnbyn är grönt.
+- **Terrasserade tomter:** marken sluttar inte jämnt; plana nivåer med **stödmurar** ner till nästa nivå.
+- Markdesign per plats: var gränsen går mellan stödmur, gräs och gatsten; hur gatorna ser ut.
+
+**Framtid (INTE nu, men styr designen):** öppen värld, en karta, går att spela i ett svep, men med
+**pacing**. Man släpps ner i Kvarnbyn och det är action direkt; man befriar Kvarnbyn ner till
+Gamla torget, och där blir det lugnt (NPC:er att prata med, senare). Sedan förbereder man anfallet
+mot Mölndals bro och centrum med olika vägar dit: prickskytte från berget, eller dyka genom ån/kulverten
+och komma upp mitt i centrum. Några skriptade händelser. Världen ska senare växa till Mölndals centrum
+och Götaforsliden ("Äteforsliden" i diktatet; troligen Götaforsliden, fråga om oklart).
+
+**Nya testverktyg:** raketdubbelhopp (mellanslag i luften) och flygläge (F, Shift = fort) i `player.gd`.
+
+**Nästa (förslag i Joels ordning):**
+1. Brief för soldatpasset: välj CC0-soldat med animationer (Quaternius/Kenney/Mixamo-fria alternativ),
+   fråga Joel om nedladdningen, byt `soldier.gd`:s klossfigurer, ge fienderna rörelse (flankera, byta
+   position, söka skydd).
+2. Vapenmodell (Ak 5) i Blender-kit, ersätt lådvapnet i `weapon.gd`.
+3. Världspass: träd/buskar, terrasser och stödmurar i trädgårdarna.
+
+---
+
 ## 2026-10-30 07:40 — Claude Code (Opus 5.5) — Joels dom över Fas B + raket/flygläge
 
 **Status:** klart
