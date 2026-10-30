@@ -188,6 +188,28 @@ Bärande delsystem och deras beslut:
 - Balansmått: total fiendebudget ~54; simulerad "realistisk spelare" (1 kill/5 s +
   allierade) klarar rundan på ~3,5–5 min. Testrigg: se CLAUDE.md (debughookarna).
 
+## Datorversionens soldat- och tillgångspipeline (2026-10-30)
+
+`v2/kvarnbyn/rebuild.sh` bygger även `blender/build_ak5.py` och `build_soldier.py` före
+Godot-import. Quaternius SWAT-källan (3,37 MB, CC0) och licens/hash versionshanteras;
+genererade GLB-filer och Mac-appen förblir lokala. Tvåhandsfattning bakas offline i Blender.
+`soldier_visual.gd` väljer klipp utifrån verklig lokal rörelse och följer huvudbenet med
+huvudträffzonen. Samma egenbyggda Ak 5 används i spelarens vy och på soldaten.
+
+`soldier_tactics.gd` använder vägnätet för långa sträckor och lågfreventa beslut om korta
+flank-/skyddsförflyttningar. Golvprover och kapselsvep prövar kandidaterna mot faktisk
+kollisionsgeometri. Målet koms ihåg kort efter tappad sikt; inget exakt följande genom väggar.
+Varje skott kräver både aktuell huvud- och mynningssikt. Lite högre fiendetryck styrs via
+`enemy_fire_interval_scale`/`enemy_accuracy_scale` i `site.py` → `game.json`.
+
+Det återkopplade torgunderlaget använder uttryckliga graderingskanter i meshen, ankarhöjder
+från triangulerad befintlig mark och exakt terrängklippning. Detta pass omfattar förgården och
+tre planteringsöar; den grövre nordbanksytan behöver eget platsprov. Höjder/konturer är
+uppskattade, medan förekomst av stenläggning och tre unga träd är visuellt observerad.
+
+Alla agentkörda Godot-prov ska vara ljudlösa (`--audio-driver Dummy` och mutad masterbuss).
+Vanlig manuell spelstart har ljud. Provflaggorna capture/bot/probe/walktest mutar automatiskt.
+
 ## Viktiga beslut & motiv (kronologiskt urval)
 
 | Beslut | Motiv |

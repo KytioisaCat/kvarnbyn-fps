@@ -1,0 +1,53 @@
+{
+  "source_sha256": "622b3f36fcac90539ef8f7121ec1f11b5e1ae603a085019b3fa96eba20dddfd3",
+  "source_bytes": 3368868,
+  "output_bytes": 2610100,
+  "sha256": "787f5f5fcc4365d0adaec5bcb36fba1e152ed29f1041699723ee5990b845b33d",
+  "triangles": 20022,
+  "bones": 62,
+  "animations": {
+    "Death": 1.0667,
+    "Gun_Shoot": 0.6,
+    "HitRecieve": 0.5667,
+    "HitRecieve_2": 0.5667,
+    "Idle": 1.6667,
+    "Idle_Gun": 1.6667,
+    "Idle_Gun_Pointing": 1.6667,
+    "Idle_Gun_Shoot": 0.6667,
+    "Idle_Neutral": 1.6667,
+    "Idle_Sword": 1.6667,
+    "Interact": 1.2667,
+    "Kick_Left": 0.9333,
+    "Kick_Right": 0.9333,
+    "Punch_Left": 0.8333,
+    "Punch_Right": 0.8333,
+    "Roll": 1.3333,
+    "Run": 0.8333,
+    "Run_Back": 0.8333,
+    "Run_Left": 0.8333,
+    "Run_Right": 0.8333,
+    "Run_Shoot": 0.8333,
+    "Sword_Slash": 1.0333,
+    "Walk": 1.3333,
+    "Wave": 1.6667
+  },
+  "root_xy_drift_m": {
+    "Run_Left": [
+      0.0,
+      0.0
+    ],
+    "Run_Right": [
+      0.0,
+      0.0
+    ]
+  },
+  "forward_axis": "+Z (runtime visual rotates 180 degrees)",
+  "license": "CC0-1.0",
+  "author": "Quaternius",
+  "modifications": [
+    "removed source pistol and custom bone shape",
+    "smooth normals",
+    "PBR roughness/metal calibration",
+    "baked two-hand rifle upper-body IK on locomotion clips"
+  ]
+}

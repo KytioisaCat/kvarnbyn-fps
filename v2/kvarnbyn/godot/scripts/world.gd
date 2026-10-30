@@ -44,6 +44,11 @@ var bot_timeout := 900.0
 func _ready() -> void:
 	var start_msec := Time.get_ticks_msec()
 	options = read_options()
+	# Automated work must stay quiet while Joel uses the computer.
+	for test_option in ["mute", "capture", "probe", "walktest", "bot"]:
+		if options.has(test_option):
+			AudioServer.set_bus_mute(0, true)
+			break
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	metadata = load_metadata()
 	touch_mode = DisplayServer.is_touchscreen_available() or options.has("touch")
@@ -148,6 +153,9 @@ func load_metadata() -> Dictionary:
 	var sky_credit := "Himmel: Poly Haven, Greg Zaal/Jarod Guest (CC0)"
 	if sky_credit not in credits:
 		credits.append(sky_credit)
+	var soldier_credit := "Soldatmodell: Quaternius, Ultimate Modular Men (CC0), anpassad med gevärsanimationer"
+	if soldier_credit not in credits:
+		credits.append(soldier_credit)
 	parsed["attribution"] = credits
 	return parsed
 

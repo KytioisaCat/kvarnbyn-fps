@@ -1,0 +1,172 @@
+{
+	"ads": {
+		"ads": 1.0,
+		"asset": "res://assets/weapons/ak5_view.glb",
+		"front_screen": [
+			960.0,
+			540.0
+		],
+		"mag": 30,
+		"model_loaded": true,
+		"muzzle_camera_local": [
+			0.0,
+			-0.0544500350952148,
+			-0.577650010585785
+		],
+		"rear_screen": [
+			960.0,
+			540.0
+		],
+		"reloading": false,
+		"sight_center_error_px": 0.0
+	},
+	"checks": [
+		{
+			"details": null,
+			"pass": true,
+			"test": "imported_asset"
+		},
+		{
+			"details": null,
+			"pass": true,
+			"test": "named_anchors"
+		},
+		{
+			"details": null,
+			"pass": true,
+			"test": "animated_magazine"
+		},
+		{
+			"details": null,
+			"pass": true,
+			"test": "charging_handle"
+		},
+		{
+			"details": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/evidence/weapon/ak5_hip.png",
+			"pass": true,
+			"test": "native_capture_hip"
+		},
+		{
+			"details": {
+				"ads": 1.0,
+				"asset": "res://assets/weapons/ak5_view.glb",
+				"front_screen": [
+					960.0,
+					540.0
+				],
+				"mag": 30,
+				"model_loaded": true,
+				"muzzle_camera_local": [
+					0.0,
+					-0.0544500350952148,
+					-0.577650010585785
+				],
+				"rear_screen": [
+					960.0,
+					540.0
+				],
+				"reloading": false,
+				"sight_center_error_px": 0.0
+			},
+			"pass": true,
+			"test": "ADS_sights_align_with_camera"
+		},
+		{
+			"details": [
+				0.0,
+				-0.0544500350952148,
+				-0.577650010585785
+			],
+			"pass": true,
+			"test": "muzzle_below_sight_axis"
+		},
+		{
+			"details": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/evidence/weapon/ak5_ads.png",
+			"pass": true,
+			"test": "native_capture_ads"
+		},
+		{
+			"details": {
+				"mag": 21,
+				"shots_in_one_second": 9
+			},
+			"pass": true,
+			"test": "auto_fire_cadence_and_ammo"
+		},
+		{
+			"details": null,
+			"pass": true,
+			"test": "magazine_moves_during_reload"
+		},
+		{
+			"details": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/evidence/weapon/ak5_reload.png",
+			"pass": true,
+			"test": "native_capture_reload"
+		},
+		{
+			"details": {
+				"duration": 1.71666666666667,
+				"expected": 1.7
+			},
+			"pass": true,
+			"test": "tactical_reload_time_and_refill"
+		},
+		{
+			"details": null,
+			"pass": true,
+			"test": "magazine_restored"
+		},
+		{
+			"details": {
+				"duration": 2.21666666666667,
+				"expected": 2.2
+			},
+			"pass": true,
+			"test": "empty_reload_time_and_refill"
+		},
+		{
+			"details": null,
+			"pass": true,
+			"test": "empty_reload_bolt_motion"
+		},
+		{
+			"details": null,
+			"pass": true,
+			"test": "bolt_restored"
+		}
+	],
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"hip": {
+		"ads": 0.0,
+		"asset": "res://assets/weapons/ak5_view.glb",
+		"front_screen": [
+			1125.90319824219,
+			630.762817382812
+		],
+		"mag": 30,
+		"model_loaded": true,
+		"muzzle_camera_local": [
+			0.119999997317791,
+			-0.120100021362305,
+			-0.642650008201599
+		],
+		"rear_screen": [
+			1361.93579101562,
+			759.892272949219
+		],
+		"reloading": false,
+		"sight_center_error_px": 458.153900146484
+	},
+	"passed": true,
+	"renderer": "forward_plus"
+}

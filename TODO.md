@@ -9,17 +9,16 @@ Joel underkände v2:s approach helt. Ny väg: datan tolkas till en stadsbeskrivn
 med riktiga verktyg och tillgångar (motor + vägverktyg + arketyp-kit + punktmoln), inget mer
 handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/tolkningsdelar.
 
-- [ ] **Beslut**: PoC-sekvens enligt `POC-PLANER.md` (rekommendation: Blender-innehåll → Godot webb
-  → Godot desktop; Unity/Unreal i reserv). Joel godkänner nedladdningslistan (~0,9 GB).
+- [x] PoC-sekvens och verktyg godkända/genomförda 2026-10-29; aktiv väg är Godot desktop i `v2/kvarnbyn/`.
 - [x] Joels dom 2026-10-29: grafiken är rätt; målplattform dator (mus+tangentbord)
 - [x] Beslut om `v2/poc/NASTA-FAS.md` (Joel ja 2026-10-29)
-- [ ] **Joels dom över Fas A** (`v2/kvarnbyn/RESULTAT.md`, appen i `v2/kvarnbyn/desktop/app/`)
+- [x] Fas A bedömd genom Joels dom över det spelbara Fas B-provet (2026-10-30).
 - [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
-- [ ] **1. Riktiga soldater** (Joels prio 2026-10-30): animerade CC0-modeller (nedladdning — fråga först), fiender som rör sig/flankerar/söker skydd, lite svårare
-- [ ] **2. Snyggt vapen**: en bra Ak 5-modell före fler vapentyper
+- [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **3. Ljussättning**: kvällsljus, gatlyktor
-- [ ] **Världen (kärnan)**: mycket mer träd och buskar; terrasserade tomter med plana nivåer och stödmurar; gränser stödmur/gräs/gatsten
+- [ ] **Världen (kärnan)**: mycket mer träd och buskar; terrasserade tomter med plana nivåer och stödmurar; gränser stödmur/gräs/gatsten. Nästa avgränsade platsprov: Roten M 29–31, verifiera murar/nivåer visuellt först (`evidence/world-review-2026-10-30.md`).
+- [ ] **Nordbanken**: kontrollera uppskattad stenläggningskontur och anslutande gatuprofiler i ett separat platsprov; inte inkluderad i förgårdspasset.
 - [ ] Framtid: pacing (Gamla torget som lugn bas med NPC:er, anfall mot Mölndals centrum via berget/ån), världen ut till Mölndals centrum och Götaforsliden
 - [ ] **Fas C** — kvällsljus, husrundor (Street View som referens), staket/häckar/trädgårdar, järnväg
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
@@ -77,6 +76,9 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-10-30 — **Soldater och Ak 5**: riggad Quaternius CC0-modell (62 ben/24 klipp), bakad gevärsfattning, flank-/skyddsmål och färsk mynningssikt; ny egen Blender-Ak 5 med sikt- och omladdningsprov. Fiendens eldintervall ×0,92 och träffchans ×1,08 ligger i `site.py` → `game.json`. Resultat: `v2/kvarnbyn/RESULTAT-SOLDATER.md`.
+- [x] 2026-10-30 — **Tysta agentprov**: Dummy-ljuddrivrutin och automatisk mute i provskript/capture/bot. Regeln står i CLAUDE.md/AGENTS.md.
 
 - [x] 2026-10-29 — **Fas A: Kvarnbyn 900×700 m som Mac-app** (`v2/kvarnbyn/`): 381 tolkade hus +
   hjältehus, gator, ån, broar, Royens trappor, träd, realtids-GI, 111–120 fps, gångtest 180/180.

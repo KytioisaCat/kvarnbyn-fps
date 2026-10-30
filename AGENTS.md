@@ -67,6 +67,9 @@ binärer (GLB, EXR, .blend, exporter) committas inte.
   Fullständiga riktlinjer inkl. när det semantiska lagret ska byggas om: **`GRAFEN.md`**.
 - **Kör lokalt:** v1: `python3 -m http.server 8763 --directory public`; v2: `cd v2 && npm run dev`
   (port 5187). Båda finns i `.claude/launch.json` (`kvarnbyn` resp. `v2`)
+- **Godot-tester är alltid ljudlösa** (Joel 2026-10-30): starta med `--audio-driver Dummy`.
+  Testskript ska dessutom tysta masterbussen direkt. Automatisk capture/bot/probe/walktest
+  tystas även i `world.gd`. Detta gäller agenternas körningar; Joels vanliga spel har ljud.
 - **Testa i preview:** rAF sover i headless — stega spelet med debughookarna
   `window.__frame(dt)`, `window.__game`, `window.__look(yaw,pitch)`, `window.__fire()`.
   Starta via klick-event på `#overlay` (preview_click når inte lyssnaren; använd

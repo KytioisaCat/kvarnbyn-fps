@@ -6,6 +6,7 @@ extends Node3D
 ## och svajar, mynningsflamma med ljus, spårljus, nedslag, träffmarkör och ljud.
 
 const SFX = preload("res://scripts/sfx.gd")
+const RIFLE_PATH := "res://assets/weapons/ak5_view.glb"
 
 var player: CharacterBody3D
 var fx: Node3D
@@ -41,14 +42,27 @@ var shot_voice: AudioStreamPlayer
 var mech_voice: AudioStreamPlayer
 var hit_voice: AudioStreamPlayer
 var reload_events: Array = []
+var rifle: Node3D
+var model_asset_loaded := false
+var rear_sight: Node3D
+var front_sight: Node3D
+var magazine_node: Node3D
+var magazine_rest := Transform3D.IDENTITY
+var bolt_node: Node3D
+var bolt_rest := Transform3D.IDENTITY
+var reload_empty := false
 
 const SCALE := 0.55
 const HIP := Vector3(0.12, -0.13, -0.30)
-const AIM := Vector3(0.0, -0.088 * SCALE, -0.20)
+# Blender's two iron-sight centers share Y=.117 in Godot meters.
+# Align that plane with the camera; the bore/muzzle remains below the sights.
+const SIGHT_HEIGHT := 0.117
+const AIM := Vector3(0.0, -SIGHT_HEIGHT * SCALE, -0.235)
 const SPRINT := Vector3(0.10, -0.17, -0.26)
 
 func _ready() -> void:
 	model = Node3D.new()
+	model.name = "ViewModel"
 	model.scale = Vector3.ONE * SCALE
 	add_child(model)
 	_build_rifle()
@@ -64,59 +78,41 @@ func _voice(stream: AudioStream, db: float) -> AudioStreamPlayer:
 	add_child(a)
 	return a
 
-func _mat(c: Color, rough: float, metal: float) -> StandardMaterial3D:
-	var m := StandardMaterial3D.new()
-	m.albedo_color = c
-	m.roughness = rough
-	m.metallic = metal
-	return m
-
-func _part(mesh: Mesh, mat: Material, pos: Vector3, rot := Vector3.ZERO) -> MeshInstance3D:
-	var mi := MeshInstance3D.new()
-	mi.mesh = mesh
-	mi.material_override = mat
-	mi.position = pos
-	mi.rotation = rot
-	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	model.add_child(mi)
-	return mi
-
-func _box(size: Vector3) -> BoxMesh:
-	var b := BoxMesh.new()
-	b.size = size
-	return b
+func _prepare_view_meshes(node: Node) -> void:
+	if node is GeometryInstance3D:
+		node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		node.gi_mode = GeometryInstance3D.GI_MODE_DISABLED
+		# A near-camera mesh must not disappear behind the world's occlusion cells.
+		node.ignore_occlusion_culling = true
+	for child in node.get_children():
+		_prepare_view_meshes(child)
 
 func _build_rifle() -> void:
-	var steel := _mat(Color(0.2, 0.21, 0.22), 0.38, 0.8)
-	var polymer := _mat(Color(0.25, 0.28, 0.22), 0.6, 0.0)
-	var glove := _mat(Color(0.42, 0.37, 0.28), 0.85, 0.0)
-	# lådan längs −Z, siktlinjen i y = +0.088 så att siktläge ligger mitt i bild
-	_part(_box(Vector3(0.055, 0.085, 0.34)), steel, Vector3(0, 0, -0.02))
-	var barrel := CylinderMesh.new()
-	barrel.top_radius = 0.011
-	barrel.bottom_radius = 0.011
-	barrel.height = 0.36
-	_part(barrel, steel, Vector3(0, 0.012, -0.36), Vector3(PI / 2, 0, 0))
-	var brake := CylinderMesh.new()
-	brake.top_radius = 0.016
-	brake.bottom_radius = 0.016
-	brake.height = 0.07
-	_part(brake, steel, Vector3(0, 0.012, -0.55), Vector3(PI / 2, 0, 0))
-	_part(_box(Vector3(0.062, 0.07, 0.22)), polymer, Vector3(0, 0.0, -0.27))
-	_part(_box(Vector3(0.032, 0.17, 0.07)), steel, Vector3(0, -0.11, -0.07), Vector3(0.28, 0, 0))
-	_part(_box(Vector3(0.04, 0.11, 0.05)), polymer, Vector3(0, -0.09, 0.08), Vector3(-0.35, 0, 0))
-	_part(_box(Vector3(0.045, 0.075, 0.26)), polymer, Vector3(0, -0.02, 0.27))
-	_part(_box(Vector3(0.05, 0.11, 0.04)), polymer, Vector3(0, -0.05, 0.39))
-	# bärhandtag/sikte och korn
-	_part(_box(Vector3(0.022, 0.03, 0.2)), steel, Vector3(0, 0.06, 0.0))
-	_part(_box(Vector3(0.026, 0.026, 0.012)), steel, Vector3(0, 0.083, 0.06))
-	_part(_box(Vector3(0.006, 0.05, 0.008)), steel, Vector3(0, 0.055, -0.5))
-	# händer
-	_part(_box(Vector3(0.07, 0.07, 0.11)), glove, Vector3(0.0, -0.06, 0.1))
-	_part(_box(Vector3(0.08, 0.06, 0.12)), glove, Vector3(-0.01, -0.035, -0.3))
-	muzzle_point = Node3D.new()
-	muzzle_point.position = Vector3(0, 0.012, -0.6)
-	model.add_child(muzzle_point)
+	if ResourceLoader.exists(RIFLE_PATH):
+		var scene := load(RIFLE_PATH) as PackedScene
+		if scene != null:
+			rifle = scene.instantiate()
+			rifle.name = "Ak5"
+			model.add_child(rifle)
+			_prepare_view_meshes(rifle)
+			model_asset_loaded = true
+			rear_sight = rifle.find_child("Sight_Rear", true, false) as Node3D
+			front_sight = rifle.find_child("Sight_Front", true, false) as Node3D
+			magazine_node = rifle.find_child("Magazine", true, false) as Node3D
+			bolt_node = rifle.find_child("Charging_Handle", true, false) as Node3D
+			if magazine_node != null:
+				magazine_rest = magazine_node.transform
+			if bolt_node != null:
+				bolt_rest = bolt_node.transform
+	else:
+		push_warning("Ak 5-modellen saknas. Kör blender/build_ak5.py och importera Godot-projektet.")
+	# The imported marker is at the actual rendered muzzle, not a guessed old box offset.
+	muzzle_point = rifle.find_child("Muzzle", true, false) as Node3D if rifle != null else null
+	if muzzle_point == null:
+		muzzle_point = Node3D.new()
+		muzzle_point.name = "MuzzleFallback"
+		muzzle_point.position = Vector3(0, 0.018, -0.623)
+		model.add_child(muzzle_point)
 	flash_light = OmniLight3D.new()
 	flash_light.light_color = Color(1.0, 0.72, 0.38)
 	flash_light.omni_range = 6.0
@@ -145,6 +141,8 @@ func refill() -> void:
 	mag = mag_size
 	reloading = false
 	reload_events.clear()
+	reload_empty = false
+	_update_component_pose(0.0)
 
 func current_spread() -> float:
 	var hspeed := Vector2(player.velocity.x, player.velocity.z).length()
@@ -170,6 +168,7 @@ func start_reload() -> void:
 	if reloading or mag == mag_size or not player.alive:
 		return
 	reloading = true
+	reload_empty = mag == 0
 	reload_total = reload_time if mag > 0 else reload_time + 0.5
 	reload_t = reload_total
 	reload_events = [[reload_total - 0.15, "mag_out"], [reload_total - 1.05, "mag_in"]]
@@ -233,9 +232,42 @@ func _process(delta: float) -> void:
 	if reloading:
 		var u := 1.0 - reload_t / reload_total
 		reload_k = sin(clampf(u, 0.0, 1.0) * PI)
-		pose += Vector3(-0.02, -0.11, 0.02) * reload_k
+		# Keep the detailed model visible while the magazine moves. Same easing/timing.
+		pose += Vector3(-0.025, 0.025, -0.05) * reload_k
 	position = pose
-	model.rotation = Vector3(kick * 0.09 - reload_k * 0.5 + sprint_pose * -0.25, -sway.x * 0.6 + sprint_pose * 0.7, reload_k * 0.6 + sprint_pose * 0.25)
+	model.rotation = Vector3(kick * 0.09 + reload_k * 0.22 + sprint_pose * -0.25, -sway.x * 0.6 + reload_k * 0.05 + sprint_pose * 0.7, -reload_k * 0.45 + sprint_pose * 0.25)
+	_update_component_pose(1.0 - reload_t / reload_total if reloading else 0.0)
+
+func _update_component_pose(progress: float) -> void:
+	# Cosmetic component motion follows the existing reload/sound timing.
+	# It does not change ammo, shooting, recoil, or tactical/empty reload duration.
+	if magazine_node != null:
+		magazine_node.transform = magazine_rest
+		if reloading:
+			var pull := smoothstep(0.06, 0.25, progress) * (1.0 - smoothstep(0.43, 0.63, progress))
+			magazine_node.position += Vector3(0, -0.13, 0.025) * pull
+			magazine_node.rotate_x(-0.13 * pull)
+			magazine_node.rotate_z(-0.12 * pull)
+	if bolt_node != null:
+		bolt_node.transform = bolt_rest
+		if reloading and reload_empty:
+			var pull := sin(clampf((progress - 0.76) / 0.18, 0.0, 1.0) * PI)
+			bolt_node.position.z += 0.035 * pull
+
+func visual_snapshot() -> Dictionary:
+	var result := {"model_loaded": model_asset_loaded, "asset": RIFLE_PATH,
+		"mag": mag, "reloading": reloading, "ads": ads}
+	if player != null and rear_sight != null and front_sight != null:
+		var camera: Camera3D = player.camera
+		var center := get_viewport().get_visible_rect().size * 0.5
+		var rear := camera.unproject_position(rear_sight.global_position)
+		var front := camera.unproject_position(front_sight.global_position)
+		result["rear_screen"] = [rear.x, rear.y]
+		result["front_screen"] = [front.x, front.y]
+		result["sight_center_error_px"] = maxf(rear.distance_to(center), front.distance_to(center))
+		var muzzle_local := camera.to_local(muzzle_point.global_position)
+		result["muzzle_camera_local"] = [muzzle_local.x, muzzle_local.y, muzzle_local.z]
+	return result
 
 func _fire() -> void:
 	mag -= 1

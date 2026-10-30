@@ -1,0 +1,147 @@
+{
+	"captures": {
+		"ads": {
+			"ads": 1.0,
+			"asset": "res://assets/weapons/ak5_view.glb",
+			"front_screen": [
+				959.984008789062,
+				540.0
+			],
+			"mag": 30,
+			"model_loaded": true,
+			"muzzle_camera_local": [
+				-0.000030517578125,
+				-0.0544509887695312,
+				-0.577667236328125
+			],
+			"rear_screen": [
+				959.845703125,
+				540.0
+			],
+			"reloading": false,
+			"sight_center_error_px": 0.154296875
+		},
+		"hip": {
+			"ads": 0.0,
+			"asset": "res://assets/weapons/ak5_view.glb",
+			"front_screen": [
+				1125.91235351562,
+				630.7646484375
+			],
+			"mag": 30,
+			"model_loaded": true,
+			"muzzle_camera_local": [
+				0.119987487792969,
+				-0.120101928710938,
+				-0.64263916015625
+			],
+			"rear_screen": [
+				1361.92114257812,
+				759.901611328125
+			],
+			"reloading": false,
+			"sight_center_error_px": 458.145538330078
+		},
+		"reload": {
+			"ads": 0.0,
+			"asset": "res://assets/weapons/ak5_view.glb",
+			"front_screen": [
+				1107.04919433594,
+				540.119689941406
+			],
+			"mag": 18,
+			"model_loaded": true,
+			"muzzle_camera_local": [
+				0.0847625732421875,
+				-0.0270042419433594,
+				-0.680389404296875
+			],
+			"rear_screen": [
+				1323.25927734375,
+				726.186706542969
+			],
+			"reloading": true,
+			"sight_center_error_px": 408.194549560547
+		}
+	},
+	"world": {
+		"baked_lightmaps": false,
+		"cpu_render_ms": 1.59500002861023,
+		"draw_calls": 3344.0,
+		"fps": 62.0,
+		"game": {
+			"allies": 9,
+			"caps": [
+				{
+					"enemies_in": 0,
+					"friends_in": 0,
+					"id": "A",
+					"owner": "enemy",
+					"progress": 1.0
+				},
+				{
+					"enemies_in": 0,
+					"friends_in": 0,
+					"id": "B",
+					"owner": "enemy",
+					"progress": 1.0
+				},
+				{
+					"enemies_in": 0,
+					"friends_in": 0,
+					"id": "C",
+					"owner": "enemy",
+					"progress": 1.0
+				}
+			],
+			"deaths": 0,
+			"elapsed_s": 1.0,
+			"enemies": 66,
+			"headshots": 0,
+			"kills": 0,
+			"over": false,
+			"player_alive": true,
+			"player_hp": 100.0,
+			"reinforcements_left": 3,
+			"running": true,
+			"victory": false
+		},
+		"gpu_render_ms": 0.0,
+		"load_ms": 8385,
+		"physics_ms": 0.051,
+		"player": {
+			"active": true,
+			"alive": true,
+			"eye": [
+				339.989990234375,
+				54.430004119873,
+				153.190002441406
+			],
+			"fov_degrees": 71.9999847412109,
+			"free_flight": false,
+			"hp": 100.0,
+			"on_floor": false,
+			"pitch": 0.0,
+			"position": [
+				339.989990234375,
+				52.7800025939941,
+				153.190002441406
+			],
+			"yaw": 0.819522082805634
+		},
+		"prepared_bake_scene": false,
+		"process_ms": 20.619,
+		"ready": true,
+		"render_triangles": 2584359.0,
+		"static_memory_bytes": 278387920,
+		"title": "Kvarnbyn",
+		"touch": false,
+		"view": 0,
+		"world": {
+			"colliders": 441,
+			"explicit_collision_meshes": 441,
+			"meshes": 4484,
+			"triangles": 2242928
+		}
+	}
+}

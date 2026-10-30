@@ -1,0 +1,52 @@
+{
+	"blocked_movement": {
+		"escape_attempts": 2,
+		"passed": true
+	},
+	"collision_samples": 6135,
+	"cover_after_hit": {
+		"cover_choices": 1,
+		"hidden_s": 2.96666666666667,
+		"passed": true,
+		"position": [
+			7.81365251541138,
+			-0.0041739079169929,
+			7.02919721603394
+		]
+	},
+	"flanking": {
+		"displaced_over_3m": 6,
+		"flank_choices": 23,
+		"maximum_displacement_m": 19.5824108123779,
+		"moving_fraction_when_firing": 0.966917697686927,
+		"passed": true,
+		"rays": 931,
+		"simulated_s": 12,
+		"soldiers": 6
+	},
+	"fresh_shot_line": {
+		"blocked_shots": 1,
+		"damage_through_wall": 0.0,
+		"passed": true
+	},
+	"low_cover_muzzle_line": {
+		"blocked_shots": 1,
+		"damage_through_wall": 0.0,
+		"eye_clear": true,
+		"eye_height_m": 1.52261413731382,
+		"muzzle_blocked": true,
+		"muzzle_height_m": 1.18735108910495,
+		"passed": true
+	},
+	"navigation_around_house": {
+		"final_position": [
+			9.00544357299805,
+			-0.00416014716029167,
+			1.81658780574799
+		],
+		"passed": true
+	},
+	"passed": true,
+	"wall_clock_s": 0.413246,
+	"wall_penetrations": 0
+}

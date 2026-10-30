@@ -1,0 +1,32 @@
+{
+  "asset": "ak5_view.glb",
+  "bytes": 711336,
+  "triangles": 15052,
+  "objects": 5,
+  "materials": 11,
+  "axes": "Godot -Z forward, +Y up, meters",
+  "sight_height_m": 0.117,
+  "muzzle_godot": [
+    0,
+    0.018,
+    -0.623
+  ],
+  "reference": "Swedish Army Museum AM.009994, 1986 Ak 5; artistic silhouette reference only",
+  "anchors_godot": {
+    "Muzzle": [
+      0,
+      0.018,
+      -0.623
+    ],
+    "Sight_Rear": [
+      0,
+      0.117,
+      0.142
+    ],
+    "Sight_Front": [
+      0,
+      0.117,
+      -0.432
+    ]
+  }
+}

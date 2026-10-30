@@ -1,0 +1,70 @@
+{
+	"ai_cpu_ms_per_physics_frame": 0.44246,
+	"display_server": "macOS",
+	"extra_enemies_near_player": 10,
+	"fps_p05": 2.0,
+	"fps_p50": 92.0,
+	"game": {
+		"allies": 9,
+		"caps": [
+			{
+				"enemies_in": 1,
+				"friends_in": 0,
+				"id": "A",
+				"owner": "enemy",
+				"progress": 1.0
+			},
+			{
+				"enemies_in": 0,
+				"friends_in": 0,
+				"id": "B",
+				"owner": "enemy",
+				"progress": 1.0
+			},
+			{
+				"enemies_in": 5,
+				"friends_in": 1,
+				"id": "C",
+				"owner": "enemy",
+				"progress": 1.0
+			}
+		],
+		"deaths": 0,
+		"elapsed_s": 5.0,
+		"enemies": 76,
+		"headshots": 0,
+		"kills": 0,
+		"over": false,
+		"player_alive": true,
+		"player_hp": 99989.5,
+		"reinforcements_left": 3,
+		"running": true,
+		"victory": false
+	},
+	"moving_fraction_when_firing": 0.690387016229712,
+	"near_wall_crossings": 0,
+	"near_wall_segment_checks": 266,
+	"passed": true,
+	"physics_ms_p50": 4.954,
+	"physics_ms_p95": 6506.881,
+	"process_ms_p50": 14.093,
+	"process_ms_p95": 277.048,
+	"renderer": "forward_plus",
+	"simulated_s": 5.0,
+	"totals": {
+		"blocked_shots": 0.0,
+		"combat_s": 13.35,
+		"cover_moves": 0.0,
+		"cpu_usec": 132738.0,
+		"decisions": 7.0,
+		"escapes": 28.0,
+		"flanks": 4.0,
+		"moving_combat_s": 9.21666666666665,
+		"rays": 1406.0,
+		"search_moves": 0.0,
+		"shots": 9.0,
+		"travel_m": 1138.82736198051
+	},
+	"tracked_soldiers": 85,
+	"wall_clock_s": 5.706705
+}

@@ -62,3 +62,14 @@ v2/kvarnbyn/desktop/
 v2/kvarnbyn/data/site.json
 v2/kvarnbyn/evidence/*.log
 v2/kvarnbyn/evidence/shots/*.png
+
+# Desktop character/weapon builds (small source assets and scripts remain tracked)
+v2/kvarnbyn/godot/assets/characters/*.glb
+v2/kvarnbyn/godot/assets/weapons/*.glb
+v2/kvarnbyn/evidence/*.png
+v2/kvarnbyn/evidence/weapon/*.png
+v2/kvarnbyn/evidence/weapon/*.log
+v2/kvarnbyn/assets-src/soldier/downloads/
+v2/kvarnbyn/**/__pycache__/
+v2/kvarnbyn/evidence/*.blend
+v2/kvarnbyn/staging/

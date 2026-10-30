@@ -1,0 +1,15 @@
+{
+  "name": "SWAT / Ultimate Modular Men",
+  "author": "Quaternius",
+  "source_page": "https://quaternius.com/packs/ultimatemodularcharacters.html",
+  "source_file": "Swat.gltf",
+  "download_url": "https://drive.usercontent.google.com/download?id=1VGmU5f8a43NBT22JWB507NDSLbmNxzF9&export=download&authuser=0&confirm=t",
+  "retrieved": "2026-10-30",
+  "license": "CC0-1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "license_file": "LICENSE.txt",
+  "sha256": "622b3f36fcac90539ef8f7121ec1f11b5e1ae603a085019b3fa96eba20dddfd3",
+  "bytes": 3368868,
+  "source_animation_count": 24,
+  "notes": "Original source included for reproducible builds. Adapted rifle poses, normals and material settings are built offline. Game model is a generic stylized soldier, not a real unit reproduction."
+}

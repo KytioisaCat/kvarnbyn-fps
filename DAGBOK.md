@@ -31,6 +31,25 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-10-30 08:22 — ChatGPT Codex — soldater, Ak 5 och återkopplat torgunderlag
+
+**Status:** pågår — soldat/vapenprov gröna, slutprofilering och torganslutningar återstår.
+**Gjort:**
+- Läst Opus överlämning. Brief `v2/kvarnbyn/BRIEF-SOLDATER.md`; allt i aktiva datorprojektet.
+- Quaternius CC0-soldatkälla 3,37 MB (licens/hash i `assets-src/soldier/`), 62 ben/24 klipp;
+  Blender-bakad tvåhandsfattning och gemensam Ak 5. `soldier_visual.gd` + riktiga benföljande huvudträffzoner.
+- AI i `soldier_tactics.gd`: prövade flank-/skyddsmål, kort målminne, färsk huvud- och mynningssikt.
+  Arena grön: 6/6 flyttar >3 m, skydd efter träff, inga väggpenetrationer; full värld 45 s utan scriptfel.
+- Ak 5 från egen Blender-modell, kalibrerat ADS och rörligt magasin/mantel. Vapenproven gröna.
+- Miljögranskning hittade att `authored_ground` ignorerades. Torgpass byggs staged och anslutningar provas mot faktisk COL-geometri.
+- Joel förtydligade att små nedladdningar är fria; stäm av först vid några hundra MB till cirka 1 GB.
+- **Joels tester ska vara tysta:** `--audio-driver Dummy`, testskript mutar masterbussen, `world.gd`
+  mutar capture/bot/probe/walktest. Sparat i CLAUDE.md och identisk AGENTS.md.
+**Nästa:** färdigt torgprov → full återbyggnad/kontroller → tyst macOS-exportprov → resultat, dagbok och commit.
+**Varningar:** inga nya stora genererade binärer i Git. Ingen annan agents/användares Godot-process ska stängas generellt.
+
+---
+
 ## 2026-10-30 08:10 — Claude Code (Opus 5.5) — Joels prioriteringar efter Fas B (läs detta, Codex)
 
 **Status:** klart — inget halvfärdigt, allt committat. Joel kör vidare med Codex i dag.
