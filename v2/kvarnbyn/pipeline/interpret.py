@@ -27,6 +27,7 @@ torget = json.loads((TORGET / 'data/city_spec.json').read_text())
 HEROES = {b['osm_way_id']: b for b in torget['buildings'] if not b['name'].startswith('Bakgrundshus')}
 factory = json.loads((TORGET / 'reference/industrial_backdrop.json').read_text())
 FACTORY_ID = factory['identification']['correct_osm_way_id']
+roten_m29 = json.loads((DATA.parent / 'reference/roten-m/house.json').read_text())
 
 # ---------- paletter (assumed: typiska kulörer i Kvarnbyn, inte uppmätta per hus) ----------
 WOOD = ['#efece4', '#efece4', '#e9dcae', '#8e3326', '#8e3326', '#cfccc2', '#bcc6a8', '#bccad0', '#d8b46c', '#e6d8c0']
@@ -184,6 +185,14 @@ for w in ways:
                             facade_color=est['facade_color'], roof_color=est['roof_color'], base_height_raw_m=est['base_height_raw_m'],
                             base_y_m=round(est['base_height_raw_m'] - Y_OFFSET, 3), sign='STORA GÖTAFORS')
                 spec['source'].update(heights='observed_estimate', facade='observed')
+        if spec['id'] == roten_m29['id']:
+            spec.update(name=roten_m29['name'], authored_model='roten_m29', priority='landmark',
+                        levels=1, wall_height_m=3.25, roof_rise_m=2.15, roof_shape='joined_gables',
+                        facade_material='wood', facade_color=roten_m29['wall_color'],
+                        trim_color=roten_m29['trim_color'], roof_material='roof_tiles', roof_color='#855b47')
+            spec['source'].update(levels='observed', facade='observed', roof_shape='observed',
+                                  heights='observed_estimate', roof_color='observed_estimate',
+                                  roof_material='observed', roof_subdivision='observed_estimate')
         buildings.append(spec); counts[spec['archetype']] += 1
     elif backdrop.contains(c):
         L = poly.minimum_rotated_rectangle
@@ -278,6 +287,7 @@ meta = dict(schema_version=1, created='2026-10-29', name='Kvarnbyn — spelbar z
                                ortho='mätt ur Lantmäteriets ortofoto 2024', assumed='tolkningsregel i interpret.py — förbättras i husrundor'))
 city = dict(meta=meta, buildings=buildings, backdrop_buildings=backdrop_buildings, roads=roads, surfaces=surfaces,
             waterways=waterways, water_polygons=water_polys, barriers=barriers, forests=forests,
+            reviewed_houses={'roten_m29': roten_m29},
             authored_ground=json.loads((TORGET / 'reference/authored_ground.json').read_text()))
 DATA.mkdir(parents=True, exist_ok=True)
 (DATA / 'city.json').write_text(json.dumps(city, ensure_ascii=False, separators=(',', ':')))

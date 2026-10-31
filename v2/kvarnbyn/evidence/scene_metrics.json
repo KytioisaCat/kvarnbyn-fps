@@ -1,11 +1,11 @@
 {
- "objects": 9741,
- "meshes": 4939,
- "materials": 139,
- "triangles_excl_trees": 2116768,
+ "objects": 9863,
+ "meshes": 5003,
+ "materials": 143,
+ "triangles_excl_trees": 2134525,
  "trees": 1570,
- "authored_trees": 3,
- "shrubs": 24,
- "raw_glb_mb": 226.0,
- "seconds": 20.7
+ "authored_trees": 5,
+ "shrubs": 41,
+ "raw_glb_mb": 228.0,
+ "seconds": 20.8
 }

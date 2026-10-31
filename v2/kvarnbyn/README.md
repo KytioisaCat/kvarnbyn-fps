@@ -32,11 +32,12 @@ från det befintliga torget-provet.
 
 ## Resultat och nästa steg
 
-- [Soldater, vapen och det senaste platsprovet](RESULTAT-SOLDATER.md)
+- [Senaste platsprovet: Roten M 29](RESULTAT-ROTEN.md)
+- [Soldater, vapen och torgförgården](RESULTAT-SOLDATER.md)
 - [Fas B: spelregler och grundkänsla](RESULTAT-FAS-B.md)
 - [Fas A: hela världen](RESULTAT.md)
 - [Vapenmodell och verifiering](blender/AK5.md)
 - [Soldatkälla och återbyggnad](assets-src/soldier/README.md)
-- [Nästa miljöprov: tomtnivåer vid Roten M](evidence/world-review-2026-10-30.md)
+- [Referenser och begränsningar för Roten M](reference/roten-m/OBSERVATIONER.md)
 
 Läs alltid de tre senaste posterna i projektets `DAGBOK.md` före nästa pass.

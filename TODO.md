@@ -17,7 +17,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **3. Ljussättning**: kvällsljus, gatlyktor
-- [ ] **Världen (kärnan)**: mycket mer träd och buskar; terrasserade tomter med plana nivåer och stödmurar; gränser stödmur/gräs/gatsten. Nästa avgränsade platsprov: Roten M 29–31, verifiera murar/nivåer visuellt först (`evidence/world-review-2026-10-30.md`).
+- [ ] **Världen (kärnan)**: fortsatt grönska och terrasser per plats. M29-provet är genomfört; nästa platsrunda är M30/M31 och Stalliden. Granska hus, trapp-/tomtgränser och växtlighet visuellt innan nya höga murar byggs.
+- [ ] **Joels bedömning av Roten M 29** (`v2/kvarnbyn/RESULTAT-ROTEN.md`): igenkänning, husproportioner och markmiljö. Övriga grannhus är fortfarande generiska.
 - [ ] **Nordbanken**: kontrollera uppskattad stenläggningskontur och anslutande gatuprofiler i ett separat platsprov; inte inkluderad i förgårdspasset.
 - [ ] Framtid: pacing (Gamla torget som lugn bas med NPC:er, anfall mot Mölndals centrum via berget/ån), världen ut till Mölndals centrum och Götaforsliden
 - [ ] **Fas C** — kvällsljus, husrundor (Street View som referens), staket/häckar/trädgårdar, järnväg
@@ -76,6 +77,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-10-31 — **Roten M 29**: faktiskt granskad Street View/exteriör, låg vit husgrupp med rund gavelruta, cirka 83,5 m² gård/grus/gräs/berg, tre steg, låg stenbäddkant, öppen grind, staket, två träd och 17 buskgrupper. Verklig kapselgång, faktiska Blender-meshar och Mac-export verifieras i `v2/kvarnbyn/RESULTAT-ROTEN.md`; M30/M31 kvarstår.
 
 - [x] 2026-10-30 — **Torgförgården återkopplad**: 940 m² sten, 82 m² planteringar, tre unga träd och 24 buskproxyer; 3 757 actual-mesh-prov utan hål/höjdspikar. Även skogsträdens tappade placeringar efter Godot-import rättade och visuellt kontrollerade i Mac-exporten. Nordbanken återstår som separat platsprov.
 

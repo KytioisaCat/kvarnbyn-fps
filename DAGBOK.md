@@ -31,6 +31,34 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-10-31 09:57 — ChatGPT Codex — slutför Roten-provet
+
+**Status:** klart — ny lokal Mac-app; Joels igenkänningsbedömning återstår.
+**Gjort:**
+- M29: låg vit husgrupp, separata sadeltaksdelar, rund vindruta, stående panel, ockra/rödbruna detaljer. OSM-fotavtryck kvar; mått/takdelning/dolda fasader uppskattade. M30/M31 oförändrad generisk kontext.
+- Cirka 83,5 m² gård/grus/gräs/berg, tre steg, låg stenbäddkant, öppen grind, trästaket, två lövträd och 17 buskgrupper. Gatsten lokalt utifrån granskad OSM/Street View; asfalt/vatten/brodäckens trianglar identiska.
+- Fixade höjdknäck mellan två vägkanter med viktad planförlängning. M29:s små former fick 0,4 m celler (2 m missade upp till 31 cm). Slutbild avslöjade spetsiga terrängkanter: 0,8 m övergång, slutna markvolymer och jämn normalskuggning.
+- Full `rebuild.sh` grön på 83 s: kontroller/raket/flyg, 180/180 globala gångpunkter, soldat/vapen/träd, Mac-export. `verify_roten.gd`: 11 golvprov, båda kapselbanorna, grindpassage och faktiskt staketstopp gröna. Största punktavvikelse 5,6 cm på uppskattat berg.
+- Blender: 927 faktiska prover, 0 hål/mismatch/saknad yta; stegrampens avsiktliga 17,5 cm skillnad separat. Staged och levererad rawGLB har samma SHA-256. CPU-prov 8/8 gröna. Trädimport 480 grupper/3 232 meshinstanser. `npm run build` grönt. Alla Godot-prov ljudlösa.
+- `RESULTAT-ROTEN.md`, referenser, källmärkt `house.json`, återbyggnadsprov och tre nya startvyer. Nativebilder från den exporterade appen; storfiler bara lokalt.
+**Läge nu:** app i `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app`; underlag och före/efter i `evidence/`. Återbygg med `rebuild.sh`. `.claude/playpen/` är Joels orelaterade filer och har lämnats orörda.
+**Nästa:** Joels dom; sedan visuellt granska M30/M31/Stalliden och kvällsljus. Ingen hög M31-mur utan bildstöd. Hela kvarterets igenkänning är inte färdig.
+
+---
+
+## 2026-10-30 21:00 — ChatGPT Codex — platsprov Roten M
+
+**Status:** avbrutet vid förbrukad agentbudget före slutkontroll; slutfört 2026-10-31, se ovan.
+**Gjort:**
+- Street View faktiskt granskad (Royens gata, augusti 2024) och publik M29-exteriör/fastighetskarta från Bjurfors. `BRIEF-ROTEN.md`, `reference/roten-m/OBSERVATIONER.md` och datagranskning med topplan finns. Inga tredjepartsbilder läggs i repo/spelet.
+- Bilderna visar låga kanter/berg/små gårdsnivåer; inget bildstöd för en hög M31-mur. M29 får därför eget avgränsat prov. `house.json` + `blender/roten.py` ersätter automatisk hög valmning med låga sadeltaksdelar, vit stående panel och rund gavelruta. Nativeformprov granskat.
+- `roten_ground.py` ger separata markytor, tre steg, låg bäddkant, grind/staket och trädgårdsgrönska. Integrerat i site/build_world. Första actual-mesh-prov: 943 prov, 0 hål/mismatch; gamla asfalt/vatten/brodäck oförändrade. Det är ett preliminärt prov före sista kant-/grindjusteringen.
+- `verify_roten.gd` skriven för verklig spelarkapsel och importerad geometri; motorparsning grön. Alla startade Godot-prov har Dummy-ljud.
+**Läge nu:** sista CPU-granskningen hittade att Royens gata klippte grindhörnet; agenten justerar placering/anslutning. Genererade scener lokalt i `v2/.tools/kvarnbyn-roten-20261030/`. Nuvarande Mac-app är fortfarande föregående leverans tills full återbyggnad passerat.
+**Nästa:** sista site-körning → full återbyggnad inkl. nya gångprovet → final actual-mesh/nativebilder/Mac-export → resultat/dagbok/commit/push.
+
+---
+
 ## 2026-10-30 14:14 — ChatGPT Codex — soldater, Ak 5 och torgförgård levererade
 
 **Status:** klart — ny lokal Mac-app verifierad; Joels bedömning av denna version återstår.

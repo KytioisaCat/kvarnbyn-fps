@@ -216,6 +216,30 @@ måste också visa grönskan. Tidiga FPS-mätningar utan synliga träd ersattes 
 Alla agentkörda Godot-prov ska vara ljudlösa (`--audio-driver Dummy` och mutad masterbuss).
 Vanlig manuell spelstart har ljud. Provflaggorna capture/bot/probe/walktest mutar automatiskt.
 
+## Platsprov Roten M 29 (2026-10-31)
+
+`reference/roten-m/OBSERVATIONER.md` skiljer faktisk bildgranskning från uppskattade mått.
+Street View augusti 2024 och publik exteriör visar låga sammanbyggda vita trähus, små
+gårdsnivåer, naturligt berg och låg stenbäddkant. DTM:s nivåskillnad vid M31 bevisar ingen
+stödmur; den byggs först efter egen visuell kontroll. M30/M31 är fortsatt osäkra kontexthus.
+
+`house.json` → `interpret.py` → `blender/roten.py` ersätter M29:s gamla automatiska
+tvåvånings-/valmningstolkning. OSM-fotavtrycket behålls; takdelning, höjder och dolda
+fasader är uppskattade. Inga referensfoton används som material i spelet.
+
+`roten_ground.py` ger disjunkta sten/grus/gräs/bergytor. Anslutningar förankras i befintliga
+färdiga gångtrianglar inklusive respektive ytlyft. En lokal viktad planförlängning undviker
+höjdknäcken när närmaste kant växlar mellan Royens gata och Roten M. Gamla gatu-, vatten-
+och brotrianglar ändras inte. OSM:s `surface=sett` styr ett lokalt materialval i Blender.
+Nya ytor klipper terrängen exakt och deras ytterkanter fylls som slutna markvolymer.
+Kantfyllningarna är byggteknisk tolkning, inte fler visuellt belagda murar.
+
+Små trädgårdsformer trianguleras med **0,4 m** celler: världens vanliga 2 m-nät tappade
+upp till 31 cm av bergens/terrassernas form i faktisk Godot-geometri. Tre synliga steg har
+en sammanhängande kollisionsramp; bild-/gångytans avsiktliga skillnad är högst ett steg.
+`verify_roten.gd` provar den importerade världen med riktiga golvstrålar, spelarkapseln,
+öppen grind och staketstopp; `qa_roten_ground.py` jämför Blender-mesharnas bild-/gångytor.
+
 ## Viktiga beslut & motiv (kronologiskt urval)
 
 | Beslut | Motiv |

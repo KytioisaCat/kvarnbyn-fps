@@ -1,0 +1,548 @@
+{
+  "date": "2026-10-31",
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "zip_bytes": 239303343,
+  "zip_sha256": "5ab7737faeb72ae3f991e20337bca0e5868fde04fb04d9e6ce0be286f5e0a947",
+  "engine": "Godot 4.7.2 stable",
+  "test_audio": "Dummy driver plus muted master bus",
+  "baseline_commit": "321954c",
+  "source_sha256": {
+    "pipeline/site.py": "3ee4561f29586d10b58818ded823bc15b5623ce41ae83eb45b5fd55e7bedefa7",
+    "pipeline/roten_ground.py": "039a19a9d1084bbd064d09e5481010ebd6f86ed873f0efd23f043b71b8ea155c",
+    "pipeline/interpret.py": "0a526447ec3891db743aa011a2895d6842fe276f9bdef679dcaf33073f1a1815",
+    "blender/build_world.py": "24e9b1d1e4f1f94e55e9ad1bd883d63d77d56c4a789cb5360b501e87f6484955",
+    "blender/roten.py": "b3be667f8a7d140d7dbea1cf470a4841967cebaf9627bebce12ebc1682a705af",
+    "reference/roten-m/house.json": "91a1c93453c409dd62019122d34a9c490a34519f4fc7a2df80f5a23fd1146c56",
+    "godot/scripts/verify_roten.gd": "881c7c2383fd072366a7727d019843714ec063440e0c16c4a3351441d499b94b"
+  },
+  "world_raw_sha256": "8bb0022902ec7ccaa0c9f91100551849570f9091561112d5b14725f7989f9192",
+  "qa_scene_raw_sha256": "8bb0022902ec7ccaa0c9f91100551849570f9091561112d5b14725f7989f9192",
+  "actual_mesh": {
+    "label": "after",
+    "actual_blend": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-roten-20261030/after/world.blend",
+    "spacing_m": 0.3,
+    "samples": 927,
+    "holes": 0,
+    "render_collision_mismatch": 0,
+    "max_render_collision_delta_m": 0.17479,
+    "stair_ramp_max_delta_m": 0.17479,
+    "samples_without_authored_floor": 0,
+    "unchanged": {
+      "asphalt": true,
+      "water": true,
+      "bridge_decks": true
+    },
+    "first_holes": [],
+    "first_mismatches": [],
+    "passed": true
+  },
+  "physics": {
+    "blockers": [
+      {
+        "expected_blocked": false,
+        "id": "m29_open_gate",
+        "passed": true,
+        "ray_blocked": false,
+        "ray_collider": "",
+        "walk": {
+          "distance_from_start_m": 2.21811437606812,
+          "frames": 71,
+          "height_profile_checked": false,
+          "maximum_height_error_m": 0.268700051518206,
+          "maximum_lateral_error_m": 2.75081729341764e-05,
+          "position": [
+            109.875595092773,
+            23.7580947875977,
+            120.12956237793
+          ],
+          "reached": true,
+          "reason": "reached",
+          "side_colliders": []
+        }
+      },
+      {
+        "expected_blocked": true,
+        "id": "m29_vine_fence_block",
+        "passed": true,
+        "ray_blocked": true,
+        "ray_collider": "/root/Kvarnbyn/Varlden/COL_Young_tree0_1__Collision_only/Gångyta",
+        "walk": {
+          "distance_from_start_m": 0.403064519166946,
+          "frames": 181,
+          "height_profile_checked": false,
+          "maximum_height_error_m": 0.0690884893346571,
+          "maximum_lateral_error_m": 0.328330904245377,
+          "position": [
+            97.4201736450195,
+            23.0695762634277,
+            126.433837890625
+          ],
+          "reached": false,
+          "reason": "stuck",
+          "side_colliders": [
+            "/root/Kvarnbyn/Varlden/COL_Roten_fence__Collision_only/Gångyta",
+            "/root/Kvarnbyn/Varlden/COL_Young_tree0_1__Collision_only/Gångyta"
+          ]
+        }
+      }
+    ],
+    "coverage": {
+      "closed_blocker_probes": 1,
+      "ground_points": 11,
+      "open_passage_probes": 1,
+      "walk_paths": 2
+    },
+    "errors": [],
+    "geometry_source": "res://assets/world.glb",
+    "metadata_mtime_unix": 1793437761,
+    "metadata_source": "world_meta.m29_ground_checks",
+    "passed": true,
+    "paths": [
+      {
+        "id": "m29_courtyard_entry",
+        "passed": true,
+        "surface_samples": {
+          "bad": 0,
+          "count": 72,
+          "first_failures": [],
+          "maximum_adjacent_height_change_m": 0.0613002777099609,
+          "maximum_height_error_m": 0.0132026672363281,
+          "passed": true
+        },
+        "walk": {
+          "distance_from_start_m": 10.0315961837769,
+          "frames": 278,
+          "height_profile_checked": true,
+          "maximum_height_error_m": 0.0188005675497784,
+          "maximum_lateral_error_m": 0.00196158536709845,
+          "position": [
+            101.485580444336,
+            23.7788314819336,
+            120.088981628418
+          ],
+          "reached": true,
+          "reason": "reached",
+          "side_colliders": []
+        }
+      },
+      {
+        "id": "m29_open_gate_steps",
+        "passed": true,
+        "surface_samples": {
+          "bad": 0,
+          "count": 48,
+          "first_failures": [],
+          "maximum_adjacent_height_change_m": 0.0917949676513672,
+          "maximum_height_error_m": 0.0220375061035156,
+          "passed": true
+        },
+        "walk": {
+          "distance_from_start_m": 6.21721267700195,
+          "frames": 174,
+          "height_profile_checked": true,
+          "maximum_height_error_m": 0.035864954958349,
+          "maximum_lateral_error_m": 0.000505731615703553,
+          "position": [
+            109.610572814941,
+            23.7588787078857,
+            120.308212280273
+          ],
+          "reached": true,
+          "reason": "reached",
+          "side_colliders": []
+        }
+      }
+    ],
+    "points": [
+      {
+        "actual": [
+          103.478584289551,
+          23.7779998779297,
+          118.843421936035
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_courtyard1_1__Collision_only/Gångyta",
+        "expected": [
+          103.478584289551,
+          23.7783298492432,
+          118.843421936035
+        ],
+        "height_error_m": 0.000329971313476562,
+        "id": "m29_courtyard",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          109.850975036621,
+          23.757999420166,
+          120.146141052246
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_landing1_1__Collision_only/Gångyta",
+        "expected": [
+          109.850975036621,
+          23.7583312988281,
+          120.146141052246
+        ],
+        "height_error_m": 0.000331878662109375,
+        "id": "m29_front_landing",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          91.4858779907227,
+          23.9041118621826,
+          117.83772277832
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_west_bedrock0_1__Collision_only/Gångyta",
+        "expected": [
+          91.4858779907227,
+          23.9593524932861,
+          117.83772277832
+        ],
+        "height_error_m": 0.0552406311035156,
+        "id": "m29_west_bedrock",
+        "normal_y": 0.96090567111969,
+        "passed": true
+      },
+      {
+        "actual": [
+          101.041046142578,
+          23.2322940826416,
+          129.321044921875
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_south_bedrock1_1__Collision_only/Gångyta",
+        "expected": [
+          101.041046142578,
+          23.250659942627,
+          129.321044921875
+        ],
+        "height_error_m": 0.0183658599853516,
+        "id": "m29_south_bedrock",
+        "normal_y": 0.999768793582916,
+        "passed": true
+      },
+      {
+        "actual": [
+          108.696678161621,
+          23.873010635376,
+          118.659896850586
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_bedrock1_1__Collision_only/Gångyta",
+        "expected": [
+          108.696678161621,
+          23.8975009918213,
+          118.659896850586
+        ],
+        "height_error_m": 0.0244903564453125,
+        "id": "m29_front_bedrock",
+        "normal_y": 0.988353788852692,
+        "passed": true
+      },
+      {
+        "actual": [
+          99.354621887207,
+          23.0709991455078,
+          127.555526733398
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_sitting_pad0_1__Collision_only/Gångyta",
+        "expected": [
+          99.354621887207,
+          23.0706596374512,
+          127.555526733398
+        ],
+        "height_error_m": 0.000339508056640625,
+        "id": "m29_sitting_pad",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          112.218170166016,
+          23.0517711639404,
+          118.768013000488
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_gate_approach1_1__Collision_only/Gångyta",
+        "expected": [
+          112.218170166016,
+          23.0561962127686,
+          118.768013000488
+        ],
+        "height_error_m": 0.004425048828125,
+        "id": "m29_gate_approach",
+        "normal_y": 0.892940044403076,
+        "passed": true
+      },
+      {
+        "actual": [
+          107.572654724121,
+          23.8499774932861,
+          117.162498474121
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_gravel_entry1_1__Collision_only/Gångyta",
+        "expected": [
+          107.572654724121,
+          23.849494934082,
+          117.162498474121
+        ],
+        "height_error_m": 0.000482559204101562,
+        "id": "m29_gravel_entry",
+        "normal_y": 0.985750317573547,
+        "passed": true
+      },
+      {
+        "actual": [
+          109.755882263184,
+          23.757999420166,
+          119.005836486816
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_planting1_1__Collision_only/Gångyta",
+        "expected": [
+          109.755882263184,
+          23.7583312988281,
+          119.005836486816
+        ],
+        "height_error_m": 0.000331878662109375,
+        "id": "m29_front_planting",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          93.5881652832031,
+          23.7419986724854,
+          121.821250915527
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_west_grass0_1__Collision_only/Gångyta",
+        "expected": [
+          93.5881652832031,
+          23.7422199249268,
+          121.821250915527
+        ],
+        "height_error_m": 0.00022125244140625,
+        "id": "m29_west_grass",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          100.957168579102,
+          23.0600185394287,
+          127.555526733398
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_south_grass1_1__Collision_only/Gångyta",
+        "expected": [
+          100.957168579102,
+          23.0638675689697,
+          127.555526733398
+        ],
+        "height_error_m": 0.00384902954101562,
+        "id": "m29_south_grass",
+        "normal_y": 0.990602672100067,
+        "passed": true
+      }
+    ],
+    "scope": "actual imported collision geometry and actual player controller",
+    "wall_clock_s": 0.530719,
+    "world_asset_mtime_unix": 1793437777
+  },
+  "walk": {
+    "failed": 0,
+    "fails": [],
+    "landed": 180,
+    "points": 180
+  },
+  "vegetation": {
+    "bad": 0,
+    "groups": 480,
+    "mesh_instances": 3232,
+    "passed": true,
+    "scope": "serialized CPU placement and runtime restore; visibility also checked in native captures"
+  },
+  "soldier": true,
+  "weapon": true,
+  "captures": {
+    "gable": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.08500003814697,
+      "draw_calls": 2252.0,
+      "fps": 81.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "load_ms": 5327,
+      "physics_ms": 0.035,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          120.699996948242,
+          24.8819999694824,
+          114.699996948242
+        ],
+        "fov_degrees": 71.9999694824219,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.1316988915205,
+        "position": [
+          120.699996948242,
+          23.2320003509521,
+          114.699996948242
+        ],
+        "yaw": 1.94201171398163
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 14.191,
+      "ready": true,
+      "render_triangles": 2312675.0,
+      "static_memory_bytes": 0,
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 4,
+      "world": {
+        "colliders": 471,
+        "explicit_collision_meshes": 471,
+        "meshes": 4535,
+        "triangles": 2278913,
+        "vegetation_mesh_instances": 3232
+      }
+    },
+    "courtyard": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 0.999000012874603,
+      "draw_calls": 2068.0,
+      "fps": 84.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "load_ms": 5241,
+      "physics_ms": 0.055,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          106.5,
+          25.6709995269775,
+          116.5
+        ],
+        "fov_degrees": 71.9999694824219,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.0868094488978386,
+        "position": [
+          106.5,
+          24.0209999084473,
+          116.5
+        ],
+        "yaw": 2.05097103118896
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 12.628,
+      "ready": true,
+      "render_triangles": 2126785.0,
+      "static_memory_bytes": 0,
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 5,
+      "world": {
+        "colliders": 471,
+        "explicit_collision_meshes": 471,
+        "meshes": 4535,
+        "triangles": 2278913,
+        "vegetation_mesh_instances": 3232
+      }
+    },
+    "garden": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.34599995613098,
+      "draw_calls": 3401.0,
+      "fps": 80.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "load_ms": 5239,
+      "physics_ms": 0.032,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          95.0,
+          21.753999710083,
+          132.5
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.344708770513535,
+        "position": [
+          95.0,
+          20.1040000915527,
+          132.5
+        ],
+        "yaw": -0.276908546686172
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 13.292,
+      "ready": true,
+      "render_triangles": 3391716.0,
+      "static_memory_bytes": 0,
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 6,
+      "world": {
+        "colliders": 471,
+        "explicit_collision_meshes": 471,
+        "meshes": 4535,
+        "triangles": 2278913,
+        "vegetation_mesh_instances": 3232
+      }
+    },
+    "matched": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.25,
+      "draw_calls": 2829.0,
+      "fps": 74.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "load_ms": 5217,
+      "physics_ms": 0.039,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          114.790000915527,
+          24.1599998474121,
+          122.190002441406
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.0576793998479843,
+        "position": [
+          114.790000915527,
+          22.5100002288818,
+          122.190002441406
+        ],
+        "yaw": 0.871554732322693
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 14.393,
+      "ready": true,
+      "render_triangles": 3189861.0,
+      "static_memory_bytes": 0,
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 3,
+      "world": {
+        "colliders": 471,
+        "explicit_collision_meshes": 471,
+        "meshes": 4535,
+        "triangles": 2278913,
+        "vegetation_mesh_instances": 3232
+      }
+    }
+  },
+  "capture_note": "Native exported-app snapshots, not a warmed performance benchmark.",
+  "binaries_in_git": false
+}

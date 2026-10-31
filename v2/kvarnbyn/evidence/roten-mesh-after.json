@@ -1,0 +1,19 @@
+{
+  "label": "after",
+  "actual_blend": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-roten-20261030/after/world.blend",
+  "spacing_m": 0.3,
+  "samples": 927,
+  "holes": 0,
+  "render_collision_mismatch": 0,
+  "max_render_collision_delta_m": 0.17479,
+  "stair_ramp_max_delta_m": 0.17479,
+  "samples_without_authored_floor": 0,
+  "unchanged": {
+    "asphalt": true,
+    "water": true,
+    "bridge_decks": true
+  },
+  "first_holes": [],
+  "first_mismatches": [],
+  "passed": true
+}

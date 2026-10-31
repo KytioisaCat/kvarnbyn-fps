@@ -1,0 +1,19 @@
+{
+  "id": "w92332120",
+  "name": "Roten M 29",
+  "review": "OBSERVATIONER.md, Street View augusti 2024 och publik exteriör granskad 2026-10-30",
+  "status": "Observed appearance; estimated dimensions, roof subdivisions and hidden facades. Original OSM footprint retained.",
+  "origin_xz": [95.921, 111.420],
+  "axis_xz": [0.559, 0.829],
+  "wall_color": "#e9e6dc",
+  "trim_color": "#b88b3e",
+  "sash_color": "#733d32",
+  "wall_height_m_estimate": 3.25,
+  "roofs": [
+    {"id":"west", "polygon_ab":[[0,-6.53],[12.14,-6.53],[12.14,-4.39],[11.86,-4.39],[11.86,-1.52],[0,-1.52]], "ridge_axis":"a", "ridge_at":-4.025, "half_width":2.505, "eave_m":2.85,"rise_m":1.55},
+    {"id":"entrance", "polygon_ab":[[0,-1.52],[8.91,-1.52],[8.90,2.38],[4.96,2.37],[0,0]], "ridge_axis":"b", "ridge_at":6.90, "half_width":2.0, "eave_m":2.65,"rise_m":1.45},
+    {"id":"street", "polygon_ab":[[11.86,-4.39],[18.20,-4.39],[18.20,5.71],[11.86,5.71]], "ridge_axis":"b", "ridge_at":15.03, "half_width":3.17, "eave_m":3.25,"rise_m":2.15}
+  ],
+  "round_window": {"a":15.03,"b":5.71,"bottom_m":3.60,"diameter_m":0.65,"observed":true},
+  "note": "Takdelning och mått är ett första bildtolkat prov. Volymen ersätter gammal automatiskt gissad tvåvåningsbyggnad med högt valmat tak. Inga fototexturer."
+}

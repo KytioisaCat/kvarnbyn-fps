@@ -41,6 +41,8 @@ step "Kontroll: kontroller och gångprov"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_controller.gd 2>&1 | grep -E "KVARNBYN|PASS|FAIL" | tail -3
 step "Kontroll: gångytor över hela världen"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --walktest > $LOG/walk-check.log 2>&1
+step "Kontroll: Roten M 29, gård och grind"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --output="$ROOT/$LOG/roten-ground-check.json" > $LOG/roten-ground-check.log 2>&1
 step "Kontroll: trädplaceringar efter import"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_trees.gd -- --explore > $LOG/tree-check.log 2>&1
 step "Kontroll: soldatmodell och stridsfysik"

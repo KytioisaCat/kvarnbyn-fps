@@ -25,6 +25,7 @@ import mapbox_earcut as earcut
 
 from common import ZONE, BACKDROP, DATA, Y_OFFSET, raw_height, land_class
 from authored_ground import AuthoredGround, SurfaceReference
+from roten_ground import RotenGround
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--stage-dir', type=Path, help='Write site/nav/game here, without touching active Godot assets.')
@@ -195,15 +196,15 @@ def base_surface_height(x, z):
     return out
 
 
-def triangulate(geom, height_fn, lift):
-    """Polygoner → trianglar med höjd, klippta i 2 m-celler så att ytan följer profilen."""
+def triangulate(geom, height_fn, lift, step=2.):
+    """Polygoner → höjdsatta trianglar. Små trädgårdsformer kräver tätare celler."""
     out = {}
     for poly in polys_of(geom):
         minx, minz, maxx, maxz = poly.bounds
-        gx = np.arange(math.floor(minx / 2) * 2, maxx, 2.0); gz = np.arange(math.floor(minz / 2) * 2, maxz, 2.0)
+        gx = np.arange(math.floor(minx / step) * step, maxx, step); gz = np.arange(math.floor(minz / step) * step, maxz, step)
         if len(gx) == 0 or len(gz) == 0: continue
         GX, GZ = np.meshgrid(gx, gz)
-        cells = shapely.box(GX.ravel(), GZ.ravel(), GX.ravel() + 2, GZ.ravel() + 2)
+        cells = shapely.box(GX.ravel(), GZ.ravel(), GX.ravel() + step, GZ.ravel() + step)
         hit = shapely.intersects(cells, poly)
         pieces = shapely.intersection(cells[hit], poly)
         for piece in pieces:
@@ -235,6 +236,23 @@ authored.fit(base_surface_height, connection_reference.height)
 def surface_height(x, z):
     x = np.atleast_1d(np.asarray(x, float)); z = np.atleast_1d(np.asarray(z, float))
     return authored.height(x, z, base_surface_height(x, z))
+
+
+# M29 joins sample the actual existing FINISHED floor, including each old lift.
+# Keep this local study out of urban conformation: its garden margins already
+# feather to DTM. Existing streets, bridges and their collision triangles win.
+existing_floor = {}
+reference_bounds = box(70, 74, 130, 142)  # grid-aligned, at least 5 m outside every queried join
+for kind, geom, fn, lift in [('asphalt', asphalt, base_surface_height, .03),
+                              ('paving', paving, surface_height, .13),
+                              ('walkway', walkway, surface_height, .12),
+                              ('trail', trail, raw_height, .05)]:
+    for tile, triangles in triangulate(geom.intersection(reference_bounds), fn, lift).items():
+        existing_floor[kind + tile] = triangles
+roten_reference = SurfaceReference(existing_floor, lambda x,z: raw_height(x,z)+.05,
+                                   Y_OFFSET, 0., (75, 80, 125, 135))
+roten = RotenGround(city, cut.union(urban).union(trail), work, raw_height,
+                   roten_reference.height, Y_OFFSET)
 
 
 def distance_to(geom, x, z):
@@ -306,6 +324,12 @@ meshes = {
     'playground': triangulate(play_u, surface_height, 0.05),
     'soil': triangulate(authored.soil, surface_height, 0.08),
 }
+roten_mesh_kinds, roten_collision_only = {}, []
+for surface in roten.surfaces:
+    key = 'm29_' + surface['id']
+    meshes[key] = triangulate(surface['geom'], surface['height_fn'], 0., step=.4)
+    roten_mesh_kinds[key] = surface['kind']
+    if surface['collision_only']: roten_collision_only.append(key)
 if river_prof:
     meshes['water'] = triangulate(channel, lambda x, z: water_level(x, z), 0.0)
 log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m in meshes.items()))
@@ -313,19 +337,49 @@ log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m 
 # Exact terrain cuts under the new surfaces prevent 2 m grass triangles crossing
 # a pavement edge. Replacement triangles keep the original cell interpolation.
 terrain_overrides = {}
-if not authored.coverage.is_empty:
+ground_cut = authored.coverage.union(roten.coverage)
+roten_margin = roten.coverage.buffer(.8)
+affected_ground = authored.coverage.union(roten_margin)
+roten_fixed_ground = urban.union(trail).buffer(.015)
+if not ground_cut.is_empty:
     H = np.asarray(fine['heights']).reshape(fine['nz'], fine['nx'])
-    minx, minz, maxx, maxz = authored.coverage.bounds
+    minx, minz, maxx, maxz = affected_ground.bounds
     for k in range(max(0, int((minz - fine['z0']) // 2)), min(fine['nz'] - 1, int((maxz - fine['z0']) // 2) + 1)):
         for i in range(max(0, int((minx - fine['x0']) // 2)), min(fine['nx'] - 1, int((maxx - fine['x0']) // 2) + 1)):
             xa, za = fine['x0'] + i * 2, fine['z0'] + k * 2
             cell = box(xa, za, xa + 2, za + 2)
-            if not cell.intersects(authored.coverage): continue
+            if not cell.intersects(affected_ground): continue
             def cell_height(x, z):
                 tx, tz = (x - xa) / 2, (z - za) / 2
-                return (H[k, i] * (1-tx) + H[k, i+1] * tx) * (1-tz) + (H[k+1, i] * (1-tx) + H[k+1, i+1] * tx) * tz + Y_OFFSET
-            replacement = triangulate(cell.difference(authored.coverage), cell_height, 0.)
+                old = (H[k, i] * (1-tx) + H[k, i+1] * tx) * (1-tz) + (H[k+1, i] * (1-tx) + H[k+1, i+1] * tx) * tz + Y_OFFSET
+                pts = shapely.points(x,z)
+                distance = shapely.distance(pts,roten.coverage)
+                near = (distance<.8) & ~shapely.covers(roten_fixed_ground,pts)
+                if near.any():
+                    q = shapely.get_point(shapely.shortest_line(pts[near],roten.coverage),-1)
+                    qx,qz = shapely.get_x(q),shapely.get_y(q)
+                    target = roten.height(qx,qz,raw_height(qx,qz))
+                    w = np.clip(1-distance[near]/.8,0,1); w=w*w*(3-2*w)
+                    old[near] += (target-old[near])*w
+                return old
+            replacement = triangulate(cell.difference(ground_cut), cell_height, 0., step=.4 if cell.intersects(roten_margin) else 2.)
             terrain_overrides[str(k * (fine['nx'] - 1) + i)] = [tri for bucket in replacement.values() for tri in bucket]
+
+# Close the regraded garden volume against the old ground. These are technical
+# rock/soil edge fills, not extra visually surveyed retaining walls.
+roten_supports = []
+H = np.asarray(fine['heights']).reshape(fine['nz'], fine['nx'])
+for poly in polys_of(roten.coverage):
+    for ring in [poly.exterior] + list(poly.interiors):
+        q = np.asarray(ring.segmentize(.4).coords)
+        fx, fz = (q[:,0]-fine['x0'])/2, (q[:,1]-fine['z0'])/2
+        i, k = fx.astype(int), fz.astype(int); tx, tz = fx-i, fz-k
+        old = (H[k,i]*(1-tx)+H[k,i+1]*tx)*(1-tz)+(H[k+1,i]*(1-tx)+H[k+1,i+1]*tx)*tz
+        new = roten.height(q[:,0],q[:,1],raw_height(q[:,0],q[:,1]))-Y_OFFSET
+        top = new
+        bottom = np.minimum(new,old)-.25
+        for j in range(len(q)-1):
+            roten_supports.append([*q[j],top[j],bottom[j],*q[j+1],top[j+1],bottom[j+1]])
 
 # Fill outer edges down into the terrain. These are foundations, not invented
 # garden retaining walls; no internal kerbs are made at shared paving borders.
@@ -344,6 +398,9 @@ for poly in polys_of(authored.soil):
         for j in range(len(q) - 1):
             planter_kerbs.append([q[j, 0], ys[j], q[j, 1], q[j+1, 0], ys[j+1], q[j+1, 1]])
 authored_trees, shrubs = authored.planting(surface_height, Y_OFFSET)
+garden_trees, garden_shrubs = roten.planting(
+    lambda x,z: roten.height(x,z,raw_height(x,z)), Y_OFFSET)
+authored_trees.extend(garden_trees); shrubs.extend(garden_shrubs)
 
 # ---------- kantsten mellan asfalt och trottoar, fundament runt upphöjda ytor ----------
 kerbs = []
@@ -533,7 +590,10 @@ site = dict(meta=dict(note='Markytor för Fas A, genererade av site.py. y = rå 
                       zone=list(ZONE), backdrop=list(BACKDROP)),
             terrain=fine, terrain_backdrop=coarse, meshes=meshes, kerbs=kerbs, river_walls=river_walls, bridges=bridges,
             lamps=lamps, trees=trees, stairs=stairs, surfaces=[dict(id=s['id'], kind=s['kind'], plane_raw=[round(float(v), 6) for v in pl]) for s, _, pl in surfaces],
-            authored_ground=authored.metadata(), terrain_overrides=terrain_overrides, authored_supports=supports,
+            authored_ground=authored.metadata(), roten_m29=roten.metadata(),
+            roten_supports=roten_supports,
+            roten_mesh_kinds=roten_mesh_kinds, roten_collision_only=roten_collision_only,
+            terrain_overrides=terrain_overrides, authored_supports=supports,
             planter_kerbs=planter_kerbs, authored_trees=authored_trees, shrubs=shrubs)
 (OUTPUT / 'site.json').write_text(json.dumps(site, separators=(',', ':')))
 log(f'site.json {((OUTPUT / "site.json").stat().st_size / 1e6):.1f} MB → {OUTPUT}')

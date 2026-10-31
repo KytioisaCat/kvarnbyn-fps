@@ -15,7 +15,7 @@ from modelkit import Kit, color
 from blender_materials import pbr_material, solid_material
 from blender_vegetation import place_tree, load_library
 from blender_finish import apply_finish
-import houses, heroes
+import houses, heroes, roten
 
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
@@ -163,20 +163,35 @@ log('terräng kuliss klar')
 
 # ---------- byggda ytor ----------
 MAT = {'asphalt': M['asphalt'], 'paving': M['paving'], 'walkway': M['walkway'], 'trail': M['trail'], 'pitch': M['pitch'], 'playground': M['playground'], 'water': M['water'], 'soil': M['soil']}
+for key, kind in SITE.get('roten_mesh_kinds', {}).items():
+    MAT[key] = M[{'gravel': 'trail', 'rock': 'rock', 'grass': 'grass', 'paving': 'paving'}[kind]]
+reviewed_setts = roten.sett_segments(CITY)
 for kind, tiles in SITE['meshes'].items():
     mat = MAT[kind]; tm = mat.get('tile_size_m', 3)
     for t, tris in tiles.items():
         for tri in tris:
+            selected = M['paving'] if kind in ('asphalt', 'walkway', 'trail') and roten.is_sett(tri, reviewed_setts) else mat
+            tm = selected.get('tile_size_m', 3)
             pts = [(x, -z, y) for x, y, z in tri]
             if ((pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0])) < 0: pts.reverse()
-            K.face(kind.title() + t, mat, pts, [(p[0] / tm, p[1] / tm) for p in pts])
-            if kind != 'water': K.face('COL_' + kind + t, M['collision'], pts)
+            is_m29 = kind.startswith('m29_')
+            render_name = 'Roten_ground_' + kind + t if is_m29 else kind.title() + t
+            col_name = 'COL_Roten_ground_' + kind + t if is_m29 else 'COL_' + kind + t
+            if kind not in SITE.get('roten_collision_only', []):
+                K.face(render_name, selected, pts, [(p[0] / tm, p[1] / tm) for p in pts])
+            if kind != 'water': K.face(col_name, M['collision'], pts)
 for x1, y1, z1, x2, y2, z2 in SITE['kerbs']:
     L = math.hypot(x2 - x1, z2 - z1)
     if L < 0.05: continue
     u = ((x2 - x1) / L, -(z2 - z1) / L)
     K.box('Kerbs' + tile_of(x1, z1), M['curb'], ((x1 + x2) / 2, -(z1 + z2) / 2, (y1 + y2) / 2 - .1), (L + .02, .14, .22), u)
 log('gator, kantsten klara')
+roten.build_garden(K, M, SITE.get('roten_m29', {}))
+for xa, za, ta, ba, xb, zb, tb, bb in SITE.get('roten_supports', []):
+    pts = [(xa,-za,ba),(xb,-zb,bb),(xb,-zb,tb),(xa,-za,ta)]
+    K.face('Roten_ground_edges', M['rock'], pts)
+    K.face('Roten_ground_edges', M['rock'], pts[::-1])
+    K.face('COL_Roten_ground_edges', M['collision'], pts)
 
 # Authored Torget surfaces are cut into the ground and have filled edge faces.
 # The foundations meet terrain below; they are not unsupported floating slabs.
@@ -272,7 +287,10 @@ log(f'trappor: {len(SITE.get("stairs", []))}')
 # ---------- hus ----------
 heroes_done = 0; houses_done = 0
 for b in CITY['buildings']:
-    if b.get('archetype_family') == 'hero':
+    if b.get('authored_model') == 'roten_m29':
+        roten.build_house(K, M, ground, b, CITY['reviewed_houses']['roten_m29'])
+        heroes_done += 1
+    elif b.get('archetype_family') == 'hero':
         if b['id'] == 'w92331981': heroes.build_krakan(K, M, ground, b, OFFSET)
         else: heroes.build_hero(K, M, ground, b)
         heroes_done += 1
@@ -301,7 +319,7 @@ for (xa, za), (xb, zb) in [((zx0, zz0), (zx1, zz0)), ((zx1, zz0), (zx1, zz1)), (
 objects = K.finish()
 for obj in objects:
     if obj.name.startswith('COL_'): obj.hide_render = True; obj.display_type = 'WIRE'
-    elif any(k in obj.name for k in ['Terrain', 'Water']):
+    elif any(k in obj.name for k in ['Terrain', 'Water']) or (obj.name.startswith('Roten_ground_') and not obj.name.startswith('Roten_ground_edges')):
         bm = bmesh.new(); bm.from_mesh(obj.data); bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=.0001); bm.to_mesh(obj.data); bm.free()
         for poly in obj.data.polygons: poly.use_smooth = True
 log(f'objekt: {len(objects)}')
@@ -327,7 +345,8 @@ def eye(x, z, up=1.7): return [round(x, 2), round(ground(x, z) + up, 2), round(z
 def paved_eye(x, z):
     """Torget's review camera is 1.7 m above the rendered/COL floor, not buried terrain."""
     floor = ground(x, z)
-    for kind in ('asphalt', 'paving', 'walkway', 'soil'):
+    for kind in SITE['meshes']:
+        if kind == 'water': continue
         for tiles in SITE['meshes'].get(kind, {}).values():
             for a, b, c in tiles:
                 if not min(a[0], b[0], c[0]) - .001 <= x <= max(a[0], b[0], c[0]) + .001 or not min(a[2], b[2], c[2]) - .001 <= z <= max(a[2], b[2], c[2]) + .001: continue
@@ -344,6 +363,9 @@ views = [
     dict(id='torget', name='Gamla torget', position=paved_eye(-8.5, 8), target=[-40, 4.5, -8]),
     dict(id='krakan', name='Kråkans krog', position=eye(8, 48), target=[11, 2.2, 30]),
     dict(id='roten', name='Roten M', position=eye(pts['cap_B'][0] + 14, pts['cap_B'][1] + 12), target=[pts['cap_B'][0] - 30, ground(*pts['cap_B']) + 3, pts['cap_B'][1] - 25]),
+    dict(id='roten-gavel', name='Roten M 29 – gaveln', position=paved_eye(120.7, 114.7), target=[105.8, 27.0, 120.5]),
+    dict(id='roten-gard', name='Roten M 29 – gården', position=paved_eye(106.5, 116.5), target=[101.7, 25.2, 119.0]),
+    dict(id='roten-tradgard', name='Roten M 29 – trädgården', position=paved_eye(95, 132.5), target=[97.7, 25.3, 123]),
     dict(id='royen', name='Royens trappor', position=eye(*pts['cap_C']), target=[pts['cap_C'][0] - 50, ground(*pts['cap_C']) + 2, pts['cap_C'][1] + 30]),
     dict(id='oversikt', name='Överblick', position=[180, 150, 330], target=[60, 0, 40], free_flight=True),
 ]
@@ -356,7 +378,8 @@ for r in CITY['roads']:
         L = math.hypot(xb - xa, zb - za); acc += L
         if acc > 45 and zx0 + 3 < xa < zx1 - 3 and zz0 + 3 < za < zz1 - 3:
             acc = 0; probe.append([round(xa, 2), round(ground(xa, za), 2), round(za, 2)])
-meta = dict(title='Kvarnbyn', probe_points=probe, spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
+meta = dict(title='Kvarnbyn', probe_points=probe, m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
+            spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),
             views=views, bounds=dict(min=[zx0, -40, zz0], max=[zx1, 120, zz1]),
             lamps=[[x, y + 4.95, z] for x, y, z, dx, dz in SITE['lamps']],
