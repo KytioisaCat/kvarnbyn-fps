@@ -240,6 +240,34 @@ en sammanhängande kollisionsramp; bild-/gångytans avsiktliga skillnad är hög
 `verify_roten.gd` provar den importerade världen med riktiga golvstrålar, spelarkapseln,
 öppen grind och staketstopp; `qa_roten_ground.py` jämför Blender-mesharnas bild-/gångytor.
 
+## Sammanhängande Stalleliden (2026-11-01)
+
+`reference/stalliden/OBSERVATIONER.md` dokumenterar faktiskt granskad Street View för
+M30 och fotografens trapp-/M25-bilder från 2017. M30 får stående vit panel, ockrafoder,
+rödbruna detaljer och liten vindruta; höjderna förblir antagna. M31 får ursprunglig
+OSM-kontur med klippt antaget sadeltak, men ingen ny påstått verifierad fasad eller hög mur.
+
+`stalliden.py` författar hela vägen från Roten M till Norra Forsåkersgatan som en
+sammanhängande färdig höjdprofil. Ankare tas från gamla triangulerade färdiga gångytor,
+inklusive deras respektive ytlyft; nya callbacks har **lift 0**. Två gamla generiska
+trappor och deras räcken ersätts. Vilplan delar 16 korta lopp; synliga steg följer
+osynliga kollisionsramper med högst ett stegs avvikelse. `stairkit.py` bygger även riktiga
+tunna slutna räckeskolliderare. Terrängklippning och 0,3 m trianglar med mjuka marginaler
+hindrar gamla grova grästrianglar från att skära igenom stegen.
+
+Originalbandet undantar uttryckligen parallellstigen och körbanan vid trappfoten.
+En kort uppskattad fotgängarlänk kopplar trappans botten till gatans nät; noden förs in
+även i soldaternas graf. Ingen tidigare körbana tas bort. `stalliden_garden.py` ger
+gräs, fem träd, 42 buskgrupper och en kort uppskattad mur/plank på den visuellt belagda
+norra tomten. Tekniska kantfyllningar märks separat från observerade murmotiv.
+
+`world_meta.stalliden_ground_checks` körs med samma riktiga kapselprov som M29 via
+`verify_roten.gd --check-key=stalliden_ground_checks`. Båda hela 112 m-banorna, punktprov,
+räckesstopp och fri passage är obligatoriska i `rebuild.sh`. `reference/stalliden/qa-export.py`
+provar dessutom transformerade GLB-trianglar. Slutbilder tas med release-appens vanliga
+`--view/--capture`-flaggor; `--script` ignoreras av release-mallen och är bara för editorn.
+Se `RESULTAT-STALLELIDEN.md` för omfattning och återstående husarbete.
+
 ## Viktiga beslut & motiv (kronologiskt urval)
 
 | Beslut | Motiv |

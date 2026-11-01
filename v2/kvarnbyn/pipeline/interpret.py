@@ -28,6 +28,7 @@ HEROES = {b['osm_way_id']: b for b in torget['buildings'] if not b['name'].start
 factory = json.loads((TORGET / 'reference/industrial_backdrop.json').read_text())
 FACTORY_ID = factory['identification']['correct_osm_way_id']
 roten_m29 = json.loads((DATA.parent / 'reference/roten-m/house.json').read_text())
+stalliden_houses = json.loads((DATA.parent / 'reference/stalliden/houses.json').read_text())
 
 # ---------- paletter (assumed: typiska kulörer i Kvarnbyn, inte uppmätta per hus) ----------
 WOOD = ['#efece4', '#efece4', '#e9dcae', '#8e3326', '#8e3326', '#cfccc2', '#bcc6a8', '#bccad0', '#d8b46c', '#e6d8c0']
@@ -193,6 +194,10 @@ for w in ways:
             spec['source'].update(levels='observed', facade='observed', roof_shape='observed',
                                   heights='observed_estimate', roof_color='observed_estimate',
                                   roof_material='observed', roof_subdivision='observed_estimate')
+        context = stalliden_houses['buildings'].get(spec['id'])
+        if context:
+            spec.update(context['override']); spec['name'] = context['name']
+            spec['source'].update(context['source'])
         buildings.append(spec); counts[spec['archetype']] += 1
     elif backdrop.contains(c):
         L = poly.minimum_rotated_rectangle
@@ -262,8 +267,8 @@ for b in buildings:
     poly = Polygon(b['footprint_xz']).buffer(0)
     rect = poly.minimum_rotated_rectangle
     fill = poly.area / max(rect.area, 1e-6)
-    simple = b['archetype'] in ('trahus', 'bod', 'offentlig') and fill >= 0.72
-    foot = list(rect.exterior.coords)[:-1] if simple else [tuple(q) for q in poly.simplify(0.25).exterior.coords[:-1]]
+    simple = b['archetype'] in ('trahus', 'bod', 'offentlig') and fill >= 0.72 and not b.get('keep_osm_footprint')
+    foot = list(rect.exterior.coords)[:-1] if simple else [tuple(q) for q in (poly if b.get('keep_osm_footprint') else poly.simplify(0.25)).exterior.coords[:-1]]
     if Polygon(foot).exterior.is_ccw: foot = foot[::-1]          # medurs i (x,z) = moturs i Blender (x,−z)
     b['build_footprint_xz'] = [r3(q) for q in foot]
     b['build_rect'] = bool(simple)

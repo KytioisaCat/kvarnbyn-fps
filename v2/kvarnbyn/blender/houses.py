@@ -9,6 +9,7 @@ i Blender, så utåtnormalen för kanten a→b är (dy, −dx) i Blender-planet.
 """
 import math, zlib
 from modelkit import Frame, roof, text
+import cottage_details
 
 
 def h01(*parts):
@@ -29,7 +30,7 @@ def _edge_frame(a, b):
     return (ax, ay), u, out, L
 
 
-def window(K, name, M, at, w, h, trim, muntins=True, sill=True):
+def window(K, name, M, at, w, h, trim, muntins=True, sill=True, muntin_mat=None):
     """at(s, depth, height) → Blender-punkt; s längs väggen, depth utåt."""
     t, d = 0.075, 0.11
     K.box(name, trim, at(-w / 2 - t / 2, d / 2, h / 2), (t, d, h + 2 * t), *_uv(at))
@@ -39,8 +40,8 @@ def window(K, name, M, at, w, h, trim, muntins=True, sill=True):
     K.face(name + '_Glass', M['glass_dark'], [at(-w / 2, 0.045, 0), at(w / 2, 0.045, 0), at(w / 2, 0.045, h), at(-w / 2, 0.045, h)],
            [(0, 0), (1, 0), (1, 1), (0, 1)])
     if muntins:
-        K.box(name, trim, at(0, 0.07, h / 2), (0.045, 0.05, h), *_uv(at))
-        K.box(name, trim, at(0, 0.07, h * 0.58), (w, 0.05, 0.04), *_uv(at))
+        K.box(name, muntin_mat or trim, at(0, 0.07, h / 2), (0.045, 0.05, h), *_uv(at))
+        K.box(name, muntin_mat or trim, at(0, 0.07, h * 0.58), (w, 0.05, 0.04), *_uv(at))
     if sill:
         K.box(name, M['metal_sill'], at(0, 0.13, -0.11), (w + 0.2, 0.2, 0.04), *_uv(at))
 
@@ -69,6 +70,8 @@ def build_house(K, b, M, ground, tile):
     trim = M['trim_dark'] if b['facade_material'] == 'wood' and b['facade_color'] in ('#efece4', '#e9dcae', '#e6d8c0', '#cfccc2') and (h01(b['id'], 'trim') < 0.33) else M['trim_light']
     if b['facade_material'] == 'wood' and b['facade_color'] == '#8e3326':
         trim = M['trim_light']
+    if b.get('reviewed_cottage'): trim = M['reviewed_trim'](b)
+    sash = M['reviewed_sash'](b) if b.get('reviewed_cottage') else trim
     name = 'H%s' % tile
     nm = name
     # sockel
@@ -85,7 +88,8 @@ def build_house(K, b, M, ground, tile):
     K.shell('COL_' + nm, M['collision'], [tuple(p) for p in foot], low, eave - low)
     # fönster och dörr
     ww, wh, sill_h = WINDOW[arch]; bay = BAY[arch]
-    if arch == 'trahus' and levels == 2 and wall < 5.0:
+    sill_h = b.get('window_sill_m', sill_h)
+    if arch == 'trahus' and levels == 2 and wall < 5.0 and not b.get('full_window_rows'):
         floors = [(base + sock, 2.55), (base + sock + 2.6, wall - sock - 2.6)]
     else:
         fh = (wall - sock) / levels
@@ -115,7 +119,7 @@ def build_house(K, b, M, ground, tile):
                     K.box(nm, M['door'](b), at_edge(s, 0.03, base + sock + 1.05), (gw, 0.06, 2.1), u)
                     continue
                 window(K, nm, M, lambda ss, d, h, s=s, fy=fy, sh=sill_h if arch != 'industri' else 0.8: at_edge(s + ss, d, fy + sh + h),
-                       ww, hh, trim, muntins=arch in ('trahus', 'offentlig', 'bod'))
+                       ww, hh, trim, muntins=arch in ('trahus', 'offentlig', 'bod'), muntin_mat=sash)
         # balkonger på flerbostadshusens långsida mot gatan (1960-tal)
         if arch == 'flerbostad' and i == street and levels >= 2 and b['facade_material'] == 'plaster':
             for f, (fy, fh) in enumerate(floors[1:], start=1):
@@ -127,7 +131,9 @@ def build_house(K, b, M, ground, tile):
                         K.box(nm + '_Balcony', M['balcony'](b), at_edge(s + sx, 0.65, fy + 0.5), (0.06, 1.3, 1.0), u)
     # tak
     roofmat = M['roof_for'](b)
-    if b['roof_shape'] == 'flat' or b['roof_rise_m'] <= 0.05 or not b.get('build_rect'):
+    if b.get('clip_gabled_roof'):
+        top = cottage_details.clipped_roof(K,b,M,roofmat,wallmat,'M31')
+    elif b['roof_shape'] == 'flat' or b['roof_rise_m'] <= 0.05 or not b.get('build_rect'):
         K.polygon(nm + '_Roof', M['roof_flat'](b), [tuple(p) for p in foot], eave + 0.02)
         for i in range(n):
             a, c = foot[i], foot[(i + 1) % n]
@@ -142,6 +148,9 @@ def build_house(K, b, M, ground, tile):
         if arch in ('trahus', 'offentlig', 'flerbostad'):
             sx = L * (0.2 if h01(b['id'], 'ch') < 0.5 else -0.2)
             K.box(nm + '_Chimney', M['chimney'], fr.p(sx, W * 0.12, eave + b['roof_rise_m'] * 0.75 + 0.5), (0.6, 0.6, b['roof_rise_m'] * 0.5 + 1.2), fr.u)
+    detail_name = 'Reviewed_' + b['id']
+    cottage_details.standing_boards(K,b,M,wallmat,foot,floors,ww,wh,sill_h,detail_name,bay)
+    cottage_details.attic_window(K,b,M,trim,sash,detail_name,window)
     if b.get('sign'):
         a, c = foot[street], foot[(street + 1) % n]
         (ax, ay), u, out, L = _edge_frame(a, c)

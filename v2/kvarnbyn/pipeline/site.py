@@ -26,6 +26,8 @@ import mapbox_earcut as earcut
 from common import ZONE, BACKDROP, DATA, Y_OFFSET, raw_height, land_class
 from authored_ground import AuthoredGround, SurfaceReference
 from roten_ground import RotenGround
+from stalliden import StallidenGround
+from stalliden_garden import StallidenGarden
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--stage-dir', type=Path, help='Write site/nav/game here, without touching active Godot assets.')
@@ -242,7 +244,7 @@ def surface_height(x, z):
 # Keep this local study out of urban conformation: its garden margins already
 # feather to DTM. Existing streets, bridges and their collision triangles win.
 existing_floor = {}
-reference_bounds = box(70, 74, 130, 142)  # grid-aligned, at least 5 m outside every queried join
+reference_bounds = box(-10, 64, 134, 144)  # grid-aligned; covers M29 and the whole Stalleliden chain
 for kind, geom, fn, lift in [('asphalt', asphalt, base_surface_height, .03),
                               ('paving', paving, surface_height, .13),
                               ('walkway', walkway, surface_height, .12),
@@ -250,9 +252,21 @@ for kind, geom, fn, lift in [('asphalt', asphalt, base_surface_height, .03),
     for tile, triangles in triangulate(geom.intersection(reference_bounds), fn, lift).items():
         existing_floor[kind + tile] = triangles
 roten_reference = SurfaceReference(existing_floor, lambda x,z: raw_height(x,z)+.05,
-                                   Y_OFFSET, 0., (75, 80, 125, 135))
+                                   Y_OFFSET, 0., (-8, 66, 132, 142))
 roten = RotenGround(city, cut.union(urban).union(trail), work, raw_height,
                    roten_reference.height, Y_OFFSET)
+forest_urban = urban
+stalliden_domain = StallidenGround.original_domain(city)
+stalliden = StallidenGround(city, cut.union(urban.difference(stalliden_domain)).union(trail.difference(stalliden_domain)),
+                            work, raw_height, roten_reference.height, Y_OFFSET)
+# Existing street/path owners remain untouched. Only the explicitly authored
+# corridor is removed from the old bands; every new surface uses finished lift0.
+paving = paving.difference(stalliden.replacement_domain)
+paving_all = paving_all.difference(stalliden.replacement_domain)
+walkway = walkway.difference(stalliden.replacement_domain)
+trail = trail.difference(stalliden.replacement_domain)
+urban = urban.difference(stalliden.replacement_domain)
+stalliden_garden = StallidenGarden(city, stalliden, cut.union(urban).union(trail).union(stalliden.coverage), raw_height, Y_OFFSET)
 
 
 def distance_to(geom, x, z):
@@ -330,6 +344,17 @@ for surface in roten.surfaces:
     meshes[key] = triangulate(surface['geom'], surface['height_fn'], 0., step=.4)
     roten_mesh_kinds[key] = surface['kind']
     if surface['collision_only']: roten_collision_only.append(key)
+stalliden_mesh_kinds, stalliden_collision_only = {}, []
+for surface in stalliden.surfaces:
+    key = 'stalliden_' + surface['id']
+    meshes[key] = triangulate(surface['geom'], surface['height_fn'], 0., step=.3)
+    stalliden_mesh_kinds[key] = surface['kind']
+    if surface['collision_only']: stalliden_collision_only.append(key)
+stalliden_garden_mesh_kinds = {}
+for surface in stalliden_garden.surfaces:
+    key = 'stalliden_garden_' + surface['id']
+    meshes[key] = triangulate(surface['geom'], surface['height_fn'], 0., step=.3)
+    stalliden_garden_mesh_kinds[key] = surface['kind']
 if river_prof:
     meshes['water'] = triangulate(channel, lambda x, z: water_level(x, z), 0.0)
 log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m in meshes.items()))
@@ -337,9 +362,10 @@ log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m 
 # Exact terrain cuts under the new surfaces prevent 2 m grass triangles crossing
 # a pavement edge. Replacement triangles keep the original cell interpolation.
 terrain_overrides = {}
-ground_cut = authored.coverage.union(roten.coverage)
+ground_cut = authored.coverage.union(roten.coverage).union(stalliden.coverage).union(stalliden_garden.coverage)
 roten_margin = roten.coverage.buffer(.8)
-affected_ground = authored.coverage.union(roten_margin)
+stalliden_margin = stalliden.coverage.union(stalliden_garden.coverage).buffer(.8)
+affected_ground = authored.coverage.union(roten_margin).union(stalliden_margin)
 roten_fixed_ground = urban.union(trail).buffer(.015)
 if not ground_cut.is_empty:
     H = np.asarray(fine['heights']).reshape(fine['nz'], fine['nx'])
@@ -353,16 +379,18 @@ if not ground_cut.is_empty:
                 tx, tz = (x - xa) / 2, (z - za) / 2
                 old = (H[k, i] * (1-tx) + H[k, i+1] * tx) * (1-tz) + (H[k+1, i] * (1-tx) + H[k+1, i+1] * tx) * tz + Y_OFFSET
                 pts = shapely.points(x,z)
-                distance = shapely.distance(pts,roten.coverage)
-                near = (distance<.8) & ~shapely.covers(roten_fixed_ground,pts)
-                if near.any():
-                    q = shapely.get_point(shapely.shortest_line(pts[near],roten.coverage),-1)
-                    qx,qz = shapely.get_x(q),shapely.get_y(q)
-                    target = roten.height(qx,qz,raw_height(qx,qz))
-                    w = np.clip(1-distance[near]/.8,0,1); w=w*w*(3-2*w)
-                    old[near] += (target-old[near])*w
+                for patch in (roten, stalliden, stalliden_garden):
+                    if patch.coverage.is_empty: continue
+                    distance = shapely.distance(pts,patch.coverage)
+                    near = (distance<.8) & ~shapely.covers(roten_fixed_ground,pts)
+                    if near.any():
+                        q = shapely.get_point(shapely.shortest_line(pts[near],patch.coverage),-1)
+                        qx,qz = shapely.get_x(q),shapely.get_y(q)
+                        target = patch.height(qx,qz,raw_height(qx,qz))
+                        w = np.clip(1-distance[near]/.8,0,1); w=w*w*(3-2*w)
+                        old[near] += (target-old[near])*w
                 return old
-            replacement = triangulate(cell.difference(ground_cut), cell_height, 0., step=.4 if cell.intersects(roten_margin) else 2.)
+            replacement = triangulate(cell.difference(ground_cut), cell_height, 0., step=.3 if cell.intersects(stalliden_margin) else .4 if cell.intersects(roten_margin) else 2.)
             terrain_overrides[str(k * (fine['nx'] - 1) + i)] = [tri for bucket in replacement.values() for tri in bucket]
 
 # Close the regraded garden volume against the old ground. These are technical
@@ -401,6 +429,8 @@ authored_trees, shrubs = authored.planting(surface_height, Y_OFFSET)
 garden_trees, garden_shrubs = roten.planting(
     lambda x,z: roten.height(x,z,raw_height(x,z)), Y_OFFSET)
 authored_trees.extend(garden_trees); shrubs.extend(garden_shrubs)
+stalliden_trees, stalliden_shrubs = stalliden_garden.planting(stalliden_garden._height, Y_OFFSET)
+authored_trees.extend(stalliden_trees); shrubs.extend(stalliden_shrubs)
 
 # ---------- kantsten mellan asfalt och trottoar, fundament runt upphöjda ytor ----------
 kerbs = []
@@ -490,6 +520,7 @@ log(f'gatlyktor: {len(lamps)}')
 # ---------- trappor ----------
 stairs = []
 for r, line, s_, h_ in profiles:
+    if r['id'] in (StallidenGround.MAIN, StallidenGround.LOWER): continue
     if r['kind'] != 'steps' or not line.intersects(zone.buffer(5)): continue
     L = line.length; n = max(2, int(L / 0.35) + 1); ss = np.linspace(0, L, n)
     xy = shapely.get_coordinates(shapely.line_interpolate_point(line, ss))
@@ -506,7 +537,7 @@ forest_w = land_class(TX, TZ)[:, 2]
 osm_forest = unary_union([Polygon(f['polygon_xz']).buffer(0) for f in city['forests'] if len(f['polygon_xz']) >= 3])
 in_osm = shapely.contains_xy(osm_forest, TX, TZ) if not osm_forest.is_empty else np.zeros(len(TX), bool)
 keep = (forest_w > 0.55) | (in_osm & (forest_w > 0.3))
-blocked = unary_union([urban, channel, buildings.buffer(2.0), bridge_clear]).buffer(2.5)
+blocked = unary_union([forest_urban, stalliden.coverage, channel, buildings.buffer(2.0), bridge_clear]).buffer(2.5)
 keep &= ~shapely.contains_xy(blocked, TX, TZ)
 idx = np.nonzero(keep)[0]
 if len(idx) > 1800: idx = rng.choice(idx, 1800, replace=False)
@@ -544,7 +575,14 @@ for r in city['roads']:
         for i in range(1, k + 1):
             xs_l.append(xa + (xb - xa) * i / k); zs_l.append(za + (zb - za) * i / k)
     xs = np.array(xs_l); zs = np.array(zs_l)
-    if r['bridge'] and r['id'] in bridge_by_id:
+    if r['id'] == StallidenGround.STREET and stalliden.active:
+        p = stalliden.connector_end
+        coords = list(zip(xs,zs)) + [(p[0],p[1])]
+        coords.sort(key=lambda q: line.project(Point(q)))
+        xs,zs = np.asarray(coords).T
+    if r['id'] in stalliden.profile_overrides:
+        ys = stalliden.road_height(r['id'],xs,zs)
+    elif r['bridge'] and r['id'] in bridge_by_id:
         ys = np.array([deck_height(bridge_by_id[r['id']], x, z) for x, z in zip(xs, zs)])
     elif r['kind'] in ('steps', 'path', 'track') or not len(profiles):
         ys = raw_height(xs, zs)
@@ -555,6 +593,13 @@ for r in city['roads']:
         ids.append(node_at(x, z, y - Y_OFFSET + 0.1) if inner.contains(Point(x, z)) else None)
     for a, b in zip(ids, ids[1:]):
         if a is not None and b is not None and a != b: edges.add((min(a, b), max(a, b)))
+if stalliden.active:
+    link = LineString([stalliden._bottom, stalliden.connector_end])
+    q = shapely.get_coordinates(link.segmentize(.5))
+    h = stalliden.height(q[:,0],q[:,1],roten_reference.height(q[:,0],q[:,1]))
+    ids = [node_at(x,z,y-Y_OFFSET+.1) for (x,z),y in zip(q,h)]
+    for a,b in zip(ids,ids[1:]):
+        if a != b: edges.add((min(a,b),max(a,b)))
 nav = dict(note='Vägnät för soldaternas AI (AStar3D). Noder [x,y,z] lokala meter, y = mark + 0,1.', nodes=nodes_xyz, edges=sorted(edges))
 (GA / 'nav.json').write_text(json.dumps(nav, separators=(',', ':')))
 log(f'vägnät: {len(nodes_xyz)} noder, {len(edges)} kanter')
@@ -593,6 +638,8 @@ site = dict(meta=dict(note='Markytor för Fas A, genererade av site.py. y = rå 
             authored_ground=authored.metadata(), roten_m29=roten.metadata(),
             roten_supports=roten_supports,
             roten_mesh_kinds=roten_mesh_kinds, roten_collision_only=roten_collision_only,
+            stalliden_garden=stalliden_garden.metadata(), stalliden_garden_mesh_kinds=stalliden_garden_mesh_kinds,
+            stalliden=stalliden.metadata(), stalliden_mesh_kinds=stalliden_mesh_kinds, stalliden_collision_only=stalliden_collision_only,
             terrain_overrides=terrain_overrides, authored_supports=supports,
             planter_kerbs=planter_kerbs, authored_trees=authored_trees, shrubs=shrubs)
 (OUTPUT / 'site.json').write_text(json.dumps(site, separators=(',', ':')))

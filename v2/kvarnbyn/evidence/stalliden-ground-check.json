@@ -1,0 +1,348 @@
+{
+	"blockers": [
+		{
+			"expected_blocked": true,
+			"id": "stalliden_metal_rail",
+			"passed": true,
+			"ray_blocked": true,
+			"ray_collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta",
+			"walk": {
+				"distance_from_start_m": 0.162574633955956,
+				"frames": 23,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.0285606007820949,
+				"maximum_lateral_error_m": 0.00448400247842073,
+				"position": [
+					51.5804252624512,
+					13.2758750915527,
+					89.2515563964844
+				],
+				"reached": false,
+				"reason": "blocked_by_static",
+				"side_colliders": [
+					"/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta"
+				]
+			}
+		},
+		{
+			"expected_blocked": false,
+			"id": "stalliden_walking_link_open",
+			"passed": true,
+			"ray_blocked": false,
+			"ray_collider": "",
+			"walk": {
+				"distance_from_start_m": 0.718932032585144,
+				"frames": 26,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.0157209200117192,
+				"maximum_lateral_error_m": 0.0000157283993758028,
+				"position": [
+					23.6332454681396,
+					4.45324373245239,
+					86.8033065795898
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		}
+	],
+	"check_key": "stalliden_ground_checks",
+	"coverage": {
+		"closed_blocker_probes": 1,
+		"ground_points": 13,
+		"open_passage_probes": 1,
+		"walk_paths": 2
+	},
+	"errors": [],
+	"geometry_source": "res://assets/world.glb",
+	"metadata_mtime_unix": 1793560809,
+	"metadata_source": "world_meta.stalliden_ground_checks",
+	"passed": true,
+	"paths": [
+		{
+			"id": "stalliden_down",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 1390,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.112314224243164,
+				"maximum_height_error_m": 0.0483503341674805,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 112.413352966309,
+				"frames": 3741,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.0825279054610881,
+				"maximum_lateral_error_m": 0.0858902782201767,
+				"position": [
+					6.44448566436768,
+					0.362520724534988,
+					97.4718399047852
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": [
+					"/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta"
+				]
+			}
+		},
+		{
+			"id": "stalliden_up",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 1390,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.112314224243164,
+				"maximum_height_error_m": 0.0483503341674805,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 112.350814819336,
+				"frames": 3744,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.0851822408837926,
+				"maximum_lateral_error_m": 0.0806402266025543,
+				"position": [
+					116.654228210449,
+					22.9077796936035,
+					118.13444519043
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": [
+					"/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta"
+				]
+			}
+		}
+	],
+	"points": [
+		{
+			"actual": [
+				28.6599998474121,
+				5.78799962997437,
+				84.9369964599609
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				28.6599998474121,
+				5.78843450546265,
+				84.9369964599609
+			],
+			"height_error_m": 0.00043487548828125,
+			"id": "w461711525_node_0",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				45.390998840332,
+				9.88589954376221,
+				80.5400009155273
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				45.390998840332,
+				9.88592720031738,
+				80.5400009155273
+			],
+			"height_error_m": 0.0000276565551757812,
+			"id": "w461711525_node_1",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				50.0660018920898,
+				11.7188997268677,
+				83.5790023803711
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				50.0660018920898,
+				11.7194690704346,
+				83.5790023803711
+			],
+			"height_error_m": 0.000569343566894531,
+			"id": "w461711525_node_2",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				52.6990013122559,
+				13.7088994979858,
+				91.6829986572266
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				52.6990013122559,
+				13.7090816497803,
+				91.6829986572266
+			],
+			"height_error_m": 0.000182151794433594,
+			"id": "w461711525_node_3",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				62.5260009765625,
+				16.7019004821777,
+				94.3550033569336
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				62.5260009765625,
+				16.7021427154541,
+				94.3550033569336
+			],
+			"height_error_m": 0.000242233276367188,
+			"id": "w461711525_node_4",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				66.2369995117188,
+				18.1889991760254,
+				105.175003051758
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_1__Collis/Gångyta",
+			"expected": [
+				66.2369995117188,
+				18.1893882751465,
+				105.175003051758
+			],
+			"height_error_m": 0.00038909912109375,
+			"id": "w461711525_node_5",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				83.4499969482422,
+				22.2399997711182,
+				99.7089996337891
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				83.4499969482422,
+				22.2399234771729,
+				99.7089996337891
+			],
+			"height_error_m": 0.0000762939453125,
+			"id": "w461711525_node_6",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				87.1660003662109,
+				23.4329986572266,
+				98.4739990234375
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				87.1660003662109,
+				23.4330596923828,
+				98.4739990234375
+			],
+			"height_error_m": 0.00006103515625,
+			"id": "w461711525_node_7",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				18.1959991455078,
+				2.95499992370605,
+				88.8219985961914
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711524_landings0_0__Collis/Gångyta",
+			"expected": [
+				18.1959991455078,
+				2.95528364181519,
+				88.8219985961914
+			],
+			"height_error_m": 0.000283718109130859,
+			"id": "w461711523_node_0",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				28.6599998474121,
+				5.78799962997437,
+				84.9369964599609
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				28.6599998474121,
+				5.78843450546265,
+				84.9369964599609
+			],
+			"height_error_m": 0.00043487548828125,
+			"id": "w461711523_node_1",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				10.7510004043579,
+				0.525543689727783,
+				94.8450012207031
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_trail0_0__Collision_only/Gångyta",
+			"expected": [
+				10.7510004043579,
+				0.49021589756012,
+				94.8450012207031
+			],
+			"height_error_m": 0.0353277921676636,
+			"id": "w461711524_node_0",
+			"normal_y": 0.989054203033447,
+			"passed": true
+		},
+		{
+			"actual": [
+				14.0030002593994,
+				1.617999792099,
+				92.7959976196289
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711524_landings0_0__Collis/Gångyta",
+			"expected": [
+				14.0030002593994,
+				1.61806344985962,
+				92.7959976196289
+			],
+			"height_error_m": 0.0000636577606201172,
+			"id": "w461711524_node_1",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				18.1959991455078,
+				2.95499992370605,
+				88.8219985961914
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711524_landings0_0__Collis/Gångyta",
+			"expected": [
+				18.1959991455078,
+				2.95528364181519,
+				88.8219985961914
+			],
+			"height_error_m": 0.000283718109130859,
+			"id": "w461711524_node_2",
+			"normal_y": 1.0,
+			"passed": true
+		}
+	],
+	"scope": "actual imported collision geometry and actual player controller",
+	"wall_clock_s": 5.028342,
+	"world_asset_mtime_unix": 1793560826
+}

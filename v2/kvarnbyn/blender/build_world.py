@@ -15,7 +15,7 @@ from modelkit import Kit, color
 from blender_materials import pbr_material, solid_material
 from blender_vegetation import place_tree, load_library
 from blender_finish import apply_finish
-import houses, heroes, roten
+import houses, heroes, roten, stairkit
 
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
@@ -90,6 +90,9 @@ def quant(hexc, steps=6):
 
 
 def wall_mat(b):
+    if b.get('reviewed_cottage'):
+        c = b['facade_color']
+        return cached(('clapboard',c),lambda:pbr('plaster','Reviewed_clapboard_'+c.lstrip('#'),c,.10))
     if b['facade_material'] == 'brick':
         return M['brick']
     key = 'wood' if b['facade_material'] == 'wood' else 'plaster'
@@ -116,6 +119,8 @@ def far_roof(b): c = quant(b.get('roof_color', '#555555'), 4); return cached(('f
 
 
 M.update(wall=wall_mat, roof_for=roof_mat, roof_flat=roof_flat, door=door_mat, balcony=balc_mat, far_wall=far_wall, far_roof=far_roof)
+M['reviewed_trim'] = lambda b: cached(('reviewed_trim',b['trim_color']),lambda:solid_material('Reviewed_ochre_trim',color(b['trim_color']),.72))
+M['reviewed_sash'] = lambda b: cached(('reviewed_sash',b['sash_color']),lambda:solid_material('Reviewed_redbrown_sash',color(b['sash_color']),.68))
 
 
 def tile_of(x, z): return '%d_%d' % (math.floor(x / TILE), math.floor(z / TILE))
@@ -165,6 +170,10 @@ log('terräng kuliss klar')
 MAT = {'asphalt': M['asphalt'], 'paving': M['paving'], 'walkway': M['walkway'], 'trail': M['trail'], 'pitch': M['pitch'], 'playground': M['playground'], 'water': M['water'], 'soil': M['soil']}
 for key, kind in SITE.get('roten_mesh_kinds', {}).items():
     MAT[key] = M[{'gravel': 'trail', 'rock': 'rock', 'grass': 'grass', 'paving': 'paving'}[kind]]
+for key, kind in SITE.get('stalliden_mesh_kinds', {}).items():
+    MAT[key] = M[kind]
+for key, kind in SITE.get('stalliden_garden_mesh_kinds', {}).items():
+    MAT[key] = M[kind]
 reviewed_setts = roten.sett_segments(CITY)
 for kind, tiles in SITE['meshes'].items():
     mat = MAT[kind]; tm = mat.get('tile_size_m', 3)
@@ -175,9 +184,10 @@ for kind, tiles in SITE['meshes'].items():
             pts = [(x, -z, y) for x, y, z in tri]
             if ((pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0])) < 0: pts.reverse()
             is_m29 = kind.startswith('m29_')
-            render_name = 'Roten_ground_' + kind + t if is_m29 else kind.title() + t
-            col_name = 'COL_Roten_ground_' + kind + t if is_m29 else 'COL_' + kind + t
-            if kind not in SITE.get('roten_collision_only', []):
+            is_stalliden = kind.startswith('stalliden_')
+            render_name = 'Roten_ground_' + kind + t if is_m29 else 'Stalleliden_ground_' + kind + t if is_stalliden else kind.title() + t
+            col_name = 'COL_Roten_ground_' + kind + t if is_m29 else 'COL_Stalleliden_ground_' + kind + t if is_stalliden else 'COL_' + kind + t
+            if kind not in SITE.get('roten_collision_only', []) + SITE.get('stalliden_collision_only', []):
                 K.face(render_name, selected, pts, [(p[0] / tm, p[1] / tm) for p in pts])
             if kind != 'water': K.face(col_name, M['collision'], pts)
 for x1, y1, z1, x2, y2, z2 in SITE['kerbs']:
@@ -187,6 +197,8 @@ for x1, y1, z1, x2, y2, z2 in SITE['kerbs']:
     K.box('Kerbs' + tile_of(x1, z1), M['curb'], ((x1 + x2) / 2, -(z1 + z2) / 2, (y1 + y2) / 2 - .1), (L + .02, .14, .22), u)
 log('gator, kantsten klara')
 roten.build_garden(K, M, SITE.get('roten_m29', {}))
+stairkit.build(K, M, SITE.get('stalliden', {}), ground)
+stairkit.garden(K, M, SITE.get('stalliden_garden', {}))
 for xa, za, ta, ba, xb, zb, tb, bb in SITE.get('roten_supports', []):
     pts = [(xa,-za,ba),(xb,-zb,bb),(xb,-zb,tb),(xa,-za,ta)]
     K.face('Roten_ground_edges', M['rock'], pts)
@@ -319,7 +331,7 @@ for (xa, za), (xb, zb) in [((zx0, zz0), (zx1, zz0)), ((zx1, zz0), (zx1, zz1)), (
 objects = K.finish()
 for obj in objects:
     if obj.name.startswith('COL_'): obj.hide_render = True; obj.display_type = 'WIRE'
-    elif any(k in obj.name for k in ['Terrain', 'Water']) or (obj.name.startswith('Roten_ground_') and not obj.name.startswith('Roten_ground_edges')):
+    elif any(k in obj.name for k in ['Terrain', 'Water']) or (obj.name.startswith(('Roten_ground_', 'Stalleliden_ground_')) and not obj.name.startswith(('Roten_ground_edges', 'Stalleliden_ground_edges'))):
         bm = bmesh.new(); bm.from_mesh(obj.data); bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=.0001); bm.to_mesh(obj.data); bm.free()
         for poly in obj.data.polygons: poly.use_smooth = True
 log(f'objekt: {len(objects)}')
@@ -366,6 +378,10 @@ views = [
     dict(id='roten-gavel', name='Roten M 29 – gaveln', position=paved_eye(120.7, 114.7), target=[105.8, 27.0, 120.5]),
     dict(id='roten-gard', name='Roten M 29 – gården', position=paved_eye(106.5, 116.5), target=[101.7, 25.2, 119.0]),
     dict(id='roten-tradgard', name='Roten M 29 – trädgården', position=paved_eye(95, 132.5), target=[97.7, 25.3, 123]),
+    dict(id='m30', name='Roten M 30', position=paved_eye(109,114), target=[100.9,27.5,103.4]),
+    dict(id='stalleliden-ovre', name='Stalleliden – övre delen', position=paved_eye(85.5,99.1), target=[63,18.5,98]),
+    dict(id='stalleliden-mitt', name='Stalleliden – mittpartiet', position=paved_eye(35,83.3), target=[53,14,85]),
+    dict(id='stalleliden-nedre', name='Stalleliden – nedre delen', position=paved_eye(16.5,90.3), target=[48,14,83]),
     dict(id='royen', name='Royens trappor', position=eye(*pts['cap_C']), target=[pts['cap_C'][0] - 50, ground(*pts['cap_C']) + 2, pts['cap_C'][1] + 30]),
     dict(id='oversikt', name='Överblick', position=[180, 150, 330], target=[60, 0, 40], free_flight=True),
 ]
@@ -378,7 +394,7 @@ for r in CITY['roads']:
         L = math.hypot(xb - xa, zb - za); acc += L
         if acc > 45 and zx0 + 3 < xa < zx1 - 3 and zz0 + 3 < za < zz1 - 3:
             acc = 0; probe.append([round(xa, 2), round(ground(xa, za), 2), round(za, 2)])
-meta = dict(title='Kvarnbyn', probe_points=probe, m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
+meta = dict(title='Kvarnbyn', probe_points=probe, stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
             spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),
             views=views, bounds=dict(min=[zx0, -40, zz0], max=[zx1, 120, zz1]),

@@ -1,0 +1,1554 @@
+{
+  "meta": {
+    "date": "2026-11-01",
+    "qa_scope": "Independent analytic CPU review only. No engine, GPU, network, or baseline mutation.",
+    "hashes": {
+      "v2/kvarnbyn/data/city.json": "ea9c1eeff6a4e663c454e9635d30125a70ae0ddd5736c58aa5b196fa7e440b2f",
+      "v2/kvarnbyn/data/site.json": "d110135e3fab41bd828f22ddb4bd6f968294dada48470e71b1ce7ac7a129df30",
+      "v2/kvarnbyn/pipeline/stalliden.py": "203ec611d5fedd750573b2c658db0e04b4c316fe8ffb75e9ccc2c186665c5347"
+    },
+    "forbidden_recipe": "Original+model houses clipped internally; external original footprints buffer0.05, water polygons, bridge halfwidth+0.3; all old asphalt/paving/walkway/trail triangles outside original_domain.",
+    "coordinates": "Finished raw metres above sea level; local Y=raw-18."
+  },
+  "passed": true,
+  "checks": [
+    {
+      "name": "active_and_expected_geometry_count",
+      "passed": true,
+      "coverage_m2": 147.3852717741718,
+      "surfaces": 21,
+      "flights": 16,
+      "rail_chains": 2
+    },
+    {
+      "name": "four_finished_anchors",
+      "passed": true,
+      "actual_raw_m": [
+        41.43306061908406,
+        23.788434644396553,
+        20.95528358341079,
+        18.490215901785714
+      ],
+      "expected_raw_m": [
+        41.43306061908406,
+        23.788434644396553,
+        20.95528358341079,
+        18.490215901785714
+      ]
+    },
+    {
+      "name": "no_forbidden_area_overlap",
+      "passed": true,
+      "overlap_m2": 9.506418201893768e-16,
+      "houses_overlap_m2": 0.0,
+      "unrelated_urban_overlap_m2": 9.499504411904742e-16
+    },
+    {
+      "name": "outside_coverage_exactly_unchanged",
+      "passed": true,
+      "outside_samples": 182262,
+      "max_change_m": 0.0
+    },
+    {
+      "name": "analytic_floor_seams_below_023m",
+      "passed": true,
+      "seam_count": 20,
+      "max_delta_m": 0.0189846
+    },
+    {
+      "name": "main_walk_lower_centre_and_side_profiles",
+      "passed": true,
+      "profiles": [
+        {
+          "road_id": "w461711525",
+          "offset_m": -0.49,
+          "samples": 3001,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.014176,
+          "worst_start_xz": [
+            85.4932317,
+            98.5135862
+          ],
+          "worst_end_xz": [
+            85.5169541,
+            98.5057022
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249981,
+          "raw_heights_m": [
+            40.9686463,
+            40.9828223
+          ]
+        },
+        {
+          "road_id": "w461711525",
+          "offset_m": -0.2,
+          "samples": 3001,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.014176,
+          "worst_start_xz": [
+            84.4697434,
+            99.1593355
+          ],
+          "worst_end_xz": [
+            84.4934658,
+            99.1514515
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249981,
+          "raw_heights_m": [
+            40.3023748,
+            40.3165508
+          ]
+        },
+        {
+          "road_id": "w461711525",
+          "offset_m": 0,
+          "samples": 3001,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.014176,
+          "worst_start_xz": [
+            85.3868246,
+            99.0653029
+          ],
+          "worst_end_xz": [
+            85.410547,
+            99.0574189
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249981,
+          "raw_heights_m": [
+            40.8127104,
+            40.8268864
+          ]
+        },
+        {
+          "road_id": "w461711525",
+          "offset_m": 0.2,
+          "samples": 3001,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.014176,
+          "worst_start_xz": [
+            84.6433421,
+            99.523153
+          ],
+          "worst_end_xz": [
+            84.6670644,
+            99.515269
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249981,
+          "raw_heights_m": [
+            40.3307267,
+            40.3449027
+          ]
+        },
+        {
+          "road_id": "w461711525",
+          "offset_m": 0.49,
+          "samples": 3001,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.014176,
+          "worst_start_xz": [
+            86.01581,
+            99.3726144
+          ],
+          "worst_end_xz": [
+            86.0395323,
+            99.3647304
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249981,
+          "raw_heights_m": [
+            41.0962302,
+            41.1104062
+          ]
+        },
+        {
+          "road_id": "w461711523",
+          "offset_m": -0.49,
+          "samples": 448,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0077217,
+          "worst_start_xz": [
+            19.4066058,
+            87.8498531
+          ],
+          "worst_end_xz": [
+            19.4300152,
+            87.8411618
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249707,
+          "raw_heights_m": [
+            21.1016346,
+            21.1093563
+          ]
+        },
+        {
+          "road_id": "w461711523",
+          "offset_m": -0.2,
+          "samples": 448,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0077217,
+          "worst_start_xz": [
+            20.6311937,
+            87.704539
+          ],
+          "worst_end_xz": [
+            20.6546031,
+            87.6958477
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249707,
+          "raw_heights_m": [
+            21.4722776,
+            21.4799993
+          ]
+        },
+        {
+          "road_id": "w461711523",
+          "offset_m": 0,
+          "samples": 448,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0077217,
+          "worst_start_xz": [
+            19.1791946,
+            88.4569664
+          ],
+          "worst_end_xz": [
+            19.202604,
+            88.4482752
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249707,
+          "raw_heights_m": [
+            20.9703652,
+            20.9780869
+          ]
+        },
+        {
+          "road_id": "w461711523",
+          "offset_m": 0.2,
+          "samples": 448,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0077217,
+          "worst_start_xz": [
+            19.2253969,
+            88.6531523
+          ],
+          "worst_end_xz": [
+            19.2488063,
+            88.644461
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249707,
+          "raw_heights_m": [
+            20.9626434,
+            20.9703652
+          ]
+        },
+        {
+          "road_id": "w461711523",
+          "offset_m": 0.49,
+          "samples": 448,
+          "uncovered": 0,
+          "not_in_new_coverage": 0,
+          "retained_original_urban_used": 0,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0077217,
+          "worst_start_xz": [
+            19.3263338,
+            88.9250194
+          ],
+          "worst_end_xz": [
+            19.3497432,
+            88.9163282
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249707,
+          "raw_heights_m": [
+            20.9626434,
+            20.9703652
+          ]
+        },
+        {
+          "road_id": "w461711524",
+          "offset_m": -0.49,
+          "samples": 386,
+          "uncovered": 0,
+          "not_in_new_coverage": 38,
+          "retained_original_urban_used": 38,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0137829,
+          "worst_start_xz": [
+            12.561719,
+            93.1249606
+          ],
+          "worst_end_xz": [
+            12.5828611,
+            93.1116395
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249888,
+          "raw_heights_m": [
+            19.413794,
+            19.4275769
+          ]
+        },
+        {
+          "road_id": "w461711524",
+          "offset_m": -0.2,
+          "samples": 386,
+          "uncovered": 0,
+          "not_in_new_coverage": 37,
+          "retained_original_urban_used": 37,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0448812,
+          "worst_start_xz": [
+            11.4055004,
+            94.1962275
+          ],
+          "worst_end_xz": [
+            11.4266426,
+            94.1829064
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249888,
+          "raw_heights_m": [
+            18.6179172,
+            18.573036
+          ]
+        },
+        {
+          "road_id": "w461711524",
+          "offset_m": 0,
+          "samples": 386,
+          "uncovered": 0,
+          "not_in_new_coverage": 37,
+          "retained_original_urban_used": 37,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0623798,
+          "worst_start_xz": [
+            11.5121169,
+            94.3654402
+          ],
+          "worst_end_xz": [
+            11.533259,
+            94.3521191
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249888,
+          "raw_heights_m": [
+            18.6354158,
+            18.573036
+          ]
+        },
+        {
+          "road_id": "w461711524",
+          "offset_m": 0.2,
+          "samples": 386,
+          "uncovered": 0,
+          "not_in_new_coverage": 36,
+          "retained_original_urban_used": 36,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0784973,
+          "worst_start_xz": [
+            11.5975912,
+            94.547974
+          ],
+          "worst_end_xz": [
+            11.6187334,
+            94.5346529
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249888,
+          "raw_heights_m": [
+            18.6377504,
+            18.5592531
+          ]
+        },
+        {
+          "road_id": "w461711524",
+          "offset_m": 0.49,
+          "samples": 386,
+          "uncovered": 0,
+          "not_in_new_coverage": 36,
+          "retained_original_urban_used": 36,
+          "floor_coverage_note": "New surface OR actual retained original urban outside the replacement mask; original parallel path wins at the lower stair foot.",
+          "max_adjacent_height_delta_m": 0.0861447,
+          "worst_start_xz": [
+            11.7521851,
+            94.7933323
+          ],
+          "worst_end_xz": [
+            11.7733273,
+            94.7800112
+          ],
+          "actual_adjacent_sample_distance_m": 0.0249888,
+          "raw_heights_m": [
+            18.6453978,
+            18.5592531
+          ]
+        }
+      ]
+    },
+    {
+      "name": "M24_M25_clipped_band_covers_body_corridor",
+      "passed": true,
+      "pinches": [
+        {
+          "building_id": "w92331938",
+          "centre_xz": [
+            46.7371991,
+            81.4151014
+          ],
+          "surface_width_m": 1.3897901,
+          "full_capsule_body_band_halfwidth_m": 0.49,
+          "clipped_surface_covers_body_band": true
+        },
+        {
+          "building_id": "w92332157",
+          "centre_xz": [
+            54.2095904,
+            92.0937355
+          ],
+          "surface_width_m": 1.4,
+          "full_capsule_body_band_halfwidth_m": 0.49,
+          "clipped_surface_covers_body_band": true
+        }
+      ]
+    },
+    {
+      "name": "full_metadata_paths_connected_with_original_floor_callback",
+      "passed": true,
+      "paths": [
+        {
+          "id": "stalliden_down",
+          "samples": 5511,
+          "max_floor_delta_m": 0.0926162,
+          "worst_xz_start": [
+            114.447625,
+            117.2291378
+          ],
+          "worst_xz_end": [
+            114.4245,
+            117.2196531
+          ],
+          "original_floor_removed_but_no_new_surface_points": 0,
+          "original_floor_removed_but_no_new_surface_xz": [],
+          "note": "Uses original finished-floor callback outside new coverage. Removed-band terrain integration must supply those points."
+        },
+        {
+          "id": "stalliden_up",
+          "samples": 5511,
+          "max_floor_delta_m": 0.0926162,
+          "worst_xz_start": [
+            114.4245,
+            117.2196531
+          ],
+          "worst_xz_end": [
+            114.447625,
+            117.2291378
+          ],
+          "original_floor_removed_but_no_new_surface_points": 0,
+          "original_floor_removed_but_no_new_surface_xz": [],
+          "note": "Uses original finished-floor callback outside new coverage. Removed-band terrain integration must supply those points."
+        }
+      ],
+      "replacement_gap_requirement": "No metadata-path point may lose its original floor through the replacement mask without receiving a new surface."
+    },
+    {
+      "name": "visible_authored_risers_below_0165m",
+      "passed": true,
+      "max_riser_m": 0.16389968918378628,
+      "treads": 128
+    },
+    {
+      "name": "rails_clear_body_corridor_plusminus_02m",
+      "passed": true,
+      "rails": [
+        {
+          "id": "w461711525_rail_0",
+          "minimum_centreline_distance_m": 0.6368588,
+          "body_corridor_overlap_m2": 0.0,
+          "segments_encroaching": []
+        },
+        {
+          "id": "w461711524_rail_0",
+          "minimum_centreline_distance_m": 0.6369182,
+          "body_corridor_overlap_m2": 0.0,
+          "segments_encroaching": []
+        }
+      ]
+    },
+    {
+      "name": "blocker_true_false_metadata_2d",
+      "passed": true,
+      "blockers": [
+        {
+          "id": "stalliden_metal_rail",
+          "expected_blocked": true,
+          "intersected_rail_chains": [
+            "w461711525_rail_0"
+          ],
+          "matches_in_2d": true,
+          "note": "2D rail metadata intersection only; exported rail posts and full 3D ray/capsule still require engine QA."
+        },
+        {
+          "id": "stalliden_walking_link_open",
+          "expected_blocked": false,
+          "intersected_rail_chains": [],
+          "matches_in_2d": true,
+          "note": "2D rail metadata intersection only; exported rail posts and full 3D ray/capsule still require engine QA."
+        }
+      ]
+    },
+    {
+      "name": "preserved_urban_boundary_tie_below_023m",
+      "passed": true,
+      "max_delta_m": 0.10083,
+      "note": "Across 4mm boundary normal. This tests unchanged original urban, including the direct connector clip edge."
+    },
+    {
+      "name": "connector_preserved_urban_edge_below_023m",
+      "passed": true,
+      "samples": 28,
+      "max_delta_m": 0.0005468,
+      "worst": [
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_norra_pedestrian_link",
+          "xz": [
+            8.1760605,
+            95.6022518
+          ],
+          "inside_raw_m": 18.4173173,
+          "old_finished_outside_raw_m": 18.4167705,
+          "dem_outside_raw_m": 18.2337652,
+          "delta_to_old_finished_m": 0.0005468,
+          "delta_to_raw_dem_m": 0.1835522
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_norra_pedestrian_link",
+          "xz": [
+            8.2281854,
+            95.6875923
+          ],
+          "inside_raw_m": 18.4245217,
+          "old_finished_outside_raw_m": 18.4239867,
+          "dem_outside_raw_m": 18.2425568,
+          "delta_to_old_finished_m": 0.000535,
+          "delta_to_raw_dem_m": 0.1819649
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_norra_pedestrian_link",
+          "xz": [
+            8.2803102,
+            95.7729328
+          ],
+          "inside_raw_m": 18.4317268,
+          "old_finished_outside_raw_m": 18.4312021,
+          "dem_outside_raw_m": 18.2512584,
+          "delta_to_old_finished_m": 0.0005247,
+          "delta_to_raw_dem_m": 0.1804683
+        }
+      ]
+    }
+  ],
+  "analytic_surface_seams": [
+    {
+      "a": "w461711525_landings",
+      "b": "stalliden_roten_landing",
+      "samples": 113,
+      "max_delta_m": 0.0189846,
+      "worst_xz": [
+        87.6241713,
+        99.003225
+      ],
+      "raw_heights_m": [
+        41.4330606,
+        41.4520452
+      ],
+      "shared_boundary_length_m": 2.9791583
+    },
+    {
+      "a": "w461711525_flight_6_0",
+      "b": "stalliden_roten_landing",
+      "samples": 2,
+      "max_delta_m": 0.004337,
+      "worst_xz": [
+        86.6357847,
+        99.3878619
+      ],
+      "raw_heights_m": [
+        41.4271364,
+        41.4314734
+      ],
+      "shared_boundary_length_m": 0.0104469
+    },
+    {
+      "a": "w461711525_flight_0_0",
+      "b": "w461711525_landings",
+      "samples": 58,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        30.8151374,
+        83.6468481
+      ],
+      "raw_heights_m": [
+        23.7884346,
+        23.7884346
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_0_1",
+      "b": "w461711525_landings",
+      "samples": 58,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        35.5757646,
+        82.3957288
+      ],
+      "raw_heights_m": [
+        25.2635318,
+        25.2635318
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_0_2",
+      "b": "w461711525_landings",
+      "samples": 58,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        40.0075578,
+        81.2310288
+      ],
+      "raw_heights_m": [
+        26.5747294,
+        26.5747294
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_1_0",
+      "b": "w461711525_landings",
+      "samples": 58,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        46.6432638,
+        80.5191378
+      ],
+      "raw_heights_m": [
+        27.8859269,
+        27.8859269
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_1_1",
+      "b": "w461711525_landings",
+      "samples": 58,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        48.2100196,
+        81.5376129
+      ],
+      "raw_heights_m": [
+        28.8026978,
+        28.8026978
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_2_0",
+      "b": "w461711525_landings",
+      "samples": 58,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        51.2365484,
+        84.9164181
+      ],
+      "raw_heights_m": [
+        29.7194688,
+        29.7194688
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_2_1",
+      "b": "w461711525_landings",
+      "samples": 60,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        52.2295755,
+        87.9728145
+      ],
+      "raw_heights_m": [
+        30.7907988,
+        30.7907988
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_3_0",
+      "b": "w461711525_landings",
+      "samples": 60,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        54.3377634,
+        91.4031715
+      ],
+      "raw_heights_m": [
+        31.7090816,
+        31.7090816
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_3_1",
+      "b": "w461711525_landings",
+      "samples": 60,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        58.301772,
+        92.481001
+      ],
+      "raw_heights_m": [
+        33.2843772,
+        33.2843772
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_4_0",
+      "b": "w461711525_landings",
+      "samples": 59,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        64.4921157,
+        97.9298531
+      ],
+      "raw_heights_m": [
+        34.7021433,
+        34.7021433
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_5_0",
+      "b": "w461711525_landings",
+      "samples": 60,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        68.6842933,
+        103.6634144
+      ],
+      "raw_heights_m": [
+        36.189388,
+        36.189388
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_5_1",
+      "b": "w461711525_landings",
+      "samples": 60,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        73.4974515,
+        102.1349927
+      ],
+      "raw_heights_m": [
+        37.6475804,
+        37.6475804
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_5_2",
+      "b": "w461711525_landings",
+      "samples": 60,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        77.9865559,
+        100.7094745
+      ],
+      "raw_heights_m": [
+        38.9437515,
+        38.9437515
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711525_flight_6_0",
+      "b": "w461711525_landings",
+      "samples": 60,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        84.2075425,
+        98.7195867
+      ],
+      "raw_heights_m": [
+        40.2399226,
+        40.2399226
+      ],
+      "shared_boundary_length_m": 2.8
+    },
+    {
+      "a": "w461711524_flight_0_0",
+      "b": "w461711524_landings",
+      "samples": 2,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        13.5094237,
+        93.9343507
+      ],
+      "raw_heights_m": [
+        19.6180635,
+        19.6180635
+      ],
+      "shared_boundary_length_m": 0.0
+    },
+    {
+      "a": "w461711524_flight_1_0",
+      "b": "w461711524_landings",
+      "samples": 3,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        16.819182,
+        89.1624634
+      ],
+      "raw_heights_m": [
+        20.9552836,
+        20.9552836
+      ],
+      "shared_boundary_length_m": 0.0
+    },
+    {
+      "a": "w461711525_landings",
+      "b": "stalliden_walking_link",
+      "samples": 96,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        28.3534182,
+        84.3077086
+      ],
+      "raw_heights_m": [
+        23.7884346,
+        23.7884346
+      ],
+      "shared_boundary_length_m": 2.1982318
+    },
+    {
+      "a": "w461711524_landings",
+      "b": "stalliden_walking_link",
+      "samples": 96,
+      "max_delta_m": 0.0,
+      "worst_xz": [
+        18.6775288,
+        89.330065
+      ],
+      "raw_heights_m": [
+        20.9552836,
+        20.9552836
+      ],
+      "shared_boundary_length_m": 2.1982318
+    }
+  ],
+  "edge_summary": {
+    "preserved_urban": {
+      "samples": 73,
+      "worst_to_old_finished": [
+        {
+          "kind": "preserved_urban",
+          "surface_id": "w461711524_flight_0_0",
+          "xz": [
+            11.8266704,
+            94.9053227
+          ],
+          "inside_raw_m": 18.5484033,
+          "old_finished_outside_raw_m": 18.6492334,
+          "dem_outside_raw_m": 18.6059793,
+          "delta_to_old_finished_m": 0.10083,
+          "delta_to_raw_dem_m": 0.0575759
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "w461711524_flight_0_0",
+          "xz": [
+            11.7764777,
+            94.8188317
+          ],
+          "inside_raw_m": 18.5504113,
+          "old_finished_outside_raw_m": 18.6474023,
+          "dem_outside_raw_m": 18.6037358,
+          "delta_to_old_finished_m": 0.096991,
+          "delta_to_raw_dem_m": 0.0533244
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "w461711524_flight_0_0",
+          "xz": [
+            11.7262746,
+            94.7323467
+          ],
+          "inside_raw_m": 18.5524128,
+          "old_finished_outside_raw_m": 18.6455686,
+          "dem_outside_raw_m": 18.6003375,
+          "delta_to_old_finished_m": 0.0931558,
+          "delta_to_raw_dem_m": 0.0479247
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "w461711524_flight_0_0",
+          "xz": [
+            11.6760668,
+            94.6458645
+          ],
+          "inside_raw_m": 18.5544112,
+          "old_finished_outside_raw_m": 18.6437337,
+          "dem_outside_raw_m": 18.5988147,
+          "delta_to_old_finished_m": 0.0893225,
+          "delta_to_raw_dem_m": 0.0444035
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "w461711524_flight_0_0",
+          "xz": [
+            11.625859,
+            94.5593823
+          ],
+          "inside_raw_m": 18.5564096,
+          "old_finished_outside_raw_m": 18.6418988,
+          "dem_outside_raw_m": 18.5962496,
+          "delta_to_old_finished_m": 0.0854892,
+          "delta_to_raw_dem_m": 0.03984
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "w461711524_flight_0_0",
+          "xz": [
+            11.5756512,
+            94.4729
+          ],
+          "inside_raw_m": 18.558408,
+          "old_finished_outside_raw_m": 18.6400638,
+          "dem_outside_raw_m": 18.5926422,
+          "delta_to_old_finished_m": 0.0816558,
+          "delta_to_raw_dem_m": 0.0342342
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "w461711524_flight_0_0",
+          "xz": [
+            11.525745,
+            94.3862468
+          ],
+          "inside_raw_m": 18.5605964,
+          "old_finished_outside_raw_m": 18.6373392,
+          "dem_outside_raw_m": 18.5880668,
+          "delta_to_old_finished_m": 0.0767428,
+          "delta_to_raw_dem_m": 0.0274704
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "w461711524_flight_0_0",
+          "xz": [
+            11.4773154,
+            94.2987564
+          ],
+          "inside_raw_m": 18.563721,
+          "old_finished_outside_raw_m": 18.6294858,
+          "dem_outside_raw_m": 18.5828392,
+          "delta_to_old_finished_m": 0.0657648,
+          "delta_to_raw_dem_m": 0.0191182
+        }
+      ],
+      "worst_to_raw_dem": [
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            89.3066628,
+            102.3630646
+          ],
+          "inside_raw_m": 41.8171118,
+          "old_finished_outside_raw_m": 41.8171735,
+          "dem_outside_raw_m": 41.6108443,
+          "delta_to_old_finished_m": 6.17e-05,
+          "delta_to_raw_dem_m": 0.2062674
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            89.2219556,
+            102.3101435
+          ],
+          "inside_raw_m": 41.812617,
+          "old_finished_outside_raw_m": 41.8126611,
+          "dem_outside_raw_m": 41.6069531,
+          "delta_to_old_finished_m": 4.4e-05,
+          "delta_to_raw_dem_m": 0.2056639
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            89.3962308,
+            102.4072642
+          ],
+          "inside_raw_m": 41.8214516,
+          "old_finished_outside_raw_m": 41.8215305,
+          "dem_outside_raw_m": 41.6160003,
+          "delta_to_old_finished_m": 7.89e-05,
+          "delta_to_raw_dem_m": 0.2054514
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            89.1429554,
+            102.2490298
+          ],
+          "inside_raw_m": 41.8080124,
+          "old_finished_outside_raw_m": 41.8080383,
+          "dem_outside_raw_m": 41.6044574,
+          "delta_to_old_finished_m": 2.59e-05,
+          "delta_to_raw_dem_m": 0.203555
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            89.4897649,
+            102.4423007
+          ],
+          "inside_raw_m": 41.8255933,
+          "old_finished_outside_raw_m": 41.8256886,
+          "dem_outside_raw_m": 41.6222421,
+          "delta_to_old_finished_m": 9.52e-05,
+          "delta_to_raw_dem_m": 0.2033512
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            89.0704513,
+            102.1803339
+          ],
+          "inside_raw_m": 41.8033438,
+          "old_finished_outside_raw_m": 41.8033513,
+          "dem_outside_raw_m": 41.6031613,
+          "delta_to_old_finished_m": 7.5e-06,
+          "delta_to_raw_dem_m": 0.2001825
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            89.5863307,
+            102.467824
+          ],
+          "inside_raw_m": 41.8294955,
+          "old_finished_outside_raw_m": 41.8296061,
+          "dem_outside_raw_m": 41.6293498,
+          "delta_to_old_finished_m": 0.0001106,
+          "delta_to_raw_dem_m": 0.2001457
+        },
+        {
+          "kind": "preserved_urban",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            89.6849637,
+            102.4835789
+          ],
+          "inside_raw_m": 41.833119,
+          "old_finished_outside_raw_m": 41.8332441,
+          "dem_outside_raw_m": 41.6370728,
+          "delta_to_old_finished_m": 0.000125,
+          "delta_to_raw_dem_m": 0.1960463
+        }
+      ]
+    },
+    "removed_old_band": {
+      "samples": 1896,
+      "worst_to_old_finished": [
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.4905962,
+            97.9254228
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.2118463,
+          "dem_outside_raw_m": 36.1618463,
+          "delta_to_old_finished_m": 1.509703,
+          "delta_to_raw_dem_m": 1.459703
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.4581537,
+            97.8308316
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1992164,
+          "dem_outside_raw_m": 36.1492164,
+          "delta_to_old_finished_m": 1.4970732,
+          "delta_to_raw_dem_m": 1.4470732
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.4257112,
+            97.7362405
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1862183,
+          "dem_outside_raw_m": 36.1362183,
+          "delta_to_old_finished_m": 1.484075,
+          "delta_to_raw_dem_m": 1.434075
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_flight_4_0",
+          "xz": [
+            64.5230387,
+            98.0200139
+          ],
+          "inside_raw_m": 34.743837,
+          "old_finished_outside_raw_m": 36.2241078,
+          "dem_outside_raw_m": 36.1741078,
+          "delta_to_old_finished_m": 1.4802708,
+          "delta_to_raw_dem_m": 1.4302708
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.3932687,
+            97.6416494
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1728517,
+          "dem_outside_raw_m": 36.1228517,
+          "delta_to_old_finished_m": 1.4707085,
+          "delta_to_raw_dem_m": 1.4207085
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.3608262,
+            97.5470582
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1591169,
+          "dem_outside_raw_m": 36.1091169,
+          "delta_to_old_finished_m": 1.4569736,
+          "delta_to_raw_dem_m": 1.4069736
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_flight_4_0",
+          "xz": [
+            64.5554812,
+            98.1146051
+          ],
+          "inside_raw_m": 34.7875795,
+          "old_finished_outside_raw_m": 36.236001,
+          "dem_outside_raw_m": 36.186001,
+          "delta_to_old_finished_m": 1.4484215,
+          "delta_to_raw_dem_m": 1.3984215
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.3283838,
+            97.4524671
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1450137,
+          "dem_outside_raw_m": 36.0950137,
+          "delta_to_old_finished_m": 1.4428705,
+          "delta_to_raw_dem_m": 1.3928705
+        }
+      ],
+      "worst_to_raw_dem": [
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.4905962,
+            97.9254228
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.2118463,
+          "dem_outside_raw_m": 36.1618463,
+          "delta_to_old_finished_m": 1.509703,
+          "delta_to_raw_dem_m": 1.459703
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.4581537,
+            97.8308316
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1992164,
+          "dem_outside_raw_m": 36.1492164,
+          "delta_to_old_finished_m": 1.4970732,
+          "delta_to_raw_dem_m": 1.4470732
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.4257112,
+            97.7362405
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1862183,
+          "dem_outside_raw_m": 36.1362183,
+          "delta_to_old_finished_m": 1.484075,
+          "delta_to_raw_dem_m": 1.434075
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_flight_4_0",
+          "xz": [
+            64.5230387,
+            98.0200139
+          ],
+          "inside_raw_m": 34.743837,
+          "old_finished_outside_raw_m": 36.2241078,
+          "dem_outside_raw_m": 36.1741078,
+          "delta_to_old_finished_m": 1.4802708,
+          "delta_to_raw_dem_m": 1.4302708
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.3932687,
+            97.6416494
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1728517,
+          "dem_outside_raw_m": 36.1228517,
+          "delta_to_old_finished_m": 1.4707085,
+          "delta_to_raw_dem_m": 1.4207085
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.3608262,
+            97.5470582
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1591169,
+          "dem_outside_raw_m": 36.1091169,
+          "delta_to_old_finished_m": 1.4569736,
+          "delta_to_raw_dem_m": 1.4069736
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_flight_4_0",
+          "xz": [
+            64.5554812,
+            98.1146051
+          ],
+          "inside_raw_m": 34.7875795,
+          "old_finished_outside_raw_m": 36.236001,
+          "dem_outside_raw_m": 36.186001,
+          "delta_to_old_finished_m": 1.4484215,
+          "delta_to_raw_dem_m": 1.3984215
+        },
+        {
+          "kind": "removed_old_band",
+          "surface_id": "w461711525_landings",
+          "xz": [
+            64.3283838,
+            97.4524671
+          ],
+          "inside_raw_m": 34.7021433,
+          "old_finished_outside_raw_m": 36.1450137,
+          "dem_outside_raw_m": 36.0950137,
+          "delta_to_old_finished_m": 1.4428705,
+          "delta_to_raw_dem_m": 1.3928705
+        }
+      ]
+    },
+    "natural_margin": {
+      "samples": 120,
+      "worst_to_old_finished": [
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.0478712,
+            97.963969
+          ],
+          "inside_raw_m": 41.4345456,
+          "old_finished_outside_raw_m": 41.6862217,
+          "dem_outside_raw_m": 41.6362217,
+          "delta_to_old_finished_m": 0.251676,
+          "delta_to_raw_dem_m": 0.201676
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            87.9822004,
+            97.8885545
+          ],
+          "inside_raw_m": 41.4334126,
+          "old_finished_outside_raw_m": 41.6822239,
+          "dem_outside_raw_m": 41.6322239,
+          "delta_to_old_finished_m": 0.2488113,
+          "delta_to_raw_dem_m": 0.1988113
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            87.9163301,
+            97.8133225
+          ],
+          "inside_raw_m": 41.4330606,
+          "old_finished_outside_raw_m": 41.6776695,
+          "dem_outside_raw_m": 41.6276695,
+          "delta_to_old_finished_m": 0.2446088,
+          "delta_to_raw_dem_m": 0.1946088
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            87.8465418,
+            97.7417473
+          ],
+          "inside_raw_m": 41.4330606,
+          "old_finished_outside_raw_m": 41.6714963,
+          "dem_outside_raw_m": 41.6214963,
+          "delta_to_old_finished_m": 0.2384356,
+          "delta_to_raw_dem_m": 0.1884356
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            87.7699619,
+            97.677502
+          ],
+          "inside_raw_m": 41.4330606,
+          "old_finished_outside_raw_m": 41.6627954,
+          "dem_outside_raw_m": 41.6127954,
+          "delta_to_old_finished_m": 0.2297347,
+          "delta_to_raw_dem_m": 0.1797347
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            87.6873565,
+            97.6212272
+          ],
+          "inside_raw_m": 41.4330606,
+          "old_finished_outside_raw_m": 41.6516801,
+          "dem_outside_raw_m": 41.6016801,
+          "delta_to_old_finished_m": 0.2186195,
+          "delta_to_raw_dem_m": 0.1686195
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.2448839,
+            98.1902122
+          ],
+          "inside_raw_m": 41.4426333,
+          "old_finished_outside_raw_m": 41.6606195,
+          "dem_outside_raw_m": 41.6453407,
+          "delta_to_old_finished_m": 0.2179862,
+          "delta_to_raw_dem_m": 0.2027073
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.179213,
+            98.1147978
+          ],
+          "inside_raw_m": 41.43916,
+          "old_finished_outside_raw_m": 41.6568115,
+          "dem_outside_raw_m": 41.6427311,
+          "delta_to_old_finished_m": 0.2176516,
+          "delta_to_raw_dem_m": 0.2035711
+        }
+      ],
+      "worst_to_raw_dem": [
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.3762256,
+            98.3410411
+          ],
+          "inside_raw_m": 41.4518658,
+          "old_finished_outside_raw_m": 41.6682355,
+          "dem_outside_raw_m": 41.6572149,
+          "delta_to_old_finished_m": 0.2163697,
+          "delta_to_raw_dem_m": 0.2053491
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.3105547,
+            98.2656267
+          ],
+          "inside_raw_m": 41.4468726,
+          "old_finished_outside_raw_m": 41.6644275,
+          "dem_outside_raw_m": 41.6517731,
+          "delta_to_old_finished_m": 0.217555,
+          "delta_to_raw_dem_m": 0.2049006
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.4418965,
+            98.4164555
+          ],
+          "inside_raw_m": 41.4575983,
+          "old_finished_outside_raw_m": 41.6720435,
+          "dem_outside_raw_m": 41.661666,
+          "delta_to_old_finished_m": 0.2144452,
+          "delta_to_raw_dem_m": 0.2040677
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.179213,
+            98.1147978
+          ],
+          "inside_raw_m": 41.43916,
+          "old_finished_outside_raw_m": 41.6568115,
+          "dem_outside_raw_m": 41.6427311,
+          "delta_to_old_finished_m": 0.2176516,
+          "delta_to_raw_dem_m": 0.2035711
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.1135421,
+            98.0393834
+          ],
+          "inside_raw_m": 41.4364614,
+          "old_finished_outside_raw_m": 41.6530035,
+          "dem_outside_raw_m": 41.6397241,
+          "delta_to_old_finished_m": 0.2165421,
+          "delta_to_raw_dem_m": 0.2032626
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.2448839,
+            98.1902122
+          ],
+          "inside_raw_m": 41.4426333,
+          "old_finished_outside_raw_m": 41.6606195,
+          "dem_outside_raw_m": 41.6453407,
+          "delta_to_old_finished_m": 0.2179862,
+          "delta_to_raw_dem_m": 0.2027073
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.0478712,
+            97.963969
+          ],
+          "inside_raw_m": 41.4345456,
+          "old_finished_outside_raw_m": 41.6862217,
+          "dem_outside_raw_m": 41.6362217,
+          "delta_to_old_finished_m": 0.251676,
+          "delta_to_raw_dem_m": 0.201676
+        },
+        {
+          "kind": "natural_margin",
+          "surface_id": "stalliden_roten_landing",
+          "xz": [
+            88.5075674,
+            98.4918699
+          ],
+          "inside_raw_m": 41.4640526,
+          "old_finished_outside_raw_m": 41.6758515,
+          "dem_outside_raw_m": 41.6651263,
+          "delta_to_old_finished_m": 0.211799,
+          "delta_to_raw_dem_m": 0.2010737
+        }
+      ]
+    }
+  },
+  "old_replacement_uncovered_area_m2": 54.215963,
+  "connector": {
+    "line_xz": [
+      [
+        10.751,
+        94.845
+      ],
+      [
+        6.190647842908654,
+        97.62826651958594
+      ]
+    ],
+    "anchors": {
+      "s0": 0.9002172905680174,
+      "s1": 2.5926008942963015,
+      "h0": 18.412336510983696,
+      "h1": 18.466794775203375
+    },
+    "new_surface_area_m2": 2.3736773
+  },
+  "metadata_source": {
+    "source": "Root inspected Stalleliden photograph, picturelives.wordpress.com, published 2017-06-26; geometry estimated from OSM/DTM 2026-11-01.",
+    "observed": "grey stone/concrete steps in short flights, walking/landing sections, simple metal rail; material observation only",
+    "estimated": "all metric heights, widths, flight counts/positions, rail placement and short topology connector. No M31 wall.",
+    "height_units": "finished raw m above sea level/lift0 for callbacks; structural points and checks local Y=raw-offset"
+  },
+  "limitations": [
+    "Does not test triangulation of these analytic surfaces.",
+    "Does not test the root integration terrain cut/feather or removal of original urban/stairs.",
+    "Does not prove exported rail mesh/collision presence or actual player-capsule passage."
+  ]
+}

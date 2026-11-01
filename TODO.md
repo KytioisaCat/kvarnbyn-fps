@@ -17,7 +17,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **3. Ljussättning**: kvällsljus, gatlyktor
-- [ ] **Världen (kärnan)**: fortsatt grönska och terrasser per plats. M29-provet är genomfört; nästa platsrunda är M30/M31 och Stalliden. Granska hus, trapp-/tomtgränser och växtlighet visuellt innan nya höga murar byggs.
+- [ ] **Världen (kärnan)**: fortsatt grönska och terrasser per plats. M29 och Stallelidens första gång-/platsprov är genomförda. Nästa husarbete: visuellt belägga M31 och återskapa M24/M25:s volymer, grunder, tak och entréer längs trappan. Granska innan nya höga murar byggs.
+- [ ] **Joels bedömning av Stalleliden/M30** (`v2/kvarnbyn/RESULTAT-STALLELIDEN.md`): igenkänning och gångstråk; grannhusen är fortfarande delvis generiska.
 - [ ] **Joels bedömning av Roten M 29** (`v2/kvarnbyn/RESULTAT-ROTEN.md`): igenkänning, husproportioner och markmiljö. Övriga grannhus är fortfarande generiska.
 - [ ] **Nordbanken**: kontrollera uppskattad stenläggningskontur och anslutande gatuprofiler i ett separat platsprov; inte inkluderad i förgårdspasset.
 - [ ] Framtid: pacing (Gamla torget som lugn bas med NPC:er, anfall mot Mölndals centrum via berget/ån), världen ut till Mölndals centrum och Götaforsliden
@@ -77,6 +78,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-01 — **Stalleliden + M30/M31, första platsprov**: sammanhängande 112 m-stråk, korta lopp/vilplan, verkligt räckesstopp, fem träd/42 buskgrupper; M30:s belagda gavel och M31:s ursprungliga kontur. 2 088 GLB-prover och riktiga kapseln åt båda håll gröna, full återbyggnad/Mac-app. Mått och dolda fasader fortsatt uppskattade. `v2/kvarnbyn/RESULTAT-STALLELIDEN.md`.
 
 - [x] 2026-10-31 — **Roten M 29**: faktiskt granskad Street View/exteriör, låg vit husgrupp med rund gavelruta, cirka 83,5 m² gård/grus/gräs/berg, tre steg, låg stenbäddkant, öppen grind, staket, två träd och 17 buskgrupper. Verklig kapselgång, faktiska Blender-meshar och Mac-export verifieras i `v2/kvarnbyn/RESULTAT-ROTEN.md`; M30/M31 kvarstår.
 

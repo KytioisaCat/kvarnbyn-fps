@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "scope": "actual raw GLB transformed triangles; centre and +/-20 cm along complete route",
+  "glb": {
+    "path": "v2/.tools/kvarnbyn-stalliden-20261101/after/world_raw.glb",
+    "bytes": 233202096,
+    "sha256": "2778830672b8fc56fcac746ebb3f00c88be401918f321292de76484792fbbf10",
+    "corridor_geometry_sha256": "5215a5405dd7fbb77a0249b124b94a22db524bcd38aa54276625bf5d5c11f614",
+    "node_primitives": 83,
+    "triangles": 88845
+  },
+  "samples": 2088,
+  "missing_or_mismatched": 0,
+  "max_render_collision_gap_m": 0.16137900000000016,
+  "max_intentional_step_gap_m": 0.16137900000000016,
+  "errors": [],
+  "baseline": {
+    "path": "v2/kvarnbyn/blender/world_raw.glb",
+    "bytes": 228038716,
+    "sha256": "8bb0022902ec7ccaa0c9f91100551849570f9091561112d5b14725f7989f9192",
+    "corridor_geometry_sha256": "3d15910a5079d6a86997436d81a94ca30af0bc916bedb73b74ab6cb8f3343bd1",
+    "node_primitives": 47,
+    "triangles": 23997
+  },
+  "preserved_in_corridor": {
+    "asphalt": true
+  },
+  "not_sampled_in_corridor": [
+    "water",
+    "bridges"
+  ]
+}

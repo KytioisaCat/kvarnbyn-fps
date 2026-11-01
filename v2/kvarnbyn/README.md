@@ -32,7 +32,8 @@ från det befintliga torget-provet.
 
 ## Resultat och nästa steg
 
-- [Senaste platsprovet: Roten M 29](RESULTAT-ROTEN.md)
+- [Senaste platsprovet: Stalleliden och M30/M31](RESULTAT-STALLELIDEN.md)
+- [Roten M 29](RESULTAT-ROTEN.md)
 - [Soldater, vapen och torgförgården](RESULTAT-SOLDATER.md)
 - [Fas B: spelregler och grundkänsla](RESULTAT-FAS-B.md)
 - [Fas A: hela världen](RESULTAT.md)

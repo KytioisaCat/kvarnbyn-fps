@@ -28,6 +28,8 @@ step "Optimerar texturer (2k) → godot/assets/world.glb"
 $PY v2/poc/torget/assets-src/optimize_glb.py --input $P/blender/world_raw.glb --output $P/godot/assets/world.glb \
   --report $LOG/glb-qa.json --max-size 2048 --quality 88 > /dev/null
 ls -la $P/godot/assets/world.glb | awk '{printf "  world.glb %.1f MB\n", $5/1e6}'
+step "Kontroll: exporterade gångtrianglar och växternas markkontakt"
+$PY $P/reference/stalliden/qa-export.py --glb $P/blender/world_raw.glb --site $P/data/site.json --out $LOG/stalliden-mesh-after.json > $LOG/stalliden-mesh-check.log
 step "Blender: Ak 5 och riggade soldater"
 $B -b --python-exit-code 1 --python $P/blender/build_ak5.py > $LOG/weapon-build.log 2>&1
 $B -b --python-exit-code 1 --python $P/blender/build_soldier.py > $LOG/soldier-build.log 2>&1
@@ -43,6 +45,8 @@ step "Kontroll: gångytor över hela världen"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --walktest > $LOG/walk-check.log 2>&1
 step "Kontroll: Roten M 29, gård och grind"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --output="$ROOT/$LOG/roten-ground-check.json" > $LOG/roten-ground-check.log 2>&1
+step "Kontroll: hela Stalleliden upp och ned samt räcke"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --check-key=stalliden_ground_checks --report-prefix=KVARNBYN_STALLIDEN_CHECK --output="$ROOT/$LOG/stalliden-ground-check.json" > $LOG/stalliden-ground-check.log 2>&1
 step "Kontroll: trädplaceringar efter import"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_trees.gd -- --explore > $LOG/tree-check.log 2>&1
 step "Kontroll: soldatmodell och stridsfysik"

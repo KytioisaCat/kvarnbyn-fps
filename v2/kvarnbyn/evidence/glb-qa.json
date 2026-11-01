@@ -1,16 +1,16 @@
 {
   "input": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/blender/world_raw.glb",
   "output": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/godot/assets/world.glb",
-  "source_bytes": 228038716,
-  "output_bytes": 193690412,
-  "reduction_percent": 15.06,
+  "source_bytes": 233240292,
+  "output_bytes": 198891748,
+  "reduction_percent": 14.73,
   "image_source_bytes": 56232829,
   "image_output_bytes": 21885193,
   "image_count": 34,
-  "material_count": 136,
-  "texture_count": 120,
-  "accessor_count": 16741,
-  "preserved_geometry_buffer_views": 16741,
+  "material_count": 144,
+  "texture_count": 124,
+  "accessor_count": 16975,
+  "preserved_geometry_buffer_views": 16975,
   "verification": "All non-image bufferViews byte-identical; scene, accessor, mesh, material, texture and node dictionaries equal; image references and world bounds unchanged; all views four-byte aligned.",
   "source_world_bounds": {
     "min": [
@@ -546,6 +546,61 @@
       ]
     },
     {
+      "name": "white_plaster_rough_01_nor_gl_1k",
+      "roles": [
+        "normalTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 384190,
+      "output_bytes": 201556,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 40.503,
+      "normal_angle_degrees": {
+        "sample_count": 16384,
+        "mean": 1.359,
+        "p95": 3.193,
+        "max": 12.667
+      },
+      "image_indices": [
+        19
+      ]
+    },
+    {
+      "name": "white_plaster_rough_01_rough_1k",
+      "roles": [
+        "metallicRoughnessTexture"
+      ],
+      "original_dimensions": [
+        1024,
+        1024
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source_bytes": 1276688,
+      "output_bytes": 556806,
+      "output_mime_type": "image/jpeg",
+      "alpha_preserved": false,
+      "jpeg_quality": 88,
+      "jpeg_chroma_subsampling": "4:4:4",
+      "psnr_db_against_resized_source": 33.441,
+      "normal_angle_degrees": null,
+      "image_indices": [
+        20
+      ]
+    },
+    {
       "name": "wood_plank_wall_nor_gl_2k",
       "roles": [
         "normalTexture"
@@ -572,7 +627,7 @@
         "max": 12.902
       },
       "image_indices": [
-        19
+        21
       ]
     },
     {
@@ -597,7 +652,7 @@
       "psnr_db_against_resized_source": 46.085,
       "normal_angle_degrees": null,
       "image_indices": [
-        20
+        22
       ]
     },
     {
@@ -627,7 +682,7 @@
         "max": 24.226
       },
       "image_indices": [
-        21
+        23
       ]
     },
     {
@@ -652,7 +707,7 @@
       "psnr_db_against_resized_source": 48.875,
       "normal_angle_degrees": null,
       "image_indices": [
-        22
+        24
       ]
     },
     {
@@ -682,7 +737,7 @@
         "max": 0.0
       },
       "image_indices": [
-        23
+        25
       ]
     },
     {
@@ -707,7 +762,7 @@
       "psnr_db_against_resized_source": "lossless",
       "normal_angle_degrees": null,
       "image_indices": [
-        24
+        26
       ]
     },
     {
@@ -730,61 +785,6 @@
       "jpeg_quality": 88,
       "jpeg_chroma_subsampling": "4:4:4",
       "psnr_db_against_resized_source": 38.842,
-      "normal_angle_degrees": null,
-      "image_indices": [
-        25
-      ]
-    },
-    {
-      "name": "white_plaster_rough_01_nor_gl_1k",
-      "roles": [
-        "normalTexture"
-      ],
-      "original_dimensions": [
-        1024,
-        1024
-      ],
-      "dimensions": [
-        1024,
-        1024
-      ],
-      "source_bytes": 384190,
-      "output_bytes": 201556,
-      "output_mime_type": "image/jpeg",
-      "alpha_preserved": false,
-      "jpeg_quality": 88,
-      "jpeg_chroma_subsampling": "4:4:4",
-      "psnr_db_against_resized_source": 40.503,
-      "normal_angle_degrees": {
-        "sample_count": 16384,
-        "mean": 1.359,
-        "p95": 3.193,
-        "max": 12.667
-      },
-      "image_indices": [
-        26
-      ]
-    },
-    {
-      "name": "white_plaster_rough_01_rough_1k",
-      "roles": [
-        "metallicRoughnessTexture"
-      ],
-      "original_dimensions": [
-        1024,
-        1024
-      ],
-      "dimensions": [
-        1024,
-        1024
-      ],
-      "source_bytes": 1276688,
-      "output_bytes": 556806,
-      "output_mime_type": "image/jpeg",
-      "alpha_preserved": false,
-      "jpeg_quality": 88,
-      "jpeg_chroma_subsampling": "4:4:4",
-      "psnr_db_against_resized_source": 33.441,
       "normal_angle_degrees": null,
       "image_indices": [
         27
@@ -941,5 +941,5 @@
       ]
     }
   ],
-  "elapsed_seconds": 2.103
+  "elapsed_seconds": 2.117
 }

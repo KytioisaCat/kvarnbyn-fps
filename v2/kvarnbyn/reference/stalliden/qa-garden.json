@@ -1,0 +1,986 @@
+{
+  "meta": {
+    "scope": "Independent CPU analytic geometry only; no exported triangles or capsule execution.",
+    "input_sha256": {
+      "v2/kvarnbyn/data/city.json": "90ff4cb59def061c74ff9acfd78a5e8f3a708673b1e12569a31132ecc1312030",
+      "v2/kvarnbyn/data/site.json": "d110135e3fab41bd828f22ddb4bd6f968294dada48470e71b1ce7ac7a129df30",
+      "v2/kvarnbyn/pipeline/stalliden.py": "203ec611d5fedd750573b2c658db0e04b4c316fe8ffb75e9ccc2c186665c5347",
+      "v2/kvarnbyn/pipeline/stalliden_garden.py": "af93ae03cb375d562264ee4105f4002a67fe813619683efc8b1e6cf0aff253bb"
+    }
+  },
+  "passed": true,
+  "checks": [
+    {
+      "name": "active_garden_has_surfaces",
+      "passed": true,
+      "coverage_m2": 377.4917004,
+      "surfaces": 1
+    },
+    {
+      "name": "garden_does_not_overlap_forbidden",
+      "passed": true,
+      "overlap_m2": 0.0
+    },
+    {
+      "name": "finished_raw_ground_surface_kinds",
+      "passed": true
+    },
+    {
+      "name": "requested_plant_counts",
+      "passed": true,
+      "trees": 5,
+      "shrubs": 42
+    },
+    {
+      "name": "plant_centres_clear_main_plusminus_11m",
+      "passed": true,
+      "minimum_m": 1.3033923
+    },
+    {
+      "name": "tree_centres_at_least_08m_from_houses",
+      "passed": true
+    },
+    {
+      "name": "no_plants_inside_any_house",
+      "passed": true
+    },
+    {
+      "name": "plants_rest_on_own_finished_ground",
+      "passed": true,
+      "max_error_m": 0.0
+    },
+    {
+      "name": "plants_inside_authored_green_ground",
+      "passed": true
+    },
+    {
+      "name": "deterministic_geometry_heights_planting_metadata",
+      "passed": true,
+      "sha256": "6756fb4bd5d37acb365b1338436fc2551a1592fc436f829bf5acf5f0b87c3150"
+    }
+  ],
+  "plants": [
+    {
+      "kind": "tree",
+      "index": 0,
+      "position": [
+        66.89832406214364,
+        18.44374163884047,
+        102.40270337812514,
+        0.66,
+        0,
+        0.0
+      ],
+      "route_distance_m": 1.5249561,
+      "house_distance_m": 5.9140877,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "tree",
+      "index": 1,
+      "position": [
+        62.17489366084098,
+        16.283637186635737,
+        91.84527815026117,
+        0.73,
+        1,
+        1.37
+      ],
+      "route_distance_m": 2.3296718,
+      "house_distance_m": 2.5173536,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "tree",
+      "index": 2,
+      "position": [
+        86.86994016953841,
+        23.381594770312496,
+        100.6889660977902,
+        0.8,
+        2,
+        2.74
+      ],
+      "route_distance_m": 2.0085499,
+      "house_distance_m": 2.8688586,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "tree",
+      "index": 3,
+      "position": [
+        32.66143354682433,
+        7.427880422051032,
+        86.14702266835455,
+        0.66,
+        0,
+        4.11
+      ],
+      "route_distance_m": 2.1873463,
+      "house_distance_m": 2.0468807,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "tree",
+      "index": 4,
+      "position": [
+        45.339455484845246,
+        9.754348060090315,
+        78.76208577647671,
+        0.73,
+        1,
+        5.48
+      ],
+      "route_distance_m": 1.7786612,
+      "house_distance_m": 1.3399481,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 0,
+      "position": [
+        52.258266447827395,
+        12.599267416193062,
+        84.96616600438416,
+        0.21,
+        0.19,
+        0,
+        0.0
+      ],
+      "route_distance_m": 1.6563447,
+      "house_distance_m": 0.6204474,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 1,
+      "position": [
+        87.33850184787133,
+        23.63068707965381,
+        96.16370503217907,
+        0.235,
+        0.22,
+        1,
+        2.17
+      ],
+      "route_distance_m": 2.3167261,
+      "house_distance_m": 2.8538959,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 2,
+      "position": [
+        85.13306371319881,
+        22.227146357108907,
+        102.37681429086224,
+        0.26,
+        0.25,
+        2,
+        4.34
+      ],
+      "route_distance_m": 3.0624722,
+      "house_distance_m": 0.6611843,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 3,
+      "position": [
+        51.644155265965246,
+        12.057975292524574,
+        82.39071375010177,
+        0.28500000000000003,
+        0.19,
+        0,
+        6.51
+      ],
+      "route_distance_m": 1.9754995,
+      "house_distance_m": 0.6591645,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 4,
+      "position": [
+        59.416432803946456,
+        16.129685020196185,
+        94.90523599766873,
+        0.21,
+        0.22,
+        1,
+        8.68
+      ],
+      "route_distance_m": 1.3468401,
+      "house_distance_m": 2.1221045,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 5,
+      "position": [
+        34.71216820066492,
+        7.3854203261572735,
+        79.88150733979161,
+        0.235,
+        0.25,
+        2,
+        10.85
+      ],
+      "route_distance_m": 3.3511545,
+      "house_distance_m": 7.6485306,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 6,
+      "position": [
+        86.77741574568195,
+        23.50052932669211,
+        95.08735015212253,
+        0.26,
+        0.19,
+        0,
+        13.02
+      ],
+      "route_distance_m": 3.40887,
+      "house_distance_m": 1.6675849,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 7,
+      "position": [
+        52.33409411365556,
+        12.929458343798903,
+        86.34178931314186,
+        0.28500000000000003,
+        0.22,
+        1,
+        15.19
+      ],
+      "route_distance_m": 1.3033923,
+      "house_distance_m": 0.8813677,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 8,
+      "position": [
+        66.07239424031926,
+        18.432554154828225,
+        96.18511921637477,
+        0.21,
+        0.25,
+        2,
+        17.36
+      ],
+      "route_distance_m": 2.7608387,
+      "house_distance_m": 7.6540723,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 9,
+      "position": [
+        40.29104313731013,
+        9.434739529466079,
+        79.98909477752032,
+        0.235,
+        0.19,
+        0,
+        19.53
+      ],
+      "route_distance_m": 1.8290921,
+      "house_distance_m": 6.4414937,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 10,
+      "position": [
+        60.69869218043379,
+        15.790494700441528,
+        91.11671241334446,
+        0.26,
+        0.22,
+        1,
+        21.7
+      ],
+      "route_distance_m": 2.6453898,
+      "house_distance_m": 1.451832,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 11,
+      "position": [
+        74.87605669159011,
+        20.070036053744957,
+        105.20932000206719,
+        0.28500000000000003,
+        0.25,
+        2,
+        23.869999999999997
+      ],
+      "route_distance_m": 2.6473846,
+      "house_distance_m": 1.0161368,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 12,
+      "position": [
+        27.167380037360054,
+        5.49476319278968,
+        82.509791707772,
+        0.21,
+        0.19,
+        0,
+        26.04
+      ],
+      "route_distance_m": 2.8494305,
+      "house_distance_m": 3.115529,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 13,
+      "position": [
+        29.41105197827204,
+        6.159904198200238,
+        81.53359344167137,
+        0.235,
+        0.22,
+        1,
+        28.21
+      ],
+      "route_distance_m": 3.1007347,
+      "house_distance_m": 5.5405933,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 14,
+      "position": [
+        74.34363214255195,
+        20.093820404061773,
+        99.00758464588155,
+        0.26,
+        0.25,
+        2,
+        30.38
+      ],
+      "route_distance_m": 3.424628,
+      "house_distance_m": 7.1589503,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 15,
+      "position": [
+        43.022386306359756,
+        10.415943741395953,
+        84.2141112404503,
+        0.28500000000000003,
+        0.19,
+        0,
+        32.55
+      ],
+      "route_distance_m": 2.9514059,
+      "house_distance_m": 3.6287503,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 16,
+      "position": [
+        61.82809763263063,
+        17.373503222068635,
+        99.84067533933958,
+        0.21,
+        0.22,
+        1,
+        34.72
+      ],
+      "route_distance_m": 2.4398435,
+      "house_distance_m": 2.6975075,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 17,
+      "position": [
+        47.724796617531396,
+        10.885684503583018,
+        84.0477799034355,
+        0.235,
+        0.25,
+        2,
+        36.89
+      ],
+      "route_distance_m": 1.6690383,
+      "house_distance_m": 3.3031391,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 18,
+      "position": [
+        34.891787314434694,
+        7.475099695327863,
+        85.30999679910057,
+        0.26,
+        0.19,
+        0,
+        39.06
+      ],
+      "route_distance_m": 1.944709,
+      "house_distance_m": 2.3319182,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 19,
+      "position": [
+        68.06231883229422,
+        18.303641706784482,
+        106.19085898840164,
+        0.28500000000000003,
+        0.22,
+        1,
+        41.23
+      ],
+      "route_distance_m": 1.5206608,
+      "house_distance_m": 2.2294317,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 20,
+      "position": [
+        74.96880387827792,
+        20.083319049948145,
+        99.67826149908414,
+        0.21,
+        0.25,
+        2,
+        43.4
+      ],
+      "route_distance_m": 2.5961934,
+      "house_distance_m": 6.3553899,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 21,
+      "position": [
+        79.10157908567152,
+        20.85676182460457,
+        103.82890979876188,
+        0.235,
+        0.19,
+        0,
+        45.57
+      ],
+      "route_distance_m": 2.610602,
+      "house_distance_m": 1.790071,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 22,
+      "position": [
+        33.87634514410753,
+        7.115399300550713,
+        80.83232624974224,
+        0.26,
+        0.22,
+        1,
+        47.739999999999995
+      ],
+      "route_distance_m": 2.644007,
+      "house_distance_m": 6.9226924,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 23,
+      "position": [
+        37.910464402021084,
+        8.14287567846404,
+        79.4280069752589,
+        0.28500000000000003,
+        0.25,
+        2,
+        49.91
+      ],
+      "route_distance_m": 2.9768355,
+      "house_distance_m": 7.3317296,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 24,
+      "position": [
+        78.8881704449233,
+        20.689968622663955,
+        104.7747174804057,
+        0.21,
+        0.19,
+        0,
+        52.08
+      ],
+      "route_distance_m": 3.447461,
+      "house_distance_m": 1.1601242,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 25,
+      "position": [
+        66.95379313842348,
+        18.249083286163497,
+        106.71211058146436,
+        0.235,
+        0.22,
+        1,
+        54.25
+      ],
+      "route_distance_m": 1.6819619,
+      "house_distance_m": 3.0039766,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 26,
+      "position": [
+        67.74118894437571,
+        18.634120940758784,
+        101.4856809311249,
+        0.26,
+        0.25,
+        2,
+        56.42
+      ],
+      "route_distance_m": 2.6197365,
+      "house_distance_m": 6.4006013,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 27,
+      "position": [
+        42.17611697367271,
+        8.944047706489364,
+        79.66442208434489,
+        0.28500000000000003,
+        0.19,
+        0,
+        58.589999999999996
+      ],
+      "route_distance_m": 1.6639641,
+      "house_distance_m": 4.6214966,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 28,
+      "position": [
+        43.922646038400046,
+        9.181413136999382,
+        78.48348933568678,
+        0.21,
+        0.22,
+        1,
+        60.76
+      ],
+      "route_distance_m": 2.3621897,
+      "house_distance_m": 2.6685466,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 29,
+      "position": [
+        69.9861798816838,
+        19.164658400462628,
+        102.44352399908747,
+        0.235,
+        0.25,
+        2,
+        62.93
+      ],
+      "route_distance_m": 1.4686512,
+      "house_distance_m": 4.8971002,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 30,
+      "position": [
+        55.441095574125875,
+        14.879115513398197,
+        95.2528346134683,
+        0.26,
+        0.19,
+        0,
+        65.1
+      ],
+      "route_distance_m": 2.7253011,
+      "house_distance_m": 2.098036,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 31,
+      "position": [
+        53.2486881762162,
+        13.557400449558244,
+        87.82729359614643,
+        0.28500000000000003,
+        0.22,
+        1,
+        67.27
+      ],
+      "route_distance_m": 1.7142051,
+      "house_distance_m": 0.3554094,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 32,
+      "position": [
+        83.83845597399174,
+        21.926546896580184,
+        101.43920880178712,
+        0.21,
+        0.25,
+        2,
+        69.44
+      ],
+      "route_distance_m": 1.7666301,
+      "house_distance_m": 0.5549012,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 33,
+      "position": [
+        61.570663453192694,
+        17.019111001274126,
+        97.75600238874405,
+        0.235,
+        0.19,
+        0,
+        71.61
+      ],
+      "route_distance_m": 2.0070336,
+      "house_distance_m": 2.9146019,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 34,
+      "position": [
+        72.95882330361728,
+        19.560989712128666,
+        105.84580943183722,
+        0.26,
+        0.22,
+        1,
+        73.78
+      ],
+      "route_distance_m": 2.6737575,
+      "house_distance_m": 0.8694822,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 35,
+      "position": [
+        58.27133148485272,
+        15.4308587834225,
+        90.70870768690264,
+        0.28500000000000003,
+        0.25,
+        2,
+        75.95
+      ],
+      "route_distance_m": 2.4022145,
+      "house_distance_m": 0.46607,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 36,
+      "position": [
+        49.28347588109458,
+        12.390924711224468,
+        89.64267886236392,
+        0.21,
+        0.19,
+        0,
+        78.12
+      ],
+      "route_distance_m": 2.6179125,
+      "house_distance_m": 4.6430252,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 37,
+      "position": [
+        30.499705590752207,
+        6.3370360375662855,
+        82.65717266138209,
+        0.235,
+        0.22,
+        1,
+        80.28999999999999
+      ],
+      "route_distance_m": 1.7373476,
+      "house_distance_m": 5.1739983,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 38,
+      "position": [
+        64.73436906863316,
+        18.02911511878566,
+        92.51353790051303,
+        0.26,
+        0.25,
+        2,
+        82.46
+      ],
+      "route_distance_m": 2.8753916,
+      "house_distance_m": 3.7936115,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 39,
+      "position": [
+        67.82442328859163,
+        19.175044707886663,
+        98.89144513415016,
+        0.28500000000000003,
+        0.19,
+        0,
+        84.63
+      ],
+      "route_distance_m": 3.5401035,
+      "house_distance_m": 8.7538841,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 40,
+      "position": [
+        50.29917775423601,
+        11.282992833717085,
+        80.49315527841826,
+        0.21,
+        0.22,
+        1,
+        86.8
+      ],
+      "route_distance_m": 2.7143301,
+      "house_distance_m": 0.3562488,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    },
+    {
+      "kind": "shrub",
+      "index": 41,
+      "position": [
+        64.24370199967032,
+        17.82122438292452,
+        91.3263097573582,
+        0.235,
+        0.25,
+        2,
+        88.97
+      ],
+      "route_distance_m": 3.4818766,
+      "house_distance_m": 2.5169129,
+      "inside_houses": [],
+      "base_error_m": 0.0,
+      "inside_garden": true
+    }
+  ],
+  "walls": [
+    {
+      "a": [
+        36.91,
+        80.91
+      ],
+      "b": [
+        42.71,
+        79.38
+      ],
+      "bottom_a_y": 7.420464861210991,
+      "bottom_b_y": 8.7297424446975,
+      "top_a_y": 8.670464861210991,
+      "top_b_y": 9.9797424446975,
+      "status": "observed motif; placement and dimensions estimated"
+    }
+  ],
+  "fences": [
+    {
+      "a": [
+        36.91,
+        80.91
+      ],
+      "b": [
+        42.71,
+        79.38
+      ],
+      "base_a_y": 8.670464861210991,
+      "base_b_y": 9.9797424446975,
+      "height_m": 1.15,
+      "status": "estimated grey vertical plank"
+    }
+  ],
+  "metadata": {
+    "source": "reference/stalliden/OBSERVATIONER.md",
+    "coverage_m2": 377.49170038347586,
+    "observed": [
+      "rough-stone wall and grey vertical plank on north high plot",
+      "mature greenery by stairs"
+    ],
+    "estimated": [
+      "wall position/length/heights",
+      "all plant positions and species proxies",
+      "green contour"
+    ],
+    "walls": [
+      {
+        "a": [
+          36.91,
+          80.91
+        ],
+        "b": [
+          42.71,
+          79.38
+        ],
+        "bottom_a_y": 7.420464861210991,
+        "bottom_b_y": 8.7297424446975,
+        "top_a_y": 8.670464861210991,
+        "top_b_y": 9.9797424446975,
+        "status": "observed motif; placement and dimensions estimated"
+      }
+    ],
+    "fences": [
+      {
+        "a": [
+          36.91,
+          80.91
+        ],
+        "b": [
+          42.71,
+          79.38
+        ],
+        "base_a_y": 8.670464861210991,
+        "base_b_y": 9.9797424446975,
+        "height_m": 1.15,
+        "status": "estimated grey vertical plank"
+      }
+    ],
+    "trees": 5,
+    "shrubs": 42
+  }
+}

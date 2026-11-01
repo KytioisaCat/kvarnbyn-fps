@@ -1,11 +1,12 @@
 extends SceneTree
 
-## Checks the imported world and its real player capsule against authored M29 metadata.
+## Checks the imported world and its real player capsule against authored ground metadata.
 ## No substitute floor/colliders are constructed. Run after export/import, with:
 ## Godot --audio-driver Dummy --headless --fixed-fps 60 --path godot \
 ##   --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --output=/absolute/report.json
 ## world_meta.m29_ground_checks: points[{id,position,tolerance_m}],
 ## paths[{id,points,speed_m_s,tolerance_m}], blockers[{id,from,to,blocked,height_m}].
+## Other areas: --check-key=stalliden_ground_checks --report-prefix=KVARNBYN_STALLIDEN_CHECK
 ## All positions use exported Godot/glTF coordinates; y is the walking surface, not eye height.
 
 const PlayerController = preload("res://scripts/player.gd")
@@ -15,6 +16,8 @@ const STATIC_MASK := 1
 var scene
 var controller
 var options := {}
+var check_key := "m29_ground_checks"
+var report_prefix := "KVARNBYN_ROTEN_CHECK"
 var report := {"passed": false, "scope": "actual imported collision geometry and actual player controller",
 	"points": [], "paths": [], "blockers": [], "errors": []}
 
@@ -24,6 +27,9 @@ func _initialize() -> void:
 		if arg.begins_with("--"):
 			var pair := arg.trim_prefix("--").split("=", true, 1)
 			options[pair[0]] = pair[1] if pair.size() > 1 else "1"
+	check_key = str(options.get("check-key", check_key)).strip_edges()
+	report_prefix = str(options.get("report-prefix", report_prefix)).strip_edges()
+	report["check_key"] = check_key
 	call_deferred("run")
 
 func run() -> void:
@@ -52,14 +58,14 @@ func run() -> void:
 		report.errors.append("Combat is active; --explore was not respected.")
 		await finish(2)
 		return
-	var metadata = scene.metadata.get("m29_ground_checks", {})
+	var metadata = scene.metadata.get(check_key, {})
 	if not metadata is Dictionary:
-		report.errors.append("world_meta.m29_ground_checks must be a dictionary.")
+		report.errors.append("world_meta." + check_key + " must be a dictionary.")
 		await finish(2)
 		return
 	for group in ["points", "paths", "blockers"]:
 		if not metadata.get(group, []) is Array or metadata.get(group, []).is_empty():
-			report.errors.append("m29_ground_checks." + group + " is missing or empty.")
+			report.errors.append(check_key + "." + group + " is missing or empty.")
 	if not report.errors.is_empty():
 		await finish(2)
 		return
@@ -77,7 +83,7 @@ func run() -> void:
 	report["geometry_source"] = geometry_path
 	report["world_asset_mtime_unix"] = FileAccess.get_modified_time(geometry_path)
 	report["metadata_mtime_unix"] = FileAccess.get_modified_time("res://assets/world_meta.json")
-	report["metadata_source"] = metadata.get("source", "world_meta.m29_ground_checks")
+	report["metadata_source"] = metadata.get("source", "world_meta." + check_key)
 	var started := Time.get_ticks_usec()
 	for spec in metadata.points:
 		report.points.append(check_point(spec))
@@ -340,7 +346,7 @@ func flat_distance(a: Vector3, b: Vector3) -> float:
 	return Vector2(a.x - b.x, a.z - b.z).length()
 
 func finish(code: int) -> void:
-	print("KVARNBYN_ROTEN_CHECK ", JSON.stringify(report))
+	print(report_prefix, " ", JSON.stringify(report))
 	if options.has("output"):
 		var file := FileAccess.open(str(options.output), FileAccess.WRITE)
 		if file != null:

@@ -31,6 +31,31 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-01 20:25 — ChatGPT Codex — Stalleliden och M30/M31
+
+**Status:** klart — första gång-/platsprov, ny lokal Mac-app. Joels igenkänningsbedömning återstår.
+**Gjort:**
+- Joel godkände fortsättning. Faktiskt granskad Google Street View augusti 2024 + juni 2009 för M30, fotografens Stalleliden/M25-bilder från 2017. `reference/stalliden/OBSERVATIONER.md` skiljer observationer från antaganden. Inga tredjepartsbilder i repot eller spelet.
+- M30: vit stående panel, ockrafoder, rödbruna detaljer, liten hög vindruta; höjder behålls som antagna. M31: ursprunglig tiopunkts-OSM-kontur i stället för rektangel (cirka 10,5 m² mindre), klippt antaget sadeltak. Fasader fortsatt obekräftade; ingen hög M31-mur. M25: endast belagd 2017-panel/kulör, inte full volymmodell.
+- `pipeline/stalliden.py`: cirka 147 m² sammanhängande färdig gång-/trappyta med 16 korta lopp/vilplan, räcke med verklig kollision, endast sista 4 m av Roten M ändras. Original parallellstig/körbana bevaras; kort uppskattad gånglänk kopplas till gatans AI-graf. `stalliden_garden.py`: cirka 379 m² gräs, fem träd/42 buskgrupper, kort uppskattad stenmur/grått plank på visuellt belagda norra tomten. Alla exakta mått/positioner uppskattade.
+- Färdiga höjder förankras i gamla faktiska urbantrianglar inklusive lift; nya callbacks lift0. Exakta terrängklipp, 0,3 m trianglar/mjuka marginaler och slutna kanter. Sista actual-mesh-prov hittade en buske 58 cm över triangeln: upphöjda remsan fick separat trianguleringsgräns och slutna kanter, därefter alla 47 växtbaser inom 1,5 cm.
+- Godot: 13 punktprov, båda hela 112 m-kapselbanorna, räckesstopp och fri passage gröna. 1 390 golvprov/riktning, max 4,8 cm fel; kapselns största profilfel 8,6 cm. M29, 180/180 globala gångpunkter, kontroller, soldater/vapen/träd gröna (3 326 växtmeshinstanser). Alla motorprov Dummy-ljud och master mute.
+- GLB: 2 088 faktiska markprov, inga hål/mismatch, avsiktligt steg/ramp-gap högst 16,2 cm. Asfalt/vattenmeshar + brobeskrivningar identiska med baslinjen. `qa-export.py` kontrollerar även växtbaser och ingår nu i rebuild. Senaste fulla återbyggnad/Mac-export 96 s; tillagd GLB-grind separat körd grön. `npm run build` grönt.
+- Fyra nativebilder från exporterad slutapp + före/efter, `RESULTAT-STALLELIDEN.md`, README/TODO/ARKITEKTUR och `evidence/delivery-stalleliden-2026-11-01.json`.
+**Läge nu:** uppdaterad app `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app`; startvyer M30 och Stalleliden övre/mitt/nedre. Storfiler lokala. Föredata/capture i `v2/.tools/kvarnbyn-stalliden-20261101/`. Staged `after/world.blend` är en tidigare iteration — slutlig rawGLB finns aktivt i `blender/world_raw.glb`, hash i delivery; använd slut-GLB för slutgeometrin. Analytiska agentrapporter är frysta planeringsprov med egna inputhashar, slutgiltig QA är `stalliden-mesh-after.json` och `stalliden-ground-check.json`.
+**Nästa:** 1. Joels igenkänningsbedömning. 2. Separat kvällsljus/gatlykteprov från samma kameror. 3. M31-fasader visuellt beläggas; M24/M25 behöver egna volymer/grunder/tak/entréer, de är fortfarande tydligt generiska.
+**Varningar:** release-mallen ignorerar `--script`; använd appens inbyggda `--view/--capture`. `review_capture.gd` fungerar med editorexekverbara Godot. Ett eget fastnat release-bildprov avslutades (endast dess identifierade PID); andra appar/processer lämnades ifred. `.claude/playpen/` orörd. Inga nya modeller/material behövde laddas ned.
+
+---
+
+## 2026-11-01 — ChatGPT Codex — nästa steg
+
+**Status:** klart — lägesråd, inga ändringar i spelet.
+**Gjort:** senaste överlämning, TODO och arkitektur kontrollerade. M29 är levererat; M30/M31/Stalliden och ljussättning återstår.
+**Nästa:** sammanhängande platsprov M30/M31/Stalliden: visuellt granskade hus, nivåer/trappor/stenläggning och grönska, följt av tyst gångprov och före/efter i Mac-appen. Därefter kvällsljus.
+
+---
+
 ## 2026-10-31 09:57 — ChatGPT Codex — slutför Roten-provet
 
 **Status:** klart — ny lokal Mac-app; Joels igenkänningsbedömning återstår.

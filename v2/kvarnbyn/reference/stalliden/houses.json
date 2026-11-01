@@ -1,0 +1,70 @@
+{
+  "review_date": "2026-11-01",
+  "reference": "OBSERVATIONER.md",
+  "buildings": {
+    "w92331973": {
+      "name": "Roten M 30",
+      "override": {
+        "facade_color": "#e8e5da",
+        "facade_material": "wood",
+        "trim_color": "#b58a47",
+        "sash_color": "#713b30",
+        "roof_shape": "gabled",
+        "roof_material": "roof_tiles",
+        "roof_color": "#866453",
+        "levels": 2,
+        "wall_height_m": 4.48,
+        "roof_rise_m": 2.66,
+        "reviewed_cottage": true,
+        "panel_orientation": "vertical",
+        "window_sill_m": 0.55,
+        "gable_window": {
+          "end": 1,
+          "width_m": 0.65,
+          "height_m": 0.42,
+          "above_eave_m": 1.55
+        },
+        "full_window_rows": true
+      },
+      "source": {
+        "facade": "observed_visible_gable_aug2024",
+        "trim": "observed_visible_gable_aug2024",
+        "roof_shape": "observed_visible_gable_aug2024",
+        "roof_material": "observed_visible_gable_aug2024",
+        "heights": "assumed_existing_heights_retained",
+        "levels": "two_rows_visible_in_2009_partial_view_2024",
+        "windows": "visible_attic_observed_other_bays_assumed"
+      }
+    },
+    "w92332141": {
+      "name": "Roten M 31",
+      "override": {
+        "keep_osm_footprint": true,
+        "clip_gabled_roof": true
+      },
+      "source": {
+        "build_footprint": "original_osm_not_enclosing_rectangle",
+        "facade": "assumed_unverified_2026-11-01",
+        "heights": "assumed_unverified_2026-11-01",
+        "roof_shape": "assumed_gable_retained_with_clipped_footprint"
+      }
+    },
+    "w92332157": {
+      "name": "Roten M 25, Stallelidens sydsida",
+      "override": {
+        "facade_color": "#e5dfca",
+        "facade_material": "wood",
+        "trim_color": "#e9e7dd",
+        "sash_color": "#e9e7dd",
+        "reviewed_cottage": true,
+        "panel_orientation": "vertical"
+      },
+      "source": {
+        "facade": "observed_photo_P1020319_2017_position_correlated_with_OSM",
+        "trim": "observed_photo_2017",
+        "heights": "assumed_existing_values_retained",
+        "windows": "assumed_existing_layout_retained"
+      }
+    }
+  }
+}
