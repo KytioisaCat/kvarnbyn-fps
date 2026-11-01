@@ -3,6 +3,7 @@ extends Node3D
 const PlayerController = preload("res://scripts/player.gd")
 const OverlayController = preload("res://scripts/overlay.gd")
 const Lighting = preload("res://scripts/lighting.gd")
+const StreetLights = preload("res://scripts/street_lights.gd")
 const WaterShader = preload("res://shaders/water.gdshader")
 const GameManager = preload("res://scripts/game.gd")
 const HudController = preload("res://scripts/hud.gd")
@@ -29,6 +30,11 @@ var used_baked_world := false
 var prepared_bake_scene := false
 var spawn_position := Vector3.ZERO
 var base_render_scale := 1.0
+var quality_index := 0
+var lighting_mode := "day"
+var scene_environment: WorldEnvironment
+var scene_sun: DirectionalLight3D
+var street_lights: Node3D
 var game: Node
 var hud: Control
 var fx: Node3D
@@ -44,6 +50,7 @@ var bot_timeout := 900.0
 func _ready() -> void:
 	var start_msec := Time.get_ticks_msec()
 	options = read_options()
+	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
 	for test_option in ["mute", "capture", "probe", "walktest", "bot"]:
 		if options.has(test_option):
@@ -79,17 +86,23 @@ func _ready() -> void:
 	overlay.jump_pressed.connect(func(): player.jump_requested = true)
 	overlay.fullscreen_requested.connect(toggle_fullscreen)
 	overlay.quality_changed.connect(set_quality)
+	overlay.lighting_changed.connect(set_lighting)
 	overlay.set_open(true, true)
 	if ResourceLoader.exists(BAKED_PATH):
 		world_instance = load(BAKED_PATH).instantiate()
 		prepared_bake_scene = true
+		lighting_mode = "day"
 	elif ResourceLoader.exists(WORLD_PATH):
 		world_instance = load(WORLD_PATH).instantiate()
-		add_child(Lighting.make_environment())
-		add_child(Lighting.make_sun())
+		scene_environment = Lighting.make_environment(lighting_mode)
+		scene_sun = Lighting.make_sun(lighting_mode)
+		add_child(scene_environment)
+		add_child(scene_sun)
 	else:
-		add_child(Lighting.make_environment())
-		add_child(Lighting.make_sun())
+		scene_environment = Lighting.make_environment(lighting_mode)
+		scene_sun = Lighting.make_sun(lighting_mode)
+		add_child(scene_environment)
+		add_child(scene_sun)
 		overlay.show_error("Miljön kunde inte laddas. Vänta en stund och ladda sedan om sidan.")
 		push_error("world.glb saknas. Exportera Blender-scenen till assets/world.glb.")
 		install_bridge()
@@ -106,6 +119,13 @@ func _ready() -> void:
 			updated_environment.free()
 	used_baked_world = has_baked_lighting(world_instance)
 	prepare_world()
+	street_lights = StreetLights.new()
+	street_lights.name = "Gatubelysning"
+	add_child(street_lights)
+	street_lights.configure(world_instance, metadata.get("lamps", []), player)
+	street_lights.set_evening(lighting_mode == "evening")
+	overlay.lighting_selector.select(1 if lighting_mode == "evening" else 0)
+	overlay.lighting_selector.disabled = prepared_bake_scene
 	player.camera.make_current()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	player.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -314,6 +334,8 @@ func set_view(index: int) -> void:
 	player.free_flight = bool(selected.get("free_flight", false))
 	overlay.status_label.text = str(selected.get("name", "Kvarnbyn"))
 	overlay.view_selector.select(index)
+	if street_lights != null:
+		street_lights.refresh()
 	if started:
 		# A chosen view stays still until the player moves or looks around.
 		overlay.status_override = "Gå eller dra för att utforska härifrån"
@@ -382,7 +404,24 @@ func toggle_fullscreen() -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
+func set_lighting(index: int) -> void:
+	if scene_environment == null or prepared_bake_scene:
+		return
+	lighting_mode = "evening" if index == 1 else "day"
+	var replacement := Lighting.make_environment(lighting_mode)
+	scene_environment.environment = replacement.environment
+	replacement.free()
+	if is_instance_valid(scene_sun):
+		scene_sun.free()
+	scene_sun = Lighting.make_sun(lighting_mode)
+	add_child(scene_sun)
+	street_lights.set_evening(lighting_mode == "evening")
+	overlay.lighting_selector.select(index)
+	set_quality(quality_index)
+
 func set_quality(index: int) -> void:
+	index = 1 if index == 1 else 0
+	quality_index = index
 	# 0 = Normal: realtids-GI, SSIL, volymdimma. 1 = Lägre belastning: utan dem, 85 % upplösning.
 	get_viewport().scaling_3d_scale = base_render_scale * (0.85 if index == 1 else 1.0)
 	get_viewport().msaa_3d = Viewport.MSAA_DISABLED if index == 1 else Viewport.MSAA_2X
@@ -391,7 +430,9 @@ func set_quality(index: int) -> void:
 		env.sdfgi_enabled = index == 0
 		env.ssil_enabled = index == 0
 		env.volumetric_fog_enabled = index == 0
-		env.ambient_light_energy = 0.6 if index == 0 else 0.9
+		env.ambient_light_energy = Lighting.ambient_energy(lighting_mode, index == 1)
+	if street_lights != null:
+		street_lights.set_low_quality(index == 1)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -425,6 +466,7 @@ func _process(delta: float) -> void:
 func snapshot() -> Dictionary:
 	return {"ready": world_ready, "title": metadata.get("title", "Kvarnbyn"),
 		"load_ms": load_msec, "baked_lightmaps": used_baked_world, "prepared_bake_scene": prepared_bake_scene,
+		"lighting": lighting_mode, "street_lights": street_lights.snapshot() if street_lights != null else {},
 		"touch": touch_mode, "world": world_stats, "player": player.snapshot() if player != null else {},
 		"fps": Engine.get_frames_per_second(), "view": view_index,
 		"draw_calls": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),

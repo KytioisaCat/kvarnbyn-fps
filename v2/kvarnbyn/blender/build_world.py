@@ -398,7 +398,7 @@ meta = dict(title='Kvarnbyn', probe_points=probe, stalliden_ground_checks=SITE.g
             spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),
             views=views, bounds=dict(min=[zx0, -40, zz0], max=[zx1, 120, zz1]),
-            lamps=[[x, y + 4.95, z] for x, y, z, dx, dz in SITE['lamps']],
+            lamps=[[x + dx * .8, y + 4.95, z + dz * .8] for x, y, z, dx, dz in SITE['lamps']],
             attribution=['Kartdata © OpenStreetMap-bidragsgivare (ODbL)', 'Höjddata och ortofoto: Lantmäteriet', 'Material, lövatlas och himmel: Poly Haven (CC0)', 'Modeller: projektet Försvara Kvarnbyn'],
             notes=['Fas A: tolkade hus (assumed) + handgranskade hjältehus vid torget (observed).'])
 (GODOT / 'world_meta.json').write_text(json.dumps(meta, ensure_ascii=False, indent=1))

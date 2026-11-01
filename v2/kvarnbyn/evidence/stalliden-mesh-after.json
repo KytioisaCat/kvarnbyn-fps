@@ -720,51 +720,5 @@
       "passed": true
     }
   ],
-  "errors": [],
-  "baseline": {
-    "path": "v2/.tools/kvarnbyn-stalliden-20261101/after/world_raw.glb",
-    "bytes": 233202096,
-    "sha256": "2778830672b8fc56fcac746ebb3f00c88be401918f321292de76484792fbbf10",
-    "corridor_geometry_sha256": "bc0cc7ff6f67af1b0a612d7fb527f954a76819328b88d6d4d1082e2ae51b42de",
-    "node_primitives": 287,
-    "triangles": 214046
-  },
-  "preserved": {
-    "asphalt": {
-      "before": {
-        "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
-        "triangles": 109708
-      },
-      "after": {
-        "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
-        "triangles": 109708
-      }
-    },
-    "water": {
-      "before": {
-        "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
-        "triangles": 10175
-      },
-      "after": {
-        "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
-        "triangles": 10175
-      }
-    },
-    "bridges": {
-      "before": {
-        "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
-        "triangles": 6720
-      },
-      "after": {
-        "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
-        "triangles": 6720
-      }
-    }
-  },
-  "preserved_site_data": {
-    "asphalt": true,
-    "water": true,
-    "bridges": true
-  },
-  "baseline_site_sha256": "d110135e3fab41bd828f22ddb4bd6f968294dada48470e71b1ce7ac7a129df30"
+  "errors": []
 }

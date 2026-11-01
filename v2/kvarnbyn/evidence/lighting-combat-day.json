@@ -1,0 +1,114 @@
+{
+	"ai_cpu_ms_per_physics_frame": 0.416503333333333,
+	"camera": {
+		"active": true,
+		"alive": true,
+		"eye": [
+			-8.07999992370605,
+			1.63581335544586,
+			2.21000003814697
+		],
+		"fov_degrees": 71.9999923706055,
+		"free_flight": false,
+		"hp": 99173.7192079886,
+		"on_floor": true,
+		"pitch": -0.0246631763875484,
+		"position": [
+			-8.07999992370605,
+			-0.0141866430640221,
+			2.21000003814697
+		],
+		"yaw": 2.31768536567688
+	},
+	"cpu_render_ms_p50": 0.867999970912933,
+	"display_server": "macOS",
+	"extra_enemies_near_player": 10,
+	"fps_p05": 67.0,
+	"fps_p50": 69.0,
+	"game": {
+		"allies": 9,
+		"caps": [
+			{
+				"enemies_in": 3,
+				"friends_in": 1,
+				"id": "A",
+				"owner": "enemy",
+				"progress": 1.0
+			},
+			{
+				"enemies_in": 0,
+				"friends_in": 0,
+				"id": "B",
+				"owner": "enemy",
+				"progress": 1.0
+			},
+			{
+				"enemies_in": 6,
+				"friends_in": 0,
+				"id": "C",
+				"owner": "enemy",
+				"progress": 1.0
+			}
+		],
+		"deaths": 0,
+		"elapsed_s": 28.0,
+		"enemies": 76,
+		"headshots": 0,
+		"kills": 0,
+		"over": false,
+		"player_alive": true,
+		"player_hp": 99173.7,
+		"reinforcements_left": 3,
+		"running": true,
+		"victory": false
+	},
+	"gpu_render_ms_p50": 0.0,
+	"gpu_render_ms_p95": 0.0,
+	"lighting": "day",
+	"moving_fraction_when_firing": 0.932368576491433,
+	"near_wall_crossings": 0,
+	"near_wall_segment_checks": 1385,
+	"passed": true,
+	"physics_ms_p50": 4.31,
+	"physics_ms_p95": 4.661,
+	"process_ms_p50": 18.271,
+	"process_ms_p95": 236.988,
+	"renderer": "forward_plus",
+	"review_view": "torget",
+	"scenario": "stationary immortal player on the road; ten extra enemies; normal game simulation",
+	"simulated_s": 20.0,
+	"street_lights": {
+		"active_ids": [],
+		"active_lights": 0,
+		"emissive_meshes": 52,
+		"evening": false,
+		"fixtures": 216,
+		"pool_size": 8,
+		"shadow_lights": 0
+	},
+	"totals": {
+		"blocked_shots": 6.0,
+		"combat_s": 338.600000000006,
+		"cover_moves": 0.0,
+		"cpu_usec": 499804.0,
+		"decisions": 112.0,
+		"escapes": 70.0,
+		"flanks": 106.0,
+		"moving_combat_s": 315.700000000004,
+		"rays": 8046.0,
+		"search_moves": 6.0,
+		"shots": 337.0,
+		"travel_m": 4776.64279332012
+	},
+	"tracked_soldiers": 85,
+	"wall_clock_s": 20.10645,
+	"warmup_s": 8.0,
+	"warmup_wall_s": 8.162614,
+	"world": {
+		"colliders": 505,
+		"explicit_collision_meshes": 505,
+		"meshes": 4567,
+		"triangles": 2320401,
+		"vegetation_mesh_instances": 3326
+	}
+}

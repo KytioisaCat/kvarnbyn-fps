@@ -32,6 +32,7 @@ från det befintliga torget-provet.
 
 ## Resultat och nästa steg
 
+- [Kvällsljus och gatlyktor](RESULTAT-KVALL.md) — välj Eftermiddag/Kväll i start- eller pausmenyn
 - [Senaste platsprovet: Stalleliden och M30/M31](RESULTAT-STALLELIDEN.md)
 - [Roten M 29](RESULTAT-ROTEN.md)
 - [Soldater, vapen och torgförgården](RESULTAT-SOLDATER.md)

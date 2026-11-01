@@ -1,0 +1,118 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"passed": true,
+			"test": "day_unlit_fixtures"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "real_fixture_materials_found"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "menu_selects_evening"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "evening_has_new_sky"
+		},
+		{
+			"detail": {
+				"active_ids": [
+					141,
+					156,
+					148,
+					155,
+					157,
+					206,
+					140,
+					84
+				],
+				"active_lights": 8,
+				"emissive_meshes": 52,
+				"evening": true,
+				"fixtures": 216,
+				"pool_size": 8,
+				"shadow_lights": 8
+			},
+			"passed": true,
+			"test": "near_lamps_cast_shadows"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "glass_glows_in_evening"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "light_centres_at_real_fixture_metadata"
+		},
+		{
+			"detail": {
+				"active_ids": [
+					9,
+					109,
+					125,
+					126
+				],
+				"active_lights": 4,
+				"emissive_meshes": 52,
+				"evening": true,
+				"fixtures": 216,
+				"pool_size": 8,
+				"shadow_lights": 4
+			},
+			"passed": true,
+			"test": "pool_follows_player"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "low_quality_keeps_evening"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "quality_preserves_evening_ambient"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "toggle_does_not_accumulate_lights"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "day_restores_original_materials"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "day_restores_panorama"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "lighting_keeps_collision_and_vegetation"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "pause_keeps_player_stopped"
+		}
+	],
+	"fixtures": 216,
+	"passed": true,
+	"world": {
+		"colliders": 505,
+		"explicit_collision_meshes": 505,
+		"meshes": 4567,
+		"triangles": 2320401,
+		"vegetation_mesh_instances": 3326
+	}
+}

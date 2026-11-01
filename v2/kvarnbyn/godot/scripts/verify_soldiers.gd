@@ -262,6 +262,15 @@ func run_world_check() -> void:
 			return
 	var cap: Dictionary = actual_game.base_cap()
 	var location: Vector3 = actual_game.nav.points[actual_game.nav.nearest(cap.pos)]
+	var review_view := "base"
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--at-view="):
+			var requested := arg.trim_prefix("--at-view=")
+			for spec in scene.metadata.get("views", []):
+				if str(spec.get("id", "")) == requested:
+					var p: Array = spec.position
+					location = actual_game.nav.points[actual_game.nav.nearest(Vector3(p[0], p[1], p[2]))]
+					review_view = requested
 	# Start on the road's own elevation, avoiding a roof picked by a ray from 100 m up.
 	var ground_query := PhysicsRayQueryParameters3D.create(location + Vector3.UP * 3, location + Vector3.DOWN * 4, 1)
 	var ground_hit := scene.get_world_3d().direct_space_state.intersect_ray(ground_query)
@@ -350,7 +359,9 @@ func run_world_check() -> void:
 	cpu_render_times.sort()
 	gpu_render_times.sort()
 	var result := {"simulated_s": duration_s, "wall_clock_s": (Time.get_ticks_usec() - start_usec) / 1000000.0,
-		"scenario": "stationary immortal player on the road near C; ten extra enemies; normal game simulation",
+		"scenario": "stationary immortal player on the road; ten extra enemies; normal game simulation",
+		"review_view": review_view, "lighting": scene.lighting_mode, "street_lights": scene.street_lights.snapshot(),
+		"camera": actual_player.snapshot(), "world": scene.world_stats,
 		"warmup_s": warmup_s, "warmup_wall_s": warmup_wall_s,
 		"tracked_soldiers": recorded.size(), "extra_enemies_near_player": placed, "near_wall_segment_checks": segment_checks,
 		"near_wall_crossings": crossings, "ai_cpu_ms_per_physics_frame": float(totals.cpu_usec) / frames / 1000.0,

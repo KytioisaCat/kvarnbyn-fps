@@ -268,6 +268,29 @@ provar dessutom transformerade GLB-trianglar. Slutbilder tas med release-appens 
 `--view/--capture`-flaggor; `--script` ignoreras av release-mallen och är bara för editorn.
 Se `RESULTAT-STALLELIDEN.md` för omfattning och återstående husarbete.
 
+## Valbart kvällsljus (2026-11-01)
+
+`lighting.gd` bygger Eftermiddag (tidigare HDR-himmel och sol) eller Kväll (egen
+procedurhimmel, varm sol 12° över horisonten och ljusare himmelsfyllnad för läsbara
+trappskuggor). Ingen ny bake, bildtextur eller geometri. Profilen är konstnärlig, inte
+datum-/astronomiskt beräknad. `world.gd` kopplar start-/pausmenyns ljusval och bevarar
+profilens ljus vid kvalitetsbyte. Det äldre bakade scenalternativet har fast dagsljus.
+
+`street_lights.gd` återanvänder åtta spotljus för de närmaste lyktorna inom 60 m; alla
+har skuggor i normal bildkvalitet. Lägre belastning: fyra ljus, två skuggor. Enbart
+lyktglasens gemensamma material får emission; dagsläget återställer originalmaterialet.
+Långt bort syns glöd utan full lokal ljuspool. Ljuskällorna ligger vid befintliga
+modellarmsglas, inte stolpcentrum (metadata i `build_world.py` rättad). De 216 lyktornas
+ursprungliga 32 m-utplacering är procedurmässig uppskattning, inte en platsinventering.
+
+SDFGI:s himmelsläsning måste finnas kvar: enbart ändrad ambientfärg räddade inte de
+mörka skuggorna i nativeprovet. Slutprofilens ljus från himlen ger fyllnad; den enklare
+bildinställningen har separat konstant omgivningsljus. AI-sikt och övriga spelregler
+ändras inte. `verify_lighting.gd` provar verkliga menysignaler, återställning, poolens
+områdesbyte och kvalitetsbyte. `verify_soldiers.gd --world --at-view=torget` kan mäta
+samma stridssituation med `--lighting=day/evening`. Se `RESULTAT-KVALL.md` för mätning,
+nativebilder och återstående igenkänningsarbete.
+
 ## Viktiga beslut & motiv (kronologiskt urval)
 
 | Beslut | Motiv |

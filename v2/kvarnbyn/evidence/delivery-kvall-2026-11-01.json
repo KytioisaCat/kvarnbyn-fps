@@ -1,0 +1,2389 @@
+{
+ "date": "2026-11-01",
+ "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+ "mode": "Selectable Eftermiddag/Kväll; day default; artistic evening, not astronomy/date simulation",
+ "build_seconds": 89,
+ "build_log": "v2/.tools/kvarnbyn-evening-20261101/rebuild.log",
+ "audio": "All agent Godot commands: --audio-driver Dummy. Test/capture scripts also mute master.",
+ "sha256": {
+  "v2/kvarnbyn/blender/world_raw.glb": "5ccd17b5df606b507eb48d1ef153c60db9ae26f93569affb13224f1f44eea116",
+  "v2/kvarnbyn/godot/assets/world.glb": "0117d98bb31fa8d35f6cb8aac83bb406397f45500bb82784551e6d936bf74d1a",
+  "v2/kvarnbyn/godot/assets/world_meta.json": "4a67a4b812d076081fbad3b87ffef9eac1767bbd350dbd8902009a65bef9c80d",
+  "v2/kvarnbyn/desktop/Kvarnbyn.zip": "9f7e9c973921ba54807c6a9e228e97607cced8d5373561f9c33275d1235aef57",
+  "v2/kvarnbyn/godot/scripts/lighting.gd": "b1dbde4a73d113a84785c28a49e556eadcc243913d3234450e891e174f8ebd53",
+  "v2/kvarnbyn/godot/scripts/street_lights.gd": "62f2a06881f6c80f21ed7a1e54c71789a501a6f778a68867e56392fd458a53d0",
+  "v2/kvarnbyn/godot/scripts/world.gd": "286064f3d69076162b9fad601503a3fb036e24b214414fc04cddf7d8692c2593",
+  "v2/kvarnbyn/godot/scripts/overlay.gd": "b026c3ff19e5a625f133cc8c289ab578a2143cbd99feb7bc014411e3d8a00ee9"
+ },
+ "unchanged_geometry": {
+  "v2/kvarnbyn/blender/world_raw.glb": true,
+  "v2/kvarnbyn/godot/assets/world.glb": true
+ },
+ "checks": {
+  "lighting-check.json": {
+   "checks": [
+    {
+     "detail": null,
+     "passed": true,
+     "test": "day_unlit_fixtures"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "real_fixture_materials_found"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "menu_selects_evening"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "evening_has_new_sky"
+    },
+    {
+     "detail": {
+      "active_ids": [
+       141,
+       156,
+       148,
+       155,
+       157,
+       206,
+       140,
+       84
+      ],
+      "active_lights": 8,
+      "emissive_meshes": 52,
+      "evening": true,
+      "fixtures": 216,
+      "pool_size": 8,
+      "shadow_lights": 8
+     },
+     "passed": true,
+     "test": "near_lamps_cast_shadows"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "glass_glows_in_evening"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "light_centres_at_real_fixture_metadata"
+    },
+    {
+     "detail": {
+      "active_ids": [
+       9,
+       109,
+       125,
+       126
+      ],
+      "active_lights": 4,
+      "emissive_meshes": 52,
+      "evening": true,
+      "fixtures": 216,
+      "pool_size": 8,
+      "shadow_lights": 4
+     },
+     "passed": true,
+     "test": "pool_follows_player"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "low_quality_keeps_evening"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "quality_preserves_evening_ambient"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "toggle_does_not_accumulate_lights"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "day_restores_original_materials"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "day_restores_panorama"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "lighting_keeps_collision_and_vegetation"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "pause_keeps_player_stopped"
+    }
+   ],
+   "fixtures": 216,
+   "passed": true,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "lighting-native-check.json": {
+   "checks": [
+    {
+     "detail": null,
+     "passed": true,
+     "test": "day_unlit_fixtures"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "real_fixture_materials_found"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "menu_selects_evening"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "evening_has_new_sky"
+    },
+    {
+     "detail": {
+      "active_ids": [
+       141,
+       156,
+       148,
+       155,
+       157,
+       206,
+       140,
+       84
+      ],
+      "active_lights": 8,
+      "emissive_meshes": 52,
+      "evening": true,
+      "fixtures": 216,
+      "pool_size": 8,
+      "shadow_lights": 8
+     },
+     "passed": true,
+     "test": "near_lamps_cast_shadows"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "glass_glows_in_evening"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "light_centres_at_real_fixture_metadata"
+    },
+    {
+     "detail": {
+      "active_ids": [
+       9,
+       109,
+       125,
+       126
+      ],
+      "active_lights": 4,
+      "emissive_meshes": 52,
+      "evening": true,
+      "fixtures": 216,
+      "pool_size": 8,
+      "shadow_lights": 4
+     },
+     "passed": true,
+     "test": "pool_follows_player"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "low_quality_keeps_evening"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "quality_preserves_evening_ambient"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "toggle_does_not_accumulate_lights"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "day_restores_original_materials"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "day_restores_panorama"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "lighting_keeps_collision_and_vegetation"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "pause_keeps_player_stopped"
+    },
+    {
+     "detail": null,
+     "passed": true,
+     "test": "native_menu_transition_capture"
+    }
+   ],
+   "fixtures": 216,
+   "passed": true,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "lighting-combat-day.json": {
+   "ai_cpu_ms_per_physics_frame": 0.416503333333333,
+   "camera": {
+    "active": true,
+    "alive": true,
+    "eye": [
+     -8.07999992370605,
+     1.63581335544586,
+     2.21000003814697
+    ],
+    "fov_degrees": 71.9999923706055,
+    "free_flight": false,
+    "hp": 99173.7192079886,
+    "on_floor": true,
+    "pitch": -0.0246631763875484,
+    "position": [
+     -8.07999992370605,
+     -0.0141866430640221,
+     2.21000003814697
+    ],
+    "yaw": 2.31768536567688
+   },
+   "cpu_render_ms_p50": 0.867999970912933,
+   "display_server": "macOS",
+   "extra_enemies_near_player": 10,
+   "fps_p05": 67.0,
+   "fps_p50": 69.0,
+   "game": {
+    "allies": 9,
+    "caps": [
+     {
+      "enemies_in": 3,
+      "friends_in": 1,
+      "id": "A",
+      "owner": "enemy",
+      "progress": 1.0
+     },
+     {
+      "enemies_in": 0,
+      "friends_in": 0,
+      "id": "B",
+      "owner": "enemy",
+      "progress": 1.0
+     },
+     {
+      "enemies_in": 6,
+      "friends_in": 0,
+      "id": "C",
+      "owner": "enemy",
+      "progress": 1.0
+     }
+    ],
+    "deaths": 0,
+    "elapsed_s": 28.0,
+    "enemies": 76,
+    "headshots": 0,
+    "kills": 0,
+    "over": false,
+    "player_alive": true,
+    "player_hp": 99173.7,
+    "reinforcements_left": 3,
+    "running": true,
+    "victory": false
+   },
+   "gpu_render_ms_p50": 0.0,
+   "gpu_render_ms_p95": 0.0,
+   "lighting": "day",
+   "moving_fraction_when_firing": 0.932368576491433,
+   "near_wall_crossings": 0,
+   "near_wall_segment_checks": 1385,
+   "passed": true,
+   "physics_ms_p50": 4.31,
+   "physics_ms_p95": 4.661,
+   "process_ms_p50": 18.271,
+   "process_ms_p95": 236.988,
+   "renderer": "forward_plus",
+   "review_view": "torget",
+   "scenario": "stationary immortal player on the road; ten extra enemies; normal game simulation",
+   "simulated_s": 20.0,
+   "street_lights": {
+    "active_ids": [],
+    "active_lights": 0,
+    "emissive_meshes": 52,
+    "evening": false,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 0
+   },
+   "totals": {
+    "blocked_shots": 6.0,
+    "combat_s": 338.600000000006,
+    "cover_moves": 0.0,
+    "cpu_usec": 499804.0,
+    "decisions": 112.0,
+    "escapes": 70.0,
+    "flanks": 106.0,
+    "moving_combat_s": 315.700000000004,
+    "rays": 8046.0,
+    "search_moves": 6.0,
+    "shots": 337.0,
+    "travel_m": 4776.64279332012
+   },
+   "tracked_soldiers": 85,
+   "wall_clock_s": 20.10645,
+   "warmup_s": 8.0,
+   "warmup_wall_s": 8.162614,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "lighting-combat-evening.json": {
+   "ai_cpu_ms_per_physics_frame": 0.410733333333333,
+   "camera": {
+    "active": true,
+    "alive": true,
+    "eye": [
+     -8.07999992370605,
+     1.63581335544586,
+     2.21000003814697
+    ],
+    "fov_degrees": 71.9999923706055,
+    "free_flight": false,
+    "hp": 99173.7192079886,
+    "on_floor": true,
+    "pitch": -0.0246631763875484,
+    "position": [
+     -8.07999992370605,
+     -0.0141866430640221,
+     2.21000003814697
+    ],
+    "yaw": 2.31768536567688
+   },
+   "cpu_render_ms_p50": 0.949999988079071,
+   "display_server": "macOS",
+   "extra_enemies_near_player": 10,
+   "fps_p05": 59.0,
+   "fps_p50": 65.0,
+   "game": {
+    "allies": 9,
+    "caps": [
+     {
+      "enemies_in": 3,
+      "friends_in": 1,
+      "id": "A",
+      "owner": "enemy",
+      "progress": 1.0
+     },
+     {
+      "enemies_in": 0,
+      "friends_in": 0,
+      "id": "B",
+      "owner": "enemy",
+      "progress": 1.0
+     },
+     {
+      "enemies_in": 6,
+      "friends_in": 0,
+      "id": "C",
+      "owner": "enemy",
+      "progress": 1.0
+     }
+    ],
+    "deaths": 0,
+    "elapsed_s": 28.0,
+    "enemies": 76,
+    "headshots": 0,
+    "kills": 0,
+    "over": false,
+    "player_alive": true,
+    "player_hp": 99173.7,
+    "reinforcements_left": 3,
+    "running": true,
+    "victory": false
+   },
+   "gpu_render_ms_p50": 0.0,
+   "gpu_render_ms_p95": 0.0,
+   "lighting": "evening",
+   "moving_fraction_when_firing": 0.932368576491433,
+   "near_wall_crossings": 0,
+   "near_wall_segment_checks": 1385,
+   "passed": true,
+   "physics_ms_p50": 4.417,
+   "physics_ms_p95": 6.922,
+   "process_ms_p50": 20.053,
+   "process_ms_p95": 20.58,
+   "renderer": "forward_plus",
+   "review_view": "torget",
+   "scenario": "stationary immortal player on the road; ten extra enemies; normal game simulation",
+   "simulated_s": 20.0,
+   "street_lights": {
+    "active_ids": [
+     156,
+     141,
+     155,
+     148,
+     157,
+     206,
+     140,
+     84
+    ],
+    "active_lights": 8,
+    "emissive_meshes": 52,
+    "evening": true,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 8
+   },
+   "totals": {
+    "blocked_shots": 6.0,
+    "combat_s": 338.600000000006,
+    "cover_moves": 0.0,
+    "cpu_usec": 492880.0,
+    "decisions": 112.0,
+    "escapes": 70.0,
+    "flanks": 106.0,
+    "moving_combat_s": 315.700000000004,
+    "rays": 8046.0,
+    "search_moves": 6.0,
+    "shots": 337.0,
+    "travel_m": 4776.64279332012
+   },
+   "tracked_soldiers": 85,
+   "wall_clock_s": 20.131797,
+   "warmup_s": 8.0,
+   "warmup_wall_s": 8.156953,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "roten-ground-check.json": {
+   "blockers": [
+    {
+     "expected_blocked": false,
+     "id": "m29_open_gate",
+     "passed": true,
+     "ray_blocked": false,
+     "ray_collider": "",
+     "walk": {
+      "distance_from_start_m": 2.21811437606812,
+      "frames": 71,
+      "height_profile_checked": false,
+      "maximum_height_error_m": 0.268700051518206,
+      "maximum_lateral_error_m": 2.75081729341764e-05,
+      "position": [
+       109.875595092773,
+       23.7580947875977,
+       120.12956237793
+      ],
+      "reached": true,
+      "reason": "reached",
+      "side_colliders": []
+     }
+    },
+    {
+     "expected_blocked": true,
+     "id": "m29_vine_fence_block",
+     "passed": true,
+     "ray_blocked": true,
+     "ray_collider": "/root/Kvarnbyn/Varlden/COL_Young_tree0_1__Collision_only/Gångyta",
+     "walk": {
+      "distance_from_start_m": 0.329172223806381,
+      "frames": 20,
+      "height_profile_checked": false,
+      "maximum_height_error_m": 0.00209808349609375,
+      "maximum_lateral_error_m": 0.342082232236862,
+      "position": [
+       97.7602081298828,
+       23.0714435577393,
+       125.809631347656
+      ],
+      "reached": false,
+      "reason": "blocked_by_static",
+      "side_colliders": [
+       "/root/Kvarnbyn/Varlden/COL_Young_tree0_1__Collision_only/Gångyta"
+      ]
+     }
+    }
+   ],
+   "check_key": "m29_ground_checks",
+   "coverage": {
+    "closed_blocker_probes": 1,
+    "ground_points": 11,
+    "open_passage_probes": 1,
+    "walk_paths": 2
+   },
+   "errors": [],
+   "geometry_source": "res://assets/world.glb",
+   "metadata_mtime_unix": 1793564642,
+   "metadata_source": "world_meta.m29_ground_checks",
+   "passed": true,
+   "paths": [
+    {
+     "id": "m29_courtyard_entry",
+     "passed": true,
+     "surface_samples": {
+      "bad": 0,
+      "count": 72,
+      "first_failures": [],
+      "maximum_adjacent_height_change_m": 0.0613002777099609,
+      "maximum_height_error_m": 0.0132026672363281,
+      "passed": true
+     },
+     "walk": {
+      "distance_from_start_m": 10.0315961837769,
+      "frames": 278,
+      "height_profile_checked": true,
+      "maximum_height_error_m": 0.0188005675497784,
+      "maximum_lateral_error_m": 0.00196158536709845,
+      "position": [
+       101.485580444336,
+       23.7788314819336,
+       120.088981628418
+      ],
+      "reached": true,
+      "reason": "reached",
+      "side_colliders": []
+     }
+    },
+    {
+     "id": "m29_open_gate_steps",
+     "passed": true,
+     "surface_samples": {
+      "bad": 0,
+      "count": 48,
+      "first_failures": [],
+      "maximum_adjacent_height_change_m": 0.0917949676513672,
+      "maximum_height_error_m": 0.0220375061035156,
+      "passed": true
+     },
+     "walk": {
+      "distance_from_start_m": 6.21721267700195,
+      "frames": 174,
+      "height_profile_checked": true,
+      "maximum_height_error_m": 0.0358677706685526,
+      "maximum_lateral_error_m": 0.000505731615703553,
+      "position": [
+       109.610572814941,
+       23.7588787078857,
+       120.308212280273
+      ],
+      "reached": true,
+      "reason": "reached",
+      "side_colliders": []
+     }
+    }
+   ],
+   "points": [
+    {
+     "actual": [
+      103.478584289551,
+      23.7779998779297,
+      118.843421936035
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_courtyard1_1__Collision_only/Gångyta",
+     "expected": [
+      103.478584289551,
+      23.7783298492432,
+      118.843421936035
+     ],
+     "height_error_m": 0.000329971313476562,
+     "id": "m29_courtyard",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      109.850975036621,
+      23.757999420166,
+      120.146141052246
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_landing1_1__Collision_only/Gångyta",
+     "expected": [
+      109.850975036621,
+      23.7583312988281,
+      120.146141052246
+     ],
+     "height_error_m": 0.000331878662109375,
+     "id": "m29_front_landing",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      91.4858779907227,
+      23.9041118621826,
+      117.83772277832
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_west_bedrock0_1__Collision_only/Gångyta",
+     "expected": [
+      91.4858779907227,
+      23.9593524932861,
+      117.83772277832
+     ],
+     "height_error_m": 0.0552406311035156,
+     "id": "m29_west_bedrock",
+     "normal_y": 0.96090567111969,
+     "passed": true
+    },
+    {
+     "actual": [
+      101.041046142578,
+      23.2322940826416,
+      129.321044921875
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_south_bedrock1_1__Collision_only/Gångyta",
+     "expected": [
+      101.041046142578,
+      23.250659942627,
+      129.321044921875
+     ],
+     "height_error_m": 0.0183658599853516,
+     "id": "m29_south_bedrock",
+     "normal_y": 0.999768793582916,
+     "passed": true
+    },
+    {
+     "actual": [
+      108.696678161621,
+      23.873010635376,
+      118.659896850586
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_bedrock1_1__Collision_only/Gångyta",
+     "expected": [
+      108.696678161621,
+      23.8975009918213,
+      118.659896850586
+     ],
+     "height_error_m": 0.0244903564453125,
+     "id": "m29_front_bedrock",
+     "normal_y": 0.988353788852692,
+     "passed": true
+    },
+    {
+     "actual": [
+      99.354621887207,
+      23.0709991455078,
+      127.555526733398
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_sitting_pad0_1__Collision_only/Gångyta",
+     "expected": [
+      99.354621887207,
+      23.0706596374512,
+      127.555526733398
+     ],
+     "height_error_m": 0.000339508056640625,
+     "id": "m29_sitting_pad",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      112.218170166016,
+      23.0517711639404,
+      118.768013000488
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_gate_approach1_1__Collision_only/Gångyta",
+     "expected": [
+      112.218170166016,
+      23.0561962127686,
+      118.768013000488
+     ],
+     "height_error_m": 0.004425048828125,
+     "id": "m29_gate_approach",
+     "normal_y": 0.892940044403076,
+     "passed": true
+    },
+    {
+     "actual": [
+      107.572654724121,
+      23.8499774932861,
+      117.162498474121
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_gravel_entry1_1__Collision_only/Gångyta",
+     "expected": [
+      107.572654724121,
+      23.849494934082,
+      117.162498474121
+     ],
+     "height_error_m": 0.000482559204101562,
+     "id": "m29_gravel_entry",
+     "normal_y": 0.985750317573547,
+     "passed": true
+    },
+    {
+     "actual": [
+      109.755882263184,
+      23.757999420166,
+      119.005836486816
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_planting1_1__Collision_only/Gångyta",
+     "expected": [
+      109.755882263184,
+      23.7583312988281,
+      119.005836486816
+     ],
+     "height_error_m": 0.000331878662109375,
+     "id": "m29_front_planting",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      93.5881652832031,
+      23.7419986724854,
+      121.821250915527
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_west_grass0_1__Collision_only/Gångyta",
+     "expected": [
+      93.5881652832031,
+      23.7422199249268,
+      121.821250915527
+     ],
+     "height_error_m": 0.00022125244140625,
+     "id": "m29_west_grass",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      100.957168579102,
+      23.0600185394287,
+      127.555526733398
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_south_grass1_1__Collision_only/Gångyta",
+     "expected": [
+      100.957168579102,
+      23.0638675689697,
+      127.555526733398
+     ],
+     "height_error_m": 0.00384902954101562,
+     "id": "m29_south_grass",
+     "normal_y": 0.990602672100067,
+     "passed": true
+    }
+   ],
+   "scope": "actual imported collision geometry and actual player controller",
+   "wall_clock_s": 0.320125,
+   "world_asset_mtime_unix": 1793564659
+  },
+  "stalliden-ground-check.json": {
+   "blockers": [
+    {
+     "expected_blocked": true,
+     "id": "stalliden_metal_rail",
+     "passed": true,
+     "ray_blocked": true,
+     "ray_collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta",
+     "walk": {
+      "distance_from_start_m": 0.162574633955956,
+      "frames": 23,
+      "height_profile_checked": false,
+      "maximum_height_error_m": 0.0285606007820949,
+      "maximum_lateral_error_m": 0.00448400247842073,
+      "position": [
+       51.5804252624512,
+       13.2758750915527,
+       89.2515563964844
+      ],
+      "reached": false,
+      "reason": "blocked_by_static",
+      "side_colliders": [
+       "/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta"
+      ]
+     }
+    },
+    {
+     "expected_blocked": false,
+     "id": "stalliden_walking_link_open",
+     "passed": true,
+     "ray_blocked": false,
+     "ray_collider": "",
+     "walk": {
+      "distance_from_start_m": 0.718932032585144,
+      "frames": 26,
+      "height_profile_checked": false,
+      "maximum_height_error_m": 0.0157209200117192,
+      "maximum_lateral_error_m": 1.57283993758028e-05,
+      "position": [
+       23.6332454681396,
+       4.45324373245239,
+       86.8033065795898
+      ],
+      "reached": true,
+      "reason": "reached",
+      "side_colliders": []
+     }
+    }
+   ],
+   "check_key": "stalliden_ground_checks",
+   "coverage": {
+    "closed_blocker_probes": 1,
+    "ground_points": 13,
+    "open_passage_probes": 1,
+    "walk_paths": 2
+   },
+   "errors": [],
+   "geometry_source": "res://assets/world.glb",
+   "metadata_mtime_unix": 1793564642,
+   "metadata_source": "world_meta.stalliden_ground_checks",
+   "passed": true,
+   "paths": [
+    {
+     "id": "stalliden_down",
+     "passed": true,
+     "surface_samples": {
+      "bad": 0,
+      "count": 1390,
+      "first_failures": [],
+      "maximum_adjacent_height_change_m": 0.112314224243164,
+      "maximum_height_error_m": 0.0483503341674805,
+      "passed": true
+     },
+     "walk": {
+      "distance_from_start_m": 112.413352966309,
+      "frames": 3741,
+      "height_profile_checked": true,
+      "maximum_height_error_m": 0.0825279054610881,
+      "maximum_lateral_error_m": 0.0858902782201767,
+      "position": [
+       6.44448566436768,
+       0.362520724534988,
+       97.4718399047852
+      ],
+      "reached": true,
+      "reason": "reached",
+      "side_colliders": [
+       "/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta"
+      ]
+     }
+    },
+    {
+     "id": "stalliden_up",
+     "passed": true,
+     "surface_samples": {
+      "bad": 0,
+      "count": 1390,
+      "first_failures": [],
+      "maximum_adjacent_height_change_m": 0.112314224243164,
+      "maximum_height_error_m": 0.0483503341674805,
+      "passed": true
+     },
+     "walk": {
+      "distance_from_start_m": 112.350814819336,
+      "frames": 3744,
+      "height_profile_checked": true,
+      "maximum_height_error_m": 0.0851822408837926,
+      "maximum_lateral_error_m": 0.0806402266025543,
+      "position": [
+       116.654228210449,
+       22.9077796936035,
+       118.13444519043
+      ],
+      "reached": true,
+      "reason": "reached",
+      "side_colliders": [
+       "/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta"
+      ]
+     }
+    }
+   ],
+   "points": [
+    {
+     "actual": [
+      28.6599998474121,
+      5.78799962997437,
+      84.9369964599609
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+     "expected": [
+      28.6599998474121,
+      5.78843450546265,
+      84.9369964599609
+     ],
+     "height_error_m": 0.00043487548828125,
+     "id": "w461711525_node_0",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      45.390998840332,
+      9.88589954376221,
+      80.5400009155273
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+     "expected": [
+      45.390998840332,
+      9.88592720031738,
+      80.5400009155273
+     ],
+     "height_error_m": 2.76565551757812e-05,
+     "id": "w461711525_node_1",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      50.0660018920898,
+      11.7188997268677,
+      83.5790023803711
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+     "expected": [
+      50.0660018920898,
+      11.7194690704346,
+      83.5790023803711
+     ],
+     "height_error_m": 0.000569343566894531,
+     "id": "w461711525_node_2",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      52.6990013122559,
+      13.7088994979858,
+      91.6829986572266
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+     "expected": [
+      52.6990013122559,
+      13.7090816497803,
+      91.6829986572266
+     ],
+     "height_error_m": 0.000182151794433594,
+     "id": "w461711525_node_3",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      62.5260009765625,
+      16.7019004821777,
+      94.3550033569336
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+     "expected": [
+      62.5260009765625,
+      16.7021427154541,
+      94.3550033569336
+     ],
+     "height_error_m": 0.000242233276367188,
+     "id": "w461711525_node_4",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      66.2369995117188,
+      18.1889991760254,
+      105.175003051758
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_1__Collis/Gångyta",
+     "expected": [
+      66.2369995117188,
+      18.1893882751465,
+      105.175003051758
+     ],
+     "height_error_m": 0.00038909912109375,
+     "id": "w461711525_node_5",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      83.4499969482422,
+      22.2399997711182,
+      99.7089996337891
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+     "expected": [
+      83.4499969482422,
+      22.2399234771729,
+      99.7089996337891
+     ],
+     "height_error_m": 7.62939453125e-05,
+     "id": "w461711525_node_6",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      87.1660003662109,
+      23.4329986572266,
+      98.4739990234375
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+     "expected": [
+      87.1660003662109,
+      23.4330596923828,
+      98.4739990234375
+     ],
+     "height_error_m": 6.103515625e-05,
+     "id": "w461711525_node_7",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      18.1959991455078,
+      2.95499992370605,
+      88.8219985961914
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711524_landings0_0__Collis/Gångyta",
+     "expected": [
+      18.1959991455078,
+      2.95528364181519,
+      88.8219985961914
+     ],
+     "height_error_m": 0.000283718109130859,
+     "id": "w461711523_node_0",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      28.6599998474121,
+      5.78799962997437,
+      84.9369964599609
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+     "expected": [
+      28.6599998474121,
+      5.78843450546265,
+      84.9369964599609
+     ],
+     "height_error_m": 0.00043487548828125,
+     "id": "w461711523_node_1",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      10.7510004043579,
+      0.525543689727783,
+      94.8450012207031
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_trail0_0__Collision_only/Gångyta",
+     "expected": [
+      10.7510004043579,
+      0.49021589756012,
+      94.8450012207031
+     ],
+     "height_error_m": 0.0353277921676636,
+     "id": "w461711524_node_0",
+     "normal_y": 0.989054203033447,
+     "passed": true
+    },
+    {
+     "actual": [
+      14.0030002593994,
+      1.617999792099,
+      92.7959976196289
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711524_landings0_0__Collis/Gångyta",
+     "expected": [
+      14.0030002593994,
+      1.61806344985962,
+      92.7959976196289
+     ],
+     "height_error_m": 6.36577606201172e-05,
+     "id": "w461711524_node_1",
+     "normal_y": 1.0,
+     "passed": true
+    },
+    {
+     "actual": [
+      18.1959991455078,
+      2.95499992370605,
+      88.8219985961914
+     ],
+     "collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711524_landings0_0__Collis/Gångyta",
+     "expected": [
+      18.1959991455078,
+      2.95528364181519,
+      88.8219985961914
+     ],
+     "height_error_m": 0.000283718109130859,
+     "id": "w461711524_node_2",
+     "normal_y": 1.0,
+     "passed": true
+    }
+   ],
+   "scope": "actual imported collision geometry and actual player controller",
+   "wall_clock_s": 4.945766,
+   "world_asset_mtime_unix": 1793564659
+  },
+  "stalliden-mesh-after.json": {
+   "passed": true,
+   "scope": "actual raw GLB transformed triangles; centre and +/-20 cm along complete route",
+   "glb": {
+    "path": "v2/kvarnbyn/blender/world_raw.glb",
+    "bytes": 233240292,
+    "sha256": "5ccd17b5df606b507eb48d1ef153c60db9ae26f93569affb13224f1f44eea116",
+    "corridor_geometry_sha256": "fc826045b8d80d2a5a6cb994be31f16a6830f47b31c11cc1da9b2c3215c4b7c7",
+    "node_primitives": 289,
+    "triangles": 214244
+   },
+   "samples": 2088,
+   "missing_or_mismatched": 0,
+   "max_render_collision_gap_m": 0.16137900000000016,
+   "max_intentional_step_gap_m": 0.16137900000000016,
+   "plant_checks": [
+    {
+     "kind": "tree",
+     "position": [
+      66.89832406214364,
+      18.44374163884047,
+      102.40270337812514
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 18.443812,
+      "slope": 0.213979
+     },
+     "error_m": 7.036115952985256e-05,
+     "passed": true
+    },
+    {
+     "kind": "tree",
+     "position": [
+      62.17489366084098,
+      16.283637186635737,
+      91.84527815026117
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 16.283928,
+      "slope": 0.679995
+     },
+     "error_m": 0.00029081336426273197,
+     "passed": true
+    },
+    {
+     "kind": "tree",
+     "position": [
+      86.86994016953841,
+      23.381594770312496,
+      100.6889660977902
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 23.379948,
+      "slope": 0.197341
+     },
+     "error_m": 0.001646770312497381,
+     "passed": true
+    },
+    {
+     "kind": "tree",
+     "position": [
+      32.66143354682433,
+      7.427880422051032,
+      86.14702266835455
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 7.42931,
+      "slope": 0.051855
+     },
+     "error_m": 0.0014295779489676974,
+     "passed": true
+    },
+    {
+     "kind": "tree",
+     "position": [
+      45.339455484845246,
+      9.754348060090315,
+      78.76208577647671
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 9.754493,
+      "slope": 0.208699
+     },
+     "error_m": 0.00014493990968489356,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      52.258266447827395,
+      12.599267416193062,
+      84.96616600438416
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 12.599631,
+      "slope": 0.347453
+     },
+     "error_m": 0.00036358380693890524,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      87.33850184787133,
+      23.63068707965381,
+      96.16370503217907
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 23.628279,
+      "slope": 0.265415
+     },
+     "error_m": 0.0024080796538115123,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      85.13306371319881,
+      22.227146357108907,
+      102.37681429086224
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 22.229097,
+      "slope": 0.400698
+     },
+     "error_m": 0.001950642891092258,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      51.644155265965246,
+      12.057975292524574,
+      82.39071375010177
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 12.057911,
+      "slope": 0.393555
+     },
+     "error_m": 6.429252457351708e-05,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      59.416432803946456,
+      16.129685020196185,
+      94.90523599766873
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 16.129396,
+      "slope": 0.317109
+     },
+     "error_m": 0.0002890201961847083,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      34.71216820066492,
+      7.3854203261572735,
+      79.88150733979161
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 7.375734,
+      "slope": 0.249824
+     },
+     "error_m": 0.009686326157273939,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      86.77741574568195,
+      23.50052932669211,
+      95.08735015212253
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 23.500673,
+      "slope": 0.336729
+     },
+     "error_m": 0.0001436733078890029,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      52.33409411365556,
+      12.929458343798903,
+      86.34178931314186
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 12.927203,
+      "slope": 0.410484
+     },
+     "error_m": 0.002255343798902132,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      66.07239424031926,
+      18.432554154828225,
+      96.18511921637477
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 18.435745,
+      "slope": 0.401676
+     },
+     "error_m": 0.0031908451717761466,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      40.29104313731013,
+      9.434739529466079,
+      79.98909477752032
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_raised_plot0_",
+      "y": 9.430409,
+      "slope": 0.279302
+     },
+     "error_m": 0.004330529466079369,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      60.69869218043379,
+      15.790494700441528,
+      91.11671241334446
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 15.793154,
+      "slope": 0.138122
+     },
+     "error_m": 0.0026592995584717727,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      74.87605669159011,
+      20.070036053744957,
+      105.20932000206719
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 20.063912,
+      "slope": 0.17346
+     },
+     "error_m": 0.006124053744958502,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      27.167380037360054,
+      5.49476319278968,
+      82.509791707772
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 5.495063,
+      "slope": 0.354839
+     },
+     "error_m": 0.00029980721031996893,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      29.41105197827204,
+      6.159904198200238,
+      81.53359344167137
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 6.160151,
+      "slope": 0.369624
+     },
+     "error_m": 0.00024680179976233063,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      74.34363214255195,
+      20.093820404061773,
+      99.00758464588155
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 20.093316,
+      "slope": 0.076014
+     },
+     "error_m": 0.0005044040617718792,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      43.022386306359756,
+      10.415943741395953,
+      84.2141112404503
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 10.411281,
+      "slope": 0.151141
+     },
+     "error_m": 0.004662741395952352,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      61.82809763263063,
+      17.373503222068635,
+      99.84067533933958
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 17.373654,
+      "slope": 0.30157
+     },
+     "error_m": 0.00015077793136342166,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      47.724796617531396,
+      10.885684503583018,
+      84.0477799034355
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 10.888384,
+      "slope": 0.544805
+     },
+     "error_m": 0.0026994964169819724,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      34.891787314434694,
+      7.475099695327863,
+      85.30999679910057
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 7.474961,
+      "slope": 0.114017
+     },
+     "error_m": 0.00013869532786259242,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      68.06231883229422,
+      18.303641706784482,
+      106.19085898840164
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 18.304081,
+      "slope": 0.050989
+     },
+     "error_m": 0.00043929321551772205,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      74.96880387827792,
+      20.083319049948145,
+      99.67826149908414
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 20.083401,
+      "slope": 0.122061
+     },
+     "error_m": 8.195005185385185e-05,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      79.10157908567152,
+      20.85676182460457,
+      103.82890979876188
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 20.856703,
+      "slope": 0.256691
+     },
+     "error_m": 5.882460456874128e-05,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      33.87634514410753,
+      7.115399300550713,
+      80.83232624974224
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 7.115284,
+      "slope": 0.342049
+     },
+     "error_m": 0.00011530055071329315,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      37.910464402021084,
+      8.14287567846404,
+      79.4280069752589
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_raised_plot0_",
+      "y": 8.139674,
+      "slope": 1.171166
+     },
+     "error_m": 0.00320167846404118,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      78.8881704449233,
+      20.689968622663955,
+      104.7747174804057
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 20.690308,
+      "slope": 0.196102
+     },
+     "error_m": 0.00033937733604716414,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      66.95379313842348,
+      18.249083286163497,
+      106.71211058146436
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 18.248953,
+      "slope": 0.067495
+     },
+     "error_m": 0.00013028616349686217,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      67.74118894437571,
+      18.634120940758784,
+      101.4856809311249
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 18.635524,
+      "slope": 0.200994
+     },
+     "error_m": 0.001403059241216198,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      42.17611697367271,
+      8.944047706489364,
+      79.66442208434489
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 8.943157,
+      "slope": 0.41127
+     },
+     "error_m": 0.0008907064893648453,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      43.922646038400046,
+      9.181413136999382,
+      78.48348933568678
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 9.187501,
+      "slope": 0.580014
+     },
+     "error_m": 0.006087863000617588,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      69.9861798816838,
+      19.164658400462628,
+      102.44352399908747
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 19.163917,
+      "slope": 0.307048
+     },
+     "error_m": 0.0007414004626262738,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      55.441095574125875,
+      14.879115513398197,
+      95.2528346134683
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 14.87641,
+      "slope": 0.379618
+     },
+     "error_m": 0.0027055133981974677,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      53.2486881762162,
+      13.557400449558244,
+      87.82729359614643
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 13.557825,
+      "slope": 0.320865
+     },
+     "error_m": 0.00042455044175504497,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      83.83845597399174,
+      21.926546896580184,
+      101.43920880178712
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 21.926733,
+      "slope": 0.329457
+     },
+     "error_m": 0.00018610341981428746,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      61.570663453192694,
+      17.019111001274126,
+      97.75600238874405
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 17.012487,
+      "slope": 0.42586
+     },
+     "error_m": 0.006624001274126101,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      72.95882330361728,
+      19.560989712128666,
+      105.84580943183722
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+      "y": 19.560748,
+      "slope": 0.316725
+     },
+     "error_m": 0.00024171212866619385,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      58.27133148485272,
+      15.4308587834225,
+      90.70870768690264
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 15.430963,
+      "slope": 0.215408
+     },
+     "error_m": 0.00010421657749937197,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      49.28347588109458,
+      12.390924711224468,
+      89.64267886236392
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 12.389183,
+      "slope": 0.953831
+     },
+     "error_m": 0.001741711224468645,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      30.499705590752207,
+      6.3370360375662855,
+      82.65717266138209
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 6.336697,
+      "slope": 0.234045
+     },
+     "error_m": 0.00033903756628550497,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      64.73436906863316,
+      18.02911511878566,
+      92.51353790051303
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 18.014633,
+      "slope": 0.373462
+     },
+     "error_m": 0.014482118785661413,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      67.82442328859163,
+      19.175044707886663,
+      98.89144513415016
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 19.175423,
+      "slope": 0.794894
+     },
+     "error_m": 0.000378292113335732,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      50.29917775423601,
+      11.282992833717085,
+      80.49315527841826
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 11.281229,
+      "slope": 0.374177
+     },
+     "error_m": 0.001763833717085106,
+     "passed": true
+    },
+    {
+     "kind": "shrub",
+     "position": [
+      64.24370199967032,
+      17.82122438292452,
+      91.3263097573582
+     ],
+     "floor": {
+      "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+      "y": 17.820539,
+      "slope": 0.413815
+     },
+     "error_m": 0.0006853829245194731,
+     "passed": true
+    }
+   ],
+   "errors": []
+  }
+ },
+ "global_walk": {
+  "failed": 0,
+  "fails": [],
+  "landed": 180,
+  "points": 180
+ },
+ "trees": {
+  "bad": 0,
+  "groups": 480,
+  "mesh_instances": 3326,
+  "passed": true,
+  "scope": "serialized CPU placement and runtime restore; visibility also checked in native captures"
+ },
+ "captures": {
+  "kvall_m29_dag": {
+   "baked_lightmaps": false,
+   "cpu_render_ms": 1.39100003242493,
+   "draw_calls": 2376.0,
+   "fps": 76.0,
+   "game": {},
+   "gpu_render_ms": 0.0,
+   "lighting": "day",
+   "load_ms": 5218,
+   "physics_ms": 0.037,
+   "player": {
+    "active": false,
+    "alive": true,
+    "eye": [
+     120.699996948242,
+     24.8819999694824,
+     114.699996948242
+    ],
+    "fov_degrees": 71.9999771118164,
+    "free_flight": false,
+    "hp": 100.0,
+    "on_floor": false,
+    "pitch": 0.1316988915205,
+    "position": [
+     120.699996948242,
+     23.2320003509521,
+     114.699996948242
+    ],
+    "yaw": 1.94201171398163
+   },
+   "prepared_bake_scene": false,
+   "process_ms": 15.025,
+   "ready": true,
+   "render_triangles": 2530697.0,
+   "static_memory_bytes": 0,
+   "street_lights": {
+    "active_ids": [],
+    "active_lights": 0,
+    "emissive_meshes": 52,
+    "evening": false,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 0
+   },
+   "title": "Kvarnbyn",
+   "touch": false,
+   "view": 4,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "kvall_torget_dag": {
+   "baked_lightmaps": false,
+   "cpu_render_ms": 1.51699995994568,
+   "draw_calls": 1961.0,
+   "fps": 66.0,
+   "game": {},
+   "gpu_render_ms": 0.0,
+   "lighting": "day",
+   "load_ms": 5174,
+   "physics_ms": 0.038,
+   "player": {
+    "active": false,
+    "alive": true,
+    "eye": [
+     -8.5,
+     1.52699995040894,
+     8.0
+    ],
+    "fov_degrees": 71.9999923706055,
+    "free_flight": false,
+    "hp": 100.0,
+    "on_floor": false,
+    "pitch": 0.0839502885937691,
+    "position": [
+     -8.5,
+     -0.123000025749207,
+     8.0
+    ],
+    "yaw": 1.10081970691681
+   },
+   "prepared_bake_scene": false,
+   "process_ms": 16.026,
+   "ready": true,
+   "render_triangles": 2015963.0,
+   "static_memory_bytes": 0,
+   "street_lights": {
+    "active_ids": [],
+    "active_lights": 0,
+    "emissive_meshes": 52,
+    "evening": false,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 0
+   },
+   "title": "Kvarnbyn",
+   "touch": false,
+   "view": 1,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "kvall_stalleliden_dag": {
+   "baked_lightmaps": false,
+   "cpu_render_ms": 1.46899998188019,
+   "draw_calls": 3319.0,
+   "fps": 72.0,
+   "game": {},
+   "gpu_render_ms": 0.0,
+   "lighting": "day",
+   "load_ms": 5212,
+   "physics_ms": 0.041,
+   "player": {
+    "active": false,
+    "alive": true,
+    "eye": [
+     35.0,
+     9.00300025939941,
+     83.3000030517578
+    ],
+    "fov_degrees": 71.9999771118164,
+    "free_flight": false,
+    "hp": 100.0,
+    "on_floor": false,
+    "pitch": 0.269649863243103,
+    "position": [
+     35.0,
+     7.35300016403198,
+     83.3000030517578
+    ],
+    "yaw": -1.66496133804321
+   },
+   "prepared_bake_scene": false,
+   "process_ms": 14.71,
+   "ready": true,
+   "render_triangles": 3122419.0,
+   "static_memory_bytes": 0,
+   "street_lights": {
+    "active_ids": [],
+    "active_lights": 0,
+    "emissive_meshes": 52,
+    "evening": false,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 0
+   },
+   "title": "Kvarnbyn",
+   "touch": false,
+   "view": 9,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "kvall_lag_belastning": {
+   "baked_lightmaps": false,
+   "cpu_render_ms": 1.37699997425079,
+   "draw_calls": 4170.0,
+   "fps": 106.0,
+   "game": {},
+   "gpu_render_ms": 0.0,
+   "lighting": "evening",
+   "load_ms": 5230,
+   "physics_ms": 0.037,
+   "player": {
+    "active": false,
+    "alive": true,
+    "eye": [
+     35.0,
+     9.00300025939941,
+     83.3000030517578
+    ],
+    "fov_degrees": 71.9999694824219,
+    "free_flight": false,
+    "hp": 100.0,
+    "on_floor": false,
+    "pitch": 0.269649863243103,
+    "position": [
+     35.0,
+     7.35300016403198,
+     83.3000030517578
+    ],
+    "yaw": -1.66496133804321
+   },
+   "prepared_bake_scene": false,
+   "process_ms": 16.97,
+   "ready": true,
+   "render_triangles": 4164136.0,
+   "static_memory_bytes": 0,
+   "street_lights": {
+    "active_ids": [
+     83,
+     82,
+     84,
+     206
+    ],
+    "active_lights": 4,
+    "emissive_meshes": 52,
+    "evening": true,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 2
+   },
+   "title": "Kvarnbyn",
+   "touch": false,
+   "view": 9,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "kvall_torget": {
+   "baked_lightmaps": false,
+   "cpu_render_ms": 1.34800004959106,
+   "draw_calls": 2067.0,
+   "fps": 62.0,
+   "game": {},
+   "gpu_render_ms": 0.0,
+   "lighting": "evening",
+   "load_ms": 5289,
+   "physics_ms": 0.046,
+   "player": {
+    "active": false,
+    "alive": true,
+    "eye": [
+     -8.5,
+     1.52699995040894,
+     8.0
+    ],
+    "fov_degrees": 71.9999847412109,
+    "free_flight": false,
+    "hp": 100.0,
+    "on_floor": false,
+    "pitch": 0.0839502885937691,
+    "position": [
+     -8.5,
+     -0.123000025749207,
+     8.0
+    ],
+    "yaw": 1.10081970691681
+   },
+   "prepared_bake_scene": false,
+   "process_ms": 17.917,
+   "ready": true,
+   "render_triangles": 2071104.0,
+   "static_memory_bytes": 0,
+   "street_lights": {
+    "active_ids": [
+     141,
+     156,
+     148,
+     155,
+     157,
+     206,
+     140,
+     84
+    ],
+    "active_lights": 8,
+    "emissive_meshes": 52,
+    "evening": true,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 8
+   },
+   "title": "Kvarnbyn",
+   "touch": false,
+   "view": 1,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "kvall_stalleliden": {
+   "baked_lightmaps": false,
+   "cpu_render_ms": 1.75399994850159,
+   "draw_calls": 4170.0,
+   "fps": 64.0,
+   "game": {},
+   "gpu_render_ms": 0.0,
+   "lighting": "evening",
+   "load_ms": 5231,
+   "physics_ms": 0.042,
+   "player": {
+    "active": false,
+    "alive": true,
+    "eye": [
+     35.0,
+     9.00300025939941,
+     83.3000030517578
+    ],
+    "fov_degrees": 71.9999847412109,
+    "free_flight": false,
+    "hp": 100.0,
+    "on_floor": false,
+    "pitch": 0.269649863243103,
+    "position": [
+     35.0,
+     7.35300016403198,
+     83.3000030517578
+    ],
+    "yaw": -1.66496133804321
+   },
+   "prepared_bake_scene": false,
+   "process_ms": 17.566,
+   "ready": true,
+   "render_triangles": 4164136.0,
+   "static_memory_bytes": 0,
+   "street_lights": {
+    "active_ids": [
+     83,
+     82,
+     84,
+     206,
+     81
+    ],
+    "active_lights": 5,
+    "emissive_meshes": 52,
+    "evening": true,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 5
+   },
+   "title": "Kvarnbyn",
+   "touch": false,
+   "view": 9,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "kvall_meny": {
+   "baked_lightmaps": false,
+   "cpu_render_ms": 1.50800001621246,
+   "draw_calls": 2088.0,
+   "fps": 61.0,
+   "game": {},
+   "gpu_render_ms": 0.0,
+   "lighting": "evening",
+   "load_ms": 5252,
+   "physics_ms": 0.052,
+   "player": {
+    "active": false,
+    "alive": true,
+    "eye": [
+     -8.5,
+     1.52699995040894,
+     8.0
+    ],
+    "fov_degrees": 71.9999847412109,
+    "free_flight": false,
+    "hp": 100.0,
+    "on_floor": false,
+    "pitch": 0.0839502885937691,
+    "position": [
+     -8.5,
+     -0.123000025749207,
+     8.0
+    ],
+    "yaw": 1.10081970691681
+   },
+   "prepared_bake_scene": false,
+   "process_ms": 23.906,
+   "ready": true,
+   "render_triangles": 2074094.0,
+   "static_memory_bytes": 0,
+   "street_lights": {
+    "active_ids": [
+     141,
+     156,
+     148,
+     155,
+     157,
+     206,
+     140,
+     84
+    ],
+    "active_lights": 8,
+    "emissive_meshes": 52,
+    "evening": true,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 8
+   },
+   "title": "Kvarnbyn",
+   "touch": false,
+   "view": 1,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  },
+  "kvall_m29": {
+   "baked_lightmaps": false,
+   "cpu_render_ms": 1.22300004959106,
+   "draw_calls": 2498.0,
+   "fps": 75.0,
+   "game": {},
+   "gpu_render_ms": 0.0,
+   "lighting": "evening",
+   "load_ms": 5216,
+   "physics_ms": 0.037,
+   "player": {
+    "active": false,
+    "alive": true,
+    "eye": [
+     120.699996948242,
+     24.8819999694824,
+     114.699996948242
+    ],
+    "fov_degrees": 71.9999847412109,
+    "free_flight": false,
+    "hp": 100.0,
+    "on_floor": false,
+    "pitch": 0.1316988915205,
+    "position": [
+     120.699996948242,
+     23.2320003509521,
+     114.699996948242
+    ],
+    "yaw": 1.94201171398163
+   },
+   "prepared_bake_scene": false,
+   "process_ms": 24.919,
+   "ready": true,
+   "render_triangles": 2658802.0,
+   "static_memory_bytes": 0,
+   "street_lights": {
+    "active_ids": [
+     128,
+     117,
+     127
+    ],
+    "active_lights": 3,
+    "emissive_meshes": 52,
+    "evening": true,
+    "fixtures": 216,
+    "pool_size": 8,
+    "shadow_lights": 3
+   },
+   "title": "Kvarnbyn",
+   "touch": false,
+   "view": 4,
+   "world": {
+    "colliders": 505,
+    "explicit_collision_meshes": 505,
+    "meshes": 4567,
+    "triangles": 2320401,
+    "vegetation_mesh_instances": 3326
+   }
+  }
+ },
+ "capture_note": "All kvall_* images: native exported release app; same fixed cameras and 72-degree FOV. Combat image/benchmark: editor executable, real game and renderer, stationary immortal test player. 8 s warmup +20 s measurement, 85 tracked soldiers, 10 extra enemies near torget, matched simulation totals. Captures FPS are not a performance benchmark.",
+ "light_budget": {
+  "total_fixture_positions": 216,
+  "fixture_position_source": "estimated procedural existing placement, not surveyed",
+  "normal_pool": 8,
+  "normal_shadow_lights": 8,
+  "low_active_max": 4,
+  "low_shadow_max": 2,
+  "radius_m": 60
+ },
+ "limitations": [
+  "Distant fixtures glow without full local light pools",
+  "Light placement and artistic sky/sun are estimated",
+  "AI sight unchanged by brightness",
+  "Short M5 benchmark only; GPU timer invalid (0)",
+  "M24/M25 volumes and M31 facade verification remain"
+ ]
+}

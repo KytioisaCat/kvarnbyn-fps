@@ -56,7 +56,7 @@
 	},
 	"errors": [],
 	"geometry_source": "res://assets/world.glb",
-	"metadata_mtime_unix": 1793560809,
+	"metadata_mtime_unix": 1793564642,
 	"metadata_source": "world_meta.m29_ground_checks",
 	"passed": true,
 	"paths": [
@@ -305,6 +305,6 @@
 		}
 	],
 	"scope": "actual imported collision geometry and actual player controller",
-	"wall_clock_s": 0.319919,
-	"world_asset_mtime_unix": 1793560826
+	"wall_clock_s": 0.320125,
+	"world_asset_mtime_unix": 1793564659
 }

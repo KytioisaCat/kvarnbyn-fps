@@ -1,9 +1,9 @@
 extends RefCounted
 
-## Dagsljus för datorversionen (Forward+): realtids-GI (SDFGI), SSAO, glow, volymetrisk dimma,
-## filmisk tonkurva. Ingen ljusbake — kvällsljus i Fas C blir en inställning, inte en ny bake.
+## Valbara konstnärliga dags-/kvällsprofiler, inte en astronomisk solmodell.
+## Samma värld och realtids-GI; gatlyktor hanteras av street_lights.gd.
 
-static func make_environment() -> WorldEnvironment:
+static func make_environment(mode := "day") -> WorldEnvironment:
 	var world_environment := WorldEnvironment.new()
 	world_environment.name = "Dagsljus"
 	var environment := Environment.new()
@@ -55,10 +55,43 @@ static func make_environment() -> WorldEnvironment:
 	environment.volumetric_fog_albedo = Color("e8eef2")
 	environment.volumetric_fog_length = 96.0
 	environment.volumetric_fog_anisotropy = 0.45
+	if mode == "evening":
+		world_environment.name = "Kvällsljus"
+		var dusk := ProceduralSkyMaterial.new()
+		dusk.sky_top_color = Color("7588ac")
+		dusk.sky_horizon_color = Color("e4b79c")
+		dusk.ground_bottom_color = Color("28332f")
+		dusk.ground_horizon_color = Color("b19c89")
+		dusk.sky_curve = 0.18
+		dusk.ground_curve = 0.25
+		dusk.sky_energy_multiplier = 1.25
+		dusk.ground_energy_multiplier = 0.65
+		dusk.sun_angle_max = 8.0
+		dusk.sun_curve = 0.08
+		sky.sky_material = dusk
+		environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+		environment.ambient_light_color = Color("b8c3d8")
+		environment.ambient_light_sky_contribution = 0.15
+		# SDFGI takes outdoor fill from the sky radiance, not this ambient knob.
+		# Keep the sky bright enough for shaded stairs; COLOR is the low-quality fallback.
+		environment.ambient_light_energy = ambient_energy(mode, false)
+		environment.ssao_intensity = 1.35
+		environment.ssao_power = 1.2
+		environment.glow_intensity = 0.42
+		environment.glow_bloom = 0.025
+		environment.glow_hdr_threshold = 1.35
+		environment.adjustment_contrast = 1.06
+		environment.adjustment_saturation = 0.98
+		environment.fog_light_color = Color("7c879c")
+		environment.fog_density = 0.00035
+		environment.fog_sky_affect = 0.08
+		environment.volumetric_fog_density = 0.0012
+		environment.volumetric_fog_albedo = Color("9ca4b4")
+		environment.volumetric_fog_anisotropy = 0.25
 	world_environment.environment = environment
 	return world_environment
 
-static func make_sun() -> DirectionalLight3D:
+static func make_sun(mode := "day") -> DirectionalLight3D:
 	var sun := DirectionalLight3D.new()
 	sun.name = "Eftermiddagssol"
 	sun.rotation_degrees = Vector3(-34.0, -42.0, 0.0)
@@ -77,4 +110,15 @@ static func make_sun() -> DirectionalLight3D:
 	sun.shadow_bias = 0.04
 	sun.shadow_normal_bias = 1.2
 	sun.light_bake_mode = Light3D.BAKE_DYNAMIC
+	if mode == "evening":
+		sun.name = "Kvällssol"
+		sun.rotation_degrees = Vector3(-12.0, -68.0, 0.0)
+		sun.light_color = Color("ffd0a0")
+		sun.light_energy = 1.1
+		sun.light_volumetric_fog_energy = 0.5
 	return sun
+
+static func ambient_energy(mode: String, low: bool) -> float:
+	if mode == "evening":
+		return 0.7 if low else 0.6
+	return 0.9 if low else 0.6

@@ -16,7 +16,7 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
-- [ ] **3. Ljussättning**: kvällsljus, gatlyktor
+- [ ] **Joels bedömning av kvällsljuset** (`v2/kvarnbyn/RESULTAT-KVALL.md`): läsbarhet i strid, stämning och lyktövergångar under promenad.
 - [ ] **Världen (kärnan)**: fortsatt grönska och terrasser per plats. M29 och Stallelidens första gång-/platsprov är genomförda. Nästa husarbete: visuellt belägga M31 och återskapa M24/M25:s volymer, grunder, tak och entréer längs trappan. Granska innan nya höga murar byggs.
 - [ ] **Joels bedömning av Stalleliden/M30** (`v2/kvarnbyn/RESULTAT-STALLELIDEN.md`): igenkänning och gångstråk; grannhusen är fortfarande delvis generiska.
 - [ ] **Joels bedömning av Roten M 29** (`v2/kvarnbyn/RESULTAT-ROTEN.md`): igenkänning, husproportioner och markmiljö. Övriga grannhus är fortfarande generiska.
@@ -78,6 +78,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-01 — **Kvällsljus och gatlyktor**: valbart Eftermiddag/Kväll i menyn, varm låg sol/sval himmel, befintliga lyktor med glöd och högst åtta närliggande skuggljus. Integrationsprov för meny/material/ljuspool; native stridsprov 69/65 FPS median för eftermiddag/kväll på M5. Resultat: `v2/kvarnbyn/RESULTAT-KVALL.md`.
 
 - [x] 2026-11-01 — **Stalleliden + M30/M31, första platsprov**: sammanhängande 112 m-stråk, korta lopp/vilplan, verkligt räckesstopp, fem träd/42 buskgrupper; M30:s belagda gavel och M31:s ursprungliga kontur. 2 088 GLB-prover och riktiga kapseln åt båda håll gröna, full återbyggnad/Mac-app. Mått och dolda fasader fortsatt uppskattade. `v2/kvarnbyn/RESULTAT-STALLELIDEN.md`.
 

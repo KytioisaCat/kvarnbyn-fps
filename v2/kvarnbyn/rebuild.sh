@@ -49,6 +49,8 @@ step "Kontroll: hela Stalleliden upp och ned samt räcke"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --check-key=stalliden_ground_checks --report-prefix=KVARNBYN_STALLIDEN_CHECK --output="$ROOT/$LOG/stalliden-ground-check.json" > $LOG/stalliden-ground-check.log 2>&1
 step "Kontroll: trädplaceringar efter import"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_trees.gd -- --explore > $LOG/tree-check.log 2>&1
+step "Kontroll: kvällsljus, gatlyktor och menybyte"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_lighting.gd -- --explore --no-pointer-lock --output="$ROOT/$LOG/lighting-check.json" > $LOG/lighting-check.log 2>&1
 step "Kontroll: soldatmodell och stridsfysik"
 $G --audio-driver Dummy --headless --path $P/godot --script res://scripts/verify_soldier_visual.gd > $LOG/soldier-visual.log 2>&1
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_soldiers.gd > $LOG/soldier-tactics.log 2>&1

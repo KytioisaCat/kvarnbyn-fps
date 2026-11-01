@@ -31,6 +31,24 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-01 21:31 — ChatGPT Codex — kvällsljus och gatlyktor
+
+**Status:** klart — valbart kvällsljus i ny lokal Mac-app; Joels ljus-/igenkänningsbedömning återstår.
+**Gjort:**
+- Joels ”nästa” efter Stalleliden genomfört. `BRIEF-KVALL.md` → `RESULTAT-KVALL.md`, README/TODO/ARKITEKTUR och `evidence/delivery-kvall-2026-11-01.json`.
+- Start-/pausmeny: Eftermiddag (standard) eller Kväll, samma pågående värld/spel. `lighting.gd`: egen procedurhimmel, varm låg sol (12°), sval himmelsfyllnad, justerad dis/glöd/ambient för lägre kvalitet. Konstnärlig profil, inte astronomisk datumtid. AI-sikt ändras inte.
+- `street_lights.gd`: alla 216 befintliga lyktpositioner kan glöda, åtta poolade spotljus med riktiga skuggor följer spelaren inom 60 m. Lägre belastning: fyra ljus, två skuggor. Långt bort endast glöd. Lyktornas gamla 32 m-utplacering är uppskattad, inte visuellt inventerad. `build_world.py` metadata flyttad från stolpcentrum till befintligt armglas (0,8 m åt vägen).
+- Första mörka profiler gömde trappor. Nativeprov visade att höjd konstant ambient inte löste SDFGI-skuggorna; behöll sky-läsning och kalibrerade själva himmelsstrålningen. Slutbilder: trappsteg/fasader och riktiga soldater/vapen synliga. Inga nya material/modeller/himmelbilder hämtades.
+- 15 headless integrationskontroller gröna: menysignaler, glöd/dagsmaterial, skuggor, poolens områdesbyte, kvalitetsbyte, sex upprepade dag/kvällsväxlingar utan extra solar/ljus, paus/ingen geometriändring. Nativevarianten provar även faktisk dag→kvällsväxling och bild (16 kontroller gröna). Använd `--transition-image`, inte `--capture`, i den testvarianten; den senare startar world.gd:s automatiska capture/quit för tidigt.
+- Matchat native stridsprov vid torget: M5/Metal/Forward+, 8 s uppvärmning +20 s mätning, 85 följda soldater, tio extra nära spelaren. Eftermiddag median 69/p05 67 FPS, kväll median 65/p05 59 med åtta skuggljus. Båda gröna, noll väggpassager, samma kamera/spelförlopp. GPU-timer=0 ogiltig. Kort stickprov på denna dator, inte hela kartans prestandagaranti. Rapport `lighting-combat-*.json`; bild `kvall_strid.jpg` från odödligt belastningsprov.
+- Full `rebuild.sh` inklusive ny ljusgrind och alla tidigare mark-/kapsel-/vapen-/soldat-/trädprov grön på 89 s; 180/180 globala gångpunkter, 3 326 växtmeshinstanser. `npm run build` grönt. Raw och optimerad världs-GLB har EXAKT samma SHA som Stalleliden-leveransen; bara ljus/runtime/lyktmetadata ändrade.
+- Åtta nativebilder från färdig Mac-app: torget/M29/Stalleliden i båda lägen, meny och lägre kvalitet. Alla körningar Dummy-ljud och testscript master-mute. Samtliga egna testprocesser avslutade; andra appar orörda.
+**Läge nu:** `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app`, välj Kväll under bildkvaliteten i menyn. Storfiler bara lokalt; bilder/loggar/profiler i `v2/.tools/kvarnbyn-evening-20261101/`. Återbyggnad skapar lyktmetadata rätt från källan.
+**Nästa:** 1. Joels omdöme om kvällsstämning/läsbarhet. 2. Nästa platsrunda M24/M25:s verkliga volymer, grunder, tak och entréer längs Stalleliden; bildstöd finns men detaljmått är osäkra. 3. M31:s skymda fasader behöver bättre referenser. Gammal geometri kan inte bli platsriktig enbart med ljussättning.
+**Varningar:** normal-/lågkvalitet har olika ljusbudget; lyktövergångar under längre promenad bör bedömas i riktigt spel. Äldre bakad scen stöder fast dagsljus. `.claude/playpen/` orörd. Alla motortester fortsatt `--audio-driver Dummy`.
+
+---
+
 ## 2026-11-01 20:25 — ChatGPT Codex — Stalleliden och M30/M31
 
 **Status:** klart — första gång-/platsprov, ny lokal Mac-app. Joels igenkänningsbedömning återstår.

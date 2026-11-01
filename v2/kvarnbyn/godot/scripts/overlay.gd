@@ -7,6 +7,7 @@ signal view_requested(index: int)
 signal jump_pressed
 signal fullscreen_requested
 signal quality_changed(index: int)
+signal lighting_changed(index: int)
 
 const INK := Color("183532")
 const PAPER := Color("f1f0e8")
@@ -33,6 +34,7 @@ var has_started := false
 var touch_hint_dismissed := false
 var settings_row: HBoxContainer
 var quality_selector: OptionButton
+var lighting_selector: OptionButton
 var available_views: Array = []
 var status_override := ""
 
@@ -132,6 +134,13 @@ func build_panel() -> void:
 	quality_selector.item_selected.connect(func(index: int): quality_changed.emit(index))
 	quality_selector.tooltip_text = "Sänk upplösningen om bilden hackar"
 	column.add_child(quality_selector)
+	lighting_selector = OptionButton.new()
+	lighting_selector.custom_minimum_size.y = 52
+	lighting_selector.add_item("Eftermiddag")
+	lighting_selector.add_item("Kväll")
+	lighting_selector.item_selected.connect(func(index: int): lighting_changed.emit(index))
+	lighting_selector.tooltip_text = "Välj ljus över Kvarnbyn"
+	column.add_child(lighting_selector)
 
 func build_chrome() -> void:
 	top_bar = HBoxContainer.new()
@@ -218,6 +227,7 @@ func layout_controls() -> void:
 	instruction_label.visible = not touch_mode or not has_started
 	settings_row.visible = not touch_mode or has_started
 	quality_selector.visible = not touch_mode or has_started
+	lighting_selector.visible = not touch_mode or has_started
 	main_panel.reset_size()
 	main_panel.size.x = panel_width
 	main_panel.position = Vector2(margin, maxf(90.0, viewport_size.y - main_panel.get_combined_minimum_size().y - 66.0))
