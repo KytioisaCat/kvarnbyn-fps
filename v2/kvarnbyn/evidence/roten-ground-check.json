@@ -29,19 +29,20 @@
 			"ray_blocked": true,
 			"ray_collider": "/root/Kvarnbyn/Varlden/COL_Young_tree0_1__Collision_only/Gångyta",
 			"walk": {
-				"distance_from_start_m": 0.329172223806381,
-				"frames": 20,
+				"distance_from_start_m": 0.439224570989609,
+				"frames": 15,
 				"height_profile_checked": false,
-				"maximum_height_error_m": 0.00209808349609375,
-				"maximum_lateral_error_m": 0.342082232236862,
+				"maximum_height_error_m": 0.0790786392652407,
+				"maximum_lateral_error_m": 0.307072460651398,
 				"position": [
-					97.7602081298828,
-					23.0714435577393,
-					125.809631347656
+					97.0979919433594,
+					23.0796012878418,
+					125.976570129395
 				],
 				"reached": false,
 				"reason": "blocked_by_static",
 				"side_colliders": [
+					"/root/Kvarnbyn/Varlden/COL_Roten_fence__Collision_only/Gångyta",
 					"/root/Kvarnbyn/Varlden/COL_Young_tree0_1__Collision_only/Gångyta"
 				]
 			}
@@ -56,7 +57,7 @@
 	},
 	"errors": [],
 	"geometry_source": "res://assets/world.glb",
-	"metadata_mtime_unix": 1793564642,
+	"metadata_mtime_unix": 1793597980,
 	"metadata_source": "world_meta.m29_ground_checks",
 	"passed": true,
 	"paths": [
@@ -305,6 +306,6 @@
 		}
 	],
 	"scope": "actual imported collision geometry and actual player controller",
-	"wall_clock_s": 0.320125,
-	"world_asset_mtime_unix": 1793564659
+	"wall_clock_s": 0.327663,
+	"world_asset_mtime_unix": 1793597997
 }

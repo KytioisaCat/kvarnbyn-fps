@@ -15,7 +15,7 @@ from modelkit import Kit, color
 from blender_materials import pbr_material, solid_material
 from blender_vegetation import place_tree, load_library
 from blender_finish import apply_finish
-import houses, heroes, roten, stairkit
+import houses, heroes, roten, stairkit, stalleliden_houses
 
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
@@ -174,6 +174,8 @@ for key, kind in SITE.get('stalliden_mesh_kinds', {}).items():
     MAT[key] = M[kind]
 for key, kind in SITE.get('stalliden_garden_mesh_kinds', {}).items():
     MAT[key] = M[kind]
+for key, kind in SITE.get('m25_mesh_kinds', {}).items():
+    MAT[key] = M[kind]
 reviewed_setts = roten.sett_segments(CITY)
 for kind, tiles in SITE['meshes'].items():
     mat = MAT[kind]; tm = mat.get('tile_size_m', 3)
@@ -184,7 +186,7 @@ for kind, tiles in SITE['meshes'].items():
             pts = [(x, -z, y) for x, y, z in tri]
             if ((pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0])) < 0: pts.reverse()
             is_m29 = kind.startswith('m29_')
-            is_stalliden = kind.startswith('stalliden_')
+            is_stalliden = kind.startswith(('stalliden_', 'm25_'))
             render_name = 'Roten_ground_' + kind + t if is_m29 else 'Stalleliden_ground_' + kind + t if is_stalliden else kind.title() + t
             col_name = 'COL_Roten_ground_' + kind + t if is_m29 else 'COL_Stalleliden_ground_' + kind + t if is_stalliden else 'COL_' + kind + t
             if kind not in SITE.get('roten_collision_only', []) + SITE.get('stalliden_collision_only', []):
@@ -198,6 +200,7 @@ for x1, y1, z1, x2, y2, z2 in SITE['kerbs']:
 log('gator, kantsten klara')
 roten.build_garden(K, M, SITE.get('roten_m29', {}))
 stairkit.build(K, M, SITE.get('stalliden', {}), ground)
+stairkit.build(K, M, SITE.get('m25', {}), ground)
 stairkit.garden(K, M, SITE.get('stalliden_garden', {}))
 for xa, za, ta, ba, xb, zb, tb, bb in SITE.get('roten_supports', []):
     pts = [(xa,-za,ba),(xb,-zb,bb),(xb,-zb,tb),(xa,-za,ta)]
@@ -302,6 +305,9 @@ for b in CITY['buildings']:
     if b.get('authored_model') == 'roten_m29':
         roten.build_house(K, M, ground, b, CITY['reviewed_houses']['roten_m29'])
         heroes_done += 1
+    elif b.get('authored_model') == 'stalleliden_m25':
+        stalleliden_houses.build_m25(K,M,ground,b,CITY['reviewed_houses']['stalleliden_m25'])
+        heroes_done += 1
     elif b.get('archetype_family') == 'hero':
         if b['id'] == 'w92331981': heroes.build_krakan(K, M, ground, b, OFFSET)
         else: heroes.build_hero(K, M, ground, b)
@@ -357,6 +363,7 @@ def eye(x, z, up=1.7): return [round(x, 2), round(ground(x, z) + up, 2), round(z
 def paved_eye(x, z):
     """Torget's review camera is 1.7 m above the rendered/COL floor, not buried terrain."""
     floor = ground(x, z)
+    owned_floor = None
     for kind in SITE['meshes']:
         if kind == 'water': continue
         for tiles in SITE['meshes'].get(kind, {}).values():
@@ -366,8 +373,11 @@ def paved_eye(x, z):
                 if abs(den) < 1e-10: continue
                 u = ((b[2]-c[2])*(x-c[0]) + (c[0]-b[0])*(z-c[2])) / den
                 v = ((c[2]-a[2])*(x-c[0]) + (a[0]-c[0])*(z-c[2])) / den
-                if min(u, v, 1-u-v) >= -1e-6: floor = max(floor, u*a[1] + v*b[1] + (1-u-v)*c[1])
-    return [round(x, 2), round(floor + 1.7, 3), round(z, 2)]
+                if min(u, v, 1-u-v) >= -1e-6:
+                    y = u*a[1] + v*b[1] + (1-u-v)*c[1]
+                    floor = max(floor,y)
+                    if kind.startswith('m25_'): owned_floor = y
+    return [round(x, 2), round((owned_floor if owned_floor is not None else floor) + 1.7, 3), round(z, 2)]
 
 
 views = [
@@ -378,6 +388,9 @@ views = [
     dict(id='roten-gavel', name='Roten M 29 – gaveln', position=paved_eye(120.7, 114.7), target=[105.8, 27.0, 120.5]),
     dict(id='roten-gard', name='Roten M 29 – gården', position=paved_eye(106.5, 116.5), target=[101.7, 25.2, 119.0]),
     dict(id='roten-tradgard', name='Roten M 29 – trädgården', position=paved_eye(95, 132.5), target=[97.7, 25.3, 123]),
+    dict(id='m25-gavel', name='Roten M 25 – gaveln', position=paved_eye(47.2,89.9), target=[57.5,17.9,85.5]),
+    dict(id='m25-gardsvy', name='Roten M 25 – från gårdssidan', position=paved_eye(49.5,96), target=[58.5,17.4,85.5]),
+    dict(id='m25-entre', name='Roten M 25 – entrén', position=paved_eye(61.45,90.3), target=[61.4,16.1,85.9]),
     dict(id='m30', name='Roten M 30', position=paved_eye(109,114), target=[100.9,27.5,103.4]),
     dict(id='stalleliden-ovre', name='Stalleliden – övre delen', position=paved_eye(85.5,99.1), target=[63,18.5,98]),
     dict(id='stalleliden-mitt', name='Stalleliden – mittpartiet', position=paved_eye(35,83.3), target=[53,14,85]),
@@ -394,7 +407,7 @@ for r in CITY['roads']:
         L = math.hypot(xb - xa, zb - za); acc += L
         if acc > 45 and zx0 + 3 < xa < zx1 - 3 and zz0 + 3 < za < zz1 - 3:
             acc = 0; probe.append([round(xa, 2), round(ground(xa, za), 2), round(za, 2)])
-meta = dict(title='Kvarnbyn', probe_points=probe, stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
+meta = dict(title='Kvarnbyn', probe_points=probe, m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
             spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),
             views=views, bounds=dict(min=[zx0, -40, zz0], max=[zx1, 120, zz1]),

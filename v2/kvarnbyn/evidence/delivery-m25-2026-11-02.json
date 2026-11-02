@@ -1,0 +1,376 @@
+{
+  "date": "2026-11-02",
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "build_seconds": 104,
+  "build_log": "v2/.tools/kvarnbyn-hus-20261101/after/rebuild.log",
+  "audio": "Every Godot agent run uses --audio-driver Dummy; tests/captures also mute master.",
+  "scope": "M25 own house on original OSM L, estimated entrance walk/grading; reviewed 2017 visible features, not a survey",
+  "source_baseline_commit": "7a3a4d4",
+  "sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "2580c9abced8495f796513b3a09cf91d28574e946b093729b17109e20cac776e",
+    "v2/kvarnbyn/godot/assets/world.glb": "860f9fbeff2733ef851e03a8303d34470fb9f567d475cc58d76f76668e8a5e4c",
+    "v2/kvarnbyn/godot/assets/world_meta.json": "d9bfba57a7072d4a58b0c40ad7add8d8a6c791d100e672adcf15fdc7b6efe580",
+    "v2/kvarnbyn/desktop/Kvarnbyn.zip": "f118f9b281a70344802801e68570e8ac128caeef906932bcbb9605fa7c8b8a3f",
+    "v2/kvarnbyn/blender/stalleliden_houses.py": "9fabd1dd1cd4c4db56ea93162dbd21da60bf8c8fd1dd17c3b38c68ffeee3ba0e",
+    "v2/kvarnbyn/pipeline/m25_ground.py": "9cdf915cea819280f9b753c90e7a71a56f1ad6de2fd5515f0d9b2b667b47d6a7",
+    "v2/kvarnbyn/reference/stalleliden-hus/m25.json": "32284307b4941e4cc5403ff26ef9ce6cec5f3d720355c322aa18ff1d1f0fcfe4"
+  },
+  "graded_area_m2": 54.605468001176575,
+  "checks": {
+    "m25-ground-check.json": {
+      "passed": true,
+      "coverage": {
+        "closed_blocker_probes": 1,
+        "ground_points": 3,
+        "open_passage_probes": 1,
+        "walk_paths": 2
+      }
+    },
+    "m25-mesh-check.json": {
+      "passed": true,
+      "samples": 141,
+      "missing_or_mismatched": 0
+    },
+    "stalliden-ground-check.json": {
+      "passed": true,
+      "coverage": {
+        "closed_blocker_probes": 1,
+        "ground_points": 13,
+        "open_passage_probes": 1,
+        "walk_paths": 2
+      }
+    },
+    "stalliden-mesh-after.json": {
+      "passed": true,
+      "samples": 2088,
+      "missing_or_mismatched": 0
+    },
+    "roten-ground-check.json": {
+      "passed": true,
+      "coverage": {
+        "closed_blocker_probes": 1,
+        "ground_points": 11,
+        "open_passage_probes": 1,
+        "walk_paths": 2
+      }
+    },
+    "lighting-check.json": {
+      "passed": true
+    }
+  },
+  "public_stair_site_unchanged": true,
+  "preserved_geometry": {
+    "asphalt": {
+      "before": {
+        "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
+        "triangles": 109708
+      },
+      "after": {
+        "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
+        "triangles": 109708
+      }
+    },
+    "water": {
+      "before": {
+        "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
+        "triangles": 10175
+      },
+      "after": {
+        "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
+        "triangles": 10175
+      }
+    },
+    "bridges": {
+      "before": {
+        "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
+        "triangles": 6720
+      },
+      "after": {
+        "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
+        "triangles": 6720
+      }
+    },
+    "public_stair": {
+      "before": {
+        "sha256": "5a6efd78c3e553dc53e777469b3a70ad3371b11dd265649af6b6789430afd768",
+        "triangles": 10887
+      },
+      "after": {
+        "sha256": "5a6efd78c3e553dc53e777469b3a70ad3371b11dd265649af6b6789430afd768",
+        "triangles": 10887
+      }
+    }
+  },
+  "baseline_chain": {
+    "previous_delivery_sha256": "5ccd17b5df606b507eb48d1ef153c60db9ae26f93569affb13224f1f44eea116",
+    "first_stage_sha256": "f7b74b79574261ccf81f3ae1195a73f2df3065a0732869df2195cb9a8c6c1ad1",
+    "first_stage_preserved": {
+      "asphalt": {
+        "before": {
+          "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
+          "triangles": 109708
+        },
+        "after": {
+          "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
+          "triangles": 109708
+        }
+      },
+      "water": {
+        "before": {
+          "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
+          "triangles": 10175
+        },
+        "after": {
+          "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
+          "triangles": 10175
+        }
+      },
+      "bridges": {
+        "before": {
+          "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
+          "triangles": 6720
+        },
+        "after": {
+          "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
+          "triangles": 6720
+        }
+      }
+    },
+    "final_baseline_sha256": "f7b74b79574261ccf81f3ae1195a73f2df3065a0732869df2195cb9a8c6c1ad1",
+    "chain_matches": true
+  },
+  "captures": {
+    "m25-gavel": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.442999958992,
+      "draw_calls": 3666.0,
+      "fps": 77.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5329,
+      "physics_ms": 0.041,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          47.2000007629395,
+          12.8179998397827,
+          89.9000015258789
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.425953030586243,
+        "position": [
+          47.2000007629395,
+          11.1680002212524,
+          89.9000015258789
+        ],
+        "yaw": -1.16707670688629
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 13.145,
+      "ready": true,
+      "render_triangles": 3547354.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 7,
+      "world": {
+        "colliders": 517,
+        "explicit_collision_meshes": 517,
+        "meshes": 4598,
+        "triangles": 2330316,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "m25-gardsvy": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.35699999332428,
+      "draw_calls": 3805.0,
+      "fps": 75.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5295,
+      "physics_ms": 0.035,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          49.5,
+          14.8339996337891,
+          96.0
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.183461427688599,
+        "position": [
+          49.5,
+          13.1840000152588,
+          96.0
+        ],
+        "yaw": -0.708626270294189
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 14.727,
+      "ready": true,
+      "render_triangles": 3834006.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 8,
+      "world": {
+        "colliders": 517,
+        "explicit_collision_meshes": 517,
+        "meshes": 4598,
+        "triangles": 2330316,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "m25-entre": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.37999999523163,
+      "draw_calls": 3758.0,
+      "fps": 69.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5297,
+      "physics_ms": 0.034,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          61.4500007629395,
+          16.8659992218018,
+          90.3000030517578
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.172352224588394,
+        "position": [
+          61.4500007629395,
+          15.2159996032715,
+          90.3000030517578
+        ],
+        "yaw": 0.0113629698753357
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 15.009,
+      "ready": true,
+      "render_triangles": 4026975.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 9,
+      "world": {
+        "colliders": 517,
+        "explicit_collision_meshes": 517,
+        "meshes": 4598,
+        "triangles": 2330316,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "m25-kvall": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.36800003051758,
+      "draw_calls": 4401.0,
+      "fps": 72.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "evening",
+      "load_ms": 5320,
+      "physics_ms": 0.036,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          49.5,
+          14.8339996337891,
+          96.0
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.183461427688599,
+        "position": [
+          49.5,
+          13.1840000152588,
+          96.0
+        ],
+        "yaw": -0.708626270294189
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 14.027,
+      "ready": true,
+      "render_triangles": 4580185.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [
+          82,
+          83,
+          81,
+          205
+        ],
+        "active_lights": 4,
+        "emissive_meshes": 52,
+        "evening": true,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 4
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 8,
+      "world": {
+        "colliders": 517,
+        "explicit_collision_meshes": 517,
+        "meshes": 4598,
+        "triangles": 2330316,
+        "vegetation_mesh_instances": 3326
+      }
+    }
+  },
+  "notes": [
+    "M24/M31 hidden facades remain unverified.",
+    "West-gable small private stairs/ramp is not reconstructed; exact orientation/endpoints uncertain.",
+    "All metric heights, roof division, hidden walls, porch, path and grading estimated.",
+    "Capture FPS are snapshots, not a performance benchmark.",
+    "Large GLB/blend/app local only."
+  ]
+}

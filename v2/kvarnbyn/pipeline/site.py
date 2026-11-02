@@ -28,6 +28,7 @@ from authored_ground import AuthoredGround, SurfaceReference
 from roten_ground import RotenGround
 from stalliden import StallidenGround
 from stalliden_garden import StallidenGarden
+from m25_ground import M25Ground
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--stage-dir', type=Path, help='Write site/nav/game here, without touching active Godot assets.')
@@ -266,7 +267,10 @@ paving_all = paving_all.difference(stalliden.replacement_domain)
 walkway = walkway.difference(stalliden.replacement_domain)
 trail = trail.difference(stalliden.replacement_domain)
 urban = urban.difference(stalliden.replacement_domain)
-stalliden_garden = StallidenGarden(city, stalliden, cut.union(urban).union(trail).union(stalliden.coverage), raw_height, Y_OFFSET)
+m25spec = city['reviewed_houses']['stalleliden_m25']
+m25 = M25Ground(city, stalliden, cut.union(urban).union(trail), work, raw_height, Y_OFFSET,
+                dict(floor_raw_m=m25spec['override']['base_height_raw_m'], door_ab=[m25spec['door']['a'],m25spec['door']['b']]))
+stalliden_garden = StallidenGarden(city, stalliden, cut.union(urban).union(trail).union(stalliden.coverage).union(m25.domain), raw_height, Y_OFFSET)
 
 
 def distance_to(geom, x, z):
@@ -355,6 +359,11 @@ for surface in stalliden_garden.surfaces:
     key = 'stalliden_garden_' + surface['id']
     meshes[key] = triangulate(surface['geom'], surface['height_fn'], 0., step=.3)
     stalliden_garden_mesh_kinds[key] = surface['kind']
+m25_mesh_kinds = {}
+for surface in m25.surfaces:
+    key = 'm25_' + surface['id']
+    meshes[key] = triangulate(surface['geom'], surface['height_fn'], 0., step=.20)
+    m25_mesh_kinds[key] = surface['kind']
 if river_prof:
     meshes['water'] = triangulate(channel, lambda x, z: water_level(x, z), 0.0)
 log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m in meshes.items()))
@@ -362,9 +371,9 @@ log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m 
 # Exact terrain cuts under the new surfaces prevent 2 m grass triangles crossing
 # a pavement edge. Replacement triangles keep the original cell interpolation.
 terrain_overrides = {}
-ground_cut = authored.coverage.union(roten.coverage).union(stalliden.coverage).union(stalliden_garden.coverage)
+ground_cut = authored.coverage.union(roten.coverage).union(stalliden.coverage).union(stalliden_garden.coverage).union(m25.coverage)
 roten_margin = roten.coverage.buffer(.8)
-stalliden_margin = stalliden.coverage.union(stalliden_garden.coverage).buffer(.8)
+stalliden_margin = stalliden.coverage.union(stalliden_garden.coverage).union(m25.coverage).buffer(.8)
 affected_ground = authored.coverage.union(roten_margin).union(stalliden_margin)
 roten_fixed_ground = urban.union(trail).buffer(.015)
 if not ground_cut.is_empty:
@@ -379,7 +388,7 @@ if not ground_cut.is_empty:
                 tx, tz = (x - xa) / 2, (z - za) / 2
                 old = (H[k, i] * (1-tx) + H[k, i+1] * tx) * (1-tz) + (H[k+1, i] * (1-tx) + H[k+1, i+1] * tx) * tz + Y_OFFSET
                 pts = shapely.points(x,z)
-                for patch in (roten, stalliden, stalliden_garden):
+                for patch in (roten, stalliden, stalliden_garden, m25):
                     if patch.coverage.is_empty: continue
                     distance = shapely.distance(pts,patch.coverage)
                     near = (distance<.8) & ~shapely.covers(roten_fixed_ground,pts)
@@ -580,6 +589,10 @@ for r in city['roads']:
         coords = list(zip(xs,zs)) + [(p[0],p[1])]
         coords.sort(key=lambda q: line.project(Point(q)))
         xs,zs = np.asarray(coords).T
+    if r['id'] == StallidenGround.MAIN and m25.active:
+        coords = list(zip(xs,zs)) + [tuple(m25.anchor)]
+        coords.sort(key=lambda q: line.project(Point(q)))
+        xs,zs = np.asarray(coords).T
     if r['id'] in stalliden.profile_overrides:
         ys = stalliden.road_height(r['id'],xs,zs)
     elif r['bridge'] and r['id'] in bridge_by_id:
@@ -597,6 +610,12 @@ if stalliden.active:
     link = LineString([stalliden._bottom, stalliden.connector_end])
     q = shapely.get_coordinates(link.segmentize(.5))
     h = stalliden.height(q[:,0],q[:,1],roten_reference.height(q[:,0],q[:,1]))
+    ids = [node_at(x,z,y-Y_OFFSET+.1) for (x,z),y in zip(q,h)]
+    for a,b in zip(ids,ids[1:]):
+        if a != b: edges.add((min(a,b),max(a,b)))
+if m25.active:
+    q = shapely.get_coordinates(m25.path_line.segmentize(.5))
+    h = m25.height(q[:,0],q[:,1],stalliden.height(q[:,0],q[:,1],raw_height(q[:,0],q[:,1])))
     ids = [node_at(x,z,y-Y_OFFSET+.1) for (x,z),y in zip(q,h)]
     for a,b in zip(ids,ids[1:]):
         if a != b: edges.add((min(a,b),max(a,b)))
@@ -639,6 +658,7 @@ site = dict(meta=dict(note='Markytor för Fas A, genererade av site.py. y = rå 
             roten_supports=roten_supports,
             roten_mesh_kinds=roten_mesh_kinds, roten_collision_only=roten_collision_only,
             stalliden_garden=stalliden_garden.metadata(), stalliden_garden_mesh_kinds=stalliden_garden_mesh_kinds,
+            m25=m25.metadata(), m25_mesh_kinds=m25_mesh_kinds,
             stalliden=stalliden.metadata(), stalliden_mesh_kinds=stalliden_mesh_kinds, stalliden_collision_only=stalliden_collision_only,
             terrain_overrides=terrain_overrides, authored_supports=supports,
             planter_kerbs=planter_kerbs, authored_trees=authored_trees, shrubs=shrubs)

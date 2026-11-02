@@ -14,6 +14,7 @@ parser.add_argument('--site',type=Path,required=True)
 parser.add_argument('--baseline',type=Path)
 parser.add_argument('--site-baseline',type=Path)
 parser.add_argument('--out',type=Path,required=True)
+parser.add_argument('--area',choices=['stalliden','m25'],default='stalliden')
 args=parser.parse_args()
 MIN,MAX=np.array([-8,66]),np.array([132,142])
 def rnd(v):return np.round(v,6).tolist() if isinstance(v,np.ndarray) else round(float(v),6)
@@ -38,7 +39,7 @@ def load_glb(path):
     result=[]
     def visit(ni,parent):
         node=doc['nodes'][ni];m=parent@transform(node);name=node.get('name','')
-        if 'mesh' in node and name.startswith(('COL_Terrain','COL_asphalt','COL_paving','COL_walkway','COL_trail','COL_Stairs','COL_Stalleliden_ground_','Terrain','Stairs','Asphalt','Paving','Walkway','Trail','Stalleliden_ground_','Stalleliden_steps','Stalleliden_risers','Bridge_deck','COL_Bridge','Water')):
+        if 'mesh' in node and name.startswith(('COL_Terrain','COL_asphalt','COL_paving','COL_walkway','COL_trail','COL_Stairs','COL_Stalleliden_ground_','Terrain','Stairs','Asphalt','Paving','Walkway','Trail','Stalleliden_ground_','Stalleliden_steps','Stalleliden_risers','Bridge_deck','COL_Bridge','Water','Stalleliden_M25','COL_Stalleliden_M25')):
             for prim in doc['meshes'][node['mesh']]['primitives']:
                 a=doc['accessors'][prim['attributes']['POSITION']]
                 lo,hi=np.array(a['min']),np.array(a['max'])
@@ -76,7 +77,7 @@ class Probe:
 
 
 meshes,info=load_glb(args.glb.resolve());probe=Probe(meshes)
-site=json.loads(args.site.read_text());meta=site['stalliden'];points=[]
+site=json.loads(args.site.read_text());meta=site[args.area];points=[]
 for path in meta['ground_checks']['paths'][:1]:
     q=np.asarray(path['points'])
     for i,p in enumerate(q):
@@ -104,9 +105,19 @@ for kind,items in [('tree',site['authored_trees'][-nt:] if nt else []),('shrub',
         h=min(cols,key=lambda h:abs(h['y']-y)) if cols else None
         error=abs(h['y']-y) if h else None
         plants.append(dict(kind=kind,position=[x,y,z],floor=h,error_m=error,passed=error is not None and error<.08))
-report=dict(passed=not errors and len(plants)==nt+ns and bool(plants) and all(p['passed'] for p in plants),scope='actual raw GLB transformed triangles; centre and +/-20 cm along complete route',
+report=dict(passed=not errors and len(plants)==nt+ns and bool(plants) and all(p['passed'] for p in plants),scope='actual raw GLB transformed triangles; centre and +/-20 cm along complete '+args.area+' route',
             glb=info,samples=len(points),missing_or_mismatched=len(errors),max_render_collision_gap_m=max_gap,
             max_intentional_step_gap_m=intentional_step_gap,plant_checks=plants,errors=errors)
+if args.area=='m25':
+    city=json.loads((ROOT/'v2/kvarnbyn/data/city.json').read_text())
+    house=next(b for b in city['buildings'] if b['id']=='w92332157')
+    body=[t for n,t in meshes if n.startswith('COL_Stalleliden_M25_Body')]
+    if body:
+        vertices=np.concatenate(body).reshape(-1,3)
+        distance=shapely.distance(shapely.points(vertices[:,0],vertices[:,2]),Polygon(house['footprint_xz']).boundary)
+        report['body_follows_original_L']=dict(passed=float(distance.max())<.01,max_distance_m=float(distance.max()),vertices=len(vertices))
+    else:report['body_follows_original_L']=dict(passed=False,reason='actual body collision mesh missing')
+    report['passed']=report['passed'] and report['body_follows_original_L']['passed']
 if args.baseline:
     before,binfo=load_glb(args.baseline.resolve())
     def signature(meshes,prefixes):
@@ -116,12 +127,15 @@ if args.baseline:
         return dict(sha256=h.hexdigest(),triangles=count)
     report['baseline']=binfo
     report['preserved']={key:dict(before=signature(before,prefix),after=signature(meshes,prefix)) for key,prefix in {
-        'asphalt':('Asphalt','COL_asphalt'),'water':('Water',),'bridges':('Bridge_deck','COL_Bridge')}.items()}
+        'asphalt':('Asphalt','COL_asphalt'),'water':('Water',),'bridges':('Bridge_deck','COL_Bridge'),
+        'public_stair':('Stalleliden_steps','Stalleliden_risers','Stalleliden_ground_stalliden_w','Stalleliden_ground_stalliden_stalliden_',
+                        'COL_Stalleliden_ground_stalliden_w','COL_Stalleliden_ground_stalliden_stalliden_')}.items()}
     report['passed']=report['passed'] and all(v['before']==v['after'] and v['before']['triangles']>0 for v in report['preserved'].values())
 if args.site_baseline:
     old=json.loads(args.site_baseline.read_text())
     report['preserved_site_data']={k:site['meshes'][k]==old['meshes'][k] for k in ('asphalt','water')}
     report['preserved_site_data']['bridges']=site['bridges']==old['bridges']
+    report['preserved_site_data']['public_stair']=site['stalliden']==old['stalliden']
     report['baseline_site_sha256']=hashlib.sha256(args.site_baseline.read_bytes()).hexdigest()
     report['passed']=report['passed'] and all(report['preserved_site_data'].values())
 args.out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')

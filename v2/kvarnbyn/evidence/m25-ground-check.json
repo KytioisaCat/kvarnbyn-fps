@@ -1,0 +1,174 @@
+{
+	"blockers": [
+		{
+			"expected_blocked": true,
+			"id": "m25_closed_door",
+			"passed": true,
+			"ray_blocked": true,
+			"ray_collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_M25_Body__Collision_only/Gångyta",
+			"walk": {
+				"distance_from_start_m": 0.258957028388977,
+				"frames": 28,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.00134181976318359,
+				"maximum_lateral_error_m": 0.0000205427731998498,
+				"position": [
+					61.4631042480469,
+					15.0997018814087,
+					86.2030639648438
+				],
+				"reached": false,
+				"reason": "blocked_by_static",
+				"side_colliders": [
+					"/root/Kvarnbyn/Varlden/COL_Stalleliden_M25_Body__Collision_only/Gångyta"
+				]
+			}
+		},
+		{
+			"expected_blocked": false,
+			"id": "m25_entrance_walk_open",
+			"passed": true,
+			"ray_blocked": false,
+			"ray_collider": "",
+			"walk": {
+				"distance_from_start_m": 0.327260792255402,
+				"frames": 14,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.00275927164782175,
+				"maximum_lateral_error_m": 0.00030095037072897,
+				"position": [
+					61.0142517089844,
+					15.2010164260864,
+					90.9767608642578
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		}
+	],
+	"check_key": "m25_ground_checks",
+	"coverage": {
+		"closed_blocker_probes": 1,
+		"ground_points": 3,
+		"open_passage_probes": 1,
+		"walk_paths": 2
+	},
+	"errors": [],
+	"geometry_source": "res://assets/world.glb",
+	"metadata_mtime_unix": 1793597980,
+	"metadata_source": "world_meta.m25_ground_checks",
+	"passed": true,
+	"paths": [
+		{
+			"id": "m25_to_door",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 92,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.00843429565429688,
+				"maximum_height_error_m": 0.000677108764648438,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 7.37008333206177,
+				"frames": 290,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.00219992440315941,
+				"maximum_lateral_error_m": 0.0739927589893341,
+				"position": [
+					61.5447578430176,
+					15.1008396148682,
+					86.7296752929688
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "m25_from_door",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 92,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.00843429565429688,
+				"maximum_height_error_m": 0.000677108764648438,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 7.32276773452759,
+				"frames": 290,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.00288531113944401,
+				"maximum_lateral_error_m": 0.0731061398983002,
+				"position": [
+					57.845458984375,
+					15.2845306396484,
+					92.7848281860352
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		}
+	],
+	"points": [
+		{
+			"actual": [
+				57.7765426635742,
+				15.2836999893188,
+				93.063606262207
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_stalliden_w461711525_landings0_0__Collis/Gångyta",
+			"expected": [
+				57.7765426635742,
+				15.2843770980835,
+				93.063606262207
+			],
+			"height_error_m": 0.000677108764648438,
+			"id": "m25_stair_join",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				58.0389213562012,
+				15.2839994430542,
+				92.0986404418945
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_m25_m25_entrance_walk0_0__Collision_only/Gångyta",
+			"expected": [
+				58.0389213562012,
+				15.2843770980835,
+				92.0986404418945
+			],
+			"height_error_m": 0.000377655029296875,
+			"id": "m25_neck",
+			"normal_y": 1.0,
+			"passed": true
+		},
+		{
+			"actual": [
+				61.526050567627,
+				15.0999994277954,
+				86.4542541503906
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_ground_m25_m25_door_landing0_0__Collision_only/Gångyta",
+			"expected": [
+				61.526050567627,
+				15.1000003814697,
+				86.4542541503906
+			],
+			"height_error_m": 0.00000095367431640625,
+			"id": "m25_door_front",
+			"normal_y": 1.0,
+			"passed": true
+		}
+	],
+	"scope": "actual imported collision geometry and actual player controller",
+	"wall_clock_s": 0.562773,
+	"world_asset_mtime_unix": 1793597997
+}

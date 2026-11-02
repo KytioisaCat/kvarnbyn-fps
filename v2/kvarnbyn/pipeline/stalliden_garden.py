@@ -34,13 +34,20 @@ class StallidenGarden:
         self.surfaces=[dict(id='stalliden_green_verges',kind='grass',geom=self.coverage.difference(self.raised),height_fn=self.raw_height,lift_m=0.,collision_only=False),
                        dict(id='stalliden_raised_plot',kind='grass',geom=self.raised,height_fn=self._height,lift_m=0.,collision_only=False)]
         rng=np.random.default_rng(20261101);minx,minz,maxx,maxz=self.coverage.bounds
+        # The reviewed M25 gable has an open grass/stone apron. Do not hide
+        # its windows behind the old random mature tree proxies.
+        self.photo_clear = Polygon()
+        m25 = next((b for b in city['buildings'] if b.get('authored_model') == 'stalleliden_m25'),None)
+        if m25:
+            origin=np.array(m25['centroid_xz']);axis=np.array(m25['major_axis_xz']);cross=np.array([axis[1],-axis[0]])
+            self.photo_clear=Polygon([origin+axis*a+cross*b for a,b in [(-10.,-5.8),(-4.3,-5.8),(-4.3,4.5),(-10.,4.5)]])
         candidates=[]
         for x,z in rng.uniform([minx,minz],[maxx,maxz],(6000,2)):
             p=Point(x,z)
-            if self.coverage.buffer(-.15).covers(p):candidates.append((float(x),float(z)))
+            if self.coverage.buffer(-.15).covers(p) and not self.photo_clear.covers(p):candidates.append((float(x),float(z)))
         self.tree_xz=[];self.shrub_xz=[]
         for q in candidates:
-            if Point(q).distance(self.houses)<1.0 or any(math.dist(q,t)<7.0 for t in self.tree_xz):continue
+            if Point(q).distance(self.houses)<3.0 or any(math.dist(q,t)<7.0 for t in self.tree_xz):continue
             self.tree_xz.append(q)
             if len(self.tree_xz)==5:break
         for q in candidates:
@@ -67,7 +74,7 @@ class StallidenGarden:
     def planting(self,height,offset):
         trees=[];shrubs=[]
         for i,(x,z) in enumerate(self.tree_xz):trees.append([x,float(np.asarray(height([x],[z])).ravel()[0])-offset,z,.66+(i%3)*.07,i%3,i*1.37])
-        for i,(x,z) in enumerate(self.shrub_xz):shrubs.append([x,float(np.asarray(height([x],[z])).ravel()[0])-offset,z,.21+(i%4)*.025,.19+(i%3)*.03,i%3,i*2.17])
+        for i,(x,z) in enumerate(self.shrub_xz):shrubs.append([x,float(np.asarray(height([x],[z])).ravel()[0])-offset,z,.09+(i%4)*.012,.08+(i%3)*.012,i%3,i*2.17])
         return trees,shrubs
 
     def metadata(self):
@@ -81,5 +88,5 @@ class StallidenGarden:
                     supports.append(dict(a=q[i].tolist(),b=q[i+1].tolist(),top_a_y=float(top[i]),top_b_y=float(top[i+1]),bottom_a_y=float(bottom[i]),bottom_b_y=float(bottom[i+1]),kind='technical_closed_ground'))
         return dict(source='reference/stalliden/OBSERVATIONER.md',coverage_m2=self.coverage.area,
                     observed=['rough-stone wall and grey vertical plank on north high plot','mature greenery by stairs'],
-                    estimated=['wall position/length/heights','all plant positions and species proxies','green contour'],
+                    estimated=['wall position/length/heights','all plant positions and species proxies','green contour','M25 open apron placement estimated from 2017 view'],
                     walls=self.walls,fences=self.fences,supports=supports,trees=len(self.tree_xz),shrubs=len(self.shrub_xz))

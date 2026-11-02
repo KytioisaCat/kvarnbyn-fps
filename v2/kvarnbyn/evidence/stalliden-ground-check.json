@@ -7,18 +7,18 @@
 			"ray_blocked": true,
 			"ray_collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta",
 			"walk": {
-				"distance_from_start_m": 0.162574633955956,
-				"frames": 23,
+				"distance_from_start_m": 0.162559345364571,
+				"frames": 181,
 				"height_profile_checked": false,
 				"maximum_height_error_m": 0.0285606007820949,
-				"maximum_lateral_error_m": 0.00448400247842073,
+				"maximum_lateral_error_m": 0.00449969386681914,
 				"position": [
-					51.5804252624512,
-					13.2758750915527,
-					89.2515563964844
+					51.580436706543,
+					13.2754592895508,
+					89.2515411376953
 				],
 				"reached": false,
-				"reason": "blocked_by_static",
+				"reason": "stuck",
 				"side_colliders": [
 					"/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta"
 				]
@@ -31,14 +31,14 @@
 			"ray_blocked": false,
 			"ray_collider": "",
 			"walk": {
-				"distance_from_start_m": 0.718932032585144,
+				"distance_from_start_m": 0.718933761119843,
 				"frames": 26,
 				"height_profile_checked": false,
-				"maximum_height_error_m": 0.0157209200117192,
-				"maximum_lateral_error_m": 0.0000157283993758028,
+				"maximum_height_error_m": 0.0157271188947758,
+				"maximum_lateral_error_m": 0.0000162963933689753,
 				"position": [
-					23.6332454681396,
-					4.45324373245239,
+					23.6332473754883,
+					4.45324993133545,
 					86.8033065795898
 				],
 				"reached": true,
@@ -56,7 +56,7 @@
 	},
 	"errors": [],
 	"geometry_source": "res://assets/world.glb",
-	"metadata_mtime_unix": 1793564642,
+	"metadata_mtime_unix": 1793597980,
 	"metadata_source": "world_meta.stalliden_ground_checks",
 	"passed": true,
 	"paths": [
@@ -72,15 +72,15 @@
 				"passed": true
 			},
 			"walk": {
-				"distance_from_start_m": 112.413352966309,
+				"distance_from_start_m": 112.413619995117,
 				"frames": 3741,
 				"height_profile_checked": true,
 				"maximum_height_error_m": 0.0825279054610881,
 				"maximum_lateral_error_m": 0.0858902782201767,
 				"position": [
-					6.44448566436768,
-					0.362520724534988,
-					97.4718399047852
+					6.44419813156128,
+					0.363285720348358,
+					97.4719390869141
 				],
 				"reached": true,
 				"reason": "reached",
@@ -101,15 +101,15 @@
 				"passed": true
 			},
 			"walk": {
-				"distance_from_start_m": 112.350814819336,
+				"distance_from_start_m": 112.351638793945,
 				"frames": 3744,
 				"height_profile_checked": true,
-				"maximum_height_error_m": 0.0851822408837926,
+				"maximum_height_error_m": 0.0849534914668872,
 				"maximum_lateral_error_m": 0.0806402266025543,
 				"position": [
-					116.654228210449,
-					22.9077796936035,
-					118.13444519043
+					116.655014038086,
+					22.9077491760254,
+					118.134727478027
 				],
 				"reached": true,
 				"reason": "reached",
@@ -343,6 +343,6 @@
 		}
 	],
 	"scope": "actual imported collision geometry and actual player controller",
-	"wall_clock_s": 4.945766,
-	"world_asset_mtime_unix": 1793564659
+	"wall_clock_s": 5.012289,
+	"world_asset_mtime_unix": 1793597997
 }

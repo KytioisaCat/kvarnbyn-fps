@@ -78,3 +78,7 @@ Nästa separata prov är kvällsljus och gatlyktor från samma kameror. För for
 platsigenkänning behövs bättre underlag för M31 samt egna volymer för M24/M25:
 de stora generiska grunderna, dörrarna och takformerna dominerar fortfarande trappvyn.
 Joels bedömning av igenkänningen återstår.
+
+Uppföljning 2026-11-02: [M25:s eget hus och entrégång](RESULTAT-M25.md) ersätter
+nu den generiska M25-modellen som beskrivs ovan. [Kvällsljuset](RESULTAT-KVALL.md)
+är också genomfört. M24 och M31:s ännu skymda detaljer behöver bättre underlag.

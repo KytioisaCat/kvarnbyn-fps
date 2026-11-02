@@ -31,6 +31,23 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-02 06:43 — ChatGPT Codex — M25:s hus och entré
+
+**Status:** klart — eget M25-hus, gångbar entré och ny lokal Mac-app; Joels igenkänningsbedömning återstår.
+**Gjort:**
+- Fördjupad faktisk granskning av fotografens P1020319 i 1320 px-version och P1020320 (2017). `reference/stalleliden-hus/OBSERVATIONER.md` och `m25.json` skiljer observationer från uppskattningar. M24:s Maps-länk landade vid Götaforsliden 8, skymd vy; kommunens kartlänk fortsatt 404. Ingen påhittad M24-fasad, inga fotopixlar i repo/spel.
+- `blender/stalleliden_houses.py`: originalets 75,1 m² L-kontur i stället för generisk rektangel, en full våning/vind, gavelns fönster och halvrunda ventil, sydkupa, grå plåt/rött tegel, lokal oregelbunden grå stengrund, dörr/öppet skärmtak i L-hörnet. Golvraw 33,10, alla mått/takdelning/dolda sidor fortsatt uppskattade. Ingen interiör. Generisk västgavelentré borttagen.
+- `pipeline/m25_ground.py` ger 54,6 m² uppskattad gång/dörrplan/markbearbetning från befintligt vilplan. Hals 0,68 m, gång 0,85 m, dörrplan 1,60 m; grafanslutning till gammalt AI-vägnät. Huvudtrappans data och 10 887 exporterade steg-/gångtrianglar exakt oförändrade. Små privata gavelsteg/ramp från fotot inte byggda eftersom riktning/slutpunkt är osäkra.
+- Nativebilder avslöjade för djupa generiska fönsterfoder, skymmande slumpvegetation och en för brant gräsränna vid entrén. Egna grunda foder, öppen gavelmark, större trädavstånd/rimligare låga buskproxyer och 0,55 m skuldra + 1,85 m mjuk uppförsövergång rättade detta. Tekniska markkanter är inte nya observerade murar.
+- Riktig Godot-kapsel: tre punkter, båda entrégångarna, faktiskt dörrstopp och fri passage gröna; 92 golvprov/riktning, största kapselprofilfel under 3 mm. GLB: 141 gångprover utan hål/glapp; huskollisionen följer original-L. Alla 47 Stalleliden-växtbaser inom 1,5 cm av marken. Båda M25-proven obligatoriska i `rebuild.sh`.
+- Slutlig full återbyggnad/Mac-export grön på 104 s: Stallelidens båda hela 112 m-promenader/räcke, M29, 180/180 globala gångpunkter, kontroller/raket/flyg, soldater/vapen/träd/kvällsljus. `npm run build` grönt. Asfalt/vatten/broars gamla geometrisignaturer oförändrade; beviskedja från kvällsleveransens rawGLB 5ccd17b5… via första M25-stagen till slut-GLB i deliveryfilen.
+- `RESULTAT-M25.md`, README/TODO/ARKITEKTUR och `evidence/delivery-m25-2026-11-02.json`. Fyra slutbilder från exporterad Mac-app (tre dagsvyer + kväll), två jämförbara före-bilder. Alla motorprov Dummy-ljud och master mute. Slutbildernas FPS är ögonblicksbilder, ingen ny prestandagaranti. Inga nya modeller/material behövde laddas ned.
+**Läge nu:** `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app`. Tre nya startvyer: M25 gaveln, gårdssidan och entrén. Slutlig värld i aktiva `blender/world_raw.glb`/`godot/assets/world.glb`, hash i delivery. Stora filer lokala. `v2/.tools/kvarnbyn-hus-20261101/after/world_raw.glb` är första husiterationen, INTE slutleveransen; slutbilder heter `after/final-*.png`. Analytiskt agentunderlag är fryst vid passets början och ska inte köras om mot slutvärlden.
+**Nästa:** 1. Joels bedömning av M25:s proportioner/stengrund/entrémark. 2. Skaffa faktiskt synliga fasader för M24/M31 innan egna modeller byggs. 3. Säkrare placering av fotots lilla privata gavelramp; fortsatt platsvis trädgårds-/terrassarbete.
+**Varningar:** exakt golvhöjd, grundhöjd, tomtgrader och dolda sidor är inte uppmätta. Release-app ignorerar `--script`; bilder med inbyggda `--view/--capture`, editor för skriptprov. `.claude/playpen/` helt orörd; spårad houses.pyc återställd. Alla agenttester fortsatt ljudlösa.
+
+---
+
 ## 2026-11-01 21:31 — ChatGPT Codex — kvällsljus och gatlyktor
 
 **Status:** klart — valbart kvällsljus i ny lokal Mac-app; Joels ljus-/igenkänningsbedömning återstår.

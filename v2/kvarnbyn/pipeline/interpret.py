@@ -29,6 +29,7 @@ factory = json.loads((TORGET / 'reference/industrial_backdrop.json').read_text()
 FACTORY_ID = factory['identification']['correct_osm_way_id']
 roten_m29 = json.loads((DATA.parent / 'reference/roten-m/house.json').read_text())
 stalliden_houses = json.loads((DATA.parent / 'reference/stalliden/houses.json').read_text())
+stalleliden_m25 = json.loads((DATA.parent / 'reference/stalleliden-hus/m25.json').read_text())
 
 # ---------- paletter (assumed: typiska kulörer i Kvarnbyn, inte uppmätta per hus) ----------
 WOOD = ['#efece4', '#efece4', '#e9dcae', '#8e3326', '#8e3326', '#cfccc2', '#bcc6a8', '#bccad0', '#d8b46c', '#e6d8c0']
@@ -198,6 +199,9 @@ for w in ways:
         if context:
             spec.update(context['override']); spec['name'] = context['name']
             spec['source'].update(context['source'])
+        if spec['id'] == stalleliden_m25['id']:
+            spec.update(stalleliden_m25['override']); spec['name'] = stalleliden_m25['name']
+            spec['source'].update(stalleliden_m25['source'])
         buildings.append(spec); counts[spec['archetype']] += 1
     elif backdrop.contains(c):
         L = poly.minimum_rotated_rectangle
@@ -292,7 +296,7 @@ meta = dict(schema_version=1, created='2026-10-29', name='Kvarnbyn — spelbar z
                                ortho='mätt ur Lantmäteriets ortofoto 2024', assumed='tolkningsregel i interpret.py — förbättras i husrundor'))
 city = dict(meta=meta, buildings=buildings, backdrop_buildings=backdrop_buildings, roads=roads, surfaces=surfaces,
             waterways=waterways, water_polygons=water_polys, barriers=barriers, forests=forests,
-            reviewed_houses={'roten_m29': roten_m29},
+            reviewed_houses={'roten_m29': roten_m29, 'stalleliden_m25': stalleliden_m25},
             authored_ground=json.loads((TORGET / 'reference/authored_ground.json').read_text()))
 DATA.mkdir(parents=True, exist_ok=True)
 (DATA / 'city.json').write_text(json.dumps(city, ensure_ascii=False, separators=(',', ':')))

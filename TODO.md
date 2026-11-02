@@ -17,7 +17,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **Joels bedömning av kvällsljuset** (`v2/kvarnbyn/RESULTAT-KVALL.md`): läsbarhet i strid, stämning och lyktövergångar under promenad.
-- [ ] **Världen (kärnan)**: fortsatt grönska och terrasser per plats. M29 och Stallelidens första gång-/platsprov är genomförda. Nästa husarbete: visuellt belägga M31 och återskapa M24/M25:s volymer, grunder, tak och entréer längs trappan. Granska innan nya höga murar byggs.
+- [ ] **Världen (kärnan)**: fortsatt grönska och terrasser per plats. M29 och Stallelidens första gång-/platsprov är genomförda. M25:s eget hus och entrégång är byggda. Nästa husarbete: visuellt belägga M24 och M31; därefter deras volymer, grunder, tak och entréer längs trappan. Granska innan nya höga murar byggs.
+- [ ] **Joels bedömning av M25** (`v2/kvarnbyn/RESULTAT-M25.md`): husproportioner, stengrund och entrégång. Mått/markskärning uppskattade. Det lilla separata gavelrampmotivet behöver säkrare placering.
 - [ ] **Joels bedömning av Stalleliden/M30** (`v2/kvarnbyn/RESULTAT-STALLELIDEN.md`): igenkänning och gångstråk; grannhusen är fortfarande delvis generiska.
 - [ ] **Joels bedömning av Roten M 29** (`v2/kvarnbyn/RESULTAT-ROTEN.md`): igenkänning, husproportioner och markmiljö. Övriga grannhus är fortfarande generiska.
 - [ ] **Nordbanken**: kontrollera uppskattad stenläggningskontur och anslutande gatuprofiler i ett separat platsprov; inte inkluderad i förgårdspasset.
@@ -78,6 +79,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-02 — **M25:s eget hus och entré**: ursprunglig L-kontur, en våning med vind, gavelrutor/ventil, takkupa, delade plåt-/tegeltak, lokal grå stengrund och gång från befintligt vilplan. Riktig kapsel fram/tillbaka, dörrstopp, 141 GLB-prover och övriga spelprov gröna. Nya startvyer och Mac-app; M24 fortsatt obekräftat. `v2/kvarnbyn/RESULTAT-M25.md`.
 
 - [x] 2026-11-01 — **Kvällsljus och gatlyktor**: valbart Eftermiddag/Kväll i menyn, varm låg sol/sval himmel, befintliga lyktor med glöd och högst åtta närliggande skuggljus. Integrationsprov för meny/material/ljuspool; native stridsprov 69/65 FPS median för eftermiddag/kväll på M5. Resultat: `v2/kvarnbyn/RESULTAT-KVALL.md`.
 

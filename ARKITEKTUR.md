@@ -268,6 +268,39 @@ provar dessutom transformerade GLB-trianglar. Slutbilder tas med release-appens 
 `--view/--capture`-flaggor; `--script` ignoreras av release-mallen och är bara för editorn.
 Se `RESULTAT-STALLELIDEN.md` för omfattning och återstående husarbete.
 
+## M25:s hus och entré (2026-11-02)
+
+M25 (`w92332157`) får en egen författad modell i `blender/stalleliden_houses.py`,
+styrd av `reference/stalleliden-hus/m25.json`. Faktiskt granskade originalfoton från
+2017 visar en full våning med vind, blek stående panel, gavelns fönster/halvrunda
+ventil, sydkupa, grå plåt och rött tegeltak. Originalets L-kontur används; den gamla
+rektangeln och påhittade dörren mitt i västgaveln tas bort. Exakt takdelning, alla
+mått, dolda fasader och golvraw 33,10 m är uppskattade. Den egna grå grunden följer
+lokal mark och använder oregelbundna stenytor med befintlig CC0-normaltextur.
+
+`pipeline/m25_ground.py` kopplar ett redan byggt plant vilplan till dörren i
+L-hörnet: 0,68 m hals, cirka 0,85 m gång, 1,60 m dörrplan och en liten uppförsskärning.
+Det är en uppskattad fungerande anslutning, inte en uppmätt historisk gårdsplan.
+Fotots separata lilla steg-/rampmotiv vid gaveln har osäker riktning/slutpunkt och
+byggs inte ännu. Huvudtrappans profiler, ytor, räcke och gamla vilplan är oförändrade.
+Nya ytor har färdig raw-höjd/lift0, exakt terrängklipp och 0,20 m trianglar. Ett
+höjdutjämnat gräsband låter uppförsterrängen möta fasaden. Intill gångens kanter
+ger 0,55 m skuldra + 1,85 m övergång en mjukare bank än första bildprovets branta
+gräsränna; slutna tekniska kanter är
+inte nya visuellt belagda stödmurar. Gången kopplas till befintligt AI-vägnät.
+
+`paved_eye` måste låta en uttryckligen ägd M25-gångyta sänka kameran under tidigare
+DTM. Att alltid ta max av gammal mark och ny gång gav en svävande entrékamera.
+Tre startvyer visar gavel, gårdssida och entrégång. Gavelns uppskattade öppna markyta
+hålls fri från slumpad vegetation; träd har större fasadavstånd och buskproxyerna
+får rimligare låga proportioner. Planteringspositioner/artval är fortfarande antagna.
+
+`rebuild.sh` kräver både `qa-export.py --area m25` (synliga/kolliderande trianglar och
+ursprunglig L-kontur) och `verify_roten.gd --check-key=m25_ground_checks` (riktig kapsel
+fram/tillbaka, dörrstopp och fri passage) före export. M24 och M31:s skymda fasader
+är fortsatt obekräftade; personkataloger och en felriktad Maps-vy är inte fasadbevis.
+Referensfoton används bara för observationer och följer inte med spelet.
+
 ## Valbart kvällsljus (2026-11-01)
 
 `lighting.gd` bygger Eftermiddag (tidigare HDR-himmel och sol) eller Kväll (egen

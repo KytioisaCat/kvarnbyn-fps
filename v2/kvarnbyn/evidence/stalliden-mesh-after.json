@@ -1,13 +1,13 @@
 {
   "passed": true,
-  "scope": "actual raw GLB transformed triangles; centre and +/-20 cm along complete route",
+  "scope": "actual raw GLB transformed triangles; centre and +/-20 cm along complete stalliden route",
   "glb": {
     "path": "v2/kvarnbyn/blender/world_raw.glb",
-    "bytes": 233240292,
-    "sha256": "5ccd17b5df606b507eb48d1ef153c60db9ae26f93569affb13224f1f44eea116",
-    "corridor_geometry_sha256": "fc826045b8d80d2a5a6cb994be31f16a6830f47b31c11cc1da9b2c3215c4b7c7",
-    "node_primitives": 289,
-    "triangles": 214244
+    "bytes": 234257748,
+    "sha256": "2580c9abced8495f796513b3a09cf91d28574e946b093729b17109e20cac776e",
+    "corridor_geometry_sha256": "0c73a6a7f8b79ea59a992244c50a0975eb08e6f0fe7ea22c65f4f0b08a06faf1",
+    "node_primitives": 338,
+    "triangles": 235516
   },
   "samples": 2088,
   "missing_or_mismatched": 0,
@@ -32,20 +32,65 @@
     {
       "kind": "tree",
       "position": [
-        62.17489366084098,
-        16.283637186635737,
-        91.84527815026117
+        34.71216820066492,
+        7.3854203261572735,
+        79.88150733979161
       ],
       "floor": {
         "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 16.283928,
-        "slope": 0.679995
+        "y": 7.375734,
+        "slope": 0.249824
       },
-      "error_m": 0.00029081336426273197,
+      "error_m": 0.009686326157273939,
       "passed": true
     },
     {
       "kind": "tree",
+      "position": [
+        27.167380037360054,
+        5.49476319278968,
+        82.509791707772
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+        "y": 5.495063,
+        "slope": 0.354839
+      },
+      "error_m": 0.00029980721031996893,
+      "passed": true
+    },
+    {
+      "kind": "tree",
+      "position": [
+        74.34363214255195,
+        20.093820404061773,
+        99.00758464588155
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+        "y": 20.093316,
+        "slope": 0.076014
+      },
+      "error_m": 0.0005044040617718792,
+      "passed": true
+    },
+    {
+      "kind": "tree",
+      "position": [
+        43.022386306359756,
+        10.415943741395953,
+        84.2141112404503
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+        "y": 10.411281,
+        "slope": 0.151141
+      },
+      "error_m": 0.004662741395952352,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
       "position": [
         86.86994016953841,
         23.381594770312496,
@@ -60,7 +105,7 @@
       "passed": true
     },
     {
-      "kind": "tree",
+      "kind": "shrub",
       "position": [
         32.66143354682433,
         7.427880422051032,
@@ -72,36 +117,6 @@
         "slope": 0.051855
       },
       "error_m": 0.0014295779489676974,
-      "passed": true
-    },
-    {
-      "kind": "tree",
-      "position": [
-        45.339455484845246,
-        9.754348060090315,
-        78.76208577647671
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 9.754493,
-        "slope": 0.208699
-      },
-      "error_m": 0.00014493990968489356,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        52.258266447827395,
-        12.599267416193062,
-        84.96616600438416
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 12.599631,
-        "slope": 0.347453
-      },
-      "error_m": 0.00036358380693890524,
       "passed": true
     },
     {
@@ -137,46 +152,16 @@
     {
       "kind": "shrub",
       "position": [
-        51.644155265965246,
-        12.057975292524574,
-        82.39071375010177
+        45.339455484845246,
+        9.754348060090315,
+        78.76208577647671
       ],
       "floor": {
         "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 12.057911,
-        "slope": 0.393555
+        "y": 9.754493,
+        "slope": 0.208699
       },
-      "error_m": 6.429252457351708e-05,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        59.416432803946456,
-        16.129685020196185,
-        94.90523599766873
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 16.129396,
-        "slope": 0.317109
-      },
-      "error_m": 0.0002890201961847083,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        34.71216820066492,
-        7.3854203261572735,
-        79.88150733979161
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 7.375734,
-        "slope": 0.249824
-      },
-      "error_m": 0.009686326157273939,
+      "error_m": 0.00014493990968489356,
       "passed": true
     },
     {
@@ -192,21 +177,6 @@
         "slope": 0.336729
       },
       "error_m": 0.0001436733078890029,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        52.33409411365556,
-        12.929458343798903,
-        86.34178931314186
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 12.927203,
-        "slope": 0.410484
-      },
-      "error_m": 0.002255343798902132,
       "passed": true
     },
     {
@@ -242,21 +212,6 @@
     {
       "kind": "shrub",
       "position": [
-        60.69869218043379,
-        15.790494700441528,
-        91.11671241334446
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 15.793154,
-        "slope": 0.138122
-      },
-      "error_m": 0.0026592995584717727,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
         74.87605669159011,
         20.070036053744957,
         105.20932000206719
@@ -267,21 +222,6 @@
         "slope": 0.17346
       },
       "error_m": 0.006124053744958502,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        27.167380037360054,
-        5.49476319278968,
-        82.509791707772
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 5.495063,
-        "slope": 0.354839
-      },
-      "error_m": 0.00029980721031996893,
       "passed": true
     },
     {
@@ -302,36 +242,6 @@
     {
       "kind": "shrub",
       "position": [
-        74.34363214255195,
-        20.093820404061773,
-        99.00758464588155
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 20.093316,
-        "slope": 0.076014
-      },
-      "error_m": 0.0005044040617718792,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        43.022386306359756,
-        10.415943741395953,
-        84.2141112404503
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 10.411281,
-        "slope": 0.151141
-      },
-      "error_m": 0.004662741395952352,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
         61.82809763263063,
         17.373503222068635,
         99.84067533933958
@@ -342,21 +252,6 @@
         "slope": 0.30157
       },
       "error_m": 0.00015077793136342166,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        47.724796617531396,
-        10.885684503583018,
-        84.0477799034355
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 10.888384,
-        "slope": 0.544805
-      },
-      "error_m": 0.0026994964169819724,
       "passed": true
     },
     {
@@ -387,21 +282,6 @@
         "slope": 0.050989
       },
       "error_m": 0.00043929321551772205,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        74.96880387827792,
-        20.083319049948145,
-        99.67826149908414
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 20.083401,
-        "slope": 0.122061
-      },
-      "error_m": 8.195005185385185e-05,
       "passed": true
     },
     {
@@ -557,16 +437,16 @@
     {
       "kind": "shrub",
       "position": [
-        53.2486881762162,
-        13.557400449558244,
-        87.82729359614643
+        46.22136081987569,
+        10.022902357301746,
+        79.16792798711218
       ],
       "floor": {
         "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 13.557825,
-        "slope": 0.320865
+        "y": 10.021486,
+        "slope": 0.328904
       },
-      "error_m": 0.00042455044175504497,
+      "error_m": 0.0014163573017462738,
       "passed": true
     },
     {
@@ -612,36 +492,6 @@
         "slope": 0.316725
       },
       "error_m": 0.00024171212866619385,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        58.27133148485272,
-        15.4308587834225,
-        90.70870768690264
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 15.430963,
-        "slope": 0.215408
-      },
-      "error_m": 0.00010421657749937197,
-      "passed": true
-    },
-    {
-      "kind": "shrub",
-      "position": [
-        49.28347588109458,
-        12.390924711224468,
-        89.64267886236392
-      ],
-      "floor": {
-        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 12.389183,
-        "slope": 0.953831
-      },
-      "error_m": 0.001741711224468645,
       "passed": true
     },
     {
@@ -707,16 +557,166 @@
     {
       "kind": "shrub",
       "position": [
-        64.24370199967032,
-        17.82122438292452,
-        91.3263097573582
+        64.27939637269054,
+        18.039281914966963,
+        106.00822141116268
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+        "y": 18.039832,
+        "slope": 0.196982
+      },
+      "error_m": 0.0005500850330371065,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        64.22160422505128,
+        17.804889692690573,
+        93.72834121835609
       ],
       "floor": {
         "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
-        "y": 17.820539,
-        "slope": 0.413815
+        "y": 17.80501,
+        "slope": 0.490718
       },
-      "error_m": 0.0006853829245194731,
+      "error_m": 0.00012030730942669265,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        44.44627064597108,
+        9.110735905757071,
+        77.39493963455303
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+        "y": 9.110569,
+        "slope": 0.810248
+      },
+      "error_m": 0.000166905757071234,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        63.807552873286674,
+        17.773221760471074,
+        104.93440655776409
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+        "y": 17.760671,
+        "slope": 0.35025
+      },
+      "error_m": 0.012550760471075506,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        85.51148026785972,
+        23.2115139882087,
+        95.9974522753072
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+        "y": 23.21136,
+        "slope": 0.22236
+      },
+      "error_m": 0.00015398820870160534,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        66.37341544494525,
+        18.54688563222679,
+        98.03562497812389
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges0",
+        "y": 18.547674,
+        "slope": 0.207984
+      },
+      "error_m": 0.0007883677732110073,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        75.1446033843168,
+        20.075426675202806,
+        100.0424134304026
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+        "y": 20.075491,
+        "slope": 0.122067
+      },
+      "error_m": 6.432479719364892e-05,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        86.60670462879058,
+        23.057794724314007,
+        102.10583961475172
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+        "y": 23.055158,
+        "slope": 0.616676
+      },
+      "error_m": 0.0026367243140086316,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        63.12166421873357,
+        17.463615242628293,
+        104.12718389441496
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+        "y": 17.468308,
+        "slope": 0.478726
+      },
+      "error_m": 0.004692757371707046,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        61.3274037085397,
+        17.072930605198046,
+        100.69511816272886
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+        "y": 17.069614,
+        "slope": 0.926962
+      },
+      "error_m": 0.003316605198044442,
+      "passed": true
+    },
+    {
+      "kind": "shrub",
+      "position": [
+        75.8291591073923,
+        20.227979180194332,
+        105.44118399693424
+      ],
+      "floor": {
+        "name": "COL_Stalleliden_ground_stalliden_garden_stalliden_green_verges",
+        "y": 20.227367,
+        "slope": 0.180494
+      },
+      "error_m": 0.0006121801943308469,
       "passed": true
     }
   ],

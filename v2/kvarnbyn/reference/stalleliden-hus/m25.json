@@ -1,0 +1,68 @@
+{
+  "id": "w92332157",
+  "name": "Roten M 25",
+  "reference": "OBSERVATIONER.md",
+  "status": "Visible features observed in photographs from 2017; all metric dimensions, roof subdivision and hidden sides estimated.",
+  "override": {
+    "authored_model": "stalleliden_m25",
+    "priority": "landmark",
+    "keep_osm_footprint": true,
+    "levels": 1,
+    "wall_height_m": 2.95,
+    "roof_rise_m": 3.21,
+    "roof_shape": "joined_gables",
+    "base_height_raw_m": 33.1,
+    "base_y_m": 15.1,
+    "facade_color": "#e5dfca",
+    "facade_material": "wood",
+    "roof_material": "metal_grey",
+    "trim_color": "#ecebe2",
+    "roof_color": "#858c8a"
+  },
+  "source": {
+    "footprint": "original_osm_L",
+    "facade": "observed_P1020319_P1020320_2017",
+    "roof_shape": "observed_gables_dormer_subdivision_estimated",
+    "roof_material": "visible_grey_sheet_and_red_tile_parts_2017",
+    "heights": "estimated_from_photo_and_finished_stair_reference_not_DTM_percentile",
+    "windows": "visible_west_and_south_layout_observed_metric_sizes_estimated",
+    "entrance": "visible_notch_porch_interpreted_position_estimated",
+    "levels": "observed_one_full_floor_and_attic_2017"
+  },
+  "wall_color": "#e5dfca",
+  "trim_color": "#ecebe2",
+  "sash_color": "#e9e8df",
+  "eave_m": 2.95,
+  "main": {
+    "a0": -4.307,
+    "a1": 2.48,
+    "b0": -4.79,
+    "b1": 4.129,
+    "ridge_b": -0.3305,
+    "rise_m": 3.21
+  },
+  "annex": {
+    "a0": 2.48,
+    "a1": 5.127,
+    "b0": -1.372,
+    "b1": 4.129,
+    "ridge_b": 1.3785,
+    "rise_m": 2.0
+  },
+  "door": {
+    "a": 3.7,
+    "b": -1.372,
+    "width_m": 0.9,
+    "height_m": 2.05
+  },
+  "dormer": {
+    "a": 0.0,
+    "width_m": 2.35,
+    "front_b": -3.7,
+    "back_b": -1.8,
+    "sill_m": 3.65,
+    "front_top_m": 4.95,
+    "back_top_m": 5.1
+  },
+  "note": "Main L shell follows OSM. Roof volumes, porch canopy, window dimensions, masonry courses and floor raw33.10 are estimates. No interior is authored. M24 remains unverified context."
+}
