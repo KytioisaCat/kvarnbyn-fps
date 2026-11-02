@@ -56,7 +56,7 @@
 	},
 	"errors": [],
 	"geometry_source": "res://assets/world.glb",
-	"metadata_mtime_unix": 1793602945,
+	"metadata_mtime_unix": 1793605100,
 	"metadata_source": "world_meta.stalliden_ground_checks",
 	"passed": true,
 	"paths": [
@@ -343,6 +343,6 @@
 		}
 	],
 	"scope": "actual imported collision geometry and actual player controller",
-	"wall_clock_s": 4.720255,
-	"world_asset_mtime_unix": 1793602961
+	"wall_clock_s": 4.854054,
+	"world_asset_mtime_unix": 1793605117
 }

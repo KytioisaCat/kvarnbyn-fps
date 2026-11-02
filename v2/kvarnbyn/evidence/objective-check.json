@@ -1,0 +1,411 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"passed": true,
+			"test": "actual_combat_world_loaded"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "priority_C_before_B_and_A"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "reclaimed_C_switches_to_B"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "reclaimed_B_switches_to_A"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "friendly_base_alarm_overrides_B_and_A"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "actual_label_shows_defend"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "no_false_base_alarm_without_enemies"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "bearing_north"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "planar_distance_ignores_200m_height_north"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "bearing_east"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "planar_distance_ignores_200m_height_east"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "bearing_south"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "planar_distance_ignores_200m_height_south"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "bearing_west"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "planar_distance_ignores_200m_height_west"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "bearing_follows_player_yaw"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "all_friendly_requests_cleanup"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "cleanup_never_points_to_hidden_enemy"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "nothing_remaining_hides_guidance"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "dead_player_hides_guidance"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "finished_round_hides_guidance"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "explore_hides_guidance"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "inactive_player_hides_guidance"
+		}
+	],
+	"passed": true,
+	"scope": "actual imported world, actual GameManager caps and live HUD objective",
+	"states": [
+		{
+			"id": "initial_enemy_zones",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					0.0000000134113866678831,
+					-1.0
+				],
+				"distance_m": 226,
+				"has_target": true,
+				"name": "Royens trappor",
+				"target_id": "C",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta C · Royens trappor · 226 m"
+		},
+		{
+			"id": "C_reclaimed",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					-0.540734767913818,
+					-0.84119313955307
+				],
+				"distance_m": 243,
+				"has_target": true,
+				"name": "Roten M",
+				"target_id": "B",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta B · Roten M · 243 m"
+		},
+		{
+			"id": "B_reclaimed",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					-0.325652956962585,
+					-0.945489346981049
+				],
+				"distance_m": 392,
+				"has_target": true,
+				"name": "Gamla torget",
+				"target_id": "A",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta A · Gamla torget · 392 m"
+		},
+		{
+			"id": "base_alarm",
+			"label_visible": true,
+			"objective": {
+				"action": "Försvara",
+				"direction": [
+					0.0000000134113866678831,
+					-1.0
+				],
+				"distance_m": 226,
+				"has_target": true,
+				"name": "Royens trappor",
+				"target_id": "C",
+				"urgent": true,
+				"visible": true
+			},
+			"text": "Försvara C · Royens trappor · 226 m"
+		},
+		{
+			"id": "contested_without_enemy",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					-0.540734767913818,
+					-0.84119313955307
+				],
+				"distance_m": 243,
+				"has_target": true,
+				"name": "Roten M",
+				"target_id": "B",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta B · Roten M · 243 m"
+		},
+		{
+			"id": "bearing_north",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					0.0,
+					-1.0
+				],
+				"distance_m": 20,
+				"has_target": true,
+				"name": "Royens trappor",
+				"target_id": "C",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta C · Royens trappor · 20 m"
+		},
+		{
+			"id": "bearing_east",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					1.0,
+					-0.0000000000000000612323426292584
+				],
+				"distance_m": 20,
+				"has_target": true,
+				"name": "Royens trappor",
+				"target_id": "C",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta C · Royens trappor · 20 m"
+		},
+		{
+			"id": "bearing_south",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					0.000000000000000122464685258517,
+					1.0
+				],
+				"distance_m": 20,
+				"has_target": true,
+				"name": "Royens trappor",
+				"target_id": "C",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta C · Royens trappor · 20 m"
+		},
+		{
+			"id": "bearing_west",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					-1.0,
+					-0.0000000000000000612323426292584
+				],
+				"distance_m": 20,
+				"has_target": true,
+				"name": "Royens trappor",
+				"target_id": "C",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta C · Royens trappor · 20 m"
+		},
+		{
+			"id": "rotated_player",
+			"label_visible": true,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					1.0,
+					0.0000000437113882867379
+				],
+				"distance_m": 20,
+				"has_target": true,
+				"name": "Royens trappor",
+				"target_id": "C",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Återta C · Royens trappor · 20 m"
+		},
+		{
+			"id": "cleanup",
+			"label_visible": true,
+			"objective": {
+				"action": "Rensa kvarvarande fiender",
+				"direction": [
+					0.0,
+					0.0
+				],
+				"distance_m": 0,
+				"has_target": false,
+				"name": "",
+				"target_id": "",
+				"urgent": false,
+				"visible": true
+			},
+			"text": "Rensa kvarvarande fiender"
+		},
+		{
+			"id": "nothing_remaining",
+			"label_visible": false,
+			"objective": {
+				"action": "Återta",
+				"direction": [
+					0.0,
+					0.0
+				],
+				"distance_m": 0,
+				"has_target": false,
+				"name": "",
+				"target_id": "",
+				"urgent": false,
+				"visible": false
+			},
+			"text": "Rensa kvarvarande fiender"
+		},
+		{
+			"id": "dead",
+			"label_visible": false,
+			"objective": {
+				"action": "",
+				"direction": [
+					0.0,
+					0.0
+				],
+				"distance_m": 0,
+				"has_target": false,
+				"name": "",
+				"target_id": "",
+				"urgent": false,
+				"visible": false
+			},
+			"text": "Rensa kvarvarande fiender"
+		},
+		{
+			"id": "ended",
+			"label_visible": false,
+			"objective": {
+				"action": "",
+				"direction": [
+					0.0,
+					0.0
+				],
+				"distance_m": 0,
+				"has_target": false,
+				"name": "",
+				"target_id": "",
+				"urgent": false,
+				"visible": false
+			},
+			"text": "Rensa kvarvarande fiender"
+		},
+		{
+			"id": "explore",
+			"label_visible": false,
+			"objective": {
+				"action": "",
+				"direction": [
+					0.0,
+					0.0
+				],
+				"distance_m": 0,
+				"has_target": false,
+				"name": "",
+				"target_id": "",
+				"urgent": false,
+				"visible": false
+			},
+			"text": "Rensa kvarvarande fiender"
+		},
+		{
+			"id": "paused_player",
+			"label_visible": false,
+			"objective": {
+				"action": "",
+				"direction": [
+					0.0,
+					0.0
+				],
+				"distance_m": 0,
+				"has_target": false,
+				"name": "",
+				"target_id": "",
+				"urgent": false,
+				"visible": false
+			},
+			"text": "Rensa kvarvarande fiender"
+		}
+	]
+}

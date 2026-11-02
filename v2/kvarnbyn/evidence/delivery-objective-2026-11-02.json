@@ -1,0 +1,165 @@
+{
+  "date": "2026-11-02",
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "baseline_commit": "a852632",
+  "build_seconds": 122,
+  "build_log": "v2/.tools/kvarnbyn-map-20261102/objective-rebuild.log",
+  "sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "v2/kvarnbyn/godot/assets/world.glb": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "v2/kvarnbyn/godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "v2/kvarnbyn/godot/scripts/hud.gd": "a576ed49978f7a98826d8580533f615e9a56d36d4a21f30453ba9c6cd0178644",
+    "v2/kvarnbyn/godot/scripts/verify_objective.gd": "aa7bdb515962b505f62dd7f48fe804ea016d9a111ca82d775c1dd5bf796abb71",
+    "v2/kvarnbyn/desktop/Kvarnbyn.zip": "75960b5b6ef057b5378e3163078ee9760b1360a871a41d28600f1de8c6caeef9"
+  },
+  "unchanged_world_and_map": {
+    "v2/kvarnbyn/blender/world_raw.glb": true,
+    "v2/kvarnbyn/godot/assets/world.glb": true,
+    "v2/kvarnbyn/godot/assets/world_map.png": true
+  },
+  "checks": {
+    "objective-check": {
+      "passed": true,
+      "checks": 23
+    },
+    "objective-native-check": {
+      "passed": true,
+      "checks": 24
+    },
+    "map-check": {
+      "passed": true,
+      "checks": 27
+    },
+    "map-world-check": {
+      "passed": true,
+      "checks": 19
+    },
+    "map-export-check": {
+      "passed": true,
+      "checks": 0
+    }
+  },
+  "native_release_capture": {
+    "baked_lightmaps": false,
+    "cpu_render_ms": 1.24600005149841,
+    "draw_calls": 3808.0,
+    "fps": 66.0,
+    "game": {
+      "allies": 9,
+      "caps": [
+        {
+          "enemies_in": 1,
+          "friends_in": 0,
+          "id": "A",
+          "owner": "enemy",
+          "progress": 1.0
+        },
+        {
+          "enemies_in": 0,
+          "friends_in": 0,
+          "id": "B",
+          "owner": "enemy",
+          "progress": 1.0
+        },
+        {
+          "enemies_in": 1,
+          "friends_in": 0,
+          "id": "C",
+          "owner": "enemy",
+          "progress": 1.0
+        }
+      ],
+      "deaths": 0,
+      "elapsed_s": 2.0,
+      "enemies": 66,
+      "headshots": 0,
+      "kills": 0,
+      "over": false,
+      "player_alive": true,
+      "player_hp": 100.0,
+      "reinforcements_left": 3,
+      "running": true,
+      "victory": false
+    },
+    "gpu_render_ms": 0.0,
+    "lighting": "day",
+    "load_ms": 5152,
+    "map": {
+      "allies": 9,
+      "bounds": [
+        -357.2080078125,
+        -299.81201171875,
+        542.7919921875,
+        400.18798828125
+      ],
+      "enemy_positions": 0,
+      "expanded": false,
+      "heading": [
+        -0.730819702148438,
+        -0.682570576667786
+      ],
+      "loaded": true,
+      "map_rect": [
+        22.0,
+        772.0,
+        245.0,
+        200.0
+      ],
+      "north_up": true,
+      "player": [
+        339.989990234375,
+        153.190002441406
+      ],
+      "static_map_draws": 1,
+      "zones": 3
+    },
+    "physics_ms": 2.907,
+    "player": {
+      "active": true,
+      "alive": true,
+      "eye": [
+        339.989990234375,
+        54.430004119873,
+        153.190002441406
+      ],
+      "fov_degrees": 71.9999771118164,
+      "free_flight": false,
+      "hp": 100.0,
+      "on_floor": false,
+      "pitch": 0.0,
+      "position": [
+        339.989990234375,
+        52.7800025939941,
+        153.190002441406
+      ],
+      "yaw": 0.819522082805634
+    },
+    "prepared_bake_scene": false,
+    "process_ms": 15.969,
+    "ready": true,
+    "render_triangles": 3315443.0,
+    "static_memory_bytes": 0,
+    "street_lights": {
+      "active_ids": [],
+      "active_lights": 0,
+      "emissive_meshes": 52,
+      "evening": false,
+      "fixtures": 216,
+      "pool_size": 8,
+      "shadow_lights": 0
+    },
+    "title": "Kvarnbyn",
+    "touch": false,
+    "view": 0,
+    "world": {
+      "colliders": 532,
+      "explicit_collision_meshes": 532,
+      "meshes": 4614,
+      "triangles": 2355088,
+      "vegetation_mesh_instances": 3326
+    }
+  },
+  "alarm_capture": "Controlled actual-world HUD fixture: friendly contested C, two enemy occupants, progress 0.35; scene paused after spawned capsules settled. Not a natural round outcome.",
+  "audio": "All runs --audio-driver Dummy; test scripts additionally mute master.",
+  "scope": "Objective HUD only; no balance, soldier AI, geometry, map data or assets changed."
+}

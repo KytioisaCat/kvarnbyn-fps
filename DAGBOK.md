@@ -33,10 +33,10 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ## 2026-11-02 — ChatGPT Codex — tydligare mål och basvarning
 
-**Status:** pågår
-**Gjort:** Joel styr fortsatt med ”fortsätt”. Nästa avgränsade bygge är mänsklig målvisning: riktning/avstånd till nästa zon och prioriterad basvarning under anfall. Ingen AI- eller balansändring. Agent tactical_map äger endast hud.gd och eventuellt verify_objective.gd; root integration/kontroller/docs.
-**Läge nu:** senaste färdiga app/kod1126512 (åbank+kartor) är fortfarande leveransen. Senare referens-/bot-/laserunderlag är färdiga; HUD-tillägget är inte levererat eller verifierat ännu.
-**Nästa:** granska HUD-källan → riktiga mål-/inmatningsprov och nativebild → full återbyggnad/app → dagbok och commit. Om budgeten bryts: kontrollera agentens filer innan de används; appen på disk är trygg baslinje tills ny export passerar.
+**Status:** klart — målvisning och basvarning i ny lokal Mac-app.
+**Gjort:** `hud.gd` visar pil/riktning och horisontellt avstånd till nästa fiendeområde C→B→A. Egen bas med contested+enemies_in prioriteras med gult Försvara C. Alla zoner egna ger Rensa kvarvarande fiender, utan fienderiktningar. Döljs i promenad, död/inaktiv och efter omgång. Agent tactical_map byggde HUD/prov, root granskade, integrerade och exporterade. `RESULTAT-MALVISNING.md`, README/TODO/ARKITEKTUR och delivery-objective-2026-11-02.json.
+**Läge nu:** full rebuild122s med alla tidigare grindar samt23 verkliga HUD-/målprov grön; exporterade appens kartgrind grön. Native kontrollerad basvarning24prov och vanlig native release-start visuellt granskade; evidence/objective_alarm.jpg respektive objective_normal.jpg. Testfixturen väntar60fysiksteg innan paus så kapslar hinner ned på marken; basägare/zonbalk sätts konsekvent. Världs-GLB och kartPNG exakt samma hash som1126512. Ingen AI/balansändring. Appen på disk innehåller nu HUD-tillägget. Alla agentprov Dummy+mute.
+**Nästa:** fortsatt faktiskt platsunderlag för åbankens lilla tegelbyggnad/intag, separat från HUD-paketet. Dataagenten inventerar OSM/ortho; root tittar i Maps. Ingen ny osäker byggnad får placeras från enbart en gissad bildföljd. Hela människans runda/bedömning av tempo återstår.
 
 ---
 

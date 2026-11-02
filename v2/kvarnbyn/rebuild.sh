@@ -61,6 +61,8 @@ step "Kontroll: kartans underlag och orientering"
 $G --audio-driver Dummy --headless --path $P/godot --script res://scripts/verify_map.gd -- --output="$ROOT/$LOG/map-check.json" > $LOG/map-check.log 2>&1
 step "Kontroll: kartknappar och paus i riktig spelvärld"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_map_world.gd -- --no-pointer-lock --output="$ROOT/$LOG/map-world-check.json" > $LOG/map-world-check.log 2>&1
+step "Kontroll: målvisning och baslarm i riktig spelvärld"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_objective.gd -- --no-pointer-lock --output="$ROOT/$LOG/objective-check.json" > $LOG/objective-check.log 2>&1
 step "Kontroll: trädplaceringar efter import"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_trees.gd -- --explore > $LOG/tree-check.log 2>&1
 step "Kontroll: kvällsljus, gatlyktor och menybyte"

@@ -15,7 +15,6 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Fas A bedömd genom Joels dom över det spelbara Fas B-provet (2026-10-30).
 - [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
-- [ ] **Målvisning i HUD**: riktning/avstånd till nästa zon och tydlig basvarning; pågående avgränsat tillägg, inga balansändringar.
 - [ ] **Omgångstempo och basförsvar:** ett nytt botprov2026-11-02 förlorade vid221,5s (40nedkämpade,0egna dödsfall); människans runda behövs. Undersök hur tydligt basanfall signaleras och hur allierade försvarar. `v2/kvarnbyn/evidence/round-2026-11-02.json`.
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **Joels bedömning av kvällsljuset** (`v2/kvarnbyn/RESULTAT-KVALL.md`): läsbarhet i strid, stämning och lyktövergångar under promenad.
@@ -101,6 +100,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-02 — **Målvisning och basvarning**: pil/avstånd till C→B→A; aktivt basanfall prioriteras. Rensningsuppmaning utan fiendepositioner.23 riktiga spel-/HUD-prov och nativebild gröna, ny Mac-app. Värld och balans oförändrade. `v2/kvarnbyn/RESULTAT-MALVISNING.md`.
 
 - [x] 2026-11-02 — **Norra åbankens första stråk**:80,4m asfalt/gångsten och550m² mark, tre egna cykelmålningar. OSM-asfalt ritades tidigare som stig. Riktig kapsel×4, fyra öppna tvärpassager,3876GLB-prover och bevarad gammal asfalt/vatten/broar/trappa. Övriga vattenanläggningen återstår. `v2/kvarnbyn/RESULTAT-NORRA-ABANKEN.md`.
 - [x] 2026-11-02 — **Spelkarta i Godot**: minikarta och stor M-karta med hus/ån, spelarriktning, zonägare och allierade; paus/återgång med M/Esc. Egen rasterkarta ur aktuella mark-/hus-/höjddata.27komponentprov+19riktiga spel-/inmatningsprov och separat exportkontroll gröna. Slutbilder från Mac-appen.

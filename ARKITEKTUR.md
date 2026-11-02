@@ -337,6 +337,21 @@ hittade att dessa saknades trots gröna editorprov; `--map-export-check` körs n
 själva release-appen i återbyggnaden. `verify_map.gd` provar kartkomponenten och
 `verify_map_world.gd` verkliga tangenthändelser, paus, zonbyte och spelavslut.
 
+## Målvisning i datorversionen (2026-11-02)
+
+`hud.gd` läser verkliga zonägare och basens `contested`/`enemies_in` från
+GameManager. En egen bas med pågående fiendeanfall prioriteras som Försvara;
+annars väljs första fiendeägda området i C→B→A-ordning. Alla egna områden med
+kvarvarande fiender ger en riktningslös rensningsuppmaning. Målvisningen läser
+aldrig fiendernas positioner. Ingen AI- eller balansändring ingår.
+
+Avstånd och pil använder X/Z-planet och spelarens yaw. Pilen är en direkt bäring,
+inte nav-grafens vägvisning. En kort skuggad textrad under zonerna håller siktytan
+öppen; aktiv basvarning är varmt gul. Promenad, inaktiv/död spelare och avslutad
+omgång döljer visningen. `verify_objective.gd` använder den riktiga importerade
+världen, GameManager och HUD; målbyten, basvillkor, kardinalriktningar och dold
+visning är en obligatorisk grind i `rebuild.sh`. Se `RESULTAT-MALVISNING.md`.
+
 ## Valbart kvällsljus (2026-11-01)
 
 `lighting.gd` bygger Eftermiddag (tidigare HDR-himmel och sol) eller Kväll (egen

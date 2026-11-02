@@ -20,6 +20,9 @@ var end_panel: PanelContainer
 var end_title: Label
 var end_stats: Label
 var font_big := 30
+var objective_label: Label
+var objective_state: Dictionary = {}
+var objective_arrow_center := Vector2.ZERO
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -28,6 +31,10 @@ func _ready() -> void:
 	reload_label = _label(18, HORIZONTAL_ALIGNMENT_RIGHT)
 	count_label = _label(17, HORIZONTAL_ALIGNMENT_RIGHT)
 	center_label = _label(26, HORIZONTAL_ALIGNMENT_CENTER)
+	objective_label = _label(18, HORIZONTAL_ALIGNMENT_LEFT)
+	objective_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	objective_label.clip_text = true
+	objective_label.visible = false
 	feed_box = VBoxContainer.new()
 	feed_box.add_theme_constant_override("separation", 2)
 	feed_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -97,6 +104,85 @@ func show_end(won: bool) -> void:
 func hide_end() -> void:
 	end_panel.visible = false
 
+func objective_info() -> Dictionary:
+	var result := {"action":"", "target_id":"", "name":"", "distance_m":0,
+		"direction":Vector2.ZERO, "urgent":false, "has_target":false, "visible":false}
+	if player == null or game == null:
+		return result
+	if not player.combat_enabled or not player.active or not player.alive or game.over or not game.started:
+		return result
+	if game.caps.is_empty():
+		return result
+	var target: Dictionary = {}
+	var base: Dictionary = game.base_cap()
+	if str(base.get("owner","enemy")) != "enemy" and bool(base.get("contested",false)) and int(base.get("enemies_in",0)) > 0:
+		target = base
+		result.action = "Försvara"
+		result.urgent = true
+	else:
+		for id in ["C","B","A"]:
+			for cap in game.caps:
+				if str(cap.get("id","")) == id and str(cap.get("owner","")) == "enemy":
+					target = cap
+					break
+			if not target.is_empty():
+				break
+		result.action = "Återta"
+	if target.is_empty():
+		# Remaining enemies affect the instruction only, never its direction.
+		if not game.enemies.is_empty():
+			result.action = "Rensa kvarvarande fiender"
+			result.visible = true
+		return result
+	var goal: Vector3 = target["pos"]
+	var offset := goal-player.global_position
+	var planar := Vector2(offset.x,offset.z)
+	result.target_id = str(target.get("id",""))
+	result.name = str(target.get("name",""))
+	result.distance_m = roundi(planar.length())
+	if planar.length_squared() > .0001:
+		var bearing := atan2(-offset.x,-offset.z)-player.rotation.y
+		result.direction = Vector2(-sin(bearing),-cos(bearing))
+	result.has_target = true
+	result.visible = true
+	return result
+
+func _update_objective(sz: Vector2) -> void:
+	objective_state = objective_info()
+	objective_label.visible = bool(objective_state.visible)
+	if not objective_label.visible:
+		return
+	var text := str(objective_state.action)
+	var arrow_space := 0.0
+	if bool(objective_state.has_target):
+		text += " %s · %s · %d m" % [objective_state.target_id, objective_state.name, objective_state.distance_m]
+		arrow_space = 30.0
+	objective_label.text = text
+	objective_label.add_theme_color_override("font_color",Color("eabb78") if objective_state.urgent else Color(.96,.96,.92))
+	var text_width := get_theme_default_font().get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,18).x
+	var row_width := minf(text_width+arrow_space,sz.x-48)
+	var left := (sz.x-row_width)/2
+	var top := 66.0 if sz.x>=1200 else 132.0
+	objective_arrow_center = Vector2(left+10,top+15)
+	objective_label.position = Vector2(left+arrow_space,top)
+	objective_label.size = Vector2(row_width-arrow_space,30)
+
+func _draw_objective_chevron() -> void:
+	if not bool(objective_state.get("visible",false)) or not bool(objective_state.get("has_target",false)):
+		return
+	var direction: Vector2 = objective_state.direction
+	var colour := Color("eabb78") if objective_state.urgent else Color(.96,.96,.92)
+	if direction.length_squared() < .0001:
+		draw_circle(objective_arrow_center,4.5,Color(0,0,0,.8))
+		draw_circle(objective_arrow_center,2.5,colour)
+		return
+	var side := Vector2(-direction.y,direction.x)
+	var tip := objective_arrow_center+direction*8
+	var back := objective_arrow_center-direction*4
+	for point in [back+side*5,back-side*5]:
+		draw_line(point,tip,Color(0,0,0,.85),5,true)
+		draw_line(point,tip,colour,2.5,true)
+
 func _process(delta: float) -> void:
 	hit_t = maxf(0.0, hit_t - delta)
 	for f in feed_lines.duplicate():
@@ -125,6 +211,7 @@ func _process(delta: float) -> void:
 	center_label.size = Vector2(sz.x, 40)
 	center_label.text = ("Du stupade — återuppstår om %d s" % ceili(game.respawn_t)) if not player.alive and not game.over else ""
 	end_panel.position = (sz - end_panel.size) / 2.0
+	_update_objective(sz)
 	queue_redraw()
 
 func _draw() -> void:
@@ -185,3 +272,5 @@ func _draw() -> void:
 		draw_string(get_theme_default_font(), r.position + Vector2(14, 18), "%s  %s" % [cap["id"], cap["name"]], HORIZONTAL_ALIGNMENT_LEFT, pw - 18, 14, Color(0.96, 0.96, 0.92))
 		draw_rect(Rect2(r.position + Vector2(14, 27), Vector2(pw - 24, 5)), Color(0, 0, 0, 0.5))
 		draw_rect(Rect2(r.position + Vector2(14, 27), Vector2((pw - 24) * float(cap["progress"]), 5)), Color(1.0, 0.35, 0.3) if cap["owner"] == "enemy" else Color(1.0, 0.7, 0.3))
+
+	_draw_objective_chevron()
