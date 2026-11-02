@@ -29,6 +29,7 @@ from roten_ground import RotenGround
 from stalliden import StallidenGround
 from stalliden_garden import StallidenGarden
 from m25_ground import M25Ground
+from north_bank_ground import NorthBankGround
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--stage-dir', type=Path, help='Write site/nav/game here, without touching active Godot assets.')
@@ -257,6 +258,28 @@ roten_reference = SurfaceReference(existing_floor, lambda x,z: raw_height(x,z)+.
 roten = RotenGround(city, cut.union(urban).union(trail), work, raw_height,
                    roten_reference.height, Y_OFFSET)
 forest_urban = urban
+# Reviewed north-bank route: old OSM surface=asphalt was rendered as generic dirt.
+# Sample existing FINISHED triangles before cutting any old path owner.
+north_bounds = box(-35,-32,72,35)
+north_floors = {}
+for kind, geom, fn, lift in [('asphalt',asphalt,base_surface_height,.03),
+                           ('paving',paving,surface_height,.13),
+                           ('walkway',walkway,surface_height,.12),
+                           ('trail',trail,raw_height,.05)]:
+    for tile, triangles in triangulate(geom.intersection(north_bounds),fn,lift).items():
+        north_floors[kind+tile] = triangles
+north_road_reference = SurfaceReference(triangulate(asphalt.intersection(north_bounds),base_surface_height,.03),
+                                      lambda x,z:base_surface_height(x,z)+.03,Y_OFFSET,0.,north_bounds.bounds)
+north_paving_reference = SurfaceReference(triangulate(paving.intersection(north_bounds),surface_height,.13),
+                                        lambda x,z:surface_height(x,z)+.13,Y_OFFSET,0.,north_bounds.bounds)
+north_end_reference = SurfaceReference(north_floors,lambda x,z:raw_height(x,z)+.05,Y_OFFSET,0.,north_bounds.bounds)
+north_spec = json.loads((DATA.parent/'reference/nordbanken/ground.json').read_text())
+north_bank = NorthBankGround(city,cut.union(asphalt).union(other_u).union(paving_all),work,
+                            raw_height,Y_OFFSET,north_road_reference.height,north_end_reference.height,north_spec,
+                            sidewalk_geom=paving.intersection(north_bounds),sidewalk_height=north_paving_reference.height)
+trail = trail.difference(north_bank.coverage)
+# Preserve old sidewalks at joins; new infill and corridor have their own lift0.
+urban = urban.union(north_bank.coverage)
 stalliden_domain = StallidenGround.original_domain(city)
 stalliden = StallidenGround(city, cut.union(urban.difference(stalliden_domain)).union(trail.difference(stalliden_domain)),
                             work, raw_height, roten_reference.height, Y_OFFSET)
@@ -364,6 +387,13 @@ for surface in m25.surfaces:
     key = 'm25_' + surface['id']
     meshes[key] = triangulate(surface['geom'], surface['height_fn'], 0., step=.20)
     m25_mesh_kinds[key] = surface['kind']
+north_bank_mesh_kinds = {}
+north_bank_collision_only = []
+for surface in north_bank.surfaces:
+    key = 'northbank_' + surface['id']
+    meshes[key] = triangulate(surface['geom'],surface['height_fn'],0.,step=.35)
+    north_bank_mesh_kinds[key] = surface['kind']
+    if surface['collision_only']:north_bank_collision_only.append(key)
 if river_prof:
     meshes['water'] = triangulate(channel, lambda x, z: water_level(x, z), 0.0)
 log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m in meshes.items()))
@@ -371,10 +401,11 @@ log('trianglar: ' + ', '.join(f'{k} {sum(len(v) for v in m.values())}' for k, m 
 # Exact terrain cuts under the new surfaces prevent 2 m grass triangles crossing
 # a pavement edge. Replacement triangles keep the original cell interpolation.
 terrain_overrides = {}
-ground_cut = authored.coverage.union(roten.coverage).union(stalliden.coverage).union(stalliden_garden.coverage).union(m25.coverage)
+ground_cut = authored.coverage.union(roten.coverage).union(stalliden.coverage).union(stalliden_garden.coverage).union(m25.coverage).union(north_bank.coverage)
 roten_margin = roten.coverage.buffer(.8)
 stalliden_margin = stalliden.coverage.union(stalliden_garden.coverage).union(m25.coverage).buffer(.8)
-affected_ground = authored.coverage.union(roten_margin).union(stalliden_margin)
+north_margin = north_bank.coverage.buffer(.8)
+affected_ground = authored.coverage.union(roten_margin).union(stalliden_margin).union(north_margin)
 roten_fixed_ground = urban.union(trail).buffer(.015)
 if not ground_cut.is_empty:
     H = np.asarray(fine['heights']).reshape(fine['nz'], fine['nx'])
@@ -388,7 +419,7 @@ if not ground_cut.is_empty:
                 tx, tz = (x - xa) / 2, (z - za) / 2
                 old = (H[k, i] * (1-tx) + H[k, i+1] * tx) * (1-tz) + (H[k+1, i] * (1-tx) + H[k+1, i+1] * tx) * tz + Y_OFFSET
                 pts = shapely.points(x,z)
-                for patch in (roten, stalliden, stalliden_garden, m25):
+                for patch in (roten, stalliden, stalliden_garden, m25, north_bank):
                     if patch.coverage.is_empty: continue
                     distance = shapely.distance(pts,patch.coverage)
                     near = (distance<.8) & ~shapely.covers(roten_fixed_ground,pts)
@@ -399,7 +430,7 @@ if not ground_cut.is_empty:
                         w = np.clip(1-distance[near]/.8,0,1); w=w*w*(3-2*w)
                         old[near] += (target-old[near])*w
                 return old
-            replacement = triangulate(cell.difference(ground_cut), cell_height, 0., step=.3 if cell.intersects(stalliden_margin) else .4 if cell.intersects(roten_margin) else 2.)
+            replacement = triangulate(cell.difference(ground_cut), cell_height, 0., step=.3 if cell.intersects(stalliden_margin) else .35 if cell.intersects(north_margin) else .4 if cell.intersects(roten_margin) else 2.)
             terrain_overrides[str(k * (fine['nx'] - 1) + i)] = [tri for bucket in replacement.values() for tri in bucket]
 
 # Close the regraded garden volume against the old ground. These are technical
@@ -523,6 +554,7 @@ for r, line, s, h in profiles:
         x = p.x + ox * side_ * (r['width_m'] / 2 + 0.9); z = p.y + oz * side_ * (r['width_m'] / 2 + 0.9)
         if not zone.contains(Point(x, z)) or buildings.buffer(0.6).contains(Point(x, z)) or channel.buffer(0.5).contains(Point(x, z)): continue
         y = float(surface_height([x], [z])[0]) + 0.13
+        y = float(north_bank.height([x],[z],[y])[0])
         lamps.append([round(x, 3), round(y - Y_OFFSET, 3), round(z, 3), round(-ox * side_, 3), round(-oz * side_, 3)])
 log(f'gatlyktor: {len(lamps)}')
 
@@ -589,6 +621,10 @@ for r in city['roads']:
         coords = list(zip(xs,zs)) + [(p[0],p[1])]
         coords.sort(key=lambda q: line.project(Point(q)))
         xs,zs = np.asarray(coords).T
+    if r['id'] == north_bank.profile_id and north_bank.active:
+        coords = list(zip(xs,zs)) + [tuple(q) for q in shapely.get_coordinates(north_bank.path_line.segmentize(.5))]
+        coords.sort(key=lambda q: line.project(Point(q)))
+        xs,zs = np.asarray(coords).T
     if r['id'] == StallidenGround.MAIN and m25.active:
         coords = list(zip(xs,zs)) + [tuple(m25.anchor)]
         coords.sort(key=lambda q: line.project(Point(q)))
@@ -601,6 +637,8 @@ for r in city['roads']:
         ys = raw_height(xs, zs)
     else:
         ys = surface_height(xs, zs)
+    if r['id'] == north_bank.profile_id:
+        ys = north_bank.profile_height(xs,zs,ys)
     ids = []
     for x, z, y in zip(xs, zs, ys):
         ids.append(node_at(x, z, y - Y_OFFSET + 0.1) if inner.contains(Point(x, z)) else None)
@@ -659,6 +697,8 @@ site = dict(meta=dict(note='Markytor för Fas A, genererade av site.py. y = rå 
             roten_mesh_kinds=roten_mesh_kinds, roten_collision_only=roten_collision_only,
             stalliden_garden=stalliden_garden.metadata(), stalliden_garden_mesh_kinds=stalliden_garden_mesh_kinds,
             m25=m25.metadata(), m25_mesh_kinds=m25_mesh_kinds,
+            north_bank=north_bank.metadata(), north_bank_mesh_kinds=north_bank_mesh_kinds,
+            north_bank_collision_only=north_bank_collision_only,
             stalliden=stalliden.metadata(), stalliden_mesh_kinds=stalliden_mesh_kinds, stalliden_collision_only=stalliden_collision_only,
             terrain_overrides=terrain_overrides, authored_supports=supports,
             planter_kerbs=planter_kerbs, authored_trees=authored_trees, shrubs=shrubs)

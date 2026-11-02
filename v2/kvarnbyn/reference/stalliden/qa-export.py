@@ -14,9 +14,9 @@ parser.add_argument('--site',type=Path,required=True)
 parser.add_argument('--baseline',type=Path)
 parser.add_argument('--site-baseline',type=Path)
 parser.add_argument('--out',type=Path,required=True)
-parser.add_argument('--area',choices=['stalliden','m25'],default='stalliden')
+parser.add_argument('--area',choices=['stalliden','m25','north_bank'],default='stalliden')
 args=parser.parse_args()
-MIN,MAX=np.array([-8,66]),np.array([132,142])
+MIN,MAX=(np.array([-35,-32]),np.array([72,35])) if args.area=='north_bank' else (np.array([-8,66]),np.array([132,142]))
 def rnd(v):return np.round(v,6).tolist() if isinstance(v,np.ndarray) else round(float(v),6)
 def transform(node):
     if 'matrix' in node:return np.array(node['matrix']).reshape(4,4,order='F')
@@ -39,12 +39,14 @@ def load_glb(path):
     result=[]
     def visit(ni,parent):
         node=doc['nodes'][ni];m=parent@transform(node);name=node.get('name','')
-        if 'mesh' in node and name.startswith(('COL_Terrain','COL_asphalt','COL_paving','COL_walkway','COL_trail','COL_Stairs','COL_Stalleliden_ground_','Terrain','Stairs','Asphalt','Paving','Walkway','Trail','Stalleliden_ground_','Stalleliden_steps','Stalleliden_risers','Bridge_deck','COL_Bridge','Water','Stalleliden_M25','COL_Stalleliden_M25')):
+        if 'mesh' in node and name.startswith(('COL_Terrain','COL_asphalt','COL_paving','COL_walkway','COL_trail','COL_Stairs','COL_Stalleliden_ground_','Terrain','Stairs','Asphalt','Paving','Walkway','Trail','Stalleliden_ground_','Stalleliden_steps','Stalleliden_risers','Bridge_deck','COL_Bridge','Water','Stalleliden_M25','COL_Stalleliden_M25','Northbank_ground_','COL_Northbank_ground_')):
             for prim in doc['meshes'][node['mesh']]['primitives']:
                 a=doc['accessors'][prim['attributes']['POSITION']]
                 lo,hi=np.array(a['min']),np.array(a['max'])
                 corners=np.array([[x,y,z,1] for x in (lo[0],hi[0]) for y in (lo[1],hi[1]) for z in (lo[2],hi[2])])@m.T
-                preserve=name.startswith(('Asphalt','COL_asphalt','Water','Bridge_deck','COL_Bridge'))
+                preserve=name.startswith(('Asphalt','COL_asphalt','Water','Bridge_deck','COL_Bridge','Stalleliden_steps','Stalleliden_risers',
+                                          'Stalleliden_ground_stalliden_w','Stalleliden_ground_stalliden_stalliden_',
+                                          'COL_Stalleliden_ground_stalliden_w','COL_Stalleliden_ground_stalliden_stalliden_'))
                 if preserve or not (np.any(corners[:,[0,2]].max(0)<MIN) or np.any(corners[:,[0,2]].min(0)>MAX)):
                     vv=acc(prim['attributes']['POSITION']).astype(float)
                     vv=np.c_[vv,np.ones(len(vv))]@m.T
@@ -78,7 +80,7 @@ class Probe:
 
 meshes,info=load_glb(args.glb.resolve());probe=Probe(meshes)
 site=json.loads(args.site.read_text());meta=site[args.area];points=[]
-for path in meta['ground_checks']['paths'][:1]:
+for path in meta['ground_checks']['paths'][:(4 if args.area=='north_bank' else 1)]:
     q=np.asarray(path['points'])
     for i,p in enumerate(q):
         a=q[max(0,i-1)];b=q[min(len(q)-1,i+1)];v=(b-a)[[0,2]];v/=max(np.linalg.norm(v),1e-9);n=np.array([-v[1],v[0]])
@@ -97,7 +99,8 @@ for x,ref,z in points:
     if abs(c['y']-ref)>.18 or delta>limit:
         errors.append(dict(xz=[x,z],expected_y=ref,collision=c,visible=v,gap_m=delta))
 plants=[]
-nt=int(site['stalliden_garden']['trees']);ns=int(site['stalliden_garden']['shrubs'])
+nt=int(site['stalliden_garden']['trees']) if args.area!='north_bank' else 0
+ns=int(site['stalliden_garden']['shrubs']) if args.area!='north_bank' else 0
 for kind,items in [('tree',site['authored_trees'][-nt:] if nt else []),('shrub',site['shrubs'][-ns:] if ns else [])]:
     for item in items:
         x,y,z=item[:3];hits=probe.hits(x,z)
@@ -105,7 +108,7 @@ for kind,items in [('tree',site['authored_trees'][-nt:] if nt else []),('shrub',
         h=min(cols,key=lambda h:abs(h['y']-y)) if cols else None
         error=abs(h['y']-y) if h else None
         plants.append(dict(kind=kind,position=[x,y,z],floor=h,error_m=error,passed=error is not None and error<.08))
-report=dict(passed=not errors and len(plants)==nt+ns and bool(plants) and all(p['passed'] for p in plants),scope='actual raw GLB transformed triangles; centre and +/-20 cm along complete '+args.area+' route',
+report=dict(passed=not errors and len(plants)==nt+ns and all(p['passed'] for p in plants),scope='actual raw GLB transformed triangles; centre and +/-20 cm along complete '+args.area+' route',
             glb=info,samples=len(points),missing_or_mismatched=len(errors),max_render_collision_gap_m=max_gap,
             max_intentional_step_gap_m=intentional_step_gap,plant_checks=plants,errors=errors)
 if args.area=='m25':

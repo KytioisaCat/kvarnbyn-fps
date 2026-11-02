@@ -21,6 +21,8 @@ step "Tolkning: data/city.json"
 (cd $P/pipeline && ../../../$PY interpret.py)
 step "Markytor: data/site.json"
 (cd $P/pipeline && ../../../$PY site.py) | tail -3
+step "Karta: eget kartunderlag ur hus, mark och höjddata"
+$PY $P/pipeline/map_image.py > $LOG/map-build.log
 step "Blender: bygger världen → blender/world_raw.glb"
 $B -b --python-exit-code 1 --python $P/blender/build_world.py > $LOG/blender-build.log 2>&1
 grep SCENE_METRICS $LOG/blender-build.log | cut -c1-200
@@ -32,6 +34,8 @@ step "Kontroll: exporterade gångtrianglar och växternas markkontakt"
 $PY $P/reference/stalliden/qa-export.py --glb $P/blender/world_raw.glb --site $P/data/site.json --out $LOG/stalliden-mesh-after.json > $LOG/stalliden-mesh-check.log
 step "Kontroll: M25:s exporterade entré och ursprungliga L-kontur"
 $PY $P/reference/stalliden/qa-export.py --area m25 --glb $P/blender/world_raw.glb --site $P/data/site.json --out $LOG/m25-mesh-check.json > $LOG/m25-mesh-check.log
+step "Kontroll: norra åbankens exporterade gångytor"
+$PY $P/reference/stalliden/qa-export.py --area north_bank --glb $P/blender/world_raw.glb --site $P/data/site.json --out $LOG/north-bank-mesh-check.json > $LOG/north-bank-mesh-check.log
 step "Blender: Ak 5 och riggade soldater"
 $B -b --python-exit-code 1 --python $P/blender/build_ak5.py > $LOG/weapon-build.log 2>&1
 $B -b --python-exit-code 1 --python $P/blender/build_soldier.py > $LOG/soldier-build.log 2>&1
@@ -51,6 +55,12 @@ step "Kontroll: hela Stalleliden upp och ned samt räcke"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --check-key=stalliden_ground_checks --report-prefix=KVARNBYN_STALLIDEN_CHECK --output="$ROOT/$LOG/stalliden-ground-check.json" > $LOG/stalliden-ground-check.log 2>&1
 step "Kontroll: M25 från vilplan till dörr och tillbaka"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --check-key=m25_ground_checks --report-prefix=KVARNBYN_M25_CHECK --output="$ROOT/$LOG/m25-ground-check.json" > $LOG/m25-ground-check.log 2>&1
+step "Kontroll: norra åbankens gång/cykelstråk i båda riktningar"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --check-key=north_bank_ground_checks --report-prefix=KVARNBYN_NORTH_BANK_CHECK --output="$ROOT/$LOG/north-bank-ground-check.json" > $LOG/north-bank-ground-check.log 2>&1
+step "Kontroll: kartans underlag och orientering"
+$G --audio-driver Dummy --headless --path $P/godot --script res://scripts/verify_map.gd -- --output="$ROOT/$LOG/map-check.json" > $LOG/map-check.log 2>&1
+step "Kontroll: kartknappar och paus i riktig spelvärld"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_map_world.gd -- --no-pointer-lock --output="$ROOT/$LOG/map-world-check.json" > $LOG/map-world-check.log 2>&1
 step "Kontroll: trädplaceringar efter import"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_trees.gd -- --explore > $LOG/tree-check.log 2>&1
 step "Kontroll: kvällsljus, gatlyktor och menybyte"
@@ -70,5 +80,7 @@ if [[ " $* " != *" --no-export "* ]]; then
   ls -la $P/desktop/Kvarnbyn.zip | awk '{printf "  Kvarnbyn.zip %.0f MB\n", $5/1e6}'
   mkdir -p $P/desktop/app
   ditto -x -k $P/desktop/Kvarnbyn.zip $P/desktop/app
+  step "Kontroll: kartan finns också i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --explore --no-pointer-lock --map-export-check > $LOG/map-export-check.log 2>&1
 fi
 step "Klart på $(( $(date +%s) - t0 )) s. Kör:  $G --path $P/godot"

@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "scope": "actual raw GLB transformed triangles; centre and +/-20 cm along complete north_bank route",
+  "glb": {
+    "path": "v2/kvarnbyn/blender/world_raw.glb",
+    "bytes": 237383780,
+    "sha256": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "corridor_geometry_sha256": "f42d73e3fb6a42b4e3f251812050bfde9f73f5362876cbc6b19c888e88410e20",
+    "node_primitives": 307,
+    "triangles": 196493
+  },
+  "samples": 3876,
+  "missing_or_mismatched": 0,
+  "max_render_collision_gap_m": 0,
+  "max_intentional_step_gap_m": 0,
+  "plant_checks": [],
+  "errors": [],
+  "baseline": {
+    "path": "v2/.tools/kvarnbyn-northbank-20261102/before/world_raw.glb",
+    "bytes": 234257748,
+    "sha256": "2580c9abced8495f796513b3a09cf91d28574e946b093729b17109e20cac776e",
+    "corridor_geometry_sha256": "8b33cc7354d30482dddb6ffcacea28f0dd15b8e43bdac87b4fa06b9803feda24",
+    "node_primitives": 279,
+    "triangles": 149115
+  },
+  "preserved": {
+    "asphalt": {
+      "before": {
+        "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
+        "triangles": 109708
+      },
+      "after": {
+        "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
+        "triangles": 109708
+      }
+    },
+    "water": {
+      "before": {
+        "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
+        "triangles": 10175
+      },
+      "after": {
+        "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
+        "triangles": 10175
+      }
+    },
+    "bridges": {
+      "before": {
+        "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
+        "triangles": 6720
+      },
+      "after": {
+        "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
+        "triangles": 6720
+      }
+    },
+    "public_stair": {
+      "before": {
+        "sha256": "5a6efd78c3e553dc53e777469b3a70ad3371b11dd265649af6b6789430afd768",
+        "triangles": 10887
+      },
+      "after": {
+        "sha256": "5a6efd78c3e553dc53e777469b3a70ad3371b11dd265649af6b6789430afd768",
+        "triangles": 10887
+      }
+    }
+  },
+  "preserved_site_data": {
+    "asphalt": true,
+    "water": true,
+    "bridges": true,
+    "public_stair": true
+  },
+  "baseline_site_sha256": "0cecefd3a9e81cf3835c607124886d7228da98cfd9581fe5e8e757a03c426899"
+}

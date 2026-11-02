@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "scope": "actual raw GLB transformed triangles; centre and +/-20 cm along complete north_bank route",
+  "glb": {
+    "path": "v2/kvarnbyn/blender/world_raw.glb",
+    "bytes": 237383780,
+    "sha256": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "corridor_geometry_sha256": "f42d73e3fb6a42b4e3f251812050bfde9f73f5362876cbc6b19c888e88410e20",
+    "node_primitives": 307,
+    "triangles": 196493
+  },
+  "samples": 3876,
+  "missing_or_mismatched": 0,
+  "max_render_collision_gap_m": 0,
+  "max_intentional_step_gap_m": 0,
+  "plant_checks": [],
+  "errors": []
+}

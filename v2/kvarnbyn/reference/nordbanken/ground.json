@@ -1,0 +1,11 @@
+{
+  "source": "OBSERVATIONER.md; reviewed Street View May2026 + OSM w34930250",
+  "status": "Observed asphalt cycle/shared route and grey paving. All exact geometry, grading, widths and lane division estimated.",
+  "bike_width_m": 2.8,
+  "separator_width_m": 0.9,
+  "road_drop_m": 0.05,
+  "endpoint_blend_m": 6.0,
+  "apron_road_buffer_m": 8.0,
+  "rail_status": "Deferred: observed rail may border intake structures absent from current channel geometry. No mid-forecourt rail invented.",
+  "walk_width_m": 1.2
+}

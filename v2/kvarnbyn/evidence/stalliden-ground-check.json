@@ -8,17 +8,17 @@
 			"ray_collider": "/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta",
 			"walk": {
 				"distance_from_start_m": 0.162559345364571,
-				"frames": 181,
+				"frames": 23,
 				"height_profile_checked": false,
 				"maximum_height_error_m": 0.0285606007820949,
 				"maximum_lateral_error_m": 0.00449969386681914,
 				"position": [
 					51.580436706543,
-					13.2754592895508,
+					13.2752075195312,
 					89.2515411376953
 				],
 				"reached": false,
-				"reason": "stuck",
+				"reason": "blocked_by_static",
 				"side_colliders": [
 					"/root/Kvarnbyn/Varlden/COL_Stalleliden_rail__Collision_only/Gångyta"
 				]
@@ -34,11 +34,11 @@
 				"distance_from_start_m": 0.718933761119843,
 				"frames": 26,
 				"height_profile_checked": false,
-				"maximum_height_error_m": 0.0157271188947758,
+				"maximum_height_error_m": 0.0157209200117192,
 				"maximum_lateral_error_m": 0.0000162963933689753,
 				"position": [
 					23.6332473754883,
-					4.45324993133545,
+					4.45324373245239,
 					86.8033065795898
 				],
 				"reached": true,
@@ -56,7 +56,7 @@
 	},
 	"errors": [],
 	"geometry_source": "res://assets/world.glb",
-	"metadata_mtime_unix": 1793597980,
+	"metadata_mtime_unix": 1793602945,
 	"metadata_source": "world_meta.stalliden_ground_checks",
 	"passed": true,
 	"paths": [
@@ -68,19 +68,19 @@
 				"count": 1390,
 				"first_failures": [],
 				"maximum_adjacent_height_change_m": 0.112314224243164,
-				"maximum_height_error_m": 0.0483503341674805,
+				"maximum_height_error_m": 0.048336386680603,
 				"passed": true
 			},
 			"walk": {
-				"distance_from_start_m": 112.413619995117,
+				"distance_from_start_m": 112.413948059082,
 				"frames": 3741,
 				"height_profile_checked": true,
 				"maximum_height_error_m": 0.0825279054610881,
-				"maximum_lateral_error_m": 0.0858902782201767,
+				"maximum_lateral_error_m": 0.0849058777093887,
 				"position": [
-					6.44419813156128,
-					0.363285720348358,
-					97.4719390869141
+					6.44381380081177,
+					0.362520128488541,
+					97.4722213745117
 				],
 				"reached": true,
 				"reason": "reached",
@@ -97,19 +97,19 @@
 				"count": 1390,
 				"first_failures": [],
 				"maximum_adjacent_height_change_m": 0.112314224243164,
-				"maximum_height_error_m": 0.0483503341674805,
+				"maximum_height_error_m": 0.048336386680603,
 				"passed": true
 			},
 			"walk": {
-				"distance_from_start_m": 112.351638793945,
+				"distance_from_start_m": 112.350700378418,
 				"frames": 3744,
 				"height_profile_checked": true,
-				"maximum_height_error_m": 0.0849534914668872,
+				"maximum_height_error_m": 0.0852957997483585,
 				"maximum_lateral_error_m": 0.0806402266025543,
 				"position": [
-					116.655014038086,
-					22.9077491760254,
-					118.134727478027
+					116.654113769531,
+					22.9087371826172,
+					118.13444519043
 				],
 				"reached": true,
 				"reason": "reached",
@@ -293,7 +293,7 @@
 		{
 			"actual": [
 				10.7510004043579,
-				0.525543689727783,
+				0.525515615940094,
 				94.8450012207031
 			],
 			"collider": "/root/Kvarnbyn/Varlden/COL_trail0_0__Collision_only/Gångyta",
@@ -302,9 +302,9 @@
 				0.49021589756012,
 				94.8450012207031
 			],
-			"height_error_m": 0.0353277921676636,
+			"height_error_m": 0.0352997183799744,
 			"id": "w461711524_node_0",
-			"normal_y": 0.989054203033447,
+			"normal_y": 0.989040851593018,
 			"passed": true
 		},
 		{
@@ -343,6 +343,6 @@
 		}
 	],
 	"scope": "actual imported collision geometry and actual player controller",
-	"wall_clock_s": 5.012289,
-	"world_asset_mtime_unix": 1793597997
+	"wall_clock_s": 4.720255,
+	"world_asset_mtime_unix": 1793602961
 }

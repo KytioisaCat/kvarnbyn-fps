@@ -109,10 +109,10 @@
 	"fixtures": 216,
 	"passed": true,
 	"world": {
-		"colliders": 517,
-		"explicit_collision_meshes": 517,
-		"meshes": 4598,
-		"triangles": 2330316,
+		"colliders": 532,
+		"explicit_collision_meshes": 532,
+		"meshes": 4614,
+		"triangles": 2355088,
 		"vegetation_mesh_instances": 3326
 	}
 }

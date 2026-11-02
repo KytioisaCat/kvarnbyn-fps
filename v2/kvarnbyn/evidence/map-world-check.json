@@ -1,0 +1,82 @@
+{
+	"checks": [
+		{
+			"passed": true,
+			"test": "actual_world_ready"
+		},
+		{
+			"passed": true,
+			"test": "actual_combat_loaded"
+		},
+		{
+			"passed": true,
+			"test": "real_map_assets_loaded"
+		},
+		{
+			"passed": true,
+			"test": "minimap_visible_during_play"
+		},
+		{
+			"passed": true,
+			"test": "physical_m_opens_full_map"
+		},
+		{
+			"passed": true,
+			"test": "map_pauses_actual_tree"
+		},
+		{
+			"passed": true,
+			"test": "map_releases_pointer"
+		},
+		{
+			"passed": true,
+			"test": "map_stops_player_and_battle"
+		},
+		{
+			"passed": true,
+			"test": "escape_closes_map_and_resumes"
+		},
+		{
+			"passed": true,
+			"test": "pointer_mode_restored"
+		},
+		{
+			"passed": true,
+			"test": "repeated_m_toggles_resume_without_extra_controls"
+		},
+		{
+			"passed": true,
+			"test": "normal_escape_pause_menu_works"
+		},
+		{
+			"passed": true,
+			"test": "m_respects_existing_pause_menu"
+		},
+		{
+			"passed": true,
+			"test": "pause_menu_resumes_normally"
+		},
+		{
+			"passed": true,
+			"test": "close_button_resumes_actual_world"
+		},
+		{
+			"passed": true,
+			"test": "actual_zone_ownership_reaches_map"
+		},
+		{
+			"passed": true,
+			"test": "no_enemy_position_radar"
+		},
+		{
+			"passed": true,
+			"test": "end_screen_hides_map"
+		},
+		{
+			"passed": true,
+			"test": "m_does_not_cover_end_screen"
+		}
+	],
+	"passed": true,
+	"scope": "actual imported world, combat, map, physical M/Esc input and pause"
+}

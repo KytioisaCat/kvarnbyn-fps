@@ -56,7 +56,7 @@
 	},
 	"errors": [],
 	"geometry_source": "res://assets/world.glb",
-	"metadata_mtime_unix": 1793597980,
+	"metadata_mtime_unix": 1793602945,
 	"metadata_source": "world_meta.m25_ground_checks",
 	"passed": true,
 	"paths": [
@@ -99,15 +99,15 @@
 				"passed": true
 			},
 			"walk": {
-				"distance_from_start_m": 7.32276773452759,
+				"distance_from_start_m": 7.3226900100708,
 				"frames": 290,
 				"height_profile_checked": true,
 				"maximum_height_error_m": 0.00288531113944401,
 				"maximum_lateral_error_m": 0.0731061398983002,
 				"position": [
-					57.845458984375,
+					57.8454818725586,
 					15.2845306396484,
-					92.7848281860352
+					92.7847518920898
 				],
 				"reached": true,
 				"reason": "reached",
@@ -169,6 +169,6 @@
 		}
 	],
 	"scope": "actual imported collision geometry and actual player controller",
-	"wall_clock_s": 0.562773,
-	"world_asset_mtime_unix": 1793597997
+	"wall_clock_s": 0.553442,
+	"world_asset_mtime_unix": 1793602961
 }

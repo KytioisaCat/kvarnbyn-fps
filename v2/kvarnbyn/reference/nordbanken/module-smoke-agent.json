@@ -1,0 +1,171 @@
+{
+  "passed": true,
+  "scope": "Analytic construction against baseline finished site triangles; no native Godot or finalGLB verification",
+  "input_sha256": {
+    "v2/kvarnbyn/data/city.json": "b4290402f4d36cb474d6dbf51f79391dba95547b0abeb6a3f57f8568755de445",
+    "v2/kvarnbyn/data/site.json": "0cecefd3a9e81cf3835c607124886d7228da98cfd9581fe5e8e757a03c426899",
+    "v2/kvarnbyn/pipeline/north_bank_ground.py": "20433ccffd8feff57737ec072dd639316c28ce9949910a7a10189e491fd60dcf"
+  },
+  "coverage_m2": 550.4623346328605,
+  "route_length_m": 80.38553696178025,
+  "surface_areas_m2": {
+    "north_bank_gc_asphalt": 214.0940725985962,
+    "north_bank_river_side_setts": 91.52034826939746,
+    "north_bank_road_separator": 68.97846580848619,
+    "north_bank_roadside_apron": 175.86944795638055
+  },
+  "points": [
+    {
+      "id": "north_bank_bike_0",
+      "position": [
+        -16.992,
+        -0.4012499928451341,
+        18.691
+      ],
+      "tolerance_m": 0.12
+    },
+    {
+      "id": "north_bank_bike_161",
+      "position": [
+        18.673238967623618,
+        0.5791987822752063,
+        0.20111948460703122
+      ],
+      "tolerance_m": 0.12
+    },
+    {
+      "id": "north_bank_bike_322",
+      "position": [
+        55.091895220233525,
+        2.916292496753698,
+        -16.802965911094653
+      ],
+      "tolerance_m": 0.12
+    },
+    {
+      "id": "north_bank_walk_0",
+      "position": [
+        -16.992,
+        -0.4012499928451341,
+        18.691
+      ],
+      "tolerance_m": 0.12
+    },
+    {
+      "id": "north_bank_walk_161",
+      "position": [
+        19.522543635279202,
+        0.5795017165179566,
+        2.0118324882325203
+      ],
+      "tolerance_m": 0.12
+    },
+    {
+      "id": "north_bank_walk_322",
+      "position": [
+        55.091895220233525,
+        2.916292496753698,
+        -16.802965911094653
+      ],
+      "tolerance_m": 0.12
+    }
+  ],
+  "paths": [
+    {
+      "id": "north_bank_bike_forward",
+      "samples": 323,
+      "max_longitudinal_slope": 0.17084834140133556
+    },
+    {
+      "id": "north_bank_bike_return",
+      "samples": 323,
+      "max_longitudinal_slope": 0.17084834140133556
+    },
+    {
+      "id": "north_bank_walk_forward",
+      "samples": 323,
+      "max_longitudinal_slope": 0.2050685615180683
+    },
+    {
+      "id": "north_bank_walk_return",
+      "samples": 323,
+      "max_longitudinal_slope": 0.2050685615180683
+    }
+  ],
+  "open_probes": [
+    {
+      "id": "north_bank_cross_lanes_open",
+      "blocked": false,
+      "height_m": 0.8,
+      "from": [
+        11.204388563395437,
+        0.3493180339697517,
+        3.2072996464732237
+      ],
+      "to": [
+        12.244786781273493,
+        0.3485118298793388,
+        5.4254230759144635
+      ]
+    },
+    {
+      "id": "north_bank_cycle_strip_open",
+      "blocked": false,
+      "height_m": 0.8,
+      "from": [
+        18.221204380418296,
+        0.5609950352029038,
+        0.41314374471149895
+      ],
+      "to": [
+        19.12527355482894,
+        0.5968275597995927,
+        -0.010904775497436958
+      ]
+    },
+    {
+      "id": "north_bank_old_sidewalk_to_cycle_0.3",
+      "blocked": false,
+      "height_m": 0.8,
+      "from": [
+        2.118881600176638,
+        -0.009235858893728022,
+        2.861790185320874
+      ],
+      "to": [
+        4.223520447737544,
+        0.06384513142474901,
+        7.243096534403848
+      ]
+    },
+    {
+      "id": "north_bank_old_sidewalk_to_cycle_0.7",
+      "blocked": false,
+      "height_m": 0.8,
+      "from": [
+        31.572823745893338,
+        1.2078529008124335,
+        -10.525204910776836
+      ],
+      "to": [
+        33.23639401668203,
+        1.3674457385225978,
+        -6.609724185392506
+      ]
+    }
+  ],
+  "old_sidewalk_seam": {
+    "samples": 438,
+    "max_mismatch_m": 0.037987089554984976,
+    "max_mismatch_xz": [
+      -11.8645,
+      10.0735
+    ]
+  },
+  "limitations": [
+    "all dimensions/position/grades estimated",
+    "source OSM shared route, viewed2026 separated strip details finer than OSM",
+    "no rail or intake basin reconstruction",
+    "final GLB and actual-controller checks required"
+  ]
+}

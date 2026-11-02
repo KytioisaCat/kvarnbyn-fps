@@ -8,6 +8,7 @@ const WaterShader = preload("res://shaders/water.gdshader")
 const GameManager = preload("res://scripts/game.gd")
 const HudController = preload("res://scripts/hud.gd")
 const Fx = preload("res://scripts/fx.gd")
+const TacticalMap = preload("res://scripts/tactical_map.gd")
 const WORLD_PATH := "res://assets/world.glb"
 const META_PATH := "res://assets/world_meta.json"
 const BAKED_PATH := "res://assets/baked_world.tscn"
@@ -37,6 +38,9 @@ var scene_sun: DirectionalLight3D
 var street_lights: Node3D
 var game: Node
 var hud: Control
+var tactical_map: Control
+var map_previous_paused := false
+var map_previous_mouse_mode := Input.MOUSE_MODE_VISIBLE
 var fx: Node3D
 var bot_mode := false
 var bot_path := PackedVector3Array()
@@ -52,7 +56,7 @@ func _ready() -> void:
 	options = read_options()
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			break
@@ -131,6 +135,13 @@ func _ready() -> void:
 	player.process_mode = Node.PROCESS_MODE_PAUSABLE
 	if not options.has("explore"):
 		setup_combat()
+	tactical_map = TacticalMap.new()
+	tactical_map.name = "Karta"
+	canvas_layer.add_child(tactical_map)
+	if not tactical_map.setup():
+		push_warning("Kartans underlag saknas; kör återbyggnaden.")
+	tactical_map.close_requested.connect(func(): set_map_open(false))
+	tactical_map.visible = false
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	reset_player()
@@ -145,12 +156,16 @@ func _ready() -> void:
 	world_ready = true
 	install_bridge()
 	print("KVARNBYN_READY ", JSON.stringify(snapshot()))
-	if options.has("autostart"):
+	if options.has("autostart") or options.has("map"):
 		begin_walk()
+	if options.has("map"):
+		set_map_open(true)
 	if options.has("hide-ui"):
 		canvas_layer.visible = false
 	if options.has("free-flight"):
 		player.free_flight = true
+	if options.has("map-export-check"):
+		check_exported_map()
 	if options.has("capture"):
 		capture_after_frames(str(options["capture"]), int(options.get("frames", "45")))
 	if options.has("probe"):
@@ -365,6 +380,7 @@ func setup_combat() -> void:
 	hud.restart_requested.connect(_on_restart)
 
 func _on_game_ended(won: bool) -> void:
+	set_map_open(false)
 	hud.show_end(won)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	player.active = false
@@ -375,6 +391,7 @@ func _on_restart() -> void:
 	begin_walk()
 
 func begin_walk() -> void:
+	set_map_open(false)
 	if world_instance == null:
 		return
 	if game != null and game.over:
@@ -391,12 +408,50 @@ func begin_walk() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func pause_walk() -> void:
+	set_map_open(false)
 	if game != null and game.started:
 		get_tree().paused = true
 	player.active = false
 	player.reset_touches()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	overlay.set_open(true)
+
+func check_exported_map() -> void:
+	AudioServer.set_bus_mute(0,true)
+	begin_walk()
+	set_map_open(true)
+	await get_tree().process_frame
+	var result := {"passed":tactical_map != null and tactical_map.map_loaded and tactical_map.expanded and get_tree().paused,
+		"map":tactical_map.snapshot() if tactical_map != null else {},"release":not OS.has_feature("editor")}
+	print("KVARNBYN_MAP_EXPORT_CHECK ",JSON.stringify(result))
+	get_tree().paused = false
+	get_tree().quit(0 if result.passed else 3)
+
+func set_map_open(value: bool) -> void:
+	if tactical_map == null or not tactical_map.map_loaded:
+		return
+	if value == tactical_map.expanded:
+		return
+	if value:
+		if not world_ready or not started or overlay.opening or (game != null and game.over):
+			return
+		map_previous_paused = get_tree().paused
+		map_previous_mouse_mode = Input.mouse_mode
+		tactical_map.set_expanded(true)
+		update_tactical_map()
+		get_tree().paused = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		tactical_map.set_expanded(false)
+		get_tree().paused = map_previous_paused
+		Input.mouse_mode = map_previous_mouse_mode if not get_tree().paused and player.active else Input.MOUSE_MODE_VISIBLE
+
+func update_tactical_map() -> void:
+	if tactical_map == null or player == null:
+		return
+	tactical_map.visible = started and not overlay.opening and (game == null or not game.over)
+	if tactical_map.visible:
+		tactical_map.set_state(player.global_position,player.rotation.y,game.caps if game != null else [],game.allies if game != null else [])
 
 func toggle_fullscreen() -> void:
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
@@ -436,12 +491,23 @@ func set_quality(index: int) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
+		if event.physical_keycode == KEY_M:
+			set_map_open(not tactical_map.expanded if tactical_map != null else false)
+			get_viewport().set_input_as_handled()
+			return
 		if event.physical_keycode == KEY_ESCAPE:
+			if tactical_map != null and tactical_map.expanded:
+				set_map_open(false)
+				get_viewport().set_input_as_handled()
+				return
 			if player.active:
 				pause_walk()
 			else:
 				begin_walk()
 			get_viewport().set_input_as_handled()
+		elif tactical_map != null and tactical_map.expanded:
+			get_viewport().set_input_as_handled()
+			return
 		elif event.physical_keycode == KEY_R and started and game == null:
 			reset_player()
 		elif event.physical_keycode == KEY_F11:
@@ -458,13 +524,14 @@ func _process(delta: float) -> void:
 		return
 	if player.position.y < spawn_position.y - 80:
 		reset_player()
+	update_tactical_map()
 	bridge_timer += delta
 	if OS.has_feature("web") and bridge_timer > 0.5:
 		bridge_timer = 0.0
 		publish_state()
 
 func snapshot() -> Dictionary:
-	return {"ready": world_ready, "title": metadata.get("title", "Kvarnbyn"),
+	return {"map":tactical_map.snapshot() if tactical_map != null else {},"ready": world_ready, "title": metadata.get("title", "Kvarnbyn"),
 		"load_ms": load_msec, "baked_lightmaps": used_baked_world, "prepared_bake_scene": prepared_bake_scene,
 		"lighting": lighting_mode, "street_lights": street_lights.snapshot() if street_lights != null else {},
 		"touch": touch_mode, "world": world_stats, "player": player.snapshot() if player != null else {},

@@ -21,7 +21,7 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] **Joels bedömning av M25** (`v2/kvarnbyn/RESULTAT-M25.md`): husproportioner, stengrund och entrégång. Mått/markskärning uppskattade. Det lilla separata gavelrampmotivet behöver säkrare placering.
 - [ ] **Joels bedömning av Stalleliden/M30** (`v2/kvarnbyn/RESULTAT-STALLELIDEN.md`): igenkänning och gångstråk; grannhusen är fortfarande delvis generiska.
 - [ ] **Joels bedömning av Roten M 29** (`v2/kvarnbyn/RESULTAT-ROTEN.md`): igenkänning, husproportioner och markmiljö. Övriga grannhus är fortfarande generiska.
-- [ ] **Nordbanken**: kontrollera uppskattad stenläggningskontur och anslutande gatuprofiler i ett separat platsprov; inte inkluderad i förgårdspasset.
+- [ ] **Norra åbanken (tidigare ”Nordbanken”)**: första80m-stråket med asfalt/gångsten/förplats är byggt och provat. Nästa del: vattenintagets/bassängernas konturer, räckeslinjer, lilla tegelbyggnaden och möbler/planteringar; kräver mer platsunderlag. `v2/kvarnbyn/RESULTAT-NORRA-ABANKEN.md`.
 - [ ] Framtid: pacing (Gamla torget som lugn bas med NPC:er, anfall mot Mölndals centrum via berget/ån), världen ut till Mölndals centrum och Götaforsliden
 - [ ] **Fas C** — kvällsljus, husrundor (Street View som referens), staket/häckar/trädgårdar, järnväg
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
@@ -41,8 +41,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 3. **Mark, grönska och fors:** platsriktiga terrasser/murar/staket, träd/buskar/stigar,
    broanslutningar och vidare vatten-/forsarbete. Förbättra uppskattade detaljer efter
    observationer. Prova punktmoln på 5–10 hus/träd separat före större automatik.
-4. **Orientering och spelomgång:** minimap/fullskärmskarta i Godot, tydligare zonläge;
-   hela rundor för tempo, svårighet, allierades framryckning och återstående AI-fel.
+4. **Orientering och spelomgång:** minikarta/fullskärmskarta i Godot är byggda.
+   Nästa kartsteg: frontlinje/anfallsriktningar. Hela rundor för tempo, svårighet, allierades framryckning och återstående AI-fel.
 5. **Fortsatt stämning:** varma fönster, forsens dimma och bättre ljudlandskap;
    befintligt dag/kvällsljus finjusteras utifrån spelbedömning. Agenttester tysta.
 6. **Senare expansion:** Mölndals centrum/större värld och idéerna om lugnt torg,
@@ -99,6 +99,9 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-02 — **Norra åbankens första stråk**:80,4m asfalt/gångsten och550m² mark, tre egna cykelmålningar. OSM-asfalt ritades tidigare som stig. Riktig kapsel×4, fyra öppna tvärpassager,3876GLB-prover och bevarad gammal asfalt/vatten/broar/trappa. Övriga vattenanläggningen återstår. `v2/kvarnbyn/RESULTAT-NORRA-ABANKEN.md`.
+- [x] 2026-11-02 — **Spelkarta i Godot**: minikarta och stor M-karta med hus/ån, spelarriktning, zonägare och allierade; paus/återgång med M/Esc. Egen rasterkarta ur aktuella mark-/hus-/höjddata.27komponentprov+19riktiga spel-/inmatningsprov och separat exportkontroll gröna. Slutbilder från Mac-appen.
 
 - [x] 2026-11-02 — **M25:s eget hus och entré**: ursprunglig L-kontur, en våning med vind, gavelrutor/ventil, takkupa, delade plåt-/tegeltak, lokal grå stengrund och gång från befintligt vilplan. Riktig kapsel fram/tillbaka, dörrstopp, 141 GLB-prover och övriga spelprov gröna. Nya startvyer och Mac-app; M24 fortsatt obekräftat. `v2/kvarnbyn/RESULTAT-M25.md`.
 

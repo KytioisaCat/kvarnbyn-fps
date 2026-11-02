@@ -1,0 +1,153 @@
+{
+  "passed": true,
+  "scope": "Actual transformed GLB floors within4mm on each side of apron interface; max8cm tolerance; not native capsule proof",
+  "glb_sha256": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+  "checks": [
+    {
+      "seam": "old_sidewalk",
+      "samples": 327,
+      "passed": true,
+      "missing_or_over8cm": 0,
+      "max_gap_m": 0.005842000000000014,
+      "worst": [
+        {
+          "apron_xz": [
+            -11.898098607741453,
+            10.09651918237991
+          ],
+          "other_xz": [
+            -11.902009294561399,
+            10.089295790309277
+          ],
+          "apron_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_roadside_apron-1_0__C",
+            "y": -0.248927,
+            "slope": 0.018451
+          },
+          "other_floor": {
+            "name": "COL_paving-1_0__Collision_only",
+            "y": -0.243085,
+            "slope": 1.886576
+          },
+          "gap_m": 0.005842000000000014
+        },
+        {
+          "apron_xz": [
+            16.511689830466352,
+            -3.846374468789032
+          ],
+          "other_xz": [
+            16.508193680846922,
+            -3.853898092881649
+          ],
+          "apron_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_roadside_apron0_-1__C",
+            "y": 0.356296,
+            "slope": 0.079902
+          },
+          "other_floor": {
+            "name": "COL_paving0_-1__Collision_only",
+            "y": 0.359358,
+            "slope": 1.040426
+          },
+          "gap_m": 0.003062000000000009
+        },
+        {
+          "apron_xz": [
+            16.10168153916271,
+            -3.6563706159897063
+          ],
+          "other_xz": [
+            16.09818910144317,
+            -3.6639079753772883
+          ],
+          "apron_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_roadside_apron0_-1__C",
+            "y": 0.340133,
+            "slope": 0.066011
+          },
+          "other_floor": {
+            "name": "COL_paving0_-1__Collision_only",
+            "y": 0.343116,
+            "slope": 1.040426
+          },
+          "gap_m": 0.002982999999999958
+        }
+      ],
+      "first_failures": []
+    },
+    {
+      "seam": "internal_lanes",
+      "samples": 510,
+      "passed": true,
+      "missing_or_over8cm": 0,
+      "max_gap_m": 0.014568999999999832,
+      "worst": [
+        {
+          "apron_xz": [
+            45.146375446135785,
+            -14.706766357305591
+          ],
+          "other_xz": [
+            45.153999999999996,
+            -14.701449497840276
+          ],
+          "apron_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_roadside_apron0_-1__C",
+            "y": 2.237625,
+            "slope": 0.093821
+          },
+          "other_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_road_separator0_-1__C",
+            "y": 2.252194,
+            "slope": 0.048572
+          },
+          "gap_m": 0.014568999999999832
+        },
+        {
+          "apron_xz": [
+            45.14834379414391,
+            -14.707641178642538
+          ],
+          "other_xz": [
+            45.153999999999996,
+            -14.701449497840276
+          ],
+          "apron_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_roadside_apron0_-1__C",
+            "y": 2.237721,
+            "slope": 0.093587
+          },
+          "other_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_road_separator0_-1__C",
+            "y": 2.252194,
+            "slope": 0.048572
+          },
+          "gap_m": 0.014472999999999736
+        },
+        {
+          "apron_xz": [
+            44.44829614618655,
+            -14.381618940592116
+          ],
+          "other_xz": [
+            44.451703869912315,
+            -14.37438102521472
+          ],
+          "apron_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_roadside_apron0_-1__C",
+            "y": 2.196676,
+            "slope": 0.102611
+          },
+          "other_floor": {
+            "name": "COL_Northbank_ground_northbank_north_bank_road_separator0_-1__C",
+            "y": 2.211083,
+            "slope": 0.048572
+          },
+          "gap_m": 0.014406999999999837
+        }
+      ],
+      "first_failures": []
+    }
+  ]
+}

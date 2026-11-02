@@ -31,6 +31,23 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-02 08:06 — ChatGPT Codex — norra åbanken och spelkartan
+
+**Status:** klart — första åbanksstråket och båda kartlägena i ny lokal Mac-app; fortsatt referensarbete M24/M31 pågår separat.
+**Gjort:**
+- Joel vill att vi fortsätter autonomt tills agentbudgeten tar slut och håller dagboken aktuell. Två delbyggen från planen genomförda: första norra åbanksstråket och Godot-kartan. `RESULTAT-NORRA-ABANKEN.md`, README/TODO/ARKITEKTUR och `evidence/delivery-north-bank-map-2026-11-02.json` samlar resultatet.
+- Faktisk Maps-granskning maj2026 från45/8Kvarnbygatan; `reference/nordbanken/OBSERVATIONER.md`. ”Nordbanken” betyder norra åbanken, inte bankkontor. OSMw34930250 säger asfalt men alla path ritades som stig. Nytt avgränsat stråk80,4m/550,5m², uppskattat2,8m asfalt+1,2m gångsten+0,9m separator och anslutande stenförplats. `north_bank_ground.py`, site/build_world/nav. Tre egna cykel-/pilmarkeringar i `north_bank_details.py`, exakt1cm över exporterad SITE-asfalt. Inga nya nedladdningar.
+- Gamla färdiga asfalt-/gångtrianglar förankrar höjderna. Dedikerad faktisk trottoarreferens ersatte antaget5,08m tväravstånd som gav en14cm knivtriangel. En mikroskopisk ändfog missades av en faktisk golvray trots att kapseln gick hela vägen: nu4cm synlig+COL överlappning2mm över golvet, inte flyttad testpunkt. Gammal körbana/vatten/broar/Torget/M29/M25/Stalleliden bevaras. Intagsbassänger, verklig räckeslinje, liten tegelbyggnad och möbler/grönska återstår; ingen falsk mitt-på-förplatsen-railing.
+- Slutlig faktisk fysik:6punkter,4hela80m-banor (asfalt/gångsten åt båda håll),4öppna tvär-/längspassager gröna.644golvprov/bana, kapselprofilfel högst3,3cm. GLB3876prover utan hål/glapp.327trottoarfogar≤5,84mm;510interna fogar≤14,57mm. Gamla asfalts-, vatten-, bro- och huvudtrappsmeshar har exakt samma signaturer som M25-baslinjen. Alla gamla meshslag utom ersatta trail är identiska; fin terräng ändras lokalt i den vanliga urbanmarginalen.
+- `map_image.py` skapar egen2400×1867-karta (2,72MB PNG) ur381hus,16broar, aktuella markmeshar och LiDAR/klasskarta. `tactical_map.gd`: minikarta norr uppåt och stor M-karta, spelarens riktning, zonägare och allierade; inga osedda fiendepositioner. `world.gd` äger M/Esc, riktig paus, återställning av musläge och döljer karta vid pausmeny/slutskärm.
+- Kartprov27komponentkontroller+19kontroller med verklig spelvärld och tangenthändelser gröna. Nativebilder avslöjade en exportmiss som editorproven inte kunde se: PNG måste läggas i export_files och map.json i include_filter. Rättat i export_presets.cfg. Ny `--map-export-check` körs nu i själva exporterade appen och ingår i rebuild; release=true/loaded=true/expanded=true/passed=true.
+- Slutlig full `rebuild.sh` inkl ny releasegrind grön på115s; tidigare M29/M25/Stalleliden,180globala gångpunkter, kontroller, soldater/vapen/träd/kvällsljus gröna. `npm run build` grönt. Native slutbilder: tre åbanksvyer, fullkarta och minikarta. FPS är ögonblicksvärden, inget nytt prestandariktmärke. Frontend-design-riktlinjer användes för den egna kartografin; inga webbkartpixlar.
+**Läge nu:** senaste app `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app`. M öppnar stor karta; M/Esc/stäng återgår. Nya vyer Norra åbanken. Slutlig rawGLB SHA918f97f94efd… i aktiva blender/world_raw.glb; mapPNG lokal/gitignorerad. Baslinje i `v2/.tools/kvarnbyn-northbank-20261102/before`; after/world_raw.glb är FÖRSTA stagen, INTE leveransens slut-GLB. Slutbilder after/final-*.png och `v2/.tools/kvarnbyn-map-20261102/final-map-*.png`; alla finns komprimerade i evidence. Analytiska agentrapporter är frysta vid sina egna inputhashar, slut-QA i evidence. Spårad houses.pyc återställd; .claude/playpen orörd.
+**Nästa:** 1. Agent `nordbanken_data` gör nu en separat begränsad referensrunda för M24/M31 (primära foton/arkiv, inga personkataloger), endast `reference/stalleliden-hus/REFERENSRUNDA-2026-11-02.md`. Root granskar resultat innan nya hus ändras. 2. Vattenintag/räcken vid åbanken kräver bättre geometri-/fotostöd. 3. Hela spelomgångar/balans och framtida frontlinje på kartan återstår.
+**Varningar:** större delen av kvarnbyns hus/mark är fortfarande uppskattad. Inga nya påstått verifierade murar/räcken i osäkra delar. Alla agentprov Dummy-ljud + master mute. Release ignorerar --script; använd inbyggda capture/map-export-check-flaggor.
+
+---
+
 ## 2026-11-02 — ChatGPT Codex — återstående byggplan
 
 **Status:** klart — planöversikt, inga ändringar i spelvärlden.

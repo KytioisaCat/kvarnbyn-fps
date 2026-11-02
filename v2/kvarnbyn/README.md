@@ -12,7 +12,10 @@ open "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app"
 ```
 
 WASD · mus · vänsterklick skjut · högerklick sikta · R ladda om · Shift spring · C huka ·
-mellanslag hoppa/raketdubbelhopp · F flygtest · Esc paus.
+mellanslag hoppa/raketdubbelhopp · F flygtest · M karta · Esc paus.
+
+Minikartan följer dig med norr uppåt. Den stora kartan pausar spelet och visar
+husen, ån, din riktning, zonerna och allierade. M eller Esc återgår till spelet.
 
 ## Bygg om
 
@@ -32,6 +35,7 @@ från det befintliga torget-provet.
 
 ## Resultat och nästa steg
 
+- [Norra åbanken och spelkartan](RESULTAT-NORRA-ABANKEN.md)
 - [Senaste husprovet: M25 och entrégången](RESULTAT-M25.md)
 - [Kvällsljus och gatlyktor](RESULTAT-KVALL.md) — välj Eftermiddag/Kväll i start- eller pausmenyn
 - [Stalleliden och M30/M31](RESULTAT-STALLELIDEN.md)

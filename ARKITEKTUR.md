@@ -301,6 +301,42 @@ fram/tillbaka, dörrstopp och fri passage) före export. M24 och M31:s skymda fa
 är fortsatt obekräftade; personkataloger och en felriktad Maps-vy är inte fasadbevis.
 Referensfoton används bara för observationer och följer inte med spelet.
 
+## Norra åbanken och spelkarta (2026-11-02)
+
+”Nordbanken” i äldre backlogg avser åns norra bank vid Kvarnbygatan, inte bankkontor.
+`reference/nordbanken/OBSERVATIONER.md` bygger på två faktiskt granskade Maps-vyer
+från maj2026. OSMw34930250 säger `surface=asphalt` men `path` ritades generellt som
+stig. `north_bank_ground.py` ger ett avgränsat80m-stråk:2,8m cykel-/gångasfalt,
+1,2m gångsten,0,9m stenremsa och anslutande förplats. Alla mått/kurvor är uppskattade;
+hela gamla1658m²-skissen aktiveras inte. Vattenintagets bassänger och exakta räckes-
+linjer är delvis otillräckligt modellerade och lämnas till separat platsprov.
+
+Nya ytor har färdig raw-höjd/lift0. Referensen för Kvarnbygatans längsprofil samplas
+bara på dess riktiga mittlinje; ändarna möter gamla färdiga gångtrianglar över6m.
+Förplatsen möter den faktiska gamla trottoargeometrin och dess golvtrianglar. Ett
+antaget konstant5,08m tväravstånd föll utanför trottoaren i västkorsningen och gav en
+14cm knivtriangel; dedikerad trottoarreferens löste den. Separat importerade meshar
+kan få en mikroskopisk ändfog efter avrundning. En4cm bred synlig/kolliderande
+överlappning2mm över golvet stänger fogen utan att flytta testpunkten. Huvudgatans
+asfalt, vatten, broar, gamla torg-/Roten-/Stalleliden-ytor bevaras. Vanlig lokal
+urban-konformering ändrar också en smal terrängmarginal. `north_bank_details.py`
+lägger egna cykel-/pilmarkeringar1cm över faktisk ny asfalt, aldrig över rå DTM.
+
+`map_image.py` körs efter site.py och skapar en2400×1867-karta ur faktiska gångytor,
+byggda huskonturer, klasskarta och LiDAR-skuggning. Ingen extern kartbild används.
+`map.json` anger samma900×700m koordinatgräns som världen och inputhashar; genererad
+PNG är lokal och gitignorerad. `tactical_map.gd` ritar en statisk textur och dynamiska
+markörer: spelare/riktning, zonägare och allierade. Norr är uppåt, X öster/Z söder;
+riktningen följer `(-sin(yaw),-cos(yaw))`. Ingen information om osedda fiender används.
+
+`world.gd` äger M/Esc och pausen. Stor karta pausar den riktiga spelvärlden och
+återställer tidigare musläge vid stängning. M tar inte över pausmeny eller slutskärm.
+Liten karta döljs bakom dessa. Export använder en uttrycklig resurslista: kart-PNG
+måste finnas i `export_files` och kart-JSON i `include_filter`. Första nativeprovet
+hittade att dessa saknades trots gröna editorprov; `--map-export-check` körs nu i
+själva release-appen i återbyggnaden. `verify_map.gd` provar kartkomponenten och
+`verify_map_world.gd` verkliga tangenthändelser, paus, zonbyte och spelavslut.
+
 ## Valbart kvällsljus (2026-11-01)
 
 `lighting.gd` bygger Eftermiddag (tidigare HDR-himmel och sol) eller Kväll (egen

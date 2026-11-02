@@ -1,0 +1,321 @@
+{
+	"blockers": [
+		{
+			"expected_blocked": false,
+			"id": "north_bank_cross_lanes_open",
+			"passed": true,
+			"ray_blocked": false,
+			"ray_collider": "",
+			"walk": {
+				"distance_from_start_m": 2.15161323547363,
+				"frames": 69,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.0015938013345016,
+				"maximum_lateral_error_m": 0.00178950908593833,
+				"position": [
+					12.116888999939,
+					0.348603993654251,
+					5.15583324432373
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"expected_blocked": false,
+			"id": "north_bank_cycle_strip_open",
+			"passed": true,
+			"ray_blocked": false,
+			"ray_collider": "",
+			"walk": {
+				"distance_from_start_m": 0.717679381370544,
+				"frames": 26,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.00191418552169476,
+				"maximum_lateral_error_m": 0.0000238224092754535,
+				"position": [
+					18.8709621429443,
+					0.587555050849915,
+					0.108383119106293
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"expected_blocked": false,
+			"id": "north_bank_old_sidewalk_to_cycle_0.3",
+			"passed": true,
+			"ray_blocked": false,
+			"ray_collider": "",
+			"walk": {
+				"distance_from_start_m": 4.58448123931885,
+				"frames": 142,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.0462732063188767,
+				"maximum_lateral_error_m": 0.00138586340472102,
+				"position": [
+					4.10312461853027,
+					0.0650627538561821,
+					6.99461603164673
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"expected_blocked": false,
+			"id": "north_bank_old_sidewalk_to_cycle_0.7",
+			"passed": true,
+			"ray_blocked": false,
+			"ray_collider": "",
+			"walk": {
+				"distance_from_start_m": 3.98512578010559,
+				"frames": 124,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.0893061014003822,
+				"maximum_lateral_error_m": 0.00292623834684491,
+				"position": [
+					33.1291961669922,
+					1.36811053752899,
+					-6.85656261444092
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		}
+	],
+	"check_key": "north_bank_ground_checks",
+	"coverage": {
+		"closed_blocker_probes": 0,
+		"ground_points": 6,
+		"open_passage_probes": 4,
+		"walk_paths": 4
+	},
+	"errors": [],
+	"geometry_source": "res://assets/world.glb",
+	"metadata_mtime_unix": 1793602945,
+	"metadata_source": "world_meta.north_bank_ground_checks",
+	"passed": true,
+	"paths": [
+		{
+			"id": "north_bank_bike_forward",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 644,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.0344716906547546,
+				"maximum_height_error_m": 0.0070074200630188,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 80.0574111938477,
+				"frames": 2294,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.00650471668794339,
+				"maximum_lateral_error_m": 0.00248172506690025,
+				"position": [
+					54.8278656005859,
+					2.88869190216064,
+					-16.679817199707
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "north_bank_bike_return",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 644,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.0344716906547546,
+				"maximum_height_error_m": 0.0070074200630188,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 80.0499267578125,
+				"frames": 2292,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.00545296962733623,
+				"maximum_lateral_error_m": 0.00245097349397838,
+				"position": [
+					-16.734354019165,
+					-0.400752991437912,
+					18.5379657745361
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "north_bank_walk_forward",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 644,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.036237895488739,
+				"maximum_height_error_m": 0.0291904211044312,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 80.0837173461914,
+				"frames": 2311,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.0329744541314684,
+				"maximum_lateral_error_m": 0.00935897417366505,
+				"position": [
+					54.8593330383301,
+					2.89053249359131,
+					-16.6754817962646
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "north_bank_walk_return",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 644,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.036237895488739,
+				"maximum_height_error_m": 0.0291904211044312,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 80.0759429931641,
+				"frames": 2309,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.0320782708975946,
+				"maximum_lateral_error_m": 0.00977612845599651,
+				"position": [
+					-16.749095916748,
+					-0.400257676839828,
+					18.5669193267822
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		}
+	],
+	"points": [
+		{
+			"actual": [
+				-16.992000579834,
+				-0.39906632900238,
+				18.6909999847412
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Northbank_ground_northbank_north_bank_cap_seam_0-1_0__Colli/Gångyta",
+			"expected": [
+				-16.992000579834,
+				-0.401250004768372,
+				18.6909999847412
+			],
+			"height_error_m": 0.00218367576599121,
+			"id": "north_bank_bike_0",
+			"normal_y": 0.999596357345581,
+			"passed": true
+		},
+		{
+			"actual": [
+				18.6732387542725,
+				0.579006433486938,
+				0.201119482517242
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Northbank_ground_northbank_north_bank_gc_asphalt0_0__Collis/Gångyta",
+			"expected": [
+				18.6732387542725,
+				0.579198777675629,
+				0.201119482517242
+			],
+			"height_error_m": 0.000192344188690186,
+			"id": "north_bank_bike_161",
+			"normal_y": 0.999404668807983,
+			"passed": true
+		},
+		{
+			"actual": [
+				55.0918960571289,
+				2.91814374923706,
+				-16.8029651641846
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Northbank_ground_northbank_north_bank_cap_seam_800_-1__Coll/Gångyta",
+			"expected": [
+				55.0918960571289,
+				2.91629242897034,
+				-16.8029651641846
+			],
+			"height_error_m": 0.00185132026672363,
+			"id": "north_bank_bike_322",
+			"normal_y": 0.9925616979599,
+			"passed": true
+		},
+		{
+			"actual": [
+				-16.992000579834,
+				-0.39906632900238,
+				18.6909999847412
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Northbank_ground_northbank_north_bank_cap_seam_0-1_0__Colli/Gångyta",
+			"expected": [
+				-16.992000579834,
+				-0.401250004768372,
+				18.6909999847412
+			],
+			"height_error_m": 0.00218367576599121,
+			"id": "north_bank_walk_0",
+			"normal_y": 0.999596357345581,
+			"passed": true
+		},
+		{
+			"actual": [
+				19.5225429534912,
+				0.579607427120209,
+				2.01183247566223
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Northbank_ground_northbank_north_bank_river_side_setts0_0__/Gångyta",
+			"expected": [
+				19.5225429534912,
+				0.579501688480377,
+				2.01183247566223
+			],
+			"height_error_m": 0.000105738639831543,
+			"id": "north_bank_walk_161",
+			"normal_y": 0.999311625957489,
+			"passed": true
+		},
+		{
+			"actual": [
+				55.0918960571289,
+				2.91814374923706,
+				-16.8029651641846
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_Northbank_ground_northbank_north_bank_cap_seam_800_-1__Coll/Gångyta",
+			"expected": [
+				55.0918960571289,
+				2.91629242897034,
+				-16.8029651641846
+			],
+			"height_error_m": 0.00185132026672363,
+			"id": "north_bank_walk_322",
+			"normal_y": 0.9925616979599,
+			"passed": true
+		}
+	],
+	"scope": "actual imported collision geometry and actual player controller",
+	"wall_clock_s": 5.467582,
+	"world_asset_mtime_unix": 1793602961
+}

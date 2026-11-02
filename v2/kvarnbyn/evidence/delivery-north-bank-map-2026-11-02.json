@@ -1,0 +1,640 @@
+{
+  "date": "2026-11-02",
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "build_seconds": 115,
+  "build_log": "v2/.tools/kvarnbyn-northbank-20261102/after/rebuild.log",
+  "audio": "All agent engine runs --audio-driver Dummy plus master mute in automatic checks/captures.",
+  "baseline_commit": "f05f153",
+  "sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "v2/kvarnbyn/godot/assets/world.glb": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "v2/kvarnbyn/godot/assets/world_meta.json": "3bb7865a1fe457785d8c695c899980dd2bf95602dae8b064d26e9ad9b31f931f",
+    "v2/kvarnbyn/godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "v2/kvarnbyn/godot/assets/map.json": "210394aadc33f5c952fe7d9a0544148ab5a4a1f3f57e7e9fc3888b0099d9ddc4",
+    "v2/kvarnbyn/godot/scripts/world.gd": "71633a2f0c77620fc9ff7fa7d3992f7d7784427c6bec6e5e7cb495733f54026e",
+    "v2/kvarnbyn/godot/scripts/tactical_map.gd": "e35f6680a08d42d460ef48b86f888a747716481447070a10d188198180ae6dbd",
+    "v2/kvarnbyn/godot/export_presets.cfg": "d32ab09e30ac5fc6048b8f257ca2b169cf47b2d916f44146e3d1365afb2dc04b",
+    "v2/kvarnbyn/pipeline/north_bank_ground.py": "abc51bfe47e3a0db458e5e7a598e2c998367a3673ec57908a5b03d0227b0e8bc",
+    "v2/kvarnbyn/pipeline/map_image.py": "a8fd009be985527aad8cb4e935ae1ecc631ca0d14e1c7e38df96014646414e15",
+    "v2/kvarnbyn/desktop/Kvarnbyn.zip": "a8bd160af7a96e8dde5800afd1832fc90583f559b6b8b5b1e31c868d2aebb8fe"
+  },
+  "north_bank": {
+    "length_m": 80.38553696178025,
+    "coverage_m2": 550.4614116074338,
+    "widths_m": [
+      2.8,
+      1.2,
+      0.9
+    ],
+    "metrics_estimated": true,
+    "canal_rail_intake_deferred": true
+  },
+  "checks": {
+    "north-bank-ground-check": {
+      "passed": true,
+      "coverage": {
+        "closed_blocker_probes": 0,
+        "ground_points": 6,
+        "open_passage_probes": 4,
+        "walk_paths": 4
+      }
+    },
+    "north-bank-mesh-check": {
+      "passed": true,
+      "samples": 3876,
+      "missing_or_mismatched": 0
+    },
+    "north-bank-preserved-check": {
+      "passed": true,
+      "samples": 3876,
+      "missing_or_mismatched": 0
+    },
+    "north-bank-seam-check": {
+      "passed": true,
+      "checks": 2
+    },
+    "map-check": {
+      "passed": true,
+      "checks": 27
+    },
+    "map-world-check": {
+      "passed": true,
+      "checks": 19
+    },
+    "map-export-check": {
+      "passed": true
+    },
+    "m25-ground-check": {
+      "passed": true,
+      "coverage": {
+        "closed_blocker_probes": 1,
+        "ground_points": 3,
+        "open_passage_probes": 1,
+        "walk_paths": 2
+      }
+    },
+    "stalliden-ground-check": {
+      "passed": true,
+      "coverage": {
+        "closed_blocker_probes": 1,
+        "ground_points": 13,
+        "open_passage_probes": 1,
+        "walk_paths": 2
+      }
+    },
+    "roten-ground-check": {
+      "passed": true,
+      "coverage": {
+        "closed_blocker_probes": 1,
+        "ground_points": 11,
+        "open_passage_probes": 1,
+        "walk_paths": 2
+      }
+    },
+    "lighting-check": {
+      "passed": true,
+      "checks": 15
+    }
+  },
+  "old_site_preserved": {
+    "authored_ground": true,
+    "roten_m29": true,
+    "m25": true,
+    "stalliden": true,
+    "stalliden_garden": true,
+    "bridges": true,
+    "river_walls": true,
+    "trees": true,
+    "authored_trees": true,
+    "shrubs": true
+  },
+  "geometry_preserved": {
+    "asphalt": {
+      "before": {
+        "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
+        "triangles": 109708
+      },
+      "after": {
+        "sha256": "803b0f3e8476c34c760775ed1a41334808757f87530bf1e16701dff246f77102",
+        "triangles": 109708
+      }
+    },
+    "water": {
+      "before": {
+        "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
+        "triangles": 10175
+      },
+      "after": {
+        "sha256": "d2d5f7173a306df6c91a78ec1b9f6135a8751cf208a31d3e45e27bb19745447e",
+        "triangles": 10175
+      }
+    },
+    "bridges": {
+      "before": {
+        "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
+        "triangles": 6720
+      },
+      "after": {
+        "sha256": "f9e3ed5531a5f1d0b1a3bcdfe4810783e4d3c87f6430cd7b0bc5ace42f9a5680",
+        "triangles": 6720
+      }
+    },
+    "public_stair": {
+      "before": {
+        "sha256": "5a6efd78c3e553dc53e777469b3a70ad3371b11dd265649af6b6789430afd768",
+        "triangles": 10887
+      },
+      "after": {
+        "sha256": "5a6efd78c3e553dc53e777469b3a70ad3371b11dd265649af6b6789430afd768",
+        "triangles": 10887
+      }
+    }
+  },
+  "map": {
+    "source": {
+      "city_sha256": "b4290402f4d36cb474d6dbf51f79391dba95547b0abeb6a3f57f8568755de445",
+      "site_sha256": "829b09a5cc651d19e7985a1f3e5e494d90e91b489ce0c1db189aeafddb3a4cdd",
+      "method": "Own cartography; rendered surface triangles and built footprints, land classes and LiDAR hillshade; no external map pixels"
+    },
+    "counts": {
+      "buildings": 381,
+      "roads": 352,
+      "surface_triangles": 112409,
+      "bridges": 16
+    },
+    "image": {
+      "file": "world_map.png",
+      "width": 2400,
+      "height": 1867
+    },
+    "north_up": true,
+    "full_map_pauses": true,
+    "enemy_position_radar": false,
+    "export_filter_verified": true
+  },
+  "captures": {
+    "northbank-across": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.46099996566772,
+      "draw_calls": 3882.0,
+      "fps": 63.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5514,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.0,
+          -1.0
+        ],
+        "loaded": false,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          0.0,
+          0.0
+        ],
+        "static_map_draws": 0,
+        "zones": 0
+      },
+      "physics_ms": 0.05,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          -25.0599994659424,
+          1.54999995231628,
+          3.13000011444092
+        ],
+        "fov_degrees": 71.9999847412109,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.00317668612115085,
+        "position": [
+          -25.0599994659424,
+          -0.100000023841858,
+          3.13000011444092
+        ],
+        "yaw": -1.65284717082977
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 17.325,
+      "ready": true,
+      "render_triangles": 3613462.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 7,
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "northbank-road": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.69799995422363,
+      "draw_calls": 3399.0,
+      "fps": 77.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5259,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.0,
+          -1.0
+        ],
+        "loaded": false,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          0.0,
+          0.0
+        ],
+        "static_map_draws": 0,
+        "zones": 0
+      },
+      "physics_ms": 0.039,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          20.3099994659424,
+          2.27900004386902,
+          -5.69000005722046
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.0609194301068783,
+        "position": [
+          20.3099994659424,
+          0.629000067710876,
+          -5.69000005722046
+        ],
+        "yaw": 3.14102745056152
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 14.095,
+      "ready": true,
+      "render_triangles": 2976378.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 8,
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "northbank-walk": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.62300002574921,
+      "draw_calls": 3709.0,
+      "fps": 68.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5291,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.0,
+          -1.0
+        ],
+        "loaded": false,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          0.0,
+          0.0
+        ],
+        "static_map_draws": 0,
+        "zones": 0
+      },
+      "physics_ms": 0.049,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          5.0,
+          1.78299999237061,
+          7.30000019073486
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.0163057930767536,
+        "position": [
+          5.0,
+          0.133000016212463,
+          7.30000019073486
+        ],
+        "yaw": -1.11660468578339
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 15.824,
+      "ready": true,
+      "render_triangles": 3733446.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 9,
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "map-full": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.55499994754791,
+      "draw_calls": 3758.0,
+      "fps": 54.0,
+      "game": {
+        "allies": 9,
+        "caps": [
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "A",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "B",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "C",
+            "owner": "enemy",
+            "progress": 1.0
+          }
+        ],
+        "deaths": 0,
+        "elapsed_s": 0.0,
+        "enemies": 66,
+        "headshots": 0,
+        "kills": 0,
+        "over": false,
+        "player_alive": true,
+        "player_hp": 100.0,
+        "reinforcements_left": 3,
+        "running": true,
+        "victory": false
+      },
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5480,
+      "map": {
+        "allies": 9,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": true,
+        "heading": [
+          -0.730819702148438,
+          -0.682570576667786
+        ],
+        "loaded": true,
+        "map_rect": [
+          460.0,
+          159.111114501953,
+          1000.0,
+          777.777770996094
+        ],
+        "north_up": true,
+        "player": [
+          339.989990234375,
+          153.190002441406
+        ],
+        "static_map_draws": 1,
+        "zones": 3
+      },
+      "physics_ms": 0.042,
+      "player": {
+        "active": true,
+        "alive": true,
+        "eye": [
+          339.989990234375,
+          54.430004119873,
+          153.190002441406
+        ],
+        "fov_degrees": 67.0,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.0,
+        "position": [
+          339.989990234375,
+          52.7800025939941,
+          153.190002441406
+        ],
+        "yaw": 0.819522082805634
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 17.433,
+      "ready": true,
+      "render_triangles": 3387017.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 1,
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "map-mini": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.85800004005432,
+      "draw_calls": 3732.0,
+      "fps": 68.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5290,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.898615956306458,
+          -0.43873605132103
+        ],
+        "loaded": true,
+        "map_rect": [
+          22.0,
+          772.0,
+          245.0,
+          200.0
+        ],
+        "north_up": true,
+        "player": [
+          5.0,
+          7.30000019073486
+        ],
+        "static_map_draws": 1,
+        "zones": 0
+      },
+      "physics_ms": 0.049,
+      "player": {
+        "active": true,
+        "alive": true,
+        "eye": [
+          5.0,
+          1.78299999237061,
+          7.30000019073486
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": 0.0163057930767536,
+        "position": [
+          5.0,
+          0.133000016212463,
+          7.30000019073486
+        ],
+        "yaw": -1.11660468578339
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 15.794,
+      "ready": true,
+      "render_triangles": 3735738.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 9,
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    }
+  },
+  "notes": [
+    "No new reference pixels/models/materials downloaded into product.",
+    "Native image FPS are snapshots, not a new benchmark.",
+    "Before/after uses same world x/z and target; eye follows finished floor.",
+    "Map native images verified after explicit PNG/JSON export inclusion.",
+    "Large GLB/blend/app and generated map PNG local only."
+  ]
+}

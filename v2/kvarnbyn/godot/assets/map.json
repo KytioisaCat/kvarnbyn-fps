@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "bounds": [
+    -357.208,
+    -299.812,
+    542.792,
+    400.188
+  ],
+  "image": {
+    "file": "world_map.png",
+    "width": 2400,
+    "height": 1867
+  },
+  "landmarks": [
+    {
+      "id": "w48115243",
+      "name": "Stadsmuseet",
+      "position": [
+        251.263,
+        -77.316
+      ],
+      "label_offset": [
+        12,
+        -10
+      ]
+    },
+    {
+      "id": "w843661093",
+      "name": "Kvarnbytornet",
+      "position": [
+        135.14,
+        -140.355
+      ],
+      "label_offset": [
+        12,
+        -8
+      ]
+    },
+    {
+      "id": "torget",
+      "name": "Gamla torget",
+      "position": [
+        -8.0,
+        0.0
+      ],
+      "label_offset": [
+        -85.0,
+        -13.0
+      ]
+    },
+    {
+      "id": "roten",
+      "name": "Roten M",
+      "position": [
+        100.0,
+        110.0
+      ],
+      "label_offset": [
+        12.0,
+        19.0
+      ]
+    },
+    {
+      "id": "royens",
+      "name": "Royens trappor",
+      "position": [
+        175.0,
+        -1.0
+      ],
+      "label_offset": [
+        12.0,
+        20.0
+      ]
+    },
+    {
+      "id": "spawn",
+      "name": "Görjelycksgatan",
+      "position": [
+        340.0,
+        153.0
+      ],
+      "label_offset": [
+        -135.0,
+        -15.0
+      ]
+    }
+  ],
+  "palette": {
+    "terrain": "#bbc5ac",
+    "forest": "#81977b",
+    "rock": "#bcc0b4",
+    "urban": "#c2c7b7",
+    "water": "#5b8d9d",
+    "asphalt": "#d6d4c8",
+    "paving": "#e1decc",
+    "walkway": "#d8d5c5",
+    "trail": "#adae94",
+    "soil": "#9a9d7f",
+    "pitch": "#94aa86",
+    "playground": "#b9ae8f",
+    "building": "#575c53",
+    "building_edge": "#3e4943",
+    "road_edge": "#7b8478"
+  },
+  "attribution": [
+    "Kartdata © OpenStreetMap-bidragsgivare (ODbL)",
+    "Höjddata: Lantmäteriet"
+  ],
+  "source": {
+    "city_sha256": "b4290402f4d36cb474d6dbf51f79391dba95547b0abeb6a3f57f8568755de445",
+    "site_sha256": "829b09a5cc651d19e7985a1f3e5e494d90e91b489ce0c1db189aeafddb3a4cdd",
+    "method": "Own cartography; rendered surface triangles and built footprints, land classes and LiDAR hillshade; no external map pixels"
+  },
+  "counts": {
+    "buildings": 381,
+    "roads": 352,
+    "surface_triangles": 112409,
+    "bridges": 16
+  }
+}

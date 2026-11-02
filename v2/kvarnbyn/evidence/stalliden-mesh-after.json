@@ -3,8 +3,8 @@
   "scope": "actual raw GLB transformed triangles; centre and +/-20 cm along complete stalliden route",
   "glb": {
     "path": "v2/kvarnbyn/blender/world_raw.glb",
-    "bytes": 234257748,
-    "sha256": "2580c9abced8495f796513b3a09cf91d28574e946b093729b17109e20cac776e",
+    "bytes": 237383780,
+    "sha256": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
     "corridor_geometry_sha256": "0c73a6a7f8b79ea59a992244c50a0975eb08e6f0fe7ea22c65f4f0b08a06faf1",
     "node_primitives": 338,
     "triangles": 235516

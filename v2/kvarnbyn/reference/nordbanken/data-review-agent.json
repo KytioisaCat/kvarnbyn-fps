@@ -1,0 +1,817 @@
+{
+  "scope": "Read-only baseline analysis, no native engine run or survey; actual transformed GLB floors",
+  "input_sha256": {
+    "v2/kvarnbyn/data/city.json": "b4290402f4d36cb474d6dbf51f79391dba95547b0abeb6a3f57f8568755de445",
+    "v2/kvarnbyn/data/site.json": "0cecefd3a9e81cf3835c607124886d7228da98cfd9581fe5e8e757a03c426899",
+    "v2/kvarnbyn/blender/world_raw.glb": "2580c9abced8495f796513b3a09cf91d28574e946b093729b17109e20cac776e"
+  },
+  "glb": {
+    "path": "v2/kvarnbyn/blender/world_raw.glb",
+    "bytes": 234257748,
+    "sha256": "2580c9abced8495f796513b3a09cf91d28574e946b093729b17109e20cac776e",
+    "corridor_geometry_sha256": "afd4ed417e226cf60b57a37e7dd49883c3ce79ffbf0e68317e1e43da7f3a1d3e",
+    "node_primitives": 243,
+    "triangles": 134814
+  },
+  "coordinate_system": "x east, z south; all floor y local Godot metres = raw-18",
+  "source_proposal": {
+    "id": "river_north_bank_hardscape",
+    "name": "Hårdgjord förplats och promenad norr om forsen",
+    "material": "sidewalk",
+    "surface": "grey_granite_setts_or_paving_slabs",
+    "priority": 9,
+    "polygon_xz": [
+      [
+        -25,
+        16
+      ],
+      [
+        -21,
+        14
+      ],
+      [
+        -5.5,
+        5.2
+      ],
+      [
+        10.5,
+        -2.8
+      ],
+      [
+        20.2,
+        -7.3
+      ],
+      [
+        53.1,
+        -21.2
+      ],
+      [
+        60,
+        -23.8
+      ],
+      [
+        60,
+        -4.0
+      ],
+      [
+        56.7,
+        -2.9
+      ],
+      [
+        51.3,
+        2.1
+      ],
+      [
+        46.2,
+        7.0
+      ],
+      [
+        41.8,
+        8.75
+      ],
+      [
+        7.1,
+        17.05
+      ],
+      [
+        0.24,
+        20.35
+      ],
+      [
+        -5.35,
+        23.96
+      ],
+      [
+        -13,
+        26.5
+      ],
+      [
+        -18,
+        24.5
+      ],
+      [
+        -22,
+        21.5
+      ]
+    ],
+    "observation": "Street View maj 2026 från torgsidan över Kvarnbygatan visar byggd hållplats-/förplatsmiljö, kantstenar och hårdgjorda ytor vid norra åbanken. Området är inte en sammanhängande grässlätt.",
+    "confidence": {
+      "hardscape_instead_of_meadow": "medium_high",
+      "authored_boundary": "medium_low",
+      "exact_surface_partition": "low"
+    },
+    "notes": [
+      "Det här är en medvetet förenklad komplett hårdgjord bas för PoC. Exakt fördelning asfalt/sten/plattor mellan nya hållplatsytor har inte kartlagts.",
+      "Behåll Kvarnbygatans befintliga asfalt och trafikytor med högre materialprioritet; klipp även bort åns vatten- och bankkorridor så ingen stenplatta går ut över vattnet.",
+      "Den södra konturen följer ungefär den norra åbanken; dess läge är tolkat ur centrumlinje och ortofoto, inte inmätt banklinje.",
+      "I Maps finns en liten byggd anläggning/tegelvolym och nya hållplatsdetaljer i denna zon som ännu saknas i PoC; undvik att påstå exakt 2026-rekonstruktion."
+    ],
+    "area_m2": 1657.89,
+    "validation": {
+      "polygon_valid": true,
+      "overlap_with_4_3m_water_buffer_m2": 2.629,
+      "overlap_with_building_footprints_m2": 0.0,
+      "requires_cutouts": true
+    }
+  },
+  "actual_proposal_material_overlaps_m2": {
+    "asphalt": 7.711706,
+    "paving": 133.426058,
+    "walkway": 0.0,
+    "trail": 163.353755,
+    "water": 2.265076
+  },
+  "conservative_strip_options": [
+    {
+      "max_road_center_offset_m": 7.0,
+      "min_offset_m": 5.1,
+      "proposed_m2": 176.05745232723538,
+      "safe_m2": 176.05745232723564,
+      "old_trail_overlap_m2": 0.07892635989268264,
+      "contours": [
+        {
+          "outer": [
+            [
+              -19.723738811612808,
+              16.50448009446131
+            ],
+            [
+              -4.893948736840164,
+              8.449315061318611
+            ],
+            [
+              11.868314707649144,
+              0.39726208727670237
+            ],
+            [
+              21.562065170946884,
+              -4.098904286147169
+            ],
+            [
+              54.109236823179984,
+              -17.927220898176138
+            ],
+            [
+              60.0,
+              -19.9454106174263
+            ],
+            [
+              60.0,
+              -21.953825133740065
+            ],
+            [
+              53.428972542602594,
+              -19.702575225814055
+            ],
+            [
+              20.79064748168989,
+              -5.835530265621517
+            ],
+            [
+              11.057200715572911,
+              -1.320951907841242
+            ],
+            [
+              -5.759276936840686,
+              6.757143830389271
+            ],
+            [
+              -20.74139541988931,
+              14.895049783107517
+            ],
+            [
+              -24.219290663525722,
+              17.431300450202837
+            ],
+            [
+              -23.30164001205249,
+              19.11365997790376
+            ],
+            [
+              -19.723738811612808,
+              16.50448009446131
+            ]
+          ],
+          "holes": []
+        }
+      ]
+    },
+    {
+      "max_road_center_offset_m": 8.0,
+      "min_offset_m": 5.1,
+      "proposed_m2": 267.9777858247456,
+      "safe_m2": 267.9482544396484,
+      "old_trail_overlap_m2": 7.882086035881439,
+      "contours": [
+        {
+          "outer": [
+            [
+              -19.188130070414612,
+              17.351548679384344
+            ],
+            [
+              -4.438512842103035,
+              9.339931498649836
+            ],
+            [
+              12.295216808741797,
+              1.3015852426019854
+            ],
+            [
+              21.96807448108215,
+              -3.1848906127396206
+            ],
+            [
+              54.46727065506292,
+              -16.992823883629907
+            ],
+            [
+              60.0,
+              -18.88835034568222
+            ],
+            [
+              60.0,
+              -21.953825133740065
+            ],
+            [
+              53.428972542602594,
+              -19.702575225814055
+            ],
+            [
+              20.79064748168989,
+              -5.835530265621517
+            ],
+            [
+              11.057200715572911,
+              -1.320951907841242
+            ],
+            [
+              -5.759276936840686,
+              6.757143830389271
+            ],
+            [
+              -20.74139541988931,
+              14.895049783107517
+            ],
+            [
+              -24.219290663525726,
+              17.431300450202837
+            ],
+            [
+              -23.061749697074607,
+              19.553458888696557
+            ],
+            [
+              -22.723850303249844,
+              19.929968146042743
+            ],
+            [
+              -19.188130070414612,
+              17.351548679384344
+            ]
+          ],
+          "holes": []
+        }
+      ]
+    },
+    {
+      "max_road_center_offset_m": 9.0,
+      "min_offset_m": 5.1,
+      "proposed_m2": 359.3867513796174,
+      "safe_m2": 359.12233979659766,
+      "old_trail_overlap_m2": 44.05322731588617,
+      "contours": [
+        {
+          "outer": [
+            [
+              -18.65252132921643,
+              18.19861726430738
+            ],
+            [
+              -3.9830769473659418,
+              10.230547935981079
+            ],
+            [
+              12.722118909834446,
+              2.2059083979272684
+            ],
+            [
+              22.374083791217526,
+              -2.270876939332119
+            ],
+            [
+              54.82530448694573,
+              -16.058426869083625
+            ],
+            [
+              60.0,
+              -17.831290073938135
+            ],
+            [
+              60.0,
+              -21.953825133740065
+            ],
+            [
+              53.428972542602594,
+              -19.702575225814055
+            ],
+            [
+              20.79064748168989,
+              -5.835530265621517
+            ],
+            [
+              11.057200715572911,
+              -1.320951907841242
+            ],
+            [
+              -5.759276936840686,
+              6.757143830389271
+            ],
+            [
+              -20.74139541988931,
+              14.895049783107517
+            ],
+            [
+              -24.219290663525726,
+              17.431300450202837
+            ],
+            [
+              -23.061749697074607,
+              19.553458888696554
+            ],
+            [
+              -22.661,
+              20.0
+            ],
+            [
+              -22.108,
+              20.616
+            ],
+            [
+              -22.035040617832998,
+              20.665315137946216
+            ],
+            [
+              -18.65252132921643,
+              18.19861726430738
+            ]
+          ],
+          "holes": []
+        }
+      ]
+    },
+    {
+      "max_road_center_offset_m": 10.0,
+      "min_offset_m": 5.1,
+      "proposed_m2": 450.263994116721,
+      "safe_m2": 449.3994905681695,
+      "old_trail_overlap_m2": 119.05190105725477,
+      "contours": [
+        {
+          "outer": [
+            [
+              -18.116912588018266,
+              19.04568584923043
+            ],
+            [
+              -3.527641052628827,
+              11.121164373312313
+            ],
+            [
+              13.149021010927259,
+              3.1102315532524747
+            ],
+            [
+              22.7800931013527,
+              -1.3568632659245305
+            ],
+            [
+              55.18333831882859,
+              -15.124029854537357
+            ],
+            [
+              60.0,
+              -16.774229802194046
+            ],
+            [
+              60.0,
+              -21.953825133740065
+            ],
+            [
+              53.428972542602594,
+              -19.702575225814055
+            ],
+            [
+              20.79064748168989,
+              -5.835530265621517
+            ],
+            [
+              11.057200715572911,
+              -1.320951907841242
+            ],
+            [
+              -5.759276936840686,
+              6.757143830389271
+            ],
+            [
+              -20.74139541988931,
+              14.895049783107517
+            ],
+            [
+              -24.219290663525726,
+              17.431300450202837
+            ],
+            [
+              -23.061749697074607,
+              19.553458888696557
+            ],
+            [
+              -22.661,
+              20.0
+            ],
+            [
+              -22.108,
+              20.616
+            ],
+            [
+              -22.0,
+              20.689
+            ],
+            [
+              -21.15061215871366,
+              21.258007388822886
+            ],
+            [
+              -18.116912588018266,
+              19.04568584923043
+            ]
+          ],
+          "holes": []
+        }
+      ]
+    }
+  ],
+  "actual_floor_anchors": [
+    {
+      "road": "w223301747",
+      "chainage_m": 11.0,
+      "inner_sidewalk": {
+        "xz": [
+          -18.8375,
+          13.8382
+        ],
+        "raw_dtm_y_m": -0.36592,
+        "actual_floor": {
+          "name": "COL_paving-1_0__Collision_only",
+          "y": -0.16988,
+          "slope": 0.198618
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          -17.9211,
+          15.5253
+        ],
+        "raw_dtm_y_m": -0.4374,
+        "actual_floor": {
+          "name": "COL_Terrain-1_0__Collision_only",
+          "y": -0.441362,
+          "slope": 0.009552
+        }
+      }
+    },
+    {
+      "road": "w223301747",
+      "chainage_m": 19.0,
+      "inner_sidewalk": {
+        "xz": [
+          -11.8076,
+          10.0197
+        ],
+        "raw_dtm_y_m": -0.29847,
+        "actual_floor": {
+          "name": "COL_paving-1_0__Collision_only",
+          "y": -0.212186,
+          "slope": 1.886576
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          -10.8912,
+          11.7069
+        ],
+        "raw_dtm_y_m": -0.3318,
+        "actual_floor": {
+          "name": "COL_Terrain-1_0__Collision_only",
+          "y": -0.341402,
+          "slope": 0.017734
+        }
+      }
+    },
+    {
+      "road": "w223301747",
+      "chainage_m": 27.0,
+      "inner_sidewalk": {
+        "xz": [
+          -4.9801,
+          6.3607
+        ],
+        "raw_dtm_y_m": -0.16307,
+        "actual_floor": {
+          "name": "COL_paving-1_0__Collision_only",
+          "y": -0.18654,
+          "slope": 0.373303
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          -4.1488,
+          8.0914
+        ],
+        "raw_dtm_y_m": -0.21704,
+        "actual_floor": {
+          "name": "COL_Terrain-1_0__Collision_only",
+          "y": -0.243658,
+          "slope": 0.030566
+        }
+      }
+    },
+    {
+      "road": "w223301747",
+      "chainage_m": 35.0,
+      "inner_sidewalk": {
+        "xz": [
+          2.231,
+          2.8967
+        ],
+        "raw_dtm_y_m": 0.0016,
+        "actual_floor": {
+          "name": "COL_paving0_0__Collision_only",
+          "y": -0.028507,
+          "slope": 0.270742
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          3.0624,
+          4.6274
+        ],
+        "raw_dtm_y_m": -0.03654,
+        "actual_floor": {
+          "name": "COL_Terrain0_0__Collision_only",
+          "y": -0.079628,
+          "slope": 0.046803
+        }
+      }
+    },
+    {
+      "road": "w223301747",
+      "chainage_m": 43.0,
+      "inner_sidewalk": {
+        "xz": [
+          9.4422,
+          -0.5673
+        ],
+        "raw_dtm_y_m": 0.21598,
+        "actual_floor": {
+          "name": "COL_paving0_-1__Collision_only",
+          "y": 0.165387,
+          "slope": 0.217785
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          10.2735,
+          1.1633
+        ],
+        "raw_dtm_y_m": 0.18063,
+        "actual_floor": {
+          "name": "COL_Terrain0_0__Collision_only",
+          "y": 0.139216,
+          "slope": 0.057873
+        }
+      }
+    },
+    {
+      "road": "w268588415",
+      "chainage_m": 3.0,
+      "inner_sidewalk": {
+        "xz": [
+          13.739,
+          -2.5869
+        ],
+        "raw_dtm_y_m": 0.32239,
+        "actual_floor": {
+          "name": "COL_paving0_-1__Collision_only",
+          "y": 0.270386,
+          "slope": 0.237625
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          14.5469,
+          -0.8451
+        ],
+        "raw_dtm_y_m": 0.27818,
+        "actual_floor": {
+          "name": "COL_Terrain0_-1__Collision_only",
+          "y": 0.242942,
+          "slope": 0.056785
+        }
+      }
+    },
+    {
+      "road": "w268588415",
+      "chainage_m": 11.0,
+      "inner_sidewalk": {
+        "xz": [
+          20.8474,
+          -5.8814
+        ],
+        "raw_dtm_y_m": 0.60659,
+        "actual_floor": {
+          "name": "COL_paving0_-1__Collision_only",
+          "y": 0.568694,
+          "slope": 0.779482
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          21.5982,
+          -4.1142
+        ],
+        "raw_dtm_y_m": 0.5904,
+        "actual_floor": {
+          "name": "COL_Terrain0_-1__Collision_only",
+          "y": 0.54354,
+          "slope": 0.075293
+        }
+      }
+    },
+    {
+      "road": "w268588415",
+      "chainage_m": 19.0,
+      "inner_sidewalk": {
+        "xz": [
+          28.2104,
+          -9.0097
+        ],
+        "raw_dtm_y_m": 0.98198,
+        "actual_floor": {
+          "name": "COL_paving0_-1__Collision_only",
+          "y": 0.967749,
+          "slope": 0.334121
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          28.9612,
+          -7.2426
+        ],
+        "raw_dtm_y_m": 0.95626,
+        "actual_floor": {
+          "name": "COL_Terrain0_-1__Collision_only",
+          "y": 0.918911,
+          "slope": 0.078409
+        }
+      }
+    },
+    {
+      "road": "w268588415",
+      "chainage_m": 27.0,
+      "inner_sidewalk": {
+        "xz": [
+          35.5734,
+          -12.138
+        ],
+        "raw_dtm_y_m": 1.52067,
+        "actual_floor": {
+          "name": "COL_paving0_-1__Collision_only",
+          "y": 1.470817,
+          "slope": 0.198955
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          36.3241,
+          -10.3709
+        ],
+        "raw_dtm_y_m": 1.48513,
+        "actual_floor": {
+          "name": "COL_Terrain0_-1__Collision_only",
+          "y": 1.428055,
+          "slope": 0.086977
+        }
+      }
+    },
+    {
+      "road": "w268588415",
+      "chainage_m": 35.0,
+      "inner_sidewalk": {
+        "xz": [
+          42.9363,
+          -15.2663
+        ],
+        "raw_dtm_y_m": 2.03813,
+        "actual_floor": {
+          "name": "COL_paving0_-1__Collision_only",
+          "y": 2.03451,
+          "slope": 0.274986
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          43.6871,
+          -13.4992
+        ],
+        "raw_dtm_y_m": 2.00067,
+        "actual_floor": {
+          "name": "COL_Terrain0_-1__Collision_only",
+          "y": 1.968022,
+          "slope": 0.081267
+        }
+      }
+    },
+    {
+      "road": "w268588415",
+      "chainage_m": 43.0,
+      "inner_sidewalk": {
+        "xz": [
+          50.2993,
+          -18.3946
+        ],
+        "raw_dtm_y_m": 2.59445,
+        "actual_floor": {
+          "name": "COL_paving0_-1__Collision_only",
+          "y": 2.661937,
+          "slope": 0.106458
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          51.0501,
+          -16.6275
+        ],
+        "raw_dtm_y_m": 2.65412,
+        "actual_floor": {
+          "name": "COL_Terrain0_-1__Collision_only",
+          "y": 2.592895,
+          "slope": 0.066979
+        }
+      }
+    },
+    {
+      "road": "w268588415",
+      "chainage_m": 51.0,
+      "inner_sidewalk": {
+        "xz": [
+          57.4358,
+          -21.0965
+        ],
+        "raw_dtm_y_m": 3.29346,
+        "actual_floor": {
+          "name": "COL_paving0_-1__Collision_only",
+          "y": 3.386916,
+          "slope": 0.099363
+        }
+      },
+      "outer_strip": {
+        "xz": [
+          58.0581,
+          -19.2801
+        ],
+        "raw_dtm_y_m": 3.25989,
+        "actual_floor": {
+          "name": "COL_Terrain0_-1__Collision_only",
+          "y": 3.245304,
+          "slope": 0.098363
+        }
+      }
+    }
+  ],
+  "existing_lamps": [
+    [
+      -18.283,
+      -0.105,
+      12.763,
+      -0.477,
+      -0.879
+    ],
+    [
+      21.502,
+      0.952,
+      -6.898,
+      -0.391,
+      -0.92
+    ]
+  ],
+  "notes": [
+    "Nordbanken is northern river bank, not a bank building.",
+    "Original1658m2 proposal is deliberately coarse, not an observed exact finished2026 contour.",
+    "No buildings overlap proposal; preserve all actual asphalt/water/bridges and original forecourt.",
+    "Bank-side ground1-2m below roadside in places; a single plane across whole original polygon can create false fills/walls.",
+    "Safest first pass is road-adjacent strip; old bank trail remains nearly entirely untouched at7m offset. Native review must validate actual surface/limits.",
+    "Tie to actual finished sidewalk height (already includes0.13m lift). New callbacks lift0 avoid double adding.",
+    "Technical fill edges are not visually observed new retaining walls."
+  ]
+}

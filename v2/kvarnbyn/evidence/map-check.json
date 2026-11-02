@@ -1,0 +1,170 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"passed": true,
+			"test": "actual_generated_map_loads"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "bounds_cover_900x700m"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "northwest_corner_maps_to_0_0"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "southeast_corner_maps_to_1_1"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "player_heading_0.0"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "player_heading_1.5707963267949"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "player_heading_3.14159265358979"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "player_heading_-1.5707963267949"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "zone_owner_colors_distinct"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "minimap_centres_on_player"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "minimap_above_health"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "snapshot_contains_3_zones_no_enemy_positions"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "one_static_map_draw"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "fullmap_fits_0"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "fullmap_preserves_geographic_aspect_0"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "fullmap_fits_1"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "fullmap_preserves_geographic_aspect_1"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "fullmap_fits_2"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "fullmap_preserves_geographic_aspect_2"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "fullmap_fits_3"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "fullmap_preserves_geographic_aspect_3"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "repeated_toggle_does_not_create_controls"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "close_button_requests_host_close"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "explore_mode_without_zone_or_enemy_markers"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "map_edge_keeps_player_centred"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "invalid_assets_return_false"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "valid_asset_recovers_after_missing"
+		}
+	],
+	"passed": true,
+	"scope": "actual generated map texture/metadata and native Control component math/state",
+	"snapshot": {
+		"allies": 0,
+		"bounds": [
+			-357.2080078125,
+			-299.81201171875,
+			542.7919921875,
+			400.18798828125
+		],
+		"enemy_positions": 0,
+		"expanded": false,
+		"heading": [
+			0.0,
+			-1.0
+		],
+		"loaded": true,
+		"map_rect": [
+			22.0,
+			1612.0,
+			245.0,
+			200.0
+		],
+		"north_up": true,
+		"player": [
+			-357.2080078125,
+			-299.81201171875
+		],
+		"static_map_draws": 1,
+		"zones": 0
+	}
+}

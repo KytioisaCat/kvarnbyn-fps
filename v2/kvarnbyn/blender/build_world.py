@@ -15,7 +15,7 @@ from modelkit import Kit, color
 from blender_materials import pbr_material, solid_material
 from blender_vegetation import place_tree, load_library
 from blender_finish import apply_finish
-import houses, heroes, roten, stairkit, stalleliden_houses
+import houses, heroes, roten, stairkit, stalleliden_houses, north_bank_details
 
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
@@ -176,6 +176,8 @@ for key, kind in SITE.get('stalliden_garden_mesh_kinds', {}).items():
     MAT[key] = M[kind]
 for key, kind in SITE.get('m25_mesh_kinds', {}).items():
     MAT[key] = M[kind]
+for key, kind in SITE.get('north_bank_mesh_kinds', {}).items():
+    MAT[key] = M[kind]
 reviewed_setts = roten.sett_segments(CITY)
 for kind, tiles in SITE['meshes'].items():
     mat = MAT[kind]; tm = mat.get('tile_size_m', 3)
@@ -185,11 +187,14 @@ for kind, tiles in SITE['meshes'].items():
             tm = selected.get('tile_size_m', 3)
             pts = [(x, -z, y) for x, y, z in tri]
             if ((pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0])) < 0: pts.reverse()
+            is_north = kind.startswith('northbank_')
             is_m29 = kind.startswith('m29_')
             is_stalliden = kind.startswith(('stalliden_', 'm25_'))
             render_name = 'Roten_ground_' + kind + t if is_m29 else 'Stalleliden_ground_' + kind + t if is_stalliden else kind.title() + t
+            if is_north: render_name = 'Northbank_ground_' + kind + t
             col_name = 'COL_Roten_ground_' + kind + t if is_m29 else 'COL_Stalleliden_ground_' + kind + t if is_stalliden else 'COL_' + kind + t
-            if kind not in SITE.get('roten_collision_only', []) + SITE.get('stalliden_collision_only', []):
+            if is_north: col_name = 'COL_Northbank_ground_' + kind + t
+            if kind not in SITE.get('roten_collision_only', []) + SITE.get('stalliden_collision_only', []) + SITE.get('north_bank_collision_only', []):
                 K.face(render_name, selected, pts, [(p[0] / tm, p[1] / tm) for p in pts])
             if kind != 'water': K.face(col_name, M['collision'], pts)
 for x1, y1, z1, x2, y2, z2 in SITE['kerbs']:
@@ -197,11 +202,21 @@ for x1, y1, z1, x2, y2, z2 in SITE['kerbs']:
     if L < 0.05: continue
     u = ((x2 - x1) / L, -(z2 - z1) / L)
     K.box('Kerbs' + tile_of(x1, z1), M['curb'], ((x1 + x2) / 2, -(z1 + z2) / 2, (y1 + y2) / 2 - .1), (L + .02, .14, .22), u)
+north_markings = north_bank_details.build(K,M,SITE)
+log('åbankens cykelmarkeringar: '+json.dumps(north_markings))
 log('gator, kantsten klara')
 roten.build_garden(K, M, SITE.get('roten_m29', {}))
 stairkit.build(K, M, SITE.get('stalliden', {}), ground)
 stairkit.build(K, M, SITE.get('m25', {}), ground)
 stairkit.garden(K, M, SITE.get('stalliden_garden', {}))
+for edge in SITE.get('north_bank',{}).get('supports',[]):
+    a,b=edge['a'],edge['b']
+    pts=[(a[0],-a[1],edge['bottom_a_y']),(b[0],-b[1],edge['bottom_b_y']),
+         (b[0],-b[1],edge['top_b_y']),(a[0],-a[1],edge['top_a_y'])]
+    K.face('Northbank_ground_edges',M['stone'],pts)
+    K.face('Northbank_ground_edges',M['stone'],pts[::-1])
+    K.face('COL_Northbank_ground_edges',M['collision'],pts)
+
 for xa, za, ta, ba, xb, zb, tb, bb in SITE.get('roten_supports', []):
     pts = [(xa,-za,ba),(xb,-zb,bb),(xb,-zb,tb),(xa,-za,ta)]
     K.face('Roten_ground_edges', M['rock'], pts)
@@ -337,7 +352,7 @@ for (xa, za), (xb, zb) in [((zx0, zz0), (zx1, zz0)), ((zx1, zz0), (zx1, zz1)), (
 objects = K.finish()
 for obj in objects:
     if obj.name.startswith('COL_'): obj.hide_render = True; obj.display_type = 'WIRE'
-    elif any(k in obj.name for k in ['Terrain', 'Water']) or (obj.name.startswith(('Roten_ground_', 'Stalleliden_ground_')) and not obj.name.startswith(('Roten_ground_edges', 'Stalleliden_ground_edges'))):
+    elif any(k in obj.name for k in ['Terrain', 'Water']) or (obj.name.startswith(('Roten_ground_', 'Stalleliden_ground_', 'Northbank_ground_')) and not obj.name.startswith(('Roten_ground_edges', 'Stalleliden_ground_edges', 'Northbank_ground_edges'))):
         bm = bmesh.new(); bm.from_mesh(obj.data); bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=.0001); bm.to_mesh(obj.data); bm.free()
         for poly in obj.data.polygons: poly.use_smooth = True
 log(f'objekt: {len(objects)}')
@@ -376,7 +391,7 @@ def paved_eye(x, z):
                 if min(u, v, 1-u-v) >= -1e-6:
                     y = u*a[1] + v*b[1] + (1-u-v)*c[1]
                     floor = max(floor,y)
-                    if kind.startswith('m25_'): owned_floor = y
+                    if kind.startswith(('m25_', 'northbank_')): owned_floor = y
     return [round(x, 2), round((owned_floor if owned_floor is not None else floor) + 1.7, 3), round(z, 2)]
 
 
@@ -388,6 +403,9 @@ views = [
     dict(id='roten-gavel', name='Roten M 29 – gaveln', position=paved_eye(120.7, 114.7), target=[105.8, 27.0, 120.5]),
     dict(id='roten-gard', name='Roten M 29 – gården', position=paved_eye(106.5, 116.5), target=[101.7, 25.2, 119.0]),
     dict(id='roten-tradgard', name='Roten M 29 – trädgården', position=paved_eye(95, 132.5), target=[97.7, 25.3, 123]),
+    dict(id='northbank-across', name='Norra åbanken – från torget', position=paved_eye(-25.06,3.13), target=[22,1.4,7]),
+    dict(id='northbank-road', name='Norra åbanken – från gatan', position=paved_eye(20.31,-5.69), target=[20.3,1.2,12]),
+    dict(id='northbank-walk', name='Norra åbanken – gångstråket', position=paved_eye(5,7.3), target=[39,2.4,-9.3]),
     dict(id='m25-gavel', name='Roten M 25 – gaveln', position=paved_eye(47.2,89.9), target=[57.5,17.9,85.5]),
     dict(id='m25-gardsvy', name='Roten M 25 – från gårdssidan', position=paved_eye(49.5,96), target=[58.5,17.4,85.5]),
     dict(id='m25-entre', name='Roten M 25 – entrén', position=paved_eye(61.45,90.3), target=[61.4,16.1,85.9]),
@@ -407,7 +425,7 @@ for r in CITY['roads']:
         L = math.hypot(xb - xa, zb - za); acc += L
         if acc > 45 and zx0 + 3 < xa < zx1 - 3 and zz0 + 3 < za < zz1 - 3:
             acc = 0; probe.append([round(xa, 2), round(ground(xa, za), 2), round(za, 2)])
-meta = dict(title='Kvarnbyn', probe_points=probe, m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
+meta = dict(title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.get('north_bank',{}).get('ground_checks',{}), m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
             spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),
             views=views, bounds=dict(min=[zx0, -40, zz0], max=[zx1, 120, zz1]),
