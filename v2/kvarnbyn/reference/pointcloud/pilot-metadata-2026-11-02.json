@@ -1,0 +1,387 @@
+{
+  "date": "2026-11-02",
+  "source": "https://api.lantmateriet.se/stac-hojd/v1/collections/dsm-skoglig-copc/items",
+  "bbox_wgs84": [
+    12.02677714909335,
+    57.655696586417534,
+    12.029744744795163,
+    57.657316915199424
+  ],
+  "scope": "Open STAC metadata only; no point cloud downloaded or roof height measured. Query strings omitted from saved asset URLs.",
+  "houses": [
+    {
+      "id": "w92331981",
+      "name": "Kråkans Krog",
+      "footprint_xz": [
+        [
+          47.219,
+          17.11
+        ],
+        [
+          50.209,
+          25.826
+        ],
+        [
+          35.003,
+          30.869
+        ],
+        [
+          28.166,
+          32.572
+        ],
+        [
+          19.792,
+          34.287
+        ],
+        [
+          13.472,
+          35.222
+        ],
+        [
+          2.37,
+          32.494
+        ],
+        [
+          3.306,
+          29.155
+        ],
+        [
+          27.993,
+          22.242
+        ]
+      ],
+      "model_base_raw_m": 17.25,
+      "assumed_wall_m": 5.9,
+      "assumed_roof_rise_m": 1.65,
+      "source": {
+        "footprint": "osm",
+        "facade": "observed",
+        "heights": "observed_estimate",
+        "roof": "observed"
+      }
+    },
+    {
+      "id": "w92332103",
+      "name": "Corpus Pizzeria",
+      "footprint_xz": [
+        [
+          -12.371,
+          -41.411
+        ],
+        [
+          -7.671,
+          -38.506
+        ],
+        [
+          -15.015,
+          -28.253
+        ],
+        [
+          -12.966,
+          -26.383
+        ],
+        [
+          -11.34,
+          -25.949
+        ],
+        [
+          -12.198,
+          -28.086
+        ],
+        [
+          -4.848,
+          -32.105
+        ],
+        [
+          0.274,
+          -22.787
+        ],
+        [
+          -10.745,
+          -15.785
+        ],
+        [
+          -13.306,
+          -16.13
+        ],
+        [
+          -23.669,
+          -23.232
+        ],
+        [
+          -25.521,
+          -24.502
+        ],
+        [
+          -23.86,
+          -26.761
+        ],
+        [
+          -20.185,
+          -31.47
+        ],
+        [
+          -16.51,
+          -36.179
+        ],
+        [
+          -13.538,
+          -39.908
+        ]
+      ],
+      "model_base_raw_m": 18.2,
+      "assumed_wall_m": 6.1,
+      "assumed_roof_rise_m": 2.2,
+      "source": {
+        "footprint": "osm",
+        "facade": "observed",
+        "heights": "observed_estimate",
+        "roof": "observed"
+      }
+    },
+    {
+      "id": "w92332120",
+      "name": "Roten M 29",
+      "footprint_xz": [
+        [
+          100.662,
+          114.203
+        ],
+        [
+          102.872,
+          117.465
+        ],
+        [
+          99.638,
+          119.658
+        ],
+        [
+          101.288,
+          122.107
+        ],
+        [
+          107.285,
+          118.055
+        ],
+        [
+          110.829,
+          123.309
+        ],
+        [
+          102.455,
+          128.964
+        ],
+        [
+          99.06,
+          123.933
+        ],
+        [
+          97.291,
+          125.135
+        ],
+        [
+          90.501,
+          115.071
+        ],
+        [
+          95.921,
+          111.42
+        ]
+      ],
+      "model_base_raw_m": 41.861,
+      "assumed_wall_m": 3.25,
+      "assumed_roof_rise_m": 2.15,
+      "source": {
+        "footprint": "osm",
+        "levels": "observed",
+        "heights": "observed_estimate",
+        "roof_color": "observed_estimate",
+        "roof_material": "observed",
+        "facade": "observed",
+        "archetype": "assumed",
+        "roof_shape": "observed",
+        "roof_subdivision": "observed_estimate"
+      }
+    },
+    {
+      "id": "w92332122",
+      "name": "Gamla stadshuset / Musikskolan",
+      "footprint_xz": [
+        [
+          -41.221,
+          -27.886
+        ],
+        [
+          -29.72,
+          -21.195
+        ],
+        [
+          -46.635,
+          7.87
+        ],
+        [
+          -55.921,
+          2.471
+        ],
+        [
+          -51.305,
+          -5.466
+        ],
+        [
+          -53.515,
+          -6.757
+        ]
+      ],
+      "model_base_raw_m": 18.1,
+      "assumed_wall_m": 10.3,
+      "assumed_roof_rise_m": 2.2,
+      "source": {
+        "footprint": "osm",
+        "facade": "observed",
+        "heights": "observed_estimate",
+        "roof": "observed"
+      }
+    },
+    {
+      "id": "w92332157",
+      "name": "Roten M 25",
+      "footprint_xz": [
+        [
+          52.288,
+          82.533
+        ],
+        [
+          61.436,
+          80.239
+        ],
+        [
+          62.776,
+          85.572
+        ],
+        [
+          60.209,
+          86.217
+        ],
+        [
+          61.037,
+          89.535
+        ],
+        [
+          54.456,
+          91.182
+        ]
+      ],
+      "model_base_raw_m": 33.1,
+      "assumed_wall_m": 2.95,
+      "assumed_roof_rise_m": 3.21,
+      "source": {
+        "footprint": "original_osm_L",
+        "levels": "observed_one_full_floor_and_attic_2017",
+        "heights": "estimated_from_photo_and_finished_stair_reference_not_DTM_percentile",
+        "roof_color": "ortho",
+        "roof_material": "visible_grey_sheet_and_red_tile_parts_2017",
+        "facade": "observed_P1020319_P1020320_2017",
+        "archetype": "assumed",
+        "trim": "observed_photo_2017",
+        "windows": "visible_west_and_south_layout_observed_metric_sizes_estimated",
+        "roof_shape": "observed_gables_dormer_subdivision_estimated",
+        "entrance": "visible_notch_porch_interpreted_position_estimated"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "19b002-639_32",
+      "bbox": [
+        11.978898992365227,
+        57.61637159471741,
+        12.1535347738668,
+        57.7099633826153
+      ],
+      "datetime": "2019-11-29T12:00:00Z",
+      "start_datetime": "2019-11-29T00:00:00Z",
+      "end_datetime": "2019-11-30T00:00:00Z",
+      "updated": "2026-06-17T14:02:27Z",
+      "data_modified": "2020-11-17T00:00:00Z",
+      "point_density": 1.2,
+      "proj_code": "EPSG:5845",
+      "assets": {
+        "data": {
+          "type": "application/vnd.laszip+copc",
+          "roles": [
+            "data"
+          ],
+          "file_size_bytes": 1604050596,
+          "url_without_query": "https://dl1.lantmateriet.se/hojd/data/pointcloud/sls/19b002/m19b002-639_32.copc.laz"
+        },
+        "info": {
+          "type": "application/json",
+          "roles": [
+            "metadata"
+          ],
+          "file_size_bytes": 22702,
+          "url_without_query": "https://dl1.lantmateriet.se/hojd/pub/pointcloud/sls/19b002/m19b002-639_32_info.json"
+        },
+        "thumbnail": {
+          "type": "image/png",
+          "roles": [
+            "thumbnail",
+            "overview"
+          ],
+          "file_size_bytes": 26911,
+          "url_without_query": "https://dl1.lantmateriet.se/hojd/pub/pointcloud/sls/19b002/m19b002-639_32_thumbnail.png"
+        }
+      }
+    },
+    {
+      "id": "19b002-63925_3225_25",
+      "bbox": [
+        12.02447431549187,
+        57.63978793397539,
+        12.068130526813885,
+        57.6631920346353
+      ],
+      "datetime": "2019-11-29T12:00:00Z",
+      "start_datetime": "2019-11-29T00:00:00Z",
+      "end_datetime": "2019-11-30T00:00:00Z",
+      "updated": "2026-10-14T11:23:00Z",
+      "data_modified": "2020-11-17T00:00:00Z",
+      "point_density": 1.2,
+      "proj_code": "EPSG:5845",
+      "assets": {
+        "data": {
+          "type": "application/vnd.laszip+copc",
+          "roles": [
+            "data"
+          ],
+          "file_size_bytes": 90989680,
+          "url_without_query": "https://dl1.lantmateriet.se/hojd/data/pointcloud/sls/19b002/y19b002-63925_3225_25.copc.laz"
+        },
+        "info": {
+          "type": "application/json",
+          "roles": [
+            "metadata"
+          ],
+          "file_size_bytes": 23285,
+          "url_without_query": "https://dl1.lantmateriet.se/hojd/pub/pointcloud/sls/19b002/y19b002-63925_3225_25_info.json"
+        },
+        "thumbnail": {
+          "type": "image/png",
+          "roles": [
+            "thumbnail",
+            "overview"
+          ],
+          "file_size_bytes": 30002,
+          "url_without_query": "https://dl1.lantmateriet.se/hojd/pub/pointcloud/sls/19b002/y19b002-63925_3225_25_thumbnail.png"
+        }
+      }
+    }
+  ],
+  "smallest_candidate": "19b002-63925_3225_25",
+  "access_probe": {
+    "method": "HEAD",
+    "credentials_used": false,
+    "downloaded_pointcloud_bytes": 0,
+    "status": 401
+  }
+}

@@ -15,6 +15,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Fas A bedömd genom Joels dom över det spelbara Fas B-provet (2026-10-30).
 - [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
+- [ ] **Målvisning i HUD**: riktning/avstånd till nästa zon och tydlig basvarning; pågående avgränsat tillägg, inga balansändringar.
+- [ ] **Omgångstempo och basförsvar:** ett nytt botprov2026-11-02 förlorade vid221,5s (40nedkämpade,0egna dödsfall); människans runda behövs. Undersök hur tydligt basanfall signaleras och hur allierade försvarar. `v2/kvarnbyn/evidence/round-2026-11-02.json`.
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **Joels bedömning av kvällsljuset** (`v2/kvarnbyn/RESULTAT-KVALL.md`): läsbarhet i strid, stämning och lyktövergångar under promenad.
 - [ ] **Världen (kärnan)**: fortsatt grönska och terrasser per plats. M29 och Stallelidens första gång-/platsprov är genomförda. M25:s eget hus och entrégång är byggda. Nästa husarbete: visuellt belägga M24 och M31; därefter deras volymer, grunder, tak och entréer längs trappan. Granska innan nya höga murar byggs.
@@ -57,7 +59,7 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
   experimentell av projektet. Börja motorprovet med en liten statisk terrängmodell ur vår
   LiDAR; testa Terrain3D separat på Joels telefon innan hela kvarteret byggs kring tillägget.
   Källa: https://terrain3d.readthedocs.io/en/stable/docs/platforms.html
-- [ ] **Punktmoln i liten skala före helautomatik**: testa takhöjd/takform på 5–10 hus mot
+- [ ] **Punktmoln i liten skala före helautomatik**: fem provhus och en91MB-kandidat är nu avgränsade i `v2/kvarnbyn/reference/pointcloud/PILOT.md`; filåtkomst401 utan systemkonto, inga punkter hämtade. Testa takhöjd/takform på 5–10 hus mot
   referenser och märk osäkra slutsatser. Utvärdera trädposition/höjd separat; artbestämning
   och exakt nockriktning ska inte förutsättas fungera från glesa punkter.
 

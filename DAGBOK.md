@@ -31,6 +31,34 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-02 — ChatGPT Codex — tydligare mål och basvarning
+
+**Status:** pågår
+**Gjort:** Joel styr fortsatt med ”fortsätt”. Nästa avgränsade bygge är mänsklig målvisning: riktning/avstånd till nästa zon och prioriterad basvarning under anfall. Ingen AI- eller balansändring. Agent tactical_map äger endast hud.gd och eventuellt verify_objective.gd; root integration/kontroller/docs.
+**Läge nu:** senaste färdiga app/kod1126512 (åbank+kartor) är fortfarande leveransen. Senare referens-/bot-/laserunderlag är färdiga; HUD-tillägget är inte levererat eller verifierat ännu.
+**Nästa:** granska HUD-källan → riktiga mål-/inmatningsprov och nativebild → full återbyggnad/app → dagbok och commit. Om budgeten bryts: kontrollera agentens filer innan de används; appen på disk är trygg baslinje tills ny export passerar.
+
+---
+
+## 2026-11-02 — ChatGPT Codex — punktmolnsprovet avgränsat
+
+**Status:** klart — metadata-/åtkomstinventering och konkret nästa prov; inget punktmoln hämtat eller nya höjder påstådda.
+**Gjort:** `reference/pointcloud/PILOT.md`, öppna STAC-kollektioner och `pilot-metadata-2026-11-02.json`. Fem redan bildgranskade provhus (Kråkan/Corpus/Musikskolan/M25/M29) täcks av91MB-rutan19b002-63925_3225_25, insamlad2019-11-29/1,2punkter per m². Alternativ1,6GB-ruta behövs inte. Endast offentlig metadata läst; HEAD mot datafil utan inloggning gav401. Lokalt baraDTM/ortofoto, inget LAS/LAZ och inget systemkonto i processen. Licensfältother; anta inte äldre markproduktvillkor. Lantmäteriets5okt2026-nyhet omCOPC-indexfel sparad som källa för framtida kontroll.
+**Läge nu:** nyaste fungerande app/kod är1126512 (åbank+kartor), GitHub41404437529 grön. Sista fulla rebuild115s inklusive faktisk release-kartgrind grön. Senare ändringar är bara ref-/pilot-/omgångsunderlag och dagbok/TODO, ingen ny halvfärdig värld. Alla motorprocesser avslutade. .claude/playpen orörd.
+**Nästa:** 1. Läs resultatet för åbanken/kartan och gör Joels egen omgång för balans/igenkänning. 2. Om punktmolnsbehörighet finns i nästa session: hämta endast91MB-rutan, läs helaLAZ, verifiera koordinater/klasskoder och fem hus innan någon global höjdrättning. 3. Annars fortsatt visuellt belagda hus-/markpass. M24/M31 får inte ges andra husens fasader bara för att fotoföljden verkar rimlig.
+**Varningar:** ingen 3D-byggnadsmodell eller takhöjd har verifierats i detta dataprov. Inga konto-/API-värden har lästs, lagrats eller efterfrågats i chat. Geotorgetproduktens åtkomst/behörighet behöver ordnas av Joel om laserprovet ska gå vidare; ingen fråga behövs för att spela den färdiga versionen.
+
+---
+
+## 2026-11-02 — ChatGPT Codex — helomgång och fortsatt husunderlag
+
+**Status:** klart — ytterligare referenslogg och ett verkligt botutfall dokumenterade; ingen balansändring.
+**Gjort:** åbanken och kartorna sparade/pushade i1126512. Ny app är färdig och verifierad. Separat referensrunda `reference/stalleliden-hus/REFERENSRUNDA-2026-11-02.md` hittade inga säkra nya M24/M31-fasader; inga sådana modeller ändras. Fortsätter med tyst längre botprov i exporterad app för att mäta omgångens förlopp.
+**Läge nu:** värld/kartor fungerar; inga nya kodändringar sedan1126512. GitHub-byggning41404437529 grön. Release-appens tysta botprov (4×,gräns900simsekunder) slutade med förlust vid221,5s:40nedkämpade/22huvudträffar,0egna dödsfall,sluthälsa100,2allierade/56fiender kvar,alla zoner åter fiendens. `evidence/round-2026-11-02.json`; logg `v2/.tools/kvarnbyn-round-20261102/bot.log`. Ett oseedat botstickprov, inte människans svårighetsbedömning. Förklarar inte ensamt om tempot är rätt. Referensagenten granskade sex2017bilder; inget säkert nyttM24/M31-belägg, M32 är förväxlingsrisk. Exakta länkar/observationer sparade utan fotopixlar/persondata.
+**Nästa:** fortsatt bättre grunddata för hus-/trädhöjder eller nästa faktiskt belagda plats; Joels egen spelomgång behövs för balans/igenkänning. Botens stridsprioritet avbryter färden mot basförsvar så länge den ser en fiende; förlusten får inte automatiskt tolkas som för svåra fiender. Ingen balansändring gjord enbart från botprovet.
+
+---
+
 ## 2026-11-02 08:06 — ChatGPT Codex — norra åbanken och spelkartan
 
 **Status:** klart — första åbanksstråket och båda kartlägena i ny lokal Mac-app; fortsatt referensarbete M24/M31 pågår separat.

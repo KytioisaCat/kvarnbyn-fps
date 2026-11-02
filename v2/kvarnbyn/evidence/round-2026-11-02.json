@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-02",
+  "application_commit": "1126512",
+  "engine": "Godot4.7.2 macOS release template, headless",
+  "options": [
+    "--audio-driver Dummy",
+    "--bot",
+    "--speed=4",
+    "--botlimit=900",
+    "--no-pointer-lock"
+  ],
+  "technical_completed": true,
+  "result": "förlust",
+  "final_state": {
+    "allies": 2,
+    "caps": [
+      {
+        "enemies_in": 8,
+        "friends_in": 0,
+        "id": "A",
+        "owner": "enemy",
+        "progress": 1.0
+      },
+      {
+        "enemies_in": 3,
+        "friends_in": 0,
+        "id": "B",
+        "owner": "enemy",
+        "progress": 1.0
+      },
+      {
+        "enemies_in": 3,
+        "friends_in": 0,
+        "id": "C",
+        "owner": "enemy",
+        "progress": 1.0
+      }
+    ],
+    "deaths": 0,
+    "elapsed_s": 221.5,
+    "enemies": 56,
+    "headshots": 22,
+    "kills": 40,
+    "over": true,
+    "player_alive": true,
+    "player_hp": 100.0,
+    "reinforcements_left": 0,
+    "running": false,
+    "victory": false
+  },
+  "interpretation": "Single unseeded automatic bot round. Not a human difficulty/recognition acceptance test. No balance change made from this run.",
+  "source_log": "v2/.tools/kvarnbyn-round-20261102/bot.log",
+  "log_sha256": "3aa9579959c376a7076eaa31e7bcd1106f81e47cd661a71f5882712633c132ce"
+}

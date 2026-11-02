@@ -1,0 +1,56 @@
+{
+  "source": "https://api.lantmateriet.se/stac-hojd/v1/collections",
+  "date": "2026-11-02",
+  "collections": [
+    {
+      "id": "dsm-skoglig-copc",
+      "title": "Laserdata Skog",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              9.252142533522628,
+              55.15807139516088,
+              25.262744904954147,
+              68.48126325375831
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2019-10-01T00:00:00Z",
+              "2026-10-26T00:00:00Z"
+            ]
+          ]
+        }
+      },
+      "license": "other"
+    },
+    {
+      "id": "dtm-cog",
+      "title": "Markhöjdmodell",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              9.083440644086602,
+              55.155643653220736,
+              25.54187300342634,
+              69.06658452861451
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2009-08-02T22:00:00Z",
+              "2026-07-08T22:00:00Z"
+            ]
+          ]
+        }
+      },
+      "license": "CC-BY-4.0"
+    }
+  ]
+}
