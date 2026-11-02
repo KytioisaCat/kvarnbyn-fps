@@ -28,6 +28,26 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] Ett arketyp-kit + ett hjältehus (Blender) med riktiga material
 - [ ] Första beviset: EN bild vid Gamla torget som ser ut som ett spel (hus, gata, träd, bakat ljus)
 
+### Föreslagen fortsatt byggordning 2026-11-02
+
+Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvällsljus
+är genomförda; nedanstående är fortsättning för Godot-datorversionen, inte v1-arbete.
+
+1. **Stalleliden/Roten M:** bättre fasadunderlag för M24/M31, därefter hus/tomter;
+   M25:s grund-/entréproportioner och lilla privata ramp bedöms separat.
+2. **Fler sammanhängande gaturum:** Nordbanken som nästa markprov, sedan husrundor
+   längs Götaforsliden/Kvarnbygatan och utpekade landmärken. Några hus med anslutande
+   mark per pass, egna före/efterbilder i spelappen.
+3. **Mark, grönska och fors:** platsriktiga terrasser/murar/staket, träd/buskar/stigar,
+   broanslutningar och vidare vatten-/forsarbete. Förbättra uppskattade detaljer efter
+   observationer. Prova punktmoln på 5–10 hus/träd separat före större automatik.
+4. **Orientering och spelomgång:** minimap/fullskärmskarta i Godot, tydligare zonläge;
+   hela rundor för tempo, svårighet, allierades framryckning och återstående AI-fel.
+5. **Fortsatt stämning:** varma fönster, forsens dimma och bättre ljudlandskap;
+   befintligt dag/kvällsljus finjusteras utifrån spelbedömning. Agenttester tysta.
+6. **Senare expansion:** Mölndals centrum/större värld och idéerna om lugnt torg,
+   NPC:er och längre anfallsvägar. Fler vapen/granater är senare påbyggnader.
+
 ### Föreslagna kontrollprov efter lägesgenomgång 2026-10-29
 
 - [ ] **Exportprov tidigt i PoC 0–1**: ett igenkännbart hus + gatan framför i Blender;

@@ -31,6 +31,14 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-02 — ChatGPT Codex — återstående byggplan
+
+**Status:** klart — planöversikt, inga ändringar i spelvärlden.
+**Gjort:** senaste tre dagboksinläggen, TODO, arkitektur, NASTA-FAS och kravbild granskade. Grafen lokaliserar backlogg/krav men täcker främst v1; aktuell datorplan hämtas från riktiga dokument. Föreslagen byggordning sparad i TODO: M24/M31 och tomter → Nordbanken/fler gaturum → mark/grönska/fors + litet punktmolnsprov → karta/hela spelomgångar → stämning → senare expansion. Befintlig värld, spel, soldat/vapen och kvällsljus är levererade; platsigenkänning återstår för stora delar av kärnan.
+**Nästa:** M24/M31-referenser samt nästa avgränsade markprov vid Nordbanken; fortsätt enligt Joels styrning. Ordningen ovan är ett prioriteringsförslag, ingen ny låst omfattning.
+
+---
+
 ## 2026-11-02 06:43 — ChatGPT Codex — M25:s hus och entré
 
 **Status:** klart — eget M25-hus, gångbar entré och ny lokal Mac-app; Joels igenkänningsbedömning återstår.
