@@ -1,0 +1,134 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"passed": true,
+			"test": "real_combat_world_loaded"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "starts_with_configured_three_guards"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "three_guards_die_through_real_hit_callback"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "losses_wait_for_existing_timer"
+		},
+		{
+			"detail": null,
+			"passed": false,
+			"test": "replacements_restore_guard_quota"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "respawn_interval_preserved"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "attack_soldiers_die_through_real_hit_callback"
+		},
+		{
+			"detail": null,
+			"passed": false,
+			"test": "attack_losses_do_not_add_extra_guards"
+		},
+		{
+			"detail": null,
+			"passed": false,
+			"test": "mixed_losses_restore_three_guards_six_assault"
+		},
+		{
+			"detail": null,
+			"passed": false,
+			"test": "replacement_guards_target_actual_base"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "full_squad_does_not_spawn_extra_soldiers"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "enemy_reinforcement_budget_unchanged"
+		},
+		{
+			"detail": null,
+			"passed": false,
+			"test": "whole_squad_replacement_preserves_roles"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "restart_restores_original_quota"
+		}
+	],
+	"passed": false,
+	"scope": "actual GameManager, real spawned soldiers/death callbacks and expired reinforcement timer in paused imported world",
+	"stages": [
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 3,
+			"id": "initial",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 0,
+			"id": "waiting",
+			"timer": 9.98333333333333,
+			"total": 6
+		},
+		{
+			"assault": 9,
+			"enemy_budget": 3,
+			"guards": 0,
+			"id": "guards_replaced",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 9,
+			"enemy_budget": 3,
+			"guards": 0,
+			"id": "attackers_replaced",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 9,
+			"enemy_budget": 3,
+			"guards": 0,
+			"id": "mixed_replaced",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 9,
+			"enemy_budget": 3,
+			"guards": 0,
+			"id": "whole_squad_replaced",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 3,
+			"id": "restart",
+			"timer": 45.0,
+			"total": 9
+		}
+	]
+}

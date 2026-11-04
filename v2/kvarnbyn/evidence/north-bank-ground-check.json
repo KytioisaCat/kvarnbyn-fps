@@ -98,7 +98,7 @@
 	},
 	"errors": [],
 	"geometry_source": "res://assets/world.glb",
-	"metadata_mtime_unix": 1793819341,
+	"metadata_mtime_unix": 1793819749,
 	"metadata_source": "world_meta.north_bank_ground_checks",
 	"passed": true,
 	"paths": [
@@ -316,6 +316,6 @@
 		}
 	],
 	"scope": "actual imported collision geometry and actual player controller",
-	"wall_clock_s": 5.396047,
-	"world_asset_mtime_unix": 1793819358
+	"wall_clock_s": 5.370417,
+	"world_asset_mtime_unix": 1793819765
 }

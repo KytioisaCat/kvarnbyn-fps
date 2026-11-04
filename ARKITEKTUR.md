@@ -475,3 +475,21 @@ nativebilder och återstående igenkänningsarbete.
 GitHub: `KytioisaCat/kvarnbyn-fps` (Joels **privata** konto — inte jobbets, aldrig GitLab).
 Push till `main` → GitHub Actions → Pages: https://kytioisacat.github.io/kvarnbyn-fps/
 Licensfrågor för publicering: se DEPLOY.md (löst 2026-07-08 i och med Lantmäteriet-bytet).
+
+## Basvakter efter allierade förluster (2026-11-04)
+
+Den första truppen har tre guard och sex assault, men förstärkningsloopen gav
+alltid assault. Riktiga hit-/dödscallbackar och den ordinarie45s-timern visade
+att3stupade vakter ersattes med3anfallare: efteråt0vakter/9anfallare.
+
+Nu räknar `game.gd` levande vakter när förstärkningen anländer. Saknade vaktplatser
+fylls först, därefter anfallare, upp till samma totala truppstorlek. Överlevande
+soldaters roller ändras inte. Vaktmålet är fortfarande basC via `cap_target_for`.
+Ingen ändring av antal, intervall, fiendetryck, skada eller soldattaktik. Rättningen
+kan påverka hur bra basen försvaras; en mänsklig omgång behövs fortfarande för tempo.
+Debugtillståndet anger nu allied_guards för framtida omgångsdiagnostik.
+
+`verify_allied_roles.gd` använder riktiga GameManager/soldater/dödshändelser och
+förstärkningstimern i pausad värld. Den provar vakt-/anfalls-/blandade förluster,
+heltruppsförlust, oförändrad väntetid, återstart, måletC samt olika kvoter.
+`--guards-export-check` prövar riktiga döds-/timerhändelser i release-appen.

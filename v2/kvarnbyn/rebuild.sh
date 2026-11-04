@@ -67,6 +67,10 @@ step "Kontroll: frontläge, förstärkningshåll och baslarm på kartan"
 rm -f $LOG/front-check.json
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_front.gd -- --no-pointer-lock --output="$ROOT/$LOG/front-check.json" > $LOG/front-check.log 2>&1
 $PY -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["checks"])>=27' $LOG/front-check.json
+step "Kontroll: allierades basvakter ersätts efter förluster"
+rm -f $LOG/allied-roles-check.json
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_allied_roles.gd -- --no-pointer-lock --output="$ROOT/$LOG/allied-roles-check.json" > $LOG/allied-roles-check.log 2>&1
+$PY -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["checks"])>=19' $LOG/allied-roles-check.json
 step "Kontroll: målvisning och baslarm i riktig spelvärld"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_objective.gd -- --no-pointer-lock --output="$ROOT/$LOG/objective-check.json" > $LOG/objective-check.log 2>&1
 step "Kontroll: forsens riktningar och faktiska vattenmaterial"
@@ -95,6 +99,9 @@ if [[ " $* " != *" --no-export "* ]]; then
   step "Kontroll: frontläget fungerar också i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --no-pointer-lock --front-export-check > $LOG/front-export-check.log 2>&1
   $PY -c 'import json,sys; lines=open(sys.argv[1]).read().splitlines(); r=json.loads(next(x.split("KVARNBYN_FRONT_EXPORT_CHECK ",1)[1] for x in lines if x.startswith("KVARNBYN_FRONT_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/front-export-check.log
+  step "Kontroll: basvakter ersätts också i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --no-pointer-lock --guards-export-check > $LOG/guards-export-check.log 2>&1
+  $PY -c 'import json,sys; lines=open(sys.argv[1]).read().splitlines(); r=json.loads(next(x.split("KVARNBYN_GUARDS_EXPORT_CHECK ",1)[1] for x in lines if x.startswith("KVARNBYN_GUARDS_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/guards-export-check.log
   step "Kontroll: flödesfältet finns också i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --explore --no-pointer-lock --water-export-check > $LOG/water-export-check.log 2>&1
 fi

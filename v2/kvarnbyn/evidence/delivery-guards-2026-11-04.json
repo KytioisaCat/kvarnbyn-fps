@@ -1,0 +1,192 @@
+{
+  "date": "2026-11-04",
+  "baseline_commit": "f9ec502",
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "build_seconds": 128,
+  "checks": {
+    "allied-roles-check": {
+      "passed": true,
+      "count": 19
+    },
+    "front-check": {
+      "passed": true,
+      "count": 30
+    },
+    "guards-export-check": {
+      "initial_guards": 3,
+      "passed": true,
+      "release": true,
+      "replacement_guards": 3,
+      "scope": "actual exported GameManager/soldier deaths and reinforcement timer, controlled casualties",
+      "squad_size": 9,
+      "survivors": 6
+    },
+    "front-export-check": {
+      "initial": {
+        "allies": 9,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": true,
+        "front": {
+          "base_under_attack": false,
+          "boundaries": 0,
+          "builds": 1,
+          "entries": 4,
+          "incoming": 4,
+          "reach_m": 125.0,
+          "regions": 3,
+          "schematic": true
+        },
+        "heading": [
+          -0.730819702148438,
+          -0.682570576667786
+        ],
+        "loaded": true,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          339.989990234375,
+          153.190002441406
+        ],
+        "static_map_draws": 1,
+        "zones": 3
+      },
+      "mixed": {
+        "allies": 9,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": true,
+        "front": {
+          "base_under_attack": true,
+          "boundaries": 2,
+          "builds": 2,
+          "entries": 4,
+          "incoming": 4,
+          "reach_m": 125.0,
+          "regions": 3,
+          "schematic": true
+        },
+        "heading": [
+          -0.730819702148438,
+          -0.682570576667786
+        ],
+        "loaded": true,
+        "map_rect": [
+          460.0,
+          579.111083984375,
+          1000.0,
+          777.777770996094
+        ],
+        "north_up": true,
+        "player": [
+          339.989990234375,
+          153.190002441406
+        ],
+        "static_map_draws": 1,
+        "zones": 3
+      },
+      "passed": true,
+      "release": true,
+      "scope": "exported map code/assets with controlled zone-owner/base-alarm fixture; no observed battle outcome"
+    },
+    "map-export-check": {
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": true,
+        "front": {
+          "base_under_attack": false,
+          "boundaries": 0,
+          "builds": 1,
+          "entries": 0,
+          "incoming": 0,
+          "reach_m": 125.0,
+          "regions": 0,
+          "schematic": true
+        },
+        "heading": [
+          -0.650768041610718,
+          -0.759276568889618
+        ],
+        "loaded": true,
+        "map_rect": [
+          460.0,
+          579.111083984375,
+          1000.0,
+          777.777770996094
+        ],
+        "north_up": true,
+        "player": [
+          339.989990234375,
+          153.190002441406
+        ],
+        "static_map_draws": 1,
+        "zones": 0
+      },
+      "passed": true,
+      "release": true
+    },
+    "water-export-check": {
+      "passed": true,
+      "release": true,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      }
+    }
+  },
+  "sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "v2/kvarnbyn/godot/assets/world.glb": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "v2/kvarnbyn/godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "v2/kvarnbyn/godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "v2/kvarnbyn/godot/assets/nav.json": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f",
+    "v2/kvarnbyn/godot/scripts/game.gd": "6795eefa04d67a8e6c4b07b6d8e89c3337daae1994a9bab6b008ae408ff35073",
+    "v2/kvarnbyn/desktop/Kvarnbyn.zip": "72b07f1065ba40f16be51b05520d9341c4f3b53fcaf5c874c591799541acd192"
+  },
+  "preserved": {
+    "v2/kvarnbyn/blender/world_raw.glb": true,
+    "v2/kvarnbyn/godot/assets/world.glb": true,
+    "v2/kvarnbyn/godot/assets/world_map.png": true,
+    "v2/kvarnbyn/godot/assets/game.json": true,
+    "v2/kvarnbyn/godot/assets/nav.json": true
+  },
+  "before": "allied-roles-before.json: 5 of14 checks failed; 3 guards killed became0 guards/9 assault after resupply",
+  "after": "19 checks passed including different quotas, death callbacks, base target, waiting time, restart and exported app",
+  "build_log": "v2/.tools/kvarnbyn-front-20261104/rebuild-guards.log"
+}

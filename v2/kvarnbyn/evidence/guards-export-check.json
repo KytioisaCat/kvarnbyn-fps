@@ -1,0 +1,9 @@
+{
+  "initial_guards": 3,
+  "passed": true,
+  "release": true,
+  "replacement_guards": 3,
+  "scope": "actual exported GameManager/soldier deaths and reinforcement timer, controlled casualties",
+  "squad_size": 9,
+  "survivors": 6
+}

@@ -1,0 +1,191 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"passed": true,
+			"test": "real_combat_world_loaded"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "starts_with_configured_three_guards"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "three_guards_die_through_real_hit_callback"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "losses_wait_for_existing_timer"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "replacements_restore_guard_quota"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "respawn_interval_preserved"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "attack_soldiers_die_through_real_hit_callback"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "attack_losses_do_not_add_extra_guards"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "mixed_losses_restore_three_guards_six_assault"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "replacement_guards_target_actual_base"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "full_squad_does_not_spawn_extra_soldiers"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "enemy_reinforcement_budget_unchanged"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "whole_squad_replacement_preserves_roles"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "restart_restores_original_quota"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "debug_state_reports_living_guards"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "configured_role_quota_9_0"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "configured_role_quota_9_9"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "configured_role_quota_5_2"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "configured_role_quota_4_12"
+		}
+	],
+	"passed": true,
+	"scope": "actual GameManager, real spawned soldiers/death callbacks and expired reinforcement timer in paused imported world",
+	"stages": [
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 3,
+			"id": "initial",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 0,
+			"id": "waiting",
+			"timer": 9.98333333333333,
+			"total": 6
+		},
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 3,
+			"id": "guards_replaced",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 3,
+			"id": "attackers_replaced",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 3,
+			"id": "mixed_replaced",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 3,
+			"id": "whole_squad_replaced",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 6,
+			"enemy_budget": 3,
+			"guards": 3,
+			"id": "restart",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 9,
+			"enemy_budget": 3,
+			"guards": 0,
+			"id": "config_9_0",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 0,
+			"enemy_budget": 3,
+			"guards": 9,
+			"id": "config_9_9",
+			"timer": 45.0,
+			"total": 9
+		},
+		{
+			"assault": 3,
+			"enemy_budget": 3,
+			"guards": 2,
+			"id": "config_5_2",
+			"timer": 45.0,
+			"total": 5
+		},
+		{
+			"assault": 0,
+			"enemy_budget": 3,
+			"guards": 4,
+			"id": "config_4_12",
+			"timer": 45.0,
+			"total": 4
+		}
+	]
+}

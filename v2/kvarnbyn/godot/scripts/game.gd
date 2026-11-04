@@ -282,10 +282,14 @@ func _physics_process(delta: float) -> void:
 	ally_reinf_t -= delta
 	if ally_reinf_t <= 0.0:
 		ally_reinf_t = float(cfg["allies"]["respawn_interval_s"])
-		var missing: int = int(cfg["allies"]["count"]) - allies.size()
+		var squad_size := int(cfg["allies"]["count"])
+		var missing: int = squad_size - allies.size()
+		var guards_alive := allies.filter(func(s): return s.alive and s.role == "guard").size()
+		var guards_needed := maxi(0, clampi(int(cfg["allies"]["guards"]), 0, squad_size) - guards_alive)
 		for i in range(missing):
 			var s := spawn_soldier("ally", spawn_point + Vector3(randf_range(-8, 8), 0.5, randf_range(-8, 8)))
-			s.role = "assault"
+			# Keep the configured base defence after casualties, as at round start.
+			s.role = "guard" if i < guards_needed else "assault"
 		if missing > 0 and hud:
 			hud.feed("Förstärkning ansluter från basen!")
 	# vinst
@@ -367,4 +371,5 @@ func state() -> Dictionary:
 		cs.append({"id": c["id"], "owner": c["owner"], "progress": snappedf(c["progress"], 0.01), "enemies_in": c.get("enemies_in", 0), "friends_in": c.get("friends_in", 0)})
 	return {"running": running, "over": over, "victory": victory, "elapsed_s": snappedf(elapsed, 0.1), "kills": kills,
 		"headshots": headshots, "deaths": deaths, "enemies": enemies.size(), "allies": allies.size(),
+		"allied_guards": allies.filter(func(s): return s.alive and s.role == "guard").size(),
 		"reinforcements_left": reinf_left, "caps": cs, "player_hp": snappedf(player.hp, 0.1), "player_alive": player.alive}

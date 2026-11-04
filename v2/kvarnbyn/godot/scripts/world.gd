@@ -57,7 +57,7 @@ func _ready() -> void:
 	options = read_options()
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			break
@@ -171,6 +171,8 @@ func _ready() -> void:
 		player.free_flight = true
 	if options.has("map-export-check"):
 		check_exported_map()
+	if options.has("guards-export-check"):
+		check_exported_guards()
 	if options.has("front-export-check"):
 		check_exported_front()
 	if options.has("water-export-check"):
@@ -431,6 +433,31 @@ func check_exported_map() -> void:
 	print("KVARNBYN_MAP_EXPORT_CHECK ",JSON.stringify(result))
 	get_tree().paused = false
 	get_tree().quit(0 if result.passed else 3)
+
+func check_exported_guards() -> void:
+	AudioServer.set_bus_mute(0,true)
+	if game==null:
+		get_tree().quit(3)
+		return
+	begin_walk()
+	get_tree().paused=true
+	var before: int=game.allies.filter(func(s):return s.alive and s.role=="guard").size()
+	for soldier in game.allies.duplicate():
+		if soldier.role=="guard":soldier.hit(1000,false,game.spawn_point,null)
+	var after_losses: int=game.allies.size()
+	game.reinf_t=99999.0
+	game.ally_reinf_t=0.0
+	game._physics_process(1.0/60.0)
+	var guards: Array=game.allies.filter(func(s):return s.alive and s.role=="guard")
+	var expected: int=clampi(int(game.cfg.allies.guards),0,int(game.cfg.allies.count))
+	var valid: bool=before==expected and after_losses==int(game.cfg.allies.count)-expected
+	valid=valid and guards.size()==expected and game.allies.size()==int(game.cfg.allies.count)
+	for soldier in guards:valid=valid and game.cap_target_for(soldier).id==str(game.cfg.base_cap)
+	print("KVARNBYN_GUARDS_EXPORT_CHECK ",JSON.stringify({"passed":valid,"release":not OS.has_feature("editor"),
+		"initial_guards":before,"survivors":after_losses,"replacement_guards":guards.size(),"squad_size":game.allies.size(),
+		"scope":"actual exported GameManager/soldier deaths and reinforcement timer, controlled casualties"}))
+	get_tree().paused=false
+	get_tree().quit(0 if valid else 3)
 
 func check_exported_front() -> void:
 	AudioServer.set_bus_mute(0,true)
