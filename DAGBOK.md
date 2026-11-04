@@ -36,6 +36,7 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 **Status:** klart — publiceringskedjan rättad och verifierad, ingen ändring av spelappen.
 **Gjort:** körning 41896520364 byggde/uppladdade 35,6 MB men deploy såg 0 paket direkt efter uppladdningen. REST-API visade sedan paketet. En omkörning skapade två paket med samma namn och deploy föll på dubbletter. I `c65a992` separerades build/deploy med ett unikt paketnamn per byggförsök; deploy läser namnet från byggjobbets output.
 **Verifierat:** ny riktig körning 41897151036 grön (build 17 s, deploy 11 s). Även omkörning av enbart deploy grön i försök 2; det lyckade byggjobbets ursprungliga paketnamn följer med. `v2/kvarnbyn/evidence/pages-deploy-check-2026-11-04.json`. Samma actions-versioner, behörigheter och sajtinnehåll. Godot-appen/kartan/vaktfixen oförändrade.
+**Slutkvitto:** dokumentationspushens körning 41897550441 också grön i försök 3. Försök 1–2 stoppades av GitHubs gamla publiceringslås, trots att status-API redan sade succeed; cancel av den avslutade c65-publiceringen nekades som already finished. Utan ytterligare kodändring gick nästa deploy igenom. `evidence/pages-final-check-2026-11-04.json`. Den här sista kvitto-/dagbokspushen använder [skip ci] så att inga nya identiska publiceringar startas för bara loggtext.
 **Nästa:** läs spelöverlämningen direkt nedanför; botens rensningspatrull och sammanhängande intagsunderlag återstår. Inget pågående motorprov eller halvfärdigt byggarbete.
 
 

@@ -509,3 +509,8 @@ https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-
 
 Verifierat i riktig körning41897151036: både hela kedjan och omkörning av enbart
 deploy lyckades. Underlag i `v2/kvarnbyn/evidence/pages-deploy-check-2026-11-04.json`.
+
+Sista dokumentationspushen (körning41897550441) verifierad grön i försök3.
+Försök1–2 fick ett kvarhängande Pages-serverlås för den redan avslutade föregångaren;
+GET sade succeed och cancel nekades som finished. Ingen mer kodändring krävdes.
+Slutkvitto: `v2/kvarnbyn/evidence/pages-final-check-2026-11-04.json`.
