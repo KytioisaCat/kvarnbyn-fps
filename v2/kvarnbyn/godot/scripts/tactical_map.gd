@@ -5,6 +5,8 @@ extends Control
 ## enemy positions are intentionally never requested or accepted by this API.
 signal close_requested
 
+const Front = preload("res://scripts/map_front.gd")
+
 const MINI_SIZE := Vector2(245,200)
 const MINI_WIDTH_M := 190.0
 const FRAME := Color("243d45")
@@ -27,6 +29,24 @@ var world_view := Rect2()
 var close_button: Button
 var last_update_msec := -1000
 var shown_frame := 0
+var entry_points: Array[Vector2] = []
+var base_id := "C"
+var front_signature := 0
+var front_regions: Array[Dictionary] = []
+var front_segments: Array[PackedVector2Array] = []
+var incoming_arrows: Array[PackedVector2Array] = []
+var front_builds := 0
+var base_under_attack := false
+
+func configure_tactics(config: Dictionary) -> void:
+	# Static, public level setup only. Never accept a GameManager/enemy list.
+	entry_points.clear()
+	for point in config.get("enemy_entries",[]):
+		if point is Array and point.size()==3:
+			entry_points.append(Vector2(float(point[0]),float(point[2])))
+	base_id=str(config.get("base_cap","C"))
+	front_signature=0
+	last_update_msec=-1000
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -62,7 +82,7 @@ func setup(metadata_path: String = "res://assets/map.json", texture_path: String
 	queue_redraw()
 	return true
 
-func set_state(position_world: Vector3, yaw: float, caps: Array, allies: Array = []) -> void:
+func set_state(position_world: Vector3, yaw: float, caps: Array, allies: Array = [], reinforcements_possible: bool = false) -> void:
 	player_position = position_world
 	player_yaw = yaw
 	# A small tactical map needs current bearings, not a full 60Hz world copy.
@@ -79,7 +99,20 @@ func set_state(position_world: Vector3, yaw: float, caps: Array, allies: Array =
 			continue
 		zone_markers.append({"id":str(value.get("id","?")),"name":str(value.get("name","")),
 			"position":Vector2(pos.x,pos.z),"owner":str(value.get("owner","enemy")),
-			"radius":float(value.get("radius",15.0)),"contested":bool(value.get("contested",false))})
+			"radius":float(value.get("radius",15.0)),"contested":bool(value.get("contested",false)),
+			"under_attack":bool(value.get("contested",false)) and int(value.get("enemies_in",0))>0})
+	base_under_attack=zone_markers.any(func(c):return str(c.id)==base_id and Front.friendly(str(c.owner)) and bool(c.under_attack))
+	var signature_data: Array = [world_bounds,entry_points,reinforcements_possible]
+	for zone in zone_markers:
+		signature_data.append([zone.id,zone.position,zone.owner,zone.radius])
+	var signature := hash(signature_data)
+	if signature!=front_signature:
+		var model := Front.build(zone_markers,world_bounds)
+		front_regions.assign(model.regions)
+		front_segments.assign(model.fronts)
+		incoming_arrows=Front.incoming(entry_points,zone_markers,reinforcements_possible)
+		front_signature=signature
+		front_builds+=1
 	ally_markers.clear()
 	for ally in allies:
 		if not is_instance_valid(ally) or not ally is Node3D:
@@ -114,6 +147,8 @@ func snapshot() -> Dictionary:
 	return {"loaded":map_loaded,"expanded":expanded,"north_up":true,
 		"bounds":[world_bounds.position.x,world_bounds.position.y,world_bounds.end.x,world_bounds.end.y],
 		"player":[player_position.x,player_position.z],"heading":[heading_vector(player_yaw).x,heading_vector(player_yaw).y],
+		"front":{"regions":front_regions.size(),"boundaries":front_segments.size(),"incoming":incoming_arrows.size(),
+			"entries":entry_points.size(),"builds":front_builds,"reach_m":Front.REACH_M,"schematic":true,"base_under_attack":base_under_attack},
 		"zones":zone_markers.size(),"allies":ally_markers.size(),"enemy_positions":0,"static_map_draws":1 if map_loaded else 0,
 		"map_rect":[map_rect.position.x,map_rect.position.y,map_rect.size.x,map_rect.size.y]}
 
@@ -125,12 +160,12 @@ func _layout() -> Rect2:
 		var span := Vector2(MINI_WIDTH_M,MINI_WIDTH_M*mini.y/mini.x)
 		world_view = Rect2(Vector2(player_position.x,player_position.z)-span/2,span)
 		return map_rect.grow_individual(8,31,8,28)
-	var maximum := Vector2(minf(1000,sz.x-70),sz.y-160)
+	var maximum := Vector2(minf(1000,sz.x-70),sz.y-190)
 	var map_size := Vector2(minf(maximum.x,maximum.y*world_bounds.size.x/world_bounds.size.y),0)
 	map_size.y = map_size.x*world_bounds.size.y/world_bounds.size.x
 	map_rect = Rect2((sz-map_size)/2+Vector2(0,8),map_size)
 	world_view = world_bounds
-	var board := map_rect.grow_individual(22,63,22,55)
+	var board := map_rect.grow_individual(22,63,22,77)
 	if close_button != null:
 		close_button.position = Vector2(board.end.x-146,board.position.y+16)
 		close_button.size = Vector2(128,32)
@@ -156,9 +191,11 @@ func _draw() -> void:
 		var target := Rect2(project_world(clipped.position,world_view,map_rect),clipped.size/world_view.size*map_rect.size)
 		var source := Rect2(world_to_uv(clipped.position)*map_texture.get_size(),clipped.size/world_bounds.size*map_texture.get_size())
 		draw_texture_rect_region(map_texture,target,source)
+	_draw_front()
 	draw_rect(map_rect,Color(0,0,0,.3),false,1)
 	if expanded:
 		_draw_landmarks(font)
+	_draw_incoming()
 	_draw_zones(font)
 	for point in ally_markers:
 		if world_view.has_point(point):
@@ -171,8 +208,12 @@ func _draw() -> void:
 	_draw_player(player_point)
 	_draw_compass(font)
 	if expanded:
-		var baseline := board.end.y-22
+		var baseline := board.end.y-44
 		_draw_legend(font,Vector2(board.position.x+23,baseline))
+		var note := "Färg: läget kring zonerna · Pilar: möjliga förstärkningar"
+		draw_string(font,Vector2(board.position.x+23,board.end.y-23),note,HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color(.81,.86,.81))
+		if base_under_attack:
+			draw_string(font,board.position+Vector2(180,34),"Försvara "+base_id+" – basen är under anfall",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("eecb68"))
 		if board.size.x>660:
 			draw_string(font,Vector2(board.end.x-248,baseline),"M / Esc stänger kartan",HORIZONTAL_ALIGNMENT_LEFT,-1,15,PAPER)
 		draw_string(font,Vector2(board.position.x+23,board.end.y-5),"Kartdata © OpenStreetMap · Höjddata: Lantmäteriet",HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color(.72,.79,.76))
@@ -180,6 +221,43 @@ func _draw() -> void:
 		draw_string(font,Vector2(board.position.x+8,board.end.y-9),"Öppna karta [M]",HORIZONTAL_ALIGNMENT_LEFT,-1,13,PAPER)
 	_draw_scale(font)
 	shown_frame += 1
+
+func _project_polygon(polygon: PackedVector2Array) -> PackedVector2Array:
+	var result := PackedVector2Array()
+	for point in polygon:result.append(project_world(point,world_view,map_rect))
+	return result
+
+func _draw_front() -> void:
+	var view := world_view.intersection(world_bounds)
+	for region in front_regions:
+		var polygon := Front.clip_rect(region.polygon,view)
+		if polygon.size()<3:continue
+		# Preserve cartographic detail; these colours describe zones, not unseen units.
+		draw_colored_polygon(_project_polygon(polygon),Color(owner_color(str(region.owner)),.16 if str(region.owner)=="enemy" else .10))
+	for segment in front_segments:
+		var clipped := Front.clip_segment(segment[0],segment[1],view)
+		if clipped.size()!=2:continue
+		var a := project_world(clipped[0],world_view,map_rect)
+		var b := project_world(clipped[1],world_view,map_rect)
+		draw_dashed_line(a,b,Color(INK,.85),4.0,7.0,true)
+		draw_dashed_line(a,b,Color("eacba2"),1.8,7.0,true)
+
+func _draw_incoming() -> void:
+	var view := world_view.intersection(world_bounds)
+	for arrow in incoming_arrows:
+		var clipped := Front.clip_segment(arrow[0],arrow[1],view)
+		if clipped.size()!=2:continue
+		var a := project_world(clipped[0],world_view,map_rect)
+		var b := project_world(clipped[1],world_view,map_rect)
+		if a.distance_to(b)<8.0:continue
+		var direction := (b-a).normalized()
+		var side := Vector2(-direction.y,direction.x)
+		draw_line(a,b,Color(PAPER,.95),5.0,true)
+		draw_line(a,b,HOSTILE,2.5,true)
+		# A clipped shaft must not invent an arrowhead at the viewport boundary.
+		if not view.has_point(arrow[1]):continue
+		draw_colored_polygon(PackedVector2Array([b+direction*2,b-direction*8+side*6,b-direction*8-side*6]),Color(PAPER,.95))
+		draw_colored_polygon(PackedVector2Array([b,b-direction*6+side*4,b-direction*6-side*4]),HOSTILE)
 
 func _draw_player(point: Vector2) -> void:
 	var forward := heading_vector(player_yaw)
@@ -256,3 +334,6 @@ func _draw_legend(font: Font, point: Vector2) -> void:
 	draw_string(font,point+Vector2(75,0),"Egen zon",HORIZONTAL_ALIGNMENT_LEFT,-1,14,PAPER)
 	draw_circle(point+Vector2(164,-5),4,HOSTILE)
 	draw_string(font,point+Vector2(175,0),"Fiendens zon",HORIZONTAL_ALIGNMENT_LEFT,-1,14,PAPER)
+
+	draw_dashed_line(point+Vector2(290,-5),point+Vector2(309,-5),Color("eacba2"),2,5,true)
+	draw_string(font,point+Vector2(317,0),"Frontläge",HORIZONTAL_ALIGNMENT_LEFT,-1,14,PAPER)

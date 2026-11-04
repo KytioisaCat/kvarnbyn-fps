@@ -57,7 +57,7 @@ func _ready() -> void:
 	options = read_options()
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			break
@@ -143,6 +143,8 @@ func _ready() -> void:
 	canvas_layer.add_child(tactical_map)
 	if not tactical_map.setup():
 		push_warning("Kartans underlag saknas; kör återbyggnaden.")
+	if game != null:
+		tactical_map.configure_tactics(game.cfg)
 	tactical_map.close_requested.connect(func(): set_map_open(false))
 	tactical_map.visible = false
 	await get_tree().physics_frame
@@ -169,6 +171,8 @@ func _ready() -> void:
 		player.free_flight = true
 	if options.has("map-export-check"):
 		check_exported_map()
+	if options.has("front-export-check"):
+		check_exported_front()
 	if options.has("water-export-check"):
 		check_exported_water()
 	if options.has("capture"):
@@ -428,6 +432,40 @@ func check_exported_map() -> void:
 	get_tree().paused = false
 	get_tree().quit(0 if result.passed else 3)
 
+func check_exported_front() -> void:
+	AudioServer.set_bus_mute(0,true)
+	if game==null:
+		print("KVARNBYN_FRONT_EXPORT_CHECK ",JSON.stringify({"passed":false,"error":"combat world required"}))
+		get_tree().quit(3)
+		return
+	begin_walk()
+	set_map_open(true)
+	var initial: Dictionary=tactical_map.snapshot()
+	var base: Dictionary=game.base_cap()
+	var original_owner: String=base.owner
+	base.owner="friendly"
+	base.contested=true
+	base.enemies_in=2
+	tactical_map.last_update_msec=-1000
+	update_tactical_map()
+	await get_tree().process_frame
+	if options.has("front-export-image") and DisplayServer.get_name()!="headless":
+		for frame in range(120):await get_tree().process_frame
+		await RenderingServer.frame_post_draw
+		var error: Error=get_viewport().get_texture().get_image().save_png(str(options["front-export-image"]))
+		if error!=OK:
+			get_tree().quit(3)
+			return
+	var mixed: Dictionary=tactical_map.snapshot()
+	var valid: bool=initial.front.regions==game.caps.size() and initial.front.incoming==game.cfg.enemy_entries.size()
+	valid=valid and mixed.front.boundaries>0 and mixed.front.base_under_attack and mixed.enemy_positions==0
+	base.owner=original_owner
+	var result := {"passed":valid,"initial":initial,"mixed":mixed,"release":not OS.has_feature("editor"),
+		"scope":"exported map code/assets with controlled zone-owner/base-alarm fixture; no observed battle outcome"}
+	print("KVARNBYN_FRONT_EXPORT_CHECK ",JSON.stringify(result))
+	get_tree().paused=false
+	get_tree().quit(0 if valid else 3)
+
 func check_exported_water() -> void:
 	AudioServer.set_bus_mute(0,true)
 	var valid: bool = river_water!=null and river_water.loaded and river_water.surfaces>0
@@ -462,7 +500,7 @@ func update_tactical_map() -> void:
 		return
 	tactical_map.visible = started and not overlay.opening and (game == null or not game.over)
 	if tactical_map.visible:
-		tactical_map.set_state(player.global_position,player.rotation.y,game.caps if game != null else [],game.allies if game != null else [])
+		tactical_map.set_state(player.global_position,player.rotation.y,game.caps if game != null else [],game.allies if game != null else [],game != null and game.started and not game.over and game.reinf_left>0)
 
 func toggle_fullscreen() -> void:
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:

@@ -29,3 +29,19 @@ Den äldre polygonen `river_north_bank_hardscape` på1658m² är en grov PoC-ski
 Den aktiveras inte som en enda plan yta: den når över olika gatuprofiler och mot
 lägre terräng vid vattnet. Första leveransen avgränsas till det observerade stråket.
 Inga referensbilder lagras i repo eller används som speltexturer.
+
+## Återbesök2026-11-04
+
+Codex granskade faktiskt panoramorna vid6Kvarnbygatan (133,51°,75°FOV) och
+8Kvarnbygatan (225°,75° och ett steg zoom). Samma maj2026-panorama som ovan.
+Närbilden bekräftar rundad rödbrun tegelvägg, ljus vertikalt rektangulär
+klinker nedtill, låg grå sockel och bred röd taksarg. Från öster syns två röda
+dörrpartier på rakare väggpartier. Funktionen är fortfarande okänd; arbetsnamnet
+intagshus är ingen fastställd funktion. Stenläggningen möter GC-banan utan steg.
+Bakom huset syns en räckesomgiven lägre anläggning. Den stora bassängens
+planform och exakta markkanter går inte att säkert läsa ur dessa gatubilder.
+
+Ingen ytterligare husmodell införs från den tidigare cirkelhypotesen. Det
+integrerade hus-/mark-/intagsprovet kvarstår. Inga Maps-pixlar sparades. Två
+begränsade offentliga webbsökningar gav ingen ny planritning för just lilla huset;
+Forsåkers samråd är inte måttunderlag för detta hus.

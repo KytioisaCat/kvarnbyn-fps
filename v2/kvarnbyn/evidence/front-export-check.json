@@ -1,0 +1,83 @@
+{
+  "initial": {
+    "allies": 9,
+    "bounds": [
+      -357.2080078125,
+      -299.81201171875,
+      542.7919921875,
+      400.18798828125
+    ],
+    "enemy_positions": 0,
+    "expanded": true,
+    "front": {
+      "base_under_attack": false,
+      "boundaries": 0,
+      "builds": 1,
+      "entries": 4,
+      "incoming": 4,
+      "reach_m": 125.0,
+      "regions": 3,
+      "schematic": true
+    },
+    "heading": [
+      -0.730819702148438,
+      -0.682570576667786
+    ],
+    "loaded": true,
+    "map_rect": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "north_up": true,
+    "player": [
+      339.989990234375,
+      153.190002441406
+    ],
+    "static_map_draws": 1,
+    "zones": 3
+  },
+  "mixed": {
+    "allies": 9,
+    "bounds": [
+      -357.2080078125,
+      -299.81201171875,
+      542.7919921875,
+      400.18798828125
+    ],
+    "enemy_positions": 0,
+    "expanded": true,
+    "front": {
+      "base_under_attack": true,
+      "boundaries": 2,
+      "builds": 2,
+      "entries": 4,
+      "incoming": 4,
+      "reach_m": 125.0,
+      "regions": 3,
+      "schematic": true
+    },
+    "heading": [
+      -0.730819702148438,
+      -0.682570576667786
+    ],
+    "loaded": true,
+    "map_rect": [
+      460.0,
+      579.111083984375,
+      1000.0,
+      777.777770996094
+    ],
+    "north_up": true,
+    "player": [
+      339.989990234375,
+      153.190002441406
+    ],
+    "static_map_draws": 1,
+    "zones": 3
+  },
+  "passed": true,
+  "release": true,
+  "scope": "exported map code/assets with controlled zone-owner/base-alarm fixture; no observed battle outcome"
+}

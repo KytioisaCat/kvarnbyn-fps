@@ -337,6 +337,30 @@ hittade att dessa saknades trots gröna editorprov; `--map-export-check` körs n
 själva release-appen i återbyggnaden. `verify_map.gd` provar kartkomponenten och
 `verify_map_world.gd` verkliga tangenthändelser, paus, zonbyte och spelavslut.
 
+## Kartans schematiska frontläge (2026-11-04)
+
+`map_front.gd` delar zonernas närhet efter närmaste zon, högst125m från dess
+centrum. Röd/blå ton följer ägaren; streckad gräns visas mellan motsatta ägare.
+Det är schematiskt zonläge, inte soldaternas verkliga territoriella kontroll.
+Okända områden längre bort lämnas neutrala. Konvexa celler klipps mot kartans
+världsgräns och utsnitt; fronten beräknas endast vid ändrade zoner/ägare.
+Spelarrörelse, allierade och fiendepositioner ändrar inte denna geometri.
+
+Kartans API tar endast zoner, allierade, spelarens läge och en bool för återstående
+förstärkningar. De fyra fasta infallspunkterna kommer från game.cfg vid setup.
+Korta pilar pekar mot närmaste fiendezon och betecknar möjliga förstärkningshåll;
+de är varken faktisk vald spawn, AI-väg eller upptäckta fiendeförband. Pilarna
+släcks vid slut på förstärkningsbudgeten och när alla zoner är egna. Befintliga
+soldater påverkas inte. En egen bas som är contested med enemies_in>0 får gul
+varning i kartans huvudrad, samma villkor som HUD-målet.
+
+`verify_front.gd` testar geometrins klippning och den riktiga importerade världen:
+ägarbyte, basanfall, uttömd/återställd budget, återtagna zoner och att flyttad fiende
+inte ändrar kartan. Nativebilder använder kontrollerade zonägare, inte en påstådd
+spelomgång. Minikartans provkamera sätts på en riktig golvray. Återbyggnadens nya
+`--front-export-check` provar även koden i release-appen. Ingen värld, AI, balans
+eller karttextur ändras i denna kartleverans.
+
 ## Forsens visuella flöde (2026-11-02)
 
 `site.py` exporterar de befintliga utjämnade, nedströmsordnade vattenprofilerna

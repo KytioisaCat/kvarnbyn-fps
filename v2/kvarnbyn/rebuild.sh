@@ -63,6 +63,10 @@ step "Kontroll: kartans underlag och orientering"
 $G --audio-driver Dummy --headless --path $P/godot --script res://scripts/verify_map.gd -- --output="$ROOT/$LOG/map-check.json" > $LOG/map-check.log 2>&1
 step "Kontroll: kartknappar och paus i riktig spelvärld"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_map_world.gd -- --no-pointer-lock --output="$ROOT/$LOG/map-world-check.json" > $LOG/map-world-check.log 2>&1
+step "Kontroll: frontläge, förstärkningshåll och baslarm på kartan"
+rm -f $LOG/front-check.json
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_front.gd -- --no-pointer-lock --output="$ROOT/$LOG/front-check.json" > $LOG/front-check.log 2>&1
+$PY -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["checks"])>=27' $LOG/front-check.json
 step "Kontroll: målvisning och baslarm i riktig spelvärld"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_objective.gd -- --no-pointer-lock --output="$ROOT/$LOG/objective-check.json" > $LOG/objective-check.log 2>&1
 step "Kontroll: forsens riktningar och faktiska vattenmaterial"
@@ -88,6 +92,9 @@ if [[ " $* " != *" --no-export "* ]]; then
   ditto -x -k $P/desktop/Kvarnbyn.zip $P/desktop/app
   step "Kontroll: kartan finns också i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --explore --no-pointer-lock --map-export-check > $LOG/map-export-check.log 2>&1
+  step "Kontroll: frontläget fungerar också i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --no-pointer-lock --front-export-check > $LOG/front-export-check.log 2>&1
+  $PY -c 'import json,sys; lines=open(sys.argv[1]).read().splitlines(); r=json.loads(next(x.split("KVARNBYN_FRONT_EXPORT_CHECK ",1)[1] for x in lines if x.startswith("KVARNBYN_FRONT_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/front-export-check.log
   step "Kontroll: flödesfältet finns också i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --explore --no-pointer-lock --water-export-check > $LOG/water-export-check.log 2>&1
 fi

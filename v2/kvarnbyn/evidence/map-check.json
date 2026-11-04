@@ -148,6 +148,16 @@
 		],
 		"enemy_positions": 0,
 		"expanded": false,
+		"front": {
+			"base_under_attack": false,
+			"boundaries": 0,
+			"builds": 2,
+			"entries": 0,
+			"incoming": 0,
+			"reach_m": 125.0,
+			"regions": 0,
+			"schematic": true
+		},
 		"heading": [
 			0.0,
 			-1.0

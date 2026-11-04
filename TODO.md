@@ -15,6 +15,7 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Fas A bedömd genom Joels dom över det spelbara Fas B-provet (2026-10-30).
 - [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
+- [ ] **Basvakternas ersättare:** konkret kodfynd2026-11-04: alla allierade förstärkningar får rollen assault, även när en av de tre basvakterna stupat. Återställ vaktkvoten med riktiga döds-/timerprov; ändra inte skada/antal/tempo från ett enstaka botprov.
 - [ ] **Omgångstempo och basförsvar:** ett nytt botprov2026-11-02 förlorade vid221,5s (40nedkämpade,0egna dödsfall); människans runda behövs. Undersök hur tydligt basanfall signaleras och hur allierade försvarar. `v2/kvarnbyn/evidence/round-2026-11-02.json`.
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **Joels bedömning av kvällsljuset** (`v2/kvarnbyn/RESULTAT-KVALL.md`): läsbarhet i strid, stämning och lyktövergångar under promenad.
@@ -44,7 +45,7 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
    broanslutningar och vidare vatten-/forsarbete. Förbättra uppskattade detaljer efter
    observationer. Prova punktmoln på 5–10 hus/träd separat före större automatik.
 4. **Orientering och spelomgång:** minikarta/fullskärmskarta i Godot är byggda.
-   Nästa kartsteg: frontlinje/anfallsriktningar. Hela rundor för tempo, svårighet, allierades framryckning och återstående AI-fel.
+   Frontläge/förstärkningshåll är byggda2026-11-04. Hela rundor för tempo, svårighet, allierades framryckning och återstående AI-fel.
 5. **Fortsatt stämning:** varma fönster, forsens dimma och bättre ljudlandskap;
    befintligt dag/kvällsljus finjusteras utifrån spelbedömning. Agenttester tysta.
 6. **Senare expansion:** Mölndals centrum/större värld och idéerna om lugnt torg,
@@ -101,6 +102,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-04 — **Kartans frontläge och förstärkningshåll**: schematisk125m zonfärg, streckad front som följer ägarbyte, fyra möjliga förstärkningspilar och basvarning.30 riktiga komponent-/världsprov,34nativekontroller samt ny releasegrind gröna. Full återbyggnad128s och ny Mac-app. Värld/kartbild/spelregler/AI-vägnät oförändrade. `v2/kvarnbyn/RESULTAT-FRONT.md`.
 
 - [x] 2026-11-02 — **Forsens rörelse och skum**: eget49KB flödesfält följer befintliga nedströmsprofiler; mer skum i brantare lopp.22 riktiga material-/riktningstest,25 nativekontroller och separat releasegrind gröna. Tre nya forsvyer, dag/kväll/lägre kvalitet, ny Mac-app. Världens GLB/kartbild och alla gamla markvärden exakt oförändrade. `v2/kvarnbyn/RESULTAT-FORS.md`.
 

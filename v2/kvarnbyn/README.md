@@ -16,6 +16,9 @@ mellanslag hoppa/raketdubbelhopp · F flygtest · M karta · Esc paus.
 
 Minikartan följer dig med norr uppåt. Den stora kartan pausar spelet och visar
 husen, ån, din riktning, zonerna och allierade. M eller Esc återgår till spelet.
+Röd/blå ton visar läget kring zonerna; den streckade fronten följer ägarbyten.
+Pilar visar möjliga förstärkningshåll medan fienden kan få fler soldater.
+Pågående basanfall får gul varning i stora kartan.
 Målpilen visar riktning och avstånd till nästa område. En pågående attack mot
 den återtagna basen prioriteras med texten Försvara C.
 
@@ -37,6 +40,7 @@ från det befintliga torget-provet.
 
 ## Resultat och nästa steg
 
+- [Kartans frontläge och förstärkningshåll](RESULTAT-FRONT.md)
 - [Forsens rörelse och skum](RESULTAT-FORS.md) — tre nya forsvyer i menyn
 - [Målvisning och basvarning](RESULTAT-MALVISNING.md)
 - [Norra åbanken och spelkartan](RESULTAT-NORRA-ABANKEN.md)

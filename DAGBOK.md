@@ -35,7 +35,9 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 **Status:** pågår.
 **Gjort:** läst senaste tre överlämningarna, TODO och arkitektur. Joel ber om fortsatt självständigt arbete under passet.
-**Nästa:** granska intagshusets sparade inventering och faktiska bild-/markunderlag; bygg nästa avgränsade förbättring där underlaget räcker, med tysta motorprov och uppdaterad Mac-app. Dokumentera osäkerheter och lämna ingen gissad stor fyllnad.
+**Gjort, delsteg:** forsleveransens tio leveranshashar identiska, release-vattenprov grönt igen; sparad i29d92a8. Faktiskt återbesök i två Maps-vyer bekräftar material/rundad vägg men ingen säker bassäng-/plankontur; nya observationer sparade, inga pixlar. Ingen cirkel på hög fyllnad byggs. Fortsätter med nästa oberoende byggbara TODO: schematiskt frontläge och möjliga förstärkningsriktningar på Godot-kartorna. BRIEF-FRONT.md; faktisk konfiguration har fyra infallspunkter.
+**Gjort, delsteg2:** frontkartan färdig i ny Mac-app: map_front.gd + tactical_map/world; schematiskt125m zonläge, gräns och fyra möjliga förstärkningshåll, baslarm.30 headlesskontroller/34nativekontroller gröna. Full rebuild128s, gamla grindar och tre releasegrindar gröna. Nativebild från release granskad. Rå/optimeradGLB och kartPNG sammaSHA som forsleveransen; game/nav byteidentiska. RESULTAT-FRONT.md och delivery-front-2026-11-04.json. Första minikartfixturens antagna markhöjd låg under mark; riktig golvray rättade testet.
+**Nästa:** konkret fel i allierades ersättare: basvakter återkommer alltid som assault. Verifiera med verkliga döds-/timerprov och rätta vaktkvoten separat från kartleveransen. Intagshus/mark/bassänger kvarstår; ingen osäker ny modell byggd.
 
 ---
 

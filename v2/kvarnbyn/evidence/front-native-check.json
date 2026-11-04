@@ -1,0 +1,646 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"passed": true,
+			"test": "polygon_clips_exactly_to_view"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "empty_view_has_no_front_fill"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "tangent_view_has_no_degenerate_polygon"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "line_clips_both_sides"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "line_outside_is_removed"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "vertical_line_clips"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "opposed_zones_have_one_front"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "front_is_equal_distance_bisector"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "influence_bounded_by_reach_and_world"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "each_colour_stays_on_its_side"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "same_owner_has_no_front"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "coincident_zones_do_not_duplicate_fill"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "empty_explore_model_has_no_regions"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "real_combat_world_loaded"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "three_actual_hostile_zones_coloured"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "four_configured_entry_arrows"
+		},
+		{
+			"detail": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-front-20261104/front-initial.png",
+			"passed": true,
+			"test": "image_front-initial"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "player_movement_does_not_rebuild_regions"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "unseen_enemy_has_no_map_effect"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "reclaiming_C_moves_front"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "base_attack_matches_real_cap_fields"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "mixed_owner_colours_present"
+		},
+		{
+			"detail": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-front-20261104/front-base-alarm.png",
+			"passed": true,
+			"test": "image_front-base-alarm"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "mini_fixture_uses_actual_floor"
+		},
+		{
+			"detail": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-front-20261104/front-mini.png",
+			"passed": true,
+			"test": "image_front-mini"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "contested_without_enemies_is_not_base_alarm"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "enemy_owned_C_is_not_a_defend_alarm"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "exhausted_reinforcements_hide_arrows"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "new_reinforcement_budget_restores_arrows"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "all_reclaimed_no_front_or_incoming"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "no_red_regions_after_all_reclaimed"
+		},
+		{
+			"detail": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-front-20261104/front-reclaimed.png",
+			"passed": true,
+			"test": "image_front-reclaimed"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "expanded_board_fits_viewport"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "explore_clears_all_front_information"
+		}
+	],
+	"passed": true,
+	"scope": "real world/map/GameManager with controlled owners and algebraic clipping checks; no measured battle front",
+	"states": {
+		"all_reclaimed": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": false,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 0,
+				"builds": 6,
+				"entries": 4,
+				"incoming": 0,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.70710676908493,
+				-0.707106828689575
+			],
+			"loaded": true,
+			"map_rect": [
+				22.0,
+				772.0,
+				245.0,
+				200.0
+			],
+			"north_up": true,
+			"player": [
+				209.889999389648,
+				33.9900016784668
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"base_under_attack": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": true,
+			"front": {
+				"base_under_attack": true,
+				"boundaries": 2,
+				"builds": 2,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.730819702148438,
+				-0.682570576667786
+			],
+			"loaded": true,
+			"map_rect": [
+				460.0,
+				159.111114501953,
+				1000.0,
+				777.777770996094
+			],
+			"north_up": true,
+			"player": [
+				344.989990234375,
+				153.190002441406
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"cleared_full": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": true,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 0,
+				"builds": 6,
+				"entries": 4,
+				"incoming": 0,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.70710676908493,
+				-0.707106828689575
+			],
+			"loaded": true,
+			"map_rect": [
+				22.0,
+				772.0,
+				245.0,
+				200.0
+			],
+			"north_up": true,
+			"player": [
+				209.889999389648,
+				33.9900016784668
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"enemy_C": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": false,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 0,
+				"builds": 3,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.70710676908493,
+				-0.707106828689575
+			],
+			"loaded": true,
+			"map_rect": [
+				22.0,
+				772.0,
+				245.0,
+				200.0
+			],
+			"north_up": true,
+			"player": [
+				209.889999389648,
+				33.9900016784668
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"initial": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": false,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 0,
+				"builds": 1,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.730819702148438,
+				-0.682570576667786
+			],
+			"loaded": true,
+			"map_rect": [
+				22.0,
+				772.0,
+				245.0,
+				200.0
+			],
+			"north_up": true,
+			"player": [
+				339.989990234375,
+				153.190002441406
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"initial_full": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": true,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 0,
+				"builds": 1,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.730819702148438,
+				-0.682570576667786
+			],
+			"loaded": true,
+			"map_rect": [
+				22.0,
+				772.0,
+				245.0,
+				200.0
+			],
+			"north_up": true,
+			"player": [
+				339.989990234375,
+				153.190002441406
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"mini_base": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": false,
+			"front": {
+				"base_under_attack": true,
+				"boundaries": 2,
+				"builds": 2,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.70710676908493,
+				-0.707106828689575
+			],
+			"loaded": true,
+			"map_rect": [
+				460.0,
+				159.111114501953,
+				1000.0,
+				777.777770996094
+			],
+			"north_up": true,
+			"player": [
+				209.889999389648,
+				33.9900016784668
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"not_an_attack": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": false,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 2,
+				"builds": 2,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.70710676908493,
+				-0.707106828689575
+			],
+			"loaded": true,
+			"map_rect": [
+				22.0,
+				772.0,
+				245.0,
+				200.0
+			],
+			"north_up": true,
+			"player": [
+				209.889999389648,
+				33.9900016784668
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"player_moved": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": true,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 0,
+				"builds": 1,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.730819702148438,
+				-0.682570576667786
+			],
+			"loaded": true,
+			"map_rect": [
+				460.0,
+				159.111114501953,
+				1000.0,
+				777.777770996094
+			],
+			"north_up": true,
+			"player": [
+				344.989990234375,
+				153.190002441406
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"reinforcements_exhausted": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": false,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 2,
+				"builds": 4,
+				"entries": 4,
+				"incoming": 0,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.70710676908493,
+				-0.707106828689575
+			],
+			"loaded": true,
+			"map_rect": [
+				22.0,
+				772.0,
+				245.0,
+				200.0
+			],
+			"north_up": true,
+			"player": [
+				209.889999389648,
+				33.9900016784668
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"reinforcements_restored": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": false,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 2,
+				"builds": 5,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.70710676908493,
+				-0.707106828689575
+			],
+			"loaded": true,
+			"map_rect": [
+				22.0,
+				772.0,
+				245.0,
+				200.0
+			],
+			"north_up": true,
+			"player": [
+				209.889999389648,
+				33.9900016784668
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		},
+		"unseen_enemy_moved": {
+			"allies": 9,
+			"bounds": [
+				-357.2080078125,
+				-299.81201171875,
+				542.7919921875,
+				400.18798828125
+			],
+			"enemy_positions": 0,
+			"expanded": true,
+			"front": {
+				"base_under_attack": false,
+				"boundaries": 0,
+				"builds": 1,
+				"entries": 4,
+				"incoming": 4,
+				"reach_m": 125.0,
+				"regions": 3,
+				"schematic": true
+			},
+			"heading": [
+				-0.730819702148438,
+				-0.682570576667786
+			],
+			"loaded": true,
+			"map_rect": [
+				460.0,
+				159.111114501953,
+				1000.0,
+				777.777770996094
+			],
+			"north_up": true,
+			"player": [
+				344.989990234375,
+				153.190002441406
+			],
+			"static_map_draws": 1,
+			"zones": 3
+		}
+	}
+}
