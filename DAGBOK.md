@@ -31,6 +31,14 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-04 20:27 — ChatGPT Codex — publiceringskedjan
+
+**Status:** pågår — Mac-appen klar; separat GitHub Pages-fel upptäckt efter push.
+**Gjort:** körning41896520364 byggde/uppladdade35,6MB men deploy såg0paket direkt efter uppladdningen. REST-API visade sedan paketet. En omkörning skapade två paket med samma namn och deploy föll på dubbletter. Separata build/deploy-jobb och unikt paketnamn per byggförsök; deploy läser namnet från byggjobbets output, även vid omkörning av enbart deploy.
+**Nästa:** pusha denna avgränsade workflow-rättning och verifiera riktig körning; spelappen/kartan/vaktfixen oförändrade.
+
+---
+
 ## 2026-11-04 19:54 — ChatGPT Codex — frontläge och basvakter
 
 **Status:** klart — två nya delar i verifierad Mac-app; inga halvfärdiga modelländringar.

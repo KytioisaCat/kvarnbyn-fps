@@ -493,3 +493,16 @@ Debugtillståndet anger nu allied_guards för framtida omgångsdiagnostik.
 förstärkningstimern i pausad värld. Den provar vakt-/anfalls-/blandade förluster,
 heltruppsförlust, oförändrad väntetid, återstart, måletC samt olika kvoter.
 `--guards-export-check` prövar riktiga döds-/timerhändelser i release-appen.
+
+## GitHub Pages: separata bygg- och publiceringsjobb (2026-11-04)
+
+Push44fd1f5 byggde och laddade upp sajten, men deploy-pages såg tillfälligt inget
+paket. Omkörningen skapade i stället två likadant namngivna paket och nekades.
+`.github/workflows/deploy.yml` delar därför på build/deploy med needs:build.
+Paketnamnet innehåller byggförsöket och skickas som jobboutput till deploy. Vid
+omkörning av enbart deploy behålls det lyckade byggjobbets paketnamn, även när
+run_attempt ökar. Samma actions-versioner, behörigheter och v1/v2-innehåll som förr.
+Det påverkar inte Godot-appen, som levereras lokalt.
+
+Primärunderlag: körning41896520364, uppladdningskvitto/paketlista samt
+https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages .
