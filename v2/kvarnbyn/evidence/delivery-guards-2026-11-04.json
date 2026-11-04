@@ -188,5 +188,6 @@
   },
   "before": "allied-roles-before.json: 5 of14 checks failed; 3 guards killed became0 guards/9 assault after resupply",
   "after": "19 checks passed including different quotas, death callbacks, base target, waiting time, restart and exported app",
-  "build_log": "v2/.tools/kvarnbyn-front-20261104/rebuild-guards.log"
+  "build_log": "v2/.tools/kvarnbyn-front-20261104/rebuild-guards.log",
+  "round_sample": "round-2026-11-04.json"
 }

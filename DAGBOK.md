@@ -31,15 +31,22 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
-## 2026-11-04 19:54 — ChatGPT Codex — fortsätter från forsleveransen
+## 2026-11-04 19:54 — ChatGPT Codex — frontläge och basvakter
 
-**Status:** pågår.
-**Gjort:** läst senaste tre överlämningarna, TODO och arkitektur. Joel ber om fortsatt självständigt arbete under passet.
-**Gjort, delsteg:** forsleveransens tio leveranshashar identiska, release-vattenprov grönt igen; sparad i29d92a8. Faktiskt återbesök i två Maps-vyer bekräftar material/rundad vägg men ingen säker bassäng-/plankontur; nya observationer sparade, inga pixlar. Ingen cirkel på hög fyllnad byggs. Fortsätter med nästa oberoende byggbara TODO: schematiskt frontläge och möjliga förstärkningsriktningar på Godot-kartorna. BRIEF-FRONT.md; faktisk konfiguration har fyra infallspunkter.
-**Gjort, delsteg2:** frontkartan färdig i ny Mac-app: map_front.gd + tactical_map/world; schematiskt125m zonläge, gräns och fyra möjliga förstärkningshåll, baslarm.30 headlesskontroller/34nativekontroller gröna. Full rebuild128s, gamla grindar och tre releasegrindar gröna. Nativebild från release granskad. Rå/optimeradGLB och kartPNG sammaSHA som forsleveransen; game/nav byteidentiska. RESULTAT-FRONT.md och delivery-front-2026-11-04.json. Första minikartfixturens antagna markhöjd låg under mark; riktig golvray rättade testet.
-**Gjort, delsteg3:** frontleverans sparad if9ec502. Riktiga soldater/hit/död+timer före rättning ger3→0vakter och9anfallare efter förluster. Fem av14rollprov faller. Fortsätter med avgränsad rättning av ersättarnas roller.
-**Gjort, delsteg4:** vaktfelet rättat i game.gd, befintlig45s-timer/trupp9/kvot3 bevarade.19 riktiga rollprov och faktisk releasegrind gröna. Full rebuild128s med alla äldre grindar samt nya front-/vaktgrindar grön. Värld/karta/game.json/nav sammaSHA som frontleveransen. RESULTAT-BASVAKTER.md och delivery-guards-2026-11-04.json. Ett sista tyst botstickprov körs i slutappen.
-**Läge nu:** båda delarna färdiga och verifierade i slutappen. Resterande botstickprov körs; därefter spara utfallet, pusha och notera nästa steg. Intagshus/mark/bassänger kvarstår separat; ingen osäker ny modell byggd.
+**Status:** klart — två nya delar i verifierad Mac-app; inga halvfärdiga modelländringar.
+**Gjort:**
+- Läst senaste tre inläggen, TODO och arkitektur. Säkrat föregående osparade forsleverans i `29d92a8`: alla tio leveranshashar identiska och release-vattenprovet grönt igen.
+- Faktiskt återbesök i Maps vid 6/8 Kvarnbygatan, maj 2026. Bekräftar rundad tegelvägg, ljus klinker, bred röd taksarg och två röda dörrpartier. Fortfarande ingen säker bassäng-/plankontur. Observationer sparade; inga Maps-pixlar eller nya gissade hus/fyllnadsmurar i spelet.
+- Kartfront i `f9ec502`: `map_front.gd` + tactical_map/world. Schematiskt zonläge inom 125 m, röd/blå ton, streckad gräns som följer ägarbyte, fyra möjliga förstärkningshåll och gul basvarning. Kartan tar inga fiendepositioner. Pilar släcks vid uttömd budget/alla zoner egna. 30 headlesskontroller, 34 nativekontroller och releasegrind gröna. `RESULTAT-FRONT.md`, delivery-front-2026-11-04.json; bild front-release.jpg från exporterad app. Första minikartfixturens felaktiga antagna markhöjd rättades med riktig golvray.
+- Vaktfix i `4d5aa73`: riktiga soldater/hit/död + ordinarie timer bevisade 3→0 vakter och 9 anfallare efter förlust. Ersättningsloopen fyller nu vaktkvoten först. Överlevande roller, truppstorlek 9, kvot 3, 45 s, skada och fiendetryck bevarade. 19 riktiga prov gröna, inklusive fyra andra kvoter, återstart och mål C. Ny separat faktisk releasegrind: 3 vakter stupade → 3 nya vakter i trupp 9. Debugstate har allied_guards. `RESULTAT-BASVAKTER.md`, delivery-guards-2026-11-04.json.
+- Två fulla återbyggnader/Mac-exporter på 128 s vardera. Alla gamla gång-/mark-/kontroll-/soldat-/vapen-/träd-/ljus-/mål-/forsprov gröna, plus front/roller och fyra releasegrindar. Rå/optimerad världs-GLB, kartPNG, game.json och nav.json har exakt samma SHA som tidigare leverans.
+- Sista tysta botomgången i slutappen: tidsgräns vid 900,1 simsekunder, alla zoner egna, 9 allierade/3 vakter, 78 nedkämpade/31 huvudträffar, 0 egna dödsfall, 5 fiender kvar. Ingen seger; inga motorfel. `evidence/round-2026-11-04.json`. Boten söker inte vidare ordentligt efter alla återtagna zoner (gångmålet blir C); ny konkret TODO. Ett oseedat stickprov, ingen före/efter-balansjämförelse eller människans bedömning. Ingen vidare balansändring från provet.
+**Läge nu:** `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app` innehåller forsen, frontkartan och vaktfixen. ZIP cirka 246 MB, stora genererade filer endast lokalt. Slutbilder/loggar i `v2/.tools/kvarnbyn-front-20261104/`. Alla egna motorprov avslutade, Dummy-ljud + mastermute. Spårad houses.pyc återställd; `.claude/playpen/` och graphify memory orörda.
+**Nästa:**
+1. Botens rensningsfas: patrull via kända gatupunkter, utan osedda fiendepositioner, så att nya helomgångsprov kan avgöra seger efter återtagna zoner. Joels egen omgång behövs för svårighet/igenkänning.
+2. Intagshus + smal markanslutning + bassänger tillsammans; börja i `INTAGSHUS-INVENTERING-2026-11-02.md` och återbesöksnoteringen. Bildbelagd rundad fasad är fortfarande ingen inmätt cirkelplan.
+3. M24/M31 behöver säkrare fasadunderlag; fortsatt platsgrönska/forsdis/stämning finns i TODO.
+**Varningar:** kartfronten är schematisk närmaste-zon-influens, inte faktisk soldatkontroll. Förstärkningspilar är möjliga infallshåll, inte aktuell spawn eller rutter. Nativebilderna visar kontrollerade zonägare/baslarm; inga nya FPS-påståenden. Release ignorerar --script: använd inbyggda prov-/capture-flaggor. Alla agentprov fortsatt ljudlösa.
 
 ---
 

@@ -38,8 +38,7 @@ App: `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app`. Alla agentkörningar var
 ljudlösa. Stora genererade filer finns endast lokalt. Inga nya nedladdade tillgångar.
 [Leveransdata och hashar](evidence/delivery-front-2026-11-04.json).
 
-Nästa: verkliga spelomgångar och kvarvarande AI-fel. Ett separat kodfynd är att
-stupade allierade basvakter ersätts som anfallare; detta ingår ännu inte i denna
-kartleverans. Tegelhuset/intagsanläggningen behöver fortfarande ett sammanhängande
+Nästa: verkliga spelomgångar och kvarvarande AI-fel. Den separata [rättningen av basvakternas ersättare](RESULTAT-BASVAKTER.md)
+är också genomförd efter kartleveransen. Tegelhuset/intagsanläggningen behöver fortfarande ett sammanhängande
 platsunderlag. Nya faktiskt granskade gatubilder bekräftar material, men inte
 bassängernas mått eller planform.

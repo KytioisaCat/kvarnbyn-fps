@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-04",
+  "application_commit": "4d5aa73",
+  "engine": "Godot4.7.2 macOS release template, headless",
+  "options": [
+    "--audio-driver Dummy",
+    "--bot",
+    "--speed=4",
+    "--botlimit=900",
+    "--no-pointer-lock"
+  ],
+  "technical_completed": true,
+  "result": "tidsgräns",
+  "final_state": {
+    "allied_guards": 3,
+    "allies": 9,
+    "caps": [
+      {
+        "enemies_in": 0,
+        "friends_in": 0,
+        "id": "A",
+        "owner": "friendly",
+        "progress": 0.0
+      },
+      {
+        "enemies_in": 0,
+        "friends_in": 0,
+        "id": "B",
+        "owner": "friendly",
+        "progress": 0.0
+      },
+      {
+        "enemies_in": 0,
+        "friends_in": 4,
+        "id": "C",
+        "owner": "friendly",
+        "progress": 0.0
+      }
+    ],
+    "deaths": 0,
+    "elapsed_s": 900.1,
+    "enemies": 5,
+    "headshots": 31,
+    "kills": 78,
+    "over": false,
+    "player_alive": true,
+    "player_hp": 100.0,
+    "reinforcements_left": 0,
+    "running": true,
+    "victory": false
+  },
+  "interpretation": "Single unseeded bot sample after guard replacement fix. Not a human difficulty/recognition test and not a controlled before/after balance comparison. Bot still prioritizes visible combat over movement. No further balance changes from this sample.",
+  "source_log": "v2/.tools/kvarnbyn-front-20261104/round.log",
+  "log_sha256": "ab0b7bb4672cfff7953c0d391896a71180807abfb08c876a40f0211cf945d18a"
+}

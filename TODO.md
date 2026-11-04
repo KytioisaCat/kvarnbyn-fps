@@ -15,7 +15,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Fas A bedömd genom Joels dom över det spelbara Fas B-provet (2026-10-30).
 - [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
-- [ ] **Omgångstempo och basförsvar:** ett nytt botprov2026-11-02 förlorade vid221,5s (40nedkämpade,0egna dödsfall); människans runda behövs. Undersök hur tydligt basanfall signaleras och hur allierade försvarar. `v2/kvarnbyn/evidence/round-2026-11-02.json`.
+- [ ] **Botens rensningsfas:** efter att alla zoner återtagits väljer boten fortfarande C som gångmål. Lägg en patrull genom kända vägnätspunkter, utan att läsa osedda fienders positioner. Releaseprovet2026-11-04 nådde900,1s med alla zoner egna,3vakter/9allierade och5fiender kvar; ingen seger. `v2/kvarnbyn/evidence/round-2026-11-04.json`.
+- [ ] **Omgångstempo och basförsvar:** botprovet2026-11-02 förlorade vid221,5s; ett nytt oseedat prov2026-11-04 efter vaktfix nådde900,1s med alla zoner egna men5fiender kvar. Ingen kontrollerad balansjämförelse; människans runda behövs. Undersök hur tydligt basanfall signaleras och hur allierade försvarar. `v2/kvarnbyn/evidence/round-2026-11-02.json`.
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **Joels bedömning av kvällsljuset** (`v2/kvarnbyn/RESULTAT-KVALL.md`): läsbarhet i strid, stämning och lyktövergångar under promenad.
 - [ ] **Joels bedömning av forsen** (`v2/kvarnbyn/RESULTAT-FORS.md`): skummängd, rörelse och känsla. Geometrin är fortfarande förenklad; dimma och verkliga fall återstår.

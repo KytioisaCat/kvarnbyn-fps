@@ -31,3 +31,14 @@ samma filhashar som kartleveransen. Rättningen ligger i hur roller tilldelas.
 
 Den nya Mac-appen innehåller också [kartans frontläge](RESULTAT-FRONT.md) och
 [forsens rörelse](RESULTAT-FORS.md). Stora genererade filer finns endast lokalt.
+
+## Ett nytt omgångsstickprov
+
+Den exporterade appens tysta botprov nådde900,1 spelsekunder: alla zoner egna,
+9allierade varav3vakter,78nedkämpade/31huvudträffar,0egna dödsfall och5fiender
+kvar. Det blev tidsgräns, **inte seger**. Inga motor-/skriptfel i loggen.
+
+Det är ett oseedat stickprov och ingen kontrollerad jämförelse mot den äldre
+förlusten. Botens kod väljer fortfarande basC som gångmål när alla zoner är egna;
+en riktig patrull/rensningsfas återstår. Ingen ytterligare balansändring gjordes
+utifrån utfallet. [Omgångsdata](evidence/round-2026-11-04.json).
