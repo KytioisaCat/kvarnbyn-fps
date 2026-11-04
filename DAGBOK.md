@@ -33,9 +33,11 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ## 2026-11-04 20:27 — ChatGPT Codex — publiceringskedjan
 
-**Status:** pågår — Mac-appen klar; separat GitHub Pages-fel upptäckt efter push.
-**Gjort:** körning41896520364 byggde/uppladdade35,6MB men deploy såg0paket direkt efter uppladdningen. REST-API visade sedan paketet. En omkörning skapade två paket med samma namn och deploy föll på dubbletter. Separata build/deploy-jobb och unikt paketnamn per byggförsök; deploy läser namnet från byggjobbets output, även vid omkörning av enbart deploy.
-**Nästa:** pusha denna avgränsade workflow-rättning och verifiera riktig körning; spelappen/kartan/vaktfixen oförändrade.
+**Status:** klart — publiceringskedjan rättad och verifierad, ingen ändring av spelappen.
+**Gjort:** körning 41896520364 byggde/uppladdade 35,6 MB men deploy såg 0 paket direkt efter uppladdningen. REST-API visade sedan paketet. En omkörning skapade två paket med samma namn och deploy föll på dubbletter. I `c65a992` separerades build/deploy med ett unikt paketnamn per byggförsök; deploy läser namnet från byggjobbets output.
+**Verifierat:** ny riktig körning 41897151036 grön (build 17 s, deploy 11 s). Även omkörning av enbart deploy grön i försök 2; det lyckade byggjobbets ursprungliga paketnamn följer med. `v2/kvarnbyn/evidence/pages-deploy-check-2026-11-04.json`. Samma actions-versioner, behörigheter och sajtinnehåll. Godot-appen/kartan/vaktfixen oförändrade.
+**Nästa:** läs spelöverlämningen direkt nedanför; botens rensningspatrull och sammanhängande intagsunderlag återstår. Inget pågående motorprov eller halvfärdigt byggarbete.
+
 
 ---
 

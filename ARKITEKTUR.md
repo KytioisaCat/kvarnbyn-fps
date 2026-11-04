@@ -506,3 +506,6 @@ Det påverkar inte Godot-appen, som levereras lokalt.
 
 Primärunderlag: körning41896520364, uppladdningskvitto/paketlista samt
 https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages .
+
+Verifierat i riktig körning41897151036: både hela kedjan och omkörning av enbart
+deploy lyckades. Underlag i `v2/kvarnbyn/evidence/pages-deploy-check-2026-11-04.json`.

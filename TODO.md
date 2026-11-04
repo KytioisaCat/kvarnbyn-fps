@@ -103,6 +103,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 
 ## Klart
 
+- [x] 2026-11-04 — **Publiceringskedjan**: separata build/deploy-jobb och entydiga byggpaket även vid omkörning. Riktig GitHub-körning41897151036 samt separat deploy-omkörning gröna. Ingen ändring av v1/v2-innehåll eller Godot-app.
+
 - [x] 2026-11-04 — **Basvakter efter förluster**: ersättare fyller de tre vaktplatserna före anfallsroller. Före-provet gav0vakter/9anfallare efter3stupade vakter; nu3/6 igen.19 riktiga döds-/timer-/rollprov, fyra kvotvarianter och ny releasegrind gröna. Full återbyggnad128s och ny Mac-app. Antal/intervall/skada oförändrade. `v2/kvarnbyn/RESULTAT-BASVAKTER.md`.
 
 - [x] 2026-11-04 — **Kartans frontläge och förstärkningshåll**: schematisk125m zonfärg, streckad front som följer ägarbyte, fyra möjliga förstärkningspilar och basvarning.30 riktiga komponent-/världsprov,34nativekontroller samt ny releasegrind gröna. Full återbyggnad128s och ny Mac-app. Värld/kartbild/spelregler/AI-vägnät oförändrade. `v2/kvarnbyn/RESULTAT-FRONT.md`.
