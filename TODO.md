@@ -18,11 +18,12 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [ ] **Omgångstempo och basförsvar:** ett nytt botprov2026-11-02 förlorade vid221,5s (40nedkämpade,0egna dödsfall); människans runda behövs. Undersök hur tydligt basanfall signaleras och hur allierade försvarar. `v2/kvarnbyn/evidence/round-2026-11-02.json`.
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **Joels bedömning av kvällsljuset** (`v2/kvarnbyn/RESULTAT-KVALL.md`): läsbarhet i strid, stämning och lyktövergångar under promenad.
+- [ ] **Joels bedömning av forsen** (`v2/kvarnbyn/RESULTAT-FORS.md`): skummängd, rörelse och känsla. Geometrin är fortfarande förenklad; dimma och verkliga fall återstår.
 - [ ] **Världen (kärnan)**: fortsatt grönska och terrasser per plats. M29 och Stallelidens första gång-/platsprov är genomförda. M25:s eget hus och entrégång är byggda. Nästa husarbete: visuellt belägga M24 och M31; därefter deras volymer, grunder, tak och entréer längs trappan. Granska innan nya höga murar byggs.
 - [ ] **Joels bedömning av M25** (`v2/kvarnbyn/RESULTAT-M25.md`): husproportioner, stengrund och entrégång. Mått/markskärning uppskattade. Det lilla separata gavelrampmotivet behöver säkrare placering.
 - [ ] **Joels bedömning av Stalleliden/M30** (`v2/kvarnbyn/RESULTAT-STALLELIDEN.md`): igenkänning och gångstråk; grannhusen är fortfarande delvis generiska.
 - [ ] **Joels bedömning av Roten M 29** (`v2/kvarnbyn/RESULTAT-ROTEN.md`): igenkänning, husproportioner och markmiljö. Övriga grannhus är fortfarande generiska.
-- [ ] **Norra åbanken (tidigare ”Nordbanken”)**: första80m-stråket med asfalt/gångsten/förplats är byggt och provat. Nästa del: vattenintagets/bassängernas konturer, räckeslinjer, lilla tegelbyggnaden och möbler/planteringar; kräver mer platsunderlag. `v2/kvarnbyn/RESULTAT-NORRA-ABANKEN.md`.
+- [ ] **Norra åbanken (tidigare ”Nordbanken”)**: första80m-stråket är byggt. Nästa del: vattenintag/bassänger/räcken, det rundade tegelhuset och möbler/planteringar. Ny faktisk närvy från6Kvarnbygatan och lokal inventering i `reference/nordbanken/INTAGSHUS-INVENTERING-2026-11-02.md`: huset saknas i OSM, uppskattad placering[0,15], cirka1,1–1,3m markskillnad till GC-kanten. Hus och mark/intag måste provas tillsammans.
 - [ ] Framtid: pacing (Gamla torget som lugn bas med NPC:er, anfall mot Mölndals centrum via berget/ån), världen ut till Mölndals centrum och Götaforsliden
 - [ ] **Fas C** — kvällsljus, husrundor (Street View som referens), staket/häckar/trädgårdar, järnväg
 - [ ] Tolkning: takform/takhöjd/nockriktning per hus + träd ur punktmolnet; arketyp per hus
@@ -100,6 +101,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-02 — **Forsens rörelse och skum**: eget49KB flödesfält följer befintliga nedströmsprofiler; mer skum i brantare lopp.22 riktiga material-/riktningstest,25 nativekontroller och separat releasegrind gröna. Tre nya forsvyer, dag/kväll/lägre kvalitet, ny Mac-app. Världens GLB/kartbild och alla gamla markvärden exakt oförändrade. `v2/kvarnbyn/RESULTAT-FORS.md`.
 
 - [x] 2026-11-02 — **Målvisning och basvarning**: pil/avstånd till C→B→A; aktivt basanfall prioriteras. Rensningsuppmaning utan fiendepositioner.23 riktiga spel-/HUD-prov och nativebild gröna, ny Mac-app. Värld och balans oförändrade. `v2/kvarnbyn/RESULTAT-MALVISNING.md`.
 

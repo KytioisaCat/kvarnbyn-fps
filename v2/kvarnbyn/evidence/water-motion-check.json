@@ -1,0 +1,31 @@
+{
+  "source": "52 native actual-world fixed-phase frames, cropped from 1600x900 viewport",
+  "period_s": 4.329004329004329,
+  "frames": 52,
+  "gif_bytes": 917933,
+  "phase_pair_frames": [
+    24,
+    28
+  ],
+  "frame_dt_s": 0.33300033300033305,
+  "patch_in_crop": [
+    220,
+    90,
+    280,
+    180
+  ],
+  "positive_dy": "down the screen toward camera; camera faces upstream",
+  "best_correlation": {
+    "score": 0.9573828481442724,
+    "dx": 0,
+    "dy": 2
+  },
+  "stationary_correlation": 0.6684664227389393,
+  "scope": "Single visual patch inspection, not global fluid simulation or velocity measurement",
+  "gif_size": [
+    400,
+    418
+  ],
+  "gif_playback_ms": 4330,
+  "gif_palette_colors": 64
+}

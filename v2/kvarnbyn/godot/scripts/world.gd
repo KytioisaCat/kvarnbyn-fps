@@ -4,7 +4,7 @@ const PlayerController = preload("res://scripts/player.gd")
 const OverlayController = preload("res://scripts/overlay.gd")
 const Lighting = preload("res://scripts/lighting.gd")
 const StreetLights = preload("res://scripts/street_lights.gd")
-const WaterShader = preload("res://shaders/water.gdshader")
+const RiverWater = preload("res://scripts/river_water.gd")
 const GameManager = preload("res://scripts/game.gd")
 const HudController = preload("res://scripts/hud.gd")
 const Fx = preload("res://scripts/fx.gd")
@@ -36,6 +36,7 @@ var lighting_mode := "day"
 var scene_environment: WorldEnvironment
 var scene_sun: DirectionalLight3D
 var street_lights: Node3D
+var river_water: RefCounted
 var game: Node
 var hud: Control
 var tactical_map: Control
@@ -56,7 +57,7 @@ func _ready() -> void:
 	options = read_options()
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			break
@@ -122,6 +123,8 @@ func _ready() -> void:
 			environment.environment = updated_environment.environment
 			updated_environment.free()
 	used_baked_world = has_baked_lighting(world_instance)
+	river_water = RiverWater.new()
+	river_water.load_field()
 	prepare_world()
 	street_lights = StreetLights.new()
 	street_lights.name = "Gatubelysning"
@@ -166,6 +169,8 @@ func _ready() -> void:
 		player.free_flight = true
 	if options.has("map-export-check"):
 		check_exported_map()
+	if options.has("water-export-check"):
+		check_exported_water()
 	if options.has("capture"):
 		capture_after_frames(str(options["capture"]), int(options.get("frames", "45")))
 	if options.has("probe"):
@@ -278,11 +283,7 @@ func animate_water_materials(mesh_instance: MeshInstance3D) -> void:
 		var material := mesh_instance.get_active_material(surface)
 		if material == null or "waterflow" not in str(material.resource_name).to_lower():
 			continue
-		var animated := ShaderMaterial.new()
-		animated.shader = WaterShader
-		animated.resource_name = "WaterFlow"
-		if material is BaseMaterial3D:
-			animated.set_shader_parameter("water_color", material.albedo_color)
+		var animated: ShaderMaterial = river_water.material_for(material)
 		mesh_instance.set_surface_override_material(surface, animated)
 		if mesh_instance.mesh.get_surface_count() == 1:
 			mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -427,6 +428,16 @@ func check_exported_map() -> void:
 	get_tree().paused = false
 	get_tree().quit(0 if result.passed else 3)
 
+func check_exported_water() -> void:
+	AudioServer.set_bus_mute(0,true)
+	var valid: bool = river_water!=null and river_water.loaded and river_water.surfaces>0
+	if valid:
+		for material in river_water.materials:
+			valid = valid and material.get_shader_parameter("flow_field")==river_water.field and material.get_shader_parameter("use_flow_field")==true
+	var result := {"passed":valid,"water":river_water.snapshot() if river_water!=null else {},"release":not OS.has_feature("editor")}
+	print("KVARNBYN_WATER_EXPORT_CHECK ",JSON.stringify(result))
+	get_tree().quit(0 if valid else 3)
+
 func set_map_open(value: bool) -> void:
 	if tactical_map == null or not tactical_map.map_loaded:
 		return
@@ -534,6 +545,7 @@ func snapshot() -> Dictionary:
 	return {"map":tactical_map.snapshot() if tactical_map != null else {},"ready": world_ready, "title": metadata.get("title", "Kvarnbyn"),
 		"load_ms": load_msec, "baked_lightmaps": used_baked_world, "prepared_bake_scene": prepared_bake_scene,
 		"lighting": lighting_mode, "street_lights": street_lights.snapshot() if street_lights != null else {},
+		"water":river_water.snapshot() if river_water!=null else {},
 		"touch": touch_mode, "world": world_stats, "player": player.snapshot() if player != null else {},
 		"fps": Engine.get_frames_per_second(), "view": view_index,
 		"draw_calls": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),

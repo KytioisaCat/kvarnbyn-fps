@@ -23,6 +23,8 @@ step "Markytor: data/site.json"
 (cd $P/pipeline && ../../../$PY site.py) | tail -3
 step "Karta: eget kartunderlag ur hus, mark och höjddata"
 $PY $P/pipeline/map_image.py > $LOG/map-build.log
+step "Fors: eget flödesfält ur befintlig vattenprofil"
+$PY $P/pipeline/river_flow.py > $LOG/river-flow-build.log
 step "Blender: bygger världen → blender/world_raw.glb"
 $B -b --python-exit-code 1 --python $P/blender/build_world.py > $LOG/blender-build.log 2>&1
 grep SCENE_METRICS $LOG/blender-build.log | cut -c1-200
@@ -63,6 +65,8 @@ step "Kontroll: kartknappar och paus i riktig spelvärld"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_map_world.gd -- --no-pointer-lock --output="$ROOT/$LOG/map-world-check.json" > $LOG/map-world-check.log 2>&1
 step "Kontroll: målvisning och baslarm i riktig spelvärld"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_objective.gd -- --no-pointer-lock --output="$ROOT/$LOG/objective-check.json" > $LOG/objective-check.log 2>&1
+step "Kontroll: forsens riktningar och faktiska vattenmaterial"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_water.gd -- --explore --no-pointer-lock --output="$ROOT/$LOG/water-check.json" > $LOG/water-check.log 2>&1
 step "Kontroll: trädplaceringar efter import"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_trees.gd -- --explore > $LOG/tree-check.log 2>&1
 step "Kontroll: kvällsljus, gatlyktor och menybyte"
@@ -84,5 +88,7 @@ if [[ " $* " != *" --no-export "* ]]; then
   ditto -x -k $P/desktop/Kvarnbyn.zip $P/desktop/app
   step "Kontroll: kartan finns också i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --explore --no-pointer-lock --map-export-check > $LOG/map-export-check.log 2>&1
+  step "Kontroll: flödesfältet finns också i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --explore --no-pointer-lock --water-export-check > $LOG/water-export-check.log 2>&1
 fi
 step "Klart på $(( $(date +%s) - t0 )) s. Kör:  $G --path $P/godot"

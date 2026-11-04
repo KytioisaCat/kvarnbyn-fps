@@ -7,10 +7,10 @@ Nordbanken avser inte ett bankkontor.
 
 - Google Street View **maj 2026**, 45 Kvarnbygatan, pano `ZcfLUaEvEvdds8CYt5lQTg`,
   position 57.6568719,12.0273793, riktning ungefär100° mot åsidan.
-  [Återbesök vyn](https://www.google.com/maps/@57.6568719,12.0273793,19a,90y,100h,85t/data=!3m7!1e1!3m5!1sZcfLUaEvEvdds8CYt5lQTg!2e0!7i16384!8i8192).
+  [Återbesök vyn](https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=57.65688,12.02745&heading=100&pitch=-5&fov=90).
 - Google Street View **maj 2026**, 8 Kvarnbygatan, pano `i4aplezFKoyidT1kSnnXgA`,
   position57.6569511,12.028141, runt225° och vidare vriden mot ån runt135–180°.
-  [Återbesök vyn](https://www.google.com/maps/@57.6569511,12.028141,20a,90y,180h,80t/data=!3m7!1e1!3m5!1si4aplezFKoyidT1kSnnXgA!2e0!7i16384!8i8192).
+  [Återbesök vyn](https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=57.6569511,12.028141&heading=225&pitch=-5&fov=60).
 
 Synligt: Kvarnbygatans körbana i asfalt, kantsten och ljus smågatstensremsa;
 separat mörk asfaltbana med cykelsymbol parallellt med ån; smalare grå sten-/plattgång

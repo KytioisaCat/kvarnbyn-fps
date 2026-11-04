@@ -108,7 +108,7 @@
   ],
   "source": {
     "city_sha256": "b4290402f4d36cb474d6dbf51f79391dba95547b0abeb6a3f57f8568755de445",
-    "site_sha256": "829b09a5cc651d19e7985a1f3e5e494d90e91b489ce0c1db189aeafddb3a4cdd",
+    "site_sha256": "95017a742f3add276ff4559dc361bd8a2aeb1fa19c130d1da32bf158837c3e1f",
     "method": "Own cartography; rendered surface triangles and built footprints, land classes and LiDAR hillshade; no external map pixels"
   },
   "counts": {

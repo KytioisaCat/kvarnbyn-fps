@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "bounds": [
+    -357.20799999996177,
+    -299.811999999838,
+    542.7920000000382,
+    400.188000000162
+  ],
+  "image": {
+    "file": "river_flow.png",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB8"
+  },
+  "encoding": {
+    "r": "downstream unit tangent X * 0.5 + 0.5",
+    "g": "downstream unit tangent Z * 0.5 + 0.5",
+    "b": "smoothstep(0.035,0.2,local non-negative height drop / actual window span)",
+    "rounding": "floor(clamp(channel,0,1)*255+0.5)",
+    "window_m": 8.0,
+    "pixel_centres": true,
+    "row0": "north / min Z",
+    "shader_uv": "(world_xz - bounds.xy) / (bounds.zw - bounds.xy)",
+    "sampler": "Data texture: omit source_color/sRGB decoding; normalize decoded RG after filtering",
+    "mask": "No off-channel mask; render/sample only on the existing water mesh"
+  },
+  "interpretation": "Artistic foam/turbulence proxy from existing estimated water profiles; not hydrodynamics, measured discharge or fluid velocity. B=0 still retains directed stream motion.",
+  "nearest_tie_break": "lowest source segment index among exact-distance ties",
+  "source": {
+    "generator_sha256": "073085a64c5ce3a3f4c24a48e19d35772c3ccc87313e11af7cf6bfa9cccbe4d6",
+    "site_sha256": "95017a742f3add276ff4559dc361bd8a2aeb1fa19c130d1da32bf158837c3e1f",
+    "city_sha256": "b4290402f4d36cb474d6dbf51f79391dba95547b0abeb6a3f57f8568755de445",
+    "profile_count": 10,
+    "segment_count": 4814
+  },
+  "output": {
+    "png_sha256": "340287e3e36a9fadce17f89a40658b1f452010e4ef9947bc0b9cef06c01d3222",
+    "png_bytes": 49210
+  },
+  "ranges": {
+    "flow_x": [
+      -0.9999961969013297,
+      0.9924821761566593
+    ],
+    "flow_z": [
+      -0.9741777140636113,
+      0.9985376115567935
+    ],
+    "local_grade": [
+      0.0,
+      0.39394232149561437
+    ],
+    "foam_proxy": [
+      0.0,
+      1.0
+    ],
+    "rgb8_min": [
+      0,
+      3,
+      0
+    ],
+    "rgb8_max": [
+      254,
+      255,
+      255
+    ]
+  },
+  "checks": {
+    "passed": true,
+    "png_roundtrip": true,
+    "minimum_decoded_tangent_dot": 0.9999880644210957,
+    "maximum_foam_quantization_error": 0.001960714248689932,
+    "synthetic_assertions": [
+      "flat_profile_retains_downstream_tangent",
+      "flat_east_encoding",
+      "steep_south_tangent_and_8m_grade",
+      "full_strength_encoding",
+      "west_direction_and_soft_strength",
+      "flat_curve_follows_line_not_height_normal",
+      "exact_distance_tie_uses_input_order",
+      "uphill_input_rejected_instead_of_silently_flipped"
+    ]
+  },
+  "probes": [
+    {
+      "label": "Forsebron nearby profile (bridge midpoint is a locator)",
+      "xz": [
+        -8.282218749961771,
+        33.09815625016199
+      ],
+      "downstream": [
+        -0.6978535543350658,
+        0.7162404740741164
+      ],
+      "grade": 0.050408155722331704,
+      "foam": 0.024532361778489876,
+      "pixel_x_y": [
+        198,
+        243
+      ],
+      "pixel_rgb8": [
+        39,
+        219,
+        6
+      ],
+      "query_xz": [
+        -8.027,
+        32.003
+      ],
+      "nearest_profile_id": "river-profile-0",
+      "nearest_profile_source_index": 0,
+      "distance_to_profile_m": 0.604164758557138,
+      "projected_profile_xyz": [
+        -7.594272746912162,
+        -3.6306644670814716,
+        32.42461852416309
+      ],
+      "downstream_xz": [
+        -0.6978535543350658,
+        0.7162404740741164
+      ],
+      "local_drop_m": 0.3917747790861337,
+      "window_span_m": 8.0,
+      "local_grade": 0.04897184738576671,
+      "foam_proxy": 0.02029668320267859,
+      "texel_xy": [
+        198,
+        243
+      ],
+      "texel_world_xz": [
+        -8.282218749961771,
+        33.09815625016199
+      ],
+      "texel_rgb8": [
+        39,
+        219,
+        6
+      ],
+      "texel_expected_downstream_xz": [
+        -0.6978535543350658,
+        0.7162404740741164
+      ],
+      "texel_encoding_passed": true
+    },
+    {
+      "label": "Royens trappor nearby river profile (zone is a locator)",
+      "xz": [
+        162.22559375003823,
+        -33.89403124983801
+      ],
+      "downstream": [
+        -0.9348466116295264,
+        0.35505184512236115
+      ],
+      "grade": 0.1357420894289244,
+      "foam": 0.6631344513431766,
+      "pixel_x_y": [
+        295,
+        194
+      ],
+      "pixel_rgb8": [
+        8,
+        173,
+        169
+      ],
+      "query_xz": [
+        174.792,
+        -0.812
+      ],
+      "nearest_profile_id": "river-profile-0",
+      "nearest_profile_source_index": 0,
+      "distance_to_profile_m": 34.945867313429744,
+      "projected_profile_xyz": [
+        162.38440533096556,
+        7.95357302397367,
+        -33.48102564841482
+      ],
+      "downstream_xz": [
+        -0.9348466116295264,
+        0.35505184512236115
+      ],
+      "local_drop_m": 1.0858343528461782,
+      "window_span_m": 8.0,
+      "local_grade": 0.13572929410577228,
+      "foam_proxy": 0.6630238134529265,
+      "texel_xy": [
+        295,
+        194
+      ],
+      "texel_world_xz": [
+        162.22559375003823,
+        -33.89403124983801
+      ],
+      "texel_rgb8": [
+        8,
+        173,
+        169
+      ],
+      "texel_expected_downstream_xz": [
+        -0.9348466116295264,
+        0.35505184512236115
+      ],
+      "texel_encoding_passed": true
+    },
+    {
+      "label": "Quiet profile example (low encoded grade, not measured fluid speed)",
+      "xz": [
+        512.0302812500382,
+        -47.56590624983801
+      ],
+      "downstream": [
+        -0.9957474518928533,
+        -0.09212498059098861
+      ],
+      "grade": 0.0,
+      "foam": 0.0,
+      "pixel_x_y": [
+        494,
+        184
+      ],
+      "pixel_rgb8": [
+        1,
+        116,
+        0
+      ],
+      "query_xz": [
+        511.86345,
+        -47.51935
+      ],
+      "nearest_profile_id": "river-profile-4",
+      "nearest_profile_source_index": 4,
+      "distance_to_profile_m": 0.0,
+      "projected_profile_xyz": [
+        511.86345,
+        27.33,
+        -47.51935
+      ],
+      "downstream_xz": [
+        -0.9957474518928533,
+        -0.09212498059098861
+      ],
+      "local_drop_m": 0.0,
+      "window_span_m": 8.000000000000004,
+      "local_grade": 0.0,
+      "foam_proxy": 0.0,
+      "texel_xy": [
+        494,
+        184
+      ],
+      "texel_world_xz": [
+        512.0302812500382,
+        -47.56590624983801
+      ],
+      "texel_rgb8": [
+        1,
+        116,
+        0
+      ],
+      "texel_expected_downstream_xz": [
+        -0.9957474518928533,
+        -0.09212498059098861
+      ],
+      "texel_encoding_passed": true
+    }
+  ]
+}

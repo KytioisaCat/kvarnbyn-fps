@@ -57,6 +57,7 @@ v2/kvarnbyn/blender/*.glb
 v2/kvarnbyn/blender/*.blend*
 v2/kvarnbyn/godot/.godot/
 v2/kvarnbyn/godot/assets/world*
+v2/kvarnbyn/godot/assets/river_flow.png*
 v2/kvarnbyn/godot/assets/sky.hdr
 v2/kvarnbyn/desktop/
 v2/kvarnbyn/data/site.json

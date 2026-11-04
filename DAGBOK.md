@@ -31,6 +31,40 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-04 19:54 — ChatGPT Codex — fortsätter från forsleveransen
+
+**Status:** pågår.
+**Gjort:** läst senaste tre överlämningarna, TODO och arkitektur. Joel ber om fortsatt självständigt arbete under passet.
+**Nästa:** granska intagshusets sparade inventering och faktiska bild-/markunderlag; bygg nästa avgränsade förbättring där underlaget räcker, med tysta motorprov och uppdaterad Mac-app. Dokumentera osäkerheter och lämna ingen gissad stor fyllnad.
+
+---
+
+## 2026-11-02 — ChatGPT Codex — forsens rörelse och skum
+
+**Status:** klart — visuellt forsprov i ny lokal Mac-app; inget halvfärdigt modellarbete.
+**Gjort:**
+- `BRIEF-FORS.md` → `RESULTAT-FORS.md`. `site.py` exporterar befintliga nedströmsprofiler, `river_flow.py` bygger eget512² RGB-datafält49KB med riktning och skumproxy från lokalt8m-fall.10profiler/4814segment. Åtta syntetiska prov, alla262144texlar/PNG-retur och byteidentisk omkörning gröna. Ingen hydrodynamik eller uppmätt hastighet/vattenföring påstås.
+- `river_water.gd` delar ett material över20vattenytor; water.gdshader ger nedströmsrörelse, mer skum/krusning vid fall och mörkare lugna partier. Första nativeprovet visade konturstrimmor vid krökar. Två korta fasförskjutna förflyttningar i globalX/Z löste det; inga vertexförskjutningar, partiklar, nya ljus eller kolliderare.
+- `configure_import.gd` håller datafältet förlustfritt utan automatisk3D-komprimering/mipmaps. PNG explicit i export_files, JSON i include_filter. Ny `--water-export-check` i själva release-appen, obligatorisk i rebuild efter kartgrinden. Nya menykameror: fors-forsebron, fors-gangbron, fors-ovre. Alla äldre vydefinitioner bevarade.
+-22verkliga material-/riktningstest och25nativekontroller gröna. Testets första bytejämförelse underkände intArray mot JSONfloatArray trots sammaRGB; rättat genom explicitheltalskonvertering, inga ändrade bildvärden/toleranser. Riktiga material, importerade bytes, basriktningar, lugnt/brant och ljus-/kvalitetsbyte prövas.
+- Slutlig full rebuild124s inklusive gamla M29/M25/Stalleliden/åbanksvägar,180globala gångpunkter, kontroller/raket/flyg, soldater/vapen/träd/kväll, kartor/mål och två verkliga releasegrindar grön. Ny Mac-app246MB zip lokalt. Fem slutbilder från den exporterade appen: tre forsvyer, kväll och låg kvalitet. `--hide-ui` används i dessa så startmenyn inte täcker motivet; position/target/FOV samma som före-bilder från nativeeditorn.
+-52styrda shaderfaser i faktisk nativevärld ger beskuren400px GIF917933B. Inte en realtidsinspelning av en spelomgång. I ett inre skumparti:24→28/0,333s, bästa korrelation0,957 vid(0,+2)pixlar mot0,668 stillastående. Kameran ser uppströms, rörelsen går nedåt i bild. `water-motion-check.json` dokumenterar detta begränsade visuella stickprov.
+- `water-preserved-check.json`: alla gamla SITE-värden exakt identiska, endast river_flow_profiles tillagt. Rå/optimeradGLB och kartPNG sammaSHA som8cb8843; city/nav/game bytes identiska medHEAD. `delivery-fors-2026-11-02.json` samlar filer/hashar/prov/bilder. Inga nya modeller/material eller referenspixlar hämtade till produkten.
+**Läge nu:** app `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app` innehåller åbank+karta, målvisning/baslarm och nu forsmaterialet. Alla motorprov Dummy+mastermute; egna processer avslutade. Stora genererade filer är lokala. Arbetsunderlag `v2/.tools/kvarnbyn-river-20261102/{before,after,motion}`, efter/raw är inte separat kopierat eftersom aktivraw är exakt baseline918f97f94efd… igen. Spårad houses.pyc återställs före commit; .claude/playpen och graphify memory orörda.
+**Nästa:** 1. Joels faktiska omgång och bedömning av igenkänning, mål/basförsvar och forsmängd. 2. Nästa modellpass: åbankens rundade lilla tegelhus/intagsbassänger och mark tillsammans; börja i INTAGSHUS-INVENTERING-2026-11-02.md och granska de tre faktiskt sedda Maps-vyerna. Inte en gissad cylinder på stor hög fyllnad. 3. M24/M31 behöver fortfarande säkra fasadunderlag. 4. Punktmolnspilot91MB är metadataavgränsad men401 utan behörighet; inga laserhusmätningar finns. Frontlinje, forsdis/finare fall och fortsatt platsgrönska finns iTODO.
+**Varningar:** världens generiska hus/enkla kanalform blir inte platsriktiga av bättre shader. Skum är en konstnärlig proxy från befintlig uppskattad vattenprofil. GIFen använder kontrollerad flow_time; normal spelkörning använder TIME. NativebildernasFPS är inget prestandariktmärke. Release ignorerar --script: använd inbyggda --view/--capture/--water-export-check. Agenternas nativa skriptbilder använder --water-images, aldrig --capture (som autoavslutar världen för tidigt).
+
+---
+
+## 2026-11-02 — ChatGPT Codex — åbankens lilla tegelhus, platsmatchning
+
+**Status:** klart — underlag sparat, inget hus byggt.
+**Gjort:** målvisning klar/pushad i8cb8843, GitHub41409296357 grön. Fortsätter med Maps från45/8Kvarnbygatan och närmare6Kvarnbygatan (maj2026, panoRhipc3Db_NukAEeSpCyZZQ). Den lilla tegelbyggnaden saknas i OSM och har en starkt rundad gatufasad/taksarg; den får inte byggas som en gissad box. Lokal dataagent inventerar OSM/ortho i reference/nordbanken. Rot tittar i bakgrundsflik6. Uppskattad plats nära world[0,15], men takkontur/markkontakt behöver matchas säkrare.
+**Läge nu:** färdig spelapp är8cb8843. Lokal inventering klar i reference/nordbanken/INTAGSHUS-INVENTERING-2026-11-02.md. Tredje närvy stöder ungefär[0,15]; rund kropp r2,3 är uppskattning. Inget OSM-hus. Kroppen har54mm marginal till gångsten, tak r3 överlappar1,638m². RåDTM/COL ligger1,1–1,3m under färdigaGC-kanten. Ny geometri skjuts till ett integrerat intags-/plazaprov; ingen cylinder på gissad hög uppfyllnad.
+**Nästa:** nästa hus-/intagsprov ska börja i rapporten och matcha mark/överkant/intagskonturer tillsammans. Nu fortsätter ett separat visuellt forsprov på oförändrad vattengeometri. Vattenintagets stora svarta ortho-rektanglar är inte hus.
+
+---
+
 ## 2026-11-02 — ChatGPT Codex — tydligare mål och basvarning
 
 **Status:** klart — målvisning och basvarning i ny lokal Mac-app.

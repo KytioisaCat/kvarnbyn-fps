@@ -20,5 +20,16 @@ func _initialize() -> void:
 	var generated_scene: String = configuration.get_value("remap", "path", "")
 	if generated_scene.begins_with("res://.godot/imported/world.glb-"):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(generated_scene))
+	# RG stores a unit direction and B a scalar, not albedo. Never let native
+	# 3D-use detection turn this small data texture into lossy VRAM compression.
+	if error == OK:
+		var flow := ConfigFile.new()
+		var flow_path := "res://assets/river_flow.png.import"
+		error = flow.load(flow_path)
+		if error == OK:
+			flow.set_value("params","compress/mode",0)
+			flow.set_value("params","mipmaps/generate",false)
+			flow.set_value("params","detect_3d/compress_to",0)
+			error = flow.save(flow_path)
 	print("KVARNBYN_IMPORT_CONFIG ", error)
 	quit(error)

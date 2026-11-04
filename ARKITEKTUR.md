@@ -337,6 +337,34 @@ hittade att dessa saknades trots gröna editorprov; `--map-export-check` körs n
 själva release-appen i återbyggnaden. `verify_map.gd` provar kartkomponenten och
 `verify_map_world.gd` verkliga tangenthändelser, paus, zonbyte och spelavslut.
 
+## Forsens visuella flöde (2026-11-02)
+
+`site.py` exporterar de befintliga utjämnade, nedströmsordnade vattenprofilerna
+som river_flow_profiles utan att ändra några gamla mark-/vattenvärden.
+`river_flow.py` skapar ett eget512² RGB-datafält över samma900×700m som världen:
+RG är normaliserad X/Z-tangent, B en mjuk skumproxy från fall över cirka8m.
+Noll lutning behåller linjens riktning. Varken riktning på helt plana sträckor,
+flödeshastighet eller vattenföring är uppmätt hydrodynamik.
+
+`river_water.gd` läser fält/metadata och delar ett ShaderMaterial mellan världens
+20 vattenytor. Datafältet har ingen sRGB-konvertering, ingen mipmapping och ingen
+förlustkomprimering; configure_import stänger av automatisk 3D-komprimering.
+Materialet samplar `(world_xz-bounds.xy)/(bounds.zw-bounds.xy)` och normaliserar RG.
+Skum ändrar färg, råhet och krusning inom befintlig vattenmesh, utan alpha-pass,
+nya partiklar, ljus, kolliderare eller vertexförflyttning.
+
+Ett obegränsat TIME×riktningsfält och roterade globala koordinater gav långa
+konturlinjer vid krökar i nativeprovet. Två korta nedströmsförflyttningar i global
+X/Z med fasförskjuten övertoning håller deformationen begränsad. Normal körning
+använder TIME; flow_time kan hålla en fas i nativeinspektionen. Kväll/kvalitetsbyte
+behåller material/fält. Se `RESULTAT-FORS.md` för bilder,22 riktiga materialprov,
+bevarad geometri och den nya release-grinden `--water-export-check`.
+
+PNG måste uttryckligen ingå i export_files och JSON i include_filter, som kartan.
+All ny storlek är ett49KB eget datafält; inga nya bild-/modellnedladdningar.
+Vattenintagets riktiga konturer/räcken och det rundade tegelhuset är ett separat
+framtida platsprov. Nivåskillnaden dit får inte döljas med en gissad stor fyllnad.
+
 ## Målvisning i datorversionen (2026-11-02)
 
 `hud.gd` läser verkliga zonägare och basens `contested`/`enemies_in` från

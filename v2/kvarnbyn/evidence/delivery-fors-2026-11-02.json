@@ -1,0 +1,703 @@
+{
+  "date": "2026-11-02",
+  "baseline_commit": "8cb8843",
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "build_seconds": 124,
+  "build_log": "v2/.tools/kvarnbyn-river-20261102/rebuild.log",
+  "sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "v2/kvarnbyn/godot/assets/world.glb": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "v2/kvarnbyn/godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "v2/kvarnbyn/godot/assets/world_meta.json": "a2d2525561458fc50a841a540b038b85b4c1a5c057181ca76c4b1855e1c0ade6",
+    "v2/kvarnbyn/godot/assets/river_flow.png": "340287e3e36a9fadce17f89a40658b1f452010e4ef9947bc0b9cef06c01d3222",
+    "v2/kvarnbyn/godot/assets/river_flow.json": "5aa920e7fad83f564770edba07f92af1461dcedf11da2ebc9ac721bf4ac06e73",
+    "v2/kvarnbyn/godot/scripts/river_water.gd": "ddbf7e7d0ba3cb0dec98b65656a1cc6741b380afb06721d0e1e6855d5ce74a30",
+    "v2/kvarnbyn/godot/shaders/water.gdshader": "7f7b9db8c8295ef1c13289c3daaca2778cb12056d784b7a3b61448ba0ebdb1fa",
+    "v2/kvarnbyn/pipeline/river_flow.py": "073085a64c5ce3a3f4c24a48e19d35772c3ccc87313e11af7cf6bfa9cccbe4d6",
+    "v2/kvarnbyn/desktop/Kvarnbyn.zip": "c298bd7591f4fe51ad595f24acb342a858a55b4fd8c1394b5ad1750efb09d618"
+  },
+  "preserved": {
+    "passed": true,
+    "baseline_commit": "8cb8843",
+    "site_old_keys_changed": [],
+    "site_only_added_keys": [
+      "river_flow_profiles"
+    ],
+    "all_old_site_values_identical": true,
+    "raw_glb_identical_to_copied_before": true,
+    "same_hash_as_hud_delivery": {
+      "v2/kvarnbyn/blender/world_raw.glb": true,
+      "v2/kvarnbyn/godot/assets/world.glb": true,
+      "v2/kvarnbyn/godot/assets/world_map.png": true
+    },
+    "all_old_view_definitions_identical": true,
+    "game_nav_city_identical_to_HEAD": {
+      "v2/kvarnbyn/godot/assets/game.json": true,
+      "v2/kvarnbyn/godot/assets/nav.json": true,
+      "v2/kvarnbyn/data/city.json": true
+    },
+    "scope": "Whole old SITE data and raw/optimized world plus map image, not just sampled bridge floors"
+  },
+  "checks": {
+    "water-check": {
+      "passed": true,
+      "count": 22,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      }
+    },
+    "water-native-check": {
+      "passed": true,
+      "count": 25,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      }
+    },
+    "map-export-check": {
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": true,
+        "heading": [
+          -0.650768041610718,
+          -0.759276568889618
+        ],
+        "loaded": true,
+        "map_rect": [
+          460.0,
+          579.111083984375,
+          1000.0,
+          777.777770996094
+        ],
+        "north_up": true,
+        "player": [
+          339.989990234375,
+          153.190002441406
+        ],
+        "static_map_draws": 1,
+        "zones": 0
+      },
+      "passed": true,
+      "release": true
+    },
+    "water-export-check": {
+      "passed": true,
+      "release": true,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      }
+    }
+  },
+  "captures": {
+    "release-forsebron": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.73300004005432,
+      "draw_calls": 4293.0,
+      "fps": 60.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5401,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.0,
+          -1.0
+        ],
+        "loaded": true,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          0.0,
+          0.0
+        ],
+        "static_map_draws": 1,
+        "zones": 0
+      },
+      "physics_ms": 0.031,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          -8.02700042724609,
+          1.36199998855591,
+          32.0029983520508
+        ],
+        "fov_degrees": 71.9999847412109,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.0980985090136528,
+        "position": [
+          -8.02700042724609,
+          -0.287999987602234,
+          32.0029983520508
+        ],
+        "yaw": -1.16740489006042
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 17.047,
+      "ready": true,
+      "render_triangles": 4292505.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 18,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      },
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "release-gangbron": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.61199998855591,
+      "draw_calls": 3882.0,
+      "fps": 69.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5311,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.0,
+          -1.0
+        ],
+        "loaded": true,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          0.0,
+          0.0
+        ],
+        "static_map_draws": 1,
+        "zones": 0
+      },
+      "physics_ms": 0.027,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          71.8690032958984,
+          3.58800005912781,
+          -3.78500008583069
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.0431007482111454,
+        "position": [
+          71.8690032958984,
+          1.93800008296967,
+          -3.78500008583069
+        ],
+        "yaw": -1.27776658535004
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 15.159,
+      "ready": true,
+      "render_triangles": 4267394.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 19,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      },
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "release-ovre": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.59099996089935,
+      "draw_calls": 3061.0,
+      "fps": 72.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5303,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.0,
+          -1.0
+        ],
+        "loaded": true,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          0.0,
+          0.0
+        ],
+        "static_map_draws": 1,
+        "zones": 0
+      },
+      "physics_ms": 0.029,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          161.037994384766,
+          14.7799997329712,
+          -31.7649993896484
+        ],
+        "fov_degrees": 71.9999771118164,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.154596507549286,
+        "position": [
+          161.037994384766,
+          13.1300001144409,
+          -31.7649993896484
+        ],
+        "yaw": -1.03515148162842
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 14.549,
+      "ready": true,
+      "render_triangles": 3557353.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 20,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      },
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "release-kvall": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.68099999427795,
+      "draw_calls": 4461.0,
+      "fps": 59.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "evening",
+      "load_ms": 5336,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.0,
+          -1.0
+        ],
+        "loaded": true,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          0.0,
+          0.0
+        ],
+        "static_map_draws": 1,
+        "zones": 0
+      },
+      "physics_ms": 0.033,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          161.037994384766,
+          14.7799997329712,
+          -31.7649993896484
+        ],
+        "fov_degrees": 71.9999847412109,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.154596507549286,
+        "position": [
+          161.037994384766,
+          13.1300001144409,
+          -31.7649993896484
+        ],
+        "yaw": -1.03515148162842
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 17.481,
+      "ready": true,
+      "render_triangles": 4943748.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [
+          9,
+          152,
+          153,
+          151
+        ],
+        "active_lights": 4,
+        "emissive_meshes": 52,
+        "evening": true,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 4
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 20,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      },
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    },
+    "release-low": {
+      "baked_lightmaps": false,
+      "cpu_render_ms": 1.08399999141693,
+      "draw_calls": 3061.0,
+      "fps": 120.0,
+      "game": {},
+      "gpu_render_ms": 0.0,
+      "lighting": "day",
+      "load_ms": 5367,
+      "map": {
+        "allies": 0,
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "enemy_positions": 0,
+        "expanded": false,
+        "heading": [
+          0.0,
+          -1.0
+        ],
+        "loaded": true,
+        "map_rect": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "north_up": true,
+        "player": [
+          0.0,
+          0.0
+        ],
+        "static_map_draws": 1,
+        "zones": 0
+      },
+      "physics_ms": 0.03,
+      "player": {
+        "active": false,
+        "alive": true,
+        "eye": [
+          161.037994384766,
+          14.7799997329712,
+          -31.7649993896484
+        ],
+        "fov_degrees": 71.9999542236328,
+        "free_flight": false,
+        "hp": 100.0,
+        "on_floor": false,
+        "pitch": -0.154596507549286,
+        "position": [
+          161.037994384766,
+          13.1300001144409,
+          -31.7649993896484
+        ],
+        "yaw": -1.03515148162842
+      },
+      "prepared_bake_scene": false,
+      "process_ms": 9.212,
+      "ready": true,
+      "render_triangles": 3557353.0,
+      "static_memory_bytes": 0,
+      "street_lights": {
+        "active_ids": [],
+        "active_lights": 0,
+        "emissive_meshes": 52,
+        "evening": false,
+        "fixtures": 216,
+        "pool_size": 8,
+        "shadow_lights": 0
+      },
+      "title": "Kvarnbyn",
+      "touch": false,
+      "view": 20,
+      "water": {
+        "bounds": [
+          -357.2080078125,
+          -299.81201171875,
+          542.7919921875,
+          400.18798828125
+        ],
+        "geometry_displacement": false,
+        "loaded": true,
+        "materials": 1,
+        "new_colliders": 0,
+        "size": [
+          512,
+          512
+        ],
+        "source": "existing downstream water profiles",
+        "surfaces": 20
+      },
+      "world": {
+        "colliders": 532,
+        "explicit_collision_meshes": 532,
+        "meshes": 4614,
+        "triangles": 2355088,
+        "vegetation_mesh_instances": 3326
+      }
+    }
+  },
+  "flow": {
+    "png_sha256": "340287e3e36a9fadce17f89a40658b1f452010e4ef9947bc0b9cef06c01d3222",
+    "png_bytes": 49210
+  },
+  "motion": {
+    "source": "52 native actual-world fixed-phase frames, cropped from 1600x900 viewport",
+    "period_s": 4.329004329004329,
+    "frames": 52,
+    "gif_bytes": 917933,
+    "phase_pair_frames": [
+      24,
+      28
+    ],
+    "frame_dt_s": 0.33300033300033305,
+    "patch_in_crop": [
+      220,
+      90,
+      280,
+      180
+    ],
+    "positive_dy": "down the screen toward camera; camera faces upstream",
+    "best_correlation": {
+      "score": 0.9573828481442724,
+      "dx": 0,
+      "dy": 2
+    },
+    "stationary_correlation": 0.6684664227389393,
+    "scope": "Single visual patch inspection, not global fluid simulation or velocity measurement",
+    "gif_size": [
+      400,
+      418
+    ],
+    "gif_playback_ms": 4330,
+    "gif_palette_colors": 64
+  },
+  "audio": "Every agent run Dummy; automatic captures/tests mute master. Normal play audio unchanged.",
+  "notes": [
+    "Five final screenshots from exported Mac app; UI hidden, eye/target/FOV match native before views.",
+    "Before images from old shader in native editor, after images from release app; no new geometry.",
+    "GIF: cropped native actual-world/material frames with controlled flow_time phase, not a real-time screen recording.",
+    "Foam and speed are artistic proxies from existing smoothed profile, not hydrodynamics or measured discharge.",
+    "No new models/materials downloaded. No new basin, rail, house or terrain geometry.",
+    "FPS values are capture snapshots, not a benchmark."
+  ]
+}

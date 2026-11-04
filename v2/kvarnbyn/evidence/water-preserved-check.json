@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "baseline_commit": "8cb8843",
+  "site_old_keys_changed": [],
+  "site_only_added_keys": [
+    "river_flow_profiles"
+  ],
+  "all_old_site_values_identical": true,
+  "raw_glb_identical_to_copied_before": true,
+  "same_hash_as_hud_delivery": {
+    "v2/kvarnbyn/blender/world_raw.glb": true,
+    "v2/kvarnbyn/godot/assets/world.glb": true,
+    "v2/kvarnbyn/godot/assets/world_map.png": true
+  },
+  "all_old_view_definitions_identical": true,
+  "game_nav_city_identical_to_HEAD": {
+    "v2/kvarnbyn/godot/assets/game.json": true,
+    "v2/kvarnbyn/godot/assets/nav.json": true,
+    "v2/kvarnbyn/data/city.json": true
+  },
+  "scope": "Whole old SITE data and raw/optimized world plus map image, not just sampled bridge floors"
+}

@@ -702,5 +702,9 @@ site = dict(meta=dict(note='Markytor för Fas A, genererade av site.py. y = rå 
             stalliden=stalliden.metadata(), stalliden_mesh_kinds=stalliden_mesh_kinds, stalliden_collision_only=stalliden_collision_only,
             terrain_overrides=terrain_overrides, authored_supports=supports,
             planter_kerbs=planter_kerbs, authored_trees=authored_trees, shrubs=shrubs)
+site['river_flow_profiles'] = [dict(id='river-profile-'+str(i),
+    points_xyz=[[round(float(x),4),round(float(y-Y_OFFSET),4),round(float(z),4)]
+                for (x,z),y in zip(shapely.get_coordinates(line),heights)])
+    for i,(line,stations,heights) in enumerate(river_prof)]
 (OUTPUT / 'site.json').write_text(json.dumps(site, separators=(',', ':')))
 log(f'site.json {((OUTPUT / "site.json").stat().st_size / 1e6):.1f} MB → {OUTPUT}')

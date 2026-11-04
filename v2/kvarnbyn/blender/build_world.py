@@ -414,6 +414,9 @@ views = [
     dict(id='stalleliden-mitt', name='Stalleliden – mittpartiet', position=paved_eye(35,83.3), target=[53,14,85]),
     dict(id='stalleliden-nedre', name='Stalleliden – nedre delen', position=paved_eye(16.5,90.3), target=[48,14,83]),
     dict(id='royen', name='Royens trappor', position=eye(*pts['cap_C']), target=[pts['cap_C'][0] - 50, ground(*pts['cap_C']) + 2, pts['cap_C'][1] + 30]),
+    dict(id='fors-forsebron', name='Forsen – Forsebron', position=[-8.027,1.362,32.003], target=[29,-2.6,16.2]),
+    dict(id='fors-gangbron', name='Forsen – gångbron', position=[71.869,3.588,-3.785], target=[116,1.6,-17.1]),
+    dict(id='fors-ovre', name='Forsen – övre loppet', position=[161.038,14.78,-31.765], target=[183,10.8,-44.8]),
     dict(id='oversikt', name='Överblick', position=[180, 150, 330], target=[60, 0, 40], free_flight=True),
 ]
 probe = []

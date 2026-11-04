@@ -1,0 +1,210 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"passed": true,
+			"test": "actual_world_loaded"
+		},
+		{
+			"detail": {
+				"bounds": [
+					-357.2080078125,
+					-299.81201171875,
+					542.7919921875,
+					400.18798828125
+				],
+				"geometry_displacement": false,
+				"loaded": true,
+				"materials": 1,
+				"new_colliders": 0,
+				"size": [
+					512,
+					512
+				],
+				"source": "existing downstream water profiles",
+				"surfaces": 20
+			},
+			"passed": true,
+			"test": "flow_field_loaded"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "small_512_data_texture"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "field_matches_actual_world_bounds"
+		},
+		{
+			"detail": 20,
+			"passed": true,
+			"test": "actual_water_surfaces_found"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "all_water_surfaces_use_actual_field"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "water_remains_visual_without_new_collision"
+		},
+		{
+			"detail": 1,
+			"passed": true,
+			"test": "shared_material_limits_allocations"
+		},
+		{
+			"detail": {
+				"actual": [
+					39,
+					219,
+					6
+				],
+				"expected": [
+					39,
+					219,
+					6
+				]
+			},
+			"passed": true,
+			"test": "imported_bytes_probe_0"
+		},
+		{
+			"detail": {
+				"direction": [
+					-0.695225119590759,
+					0.718792080879211
+				],
+				"dot": 0.999993324279785
+			},
+			"passed": true,
+			"test": "downstream_direction_probe_0"
+		},
+		{
+			"detail": {
+				"actual": 0.0235294122248888,
+				"expected": 0.0245323617784899
+			},
+			"passed": true,
+			"test": "foam_grade_probe_0"
+		},
+		{
+			"detail": {
+				"actual": [
+					8,
+					173,
+					169
+				],
+				"expected": [
+					8,
+					173,
+					169
+				]
+			},
+			"passed": true,
+			"test": "imported_bytes_probe_1"
+		},
+		{
+			"detail": {
+				"direction": [
+					-0.934549629688263,
+					0.355832725763321
+				],
+				"dot": 0.999999642372131
+			},
+			"passed": true,
+			"test": "downstream_direction_probe_1"
+		},
+		{
+			"detail": {
+				"actual": 0.662745118141174,
+				"expected": 0.663134451343177
+			},
+			"passed": true,
+			"test": "foam_grade_probe_1"
+		},
+		{
+			"detail": {
+				"actual": [
+					1,
+					116,
+					0
+				],
+				"expected": [
+					1,
+					116,
+					0
+				]
+			},
+			"passed": true,
+			"test": "imported_bytes_probe_2"
+		},
+		{
+			"detail": {
+				"direction": [
+					-0.995893239974976,
+					-0.0905357375741005
+				],
+				"dot": 0.99999874830246
+			},
+			"passed": true,
+			"test": "downstream_direction_probe_2"
+		},
+		{
+			"detail": {
+				"actual": 0.0,
+				"expected": 0.0
+			},
+			"passed": true,
+			"test": "foam_grade_probe_2"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "calm_reach_keeps_flow_without_whitewater"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "steeper_reach_gets_more_foam"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "menu_changes_keep_same_water_materials"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "menu_changes_keep_actual_geometry"
+		},
+		{
+			"detail": null,
+			"passed": true,
+			"test": "native_capture_views_exist"
+		}
+	],
+	"passed": true,
+	"water": {
+		"bounds": [
+			-357.2080078125,
+			-299.81201171875,
+			542.7919921875,
+			400.18798828125
+		],
+		"geometry_displacement": false,
+		"loaded": true,
+		"materials": 1,
+		"new_colliders": 0,
+		"size": [
+			512,
+			512
+		],
+		"source": "existing downstream water profiles",
+		"surfaces": 20
+	}
+}
