@@ -31,6 +31,24 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-05 17:40 — ChatGPT Codex — slutför patrullprovet
+
+**Status:** klart — patrull i uppdaterad Mac-app, kvarstående AI-/omgångsproblem avgränsade.
+**Gjort:** slutfört föregående delpass. bot_patrol.gd väljer138 kända navmål, utan osedda fiendepositioner; baslarm/ägarskifte prioriteras.16 verkliga mål-/grafprov gröna. Full rebuild140s med tidigare grindar grön. Därefter separat fixtur och slutimport/export: release=true/pass=true, riktig kapsel216,33m över1904markbundna fysiksteg,3mål nådda/0överhoppade. Ingen konstgjord golvgeometri eller teleport under gångdelen. RESULTAT-BOTPATRULL.md, delivery-patrol-2026-11-05.json.
+**Läge nu:** slutappen innehåller patrullen. Alla fem skyddade filer (rå/optimeradGLB, karta, game.json, nav.json) sammaSHA som vaktleveransen. Stora filer endast lokalt. Spårad houses.pyc återställd; playpen/graphify memory orörda. Inget motorprov kvar igång.
+**Nästa:** 1. AI-kapselprov vid Stallelidens mitt[40,81]/M25[61,92]: vanlig seedad botomgång förlorade innan rensning och visar103/14flyktförsök. 2. Fler normala omgångar som når rensningsfasen. 3. Felsök ObjectDB-avslutsvarningar separat. Platsunderlag/stämning kvarstår enligt TODO.
+**Varningar:** gångfixturen har egna zoner och ingen strid; den är inte en vunnen omgång. Vanligt seedat prov förlorade vid140,7s med27kills/1död/63fiender; noll patrullbesök. Loggar i v2/.tools/kvarnbyn-patrol-20261104/. Det gamla provets JSON hade inflätad stderr-varning; bara den explicit angivna varningen borttagen för tolkning. Spara framtida stdout/stderr åtskilt. Alla motorprov ljudlösa.
+
+---
+
+## 2026-11-04 20:36 — ChatGPT Codex — botens rensningspatrull
+
+**Status:** återupptaget och slutfört 2026-11-05, se ovan.
+**Gjort:** senaste tre inlägg/TODO/arkitektur lästa. Joel vill att arbetet fortsätter enligt listan. Nästa punkt: känd vägnätspatrull efter alla återtagna zoner, utan mål från osedda fiender.
+**Nästa:** implementera, prova riktiga nav-/målbyten, exportera och köra helomgång. Övrig lista: fortsatta AI-/omgångsfel, platsunderlag för åbanken/M24/M31, därefter stämning/ljud.
+
+---
+
 ## 2026-11-04 20:27 — ChatGPT Codex — publiceringskedjan
 
 **Status:** klart — publiceringskedjan rättad och verifierad, ingen ändring av spelappen.

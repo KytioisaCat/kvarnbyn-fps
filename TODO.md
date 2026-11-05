@@ -3,6 +3,13 @@
 Idébacklogg. En punkt i taget, ~30 min styck. Bocka av med `[x]` och flytta till
 Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md).
 
+## Aktiv arbetskö för självständiga pass (2026-11-04)
+
+1. Patrullen är byggd och kapselprövad. Nästa omgångsarbete: undersök soldater som fastnar vid Stallelidens mitt och nå rensningsfasen i fler vanliga spelprov.
+2. Åtgärda konkreta gång-/AI-fel från omgångarnas slutdiagnostik; gör inte allmänna balansändringar från ett stickprov.
+3. Samla säkrare platsunderlag för åbankens hus/mark/intag och M24/M31. Bygg bara där underlaget räcker.
+4. Fortsatt stämning: varma fönster, forsdis och ljudlandskap; tysta agentprov.
+
 ## Omstart 2026-10-22 (läs `OMSTART.md` först)
 
 Joel underkände v2:s approach helt. Ny väg: datan tolkas till en stadsbeskrivning, världen byggs
@@ -15,7 +22,8 @@ handskrivet ritande av rådata. v2/ och tools/v2model/ ligger kvar som historik/
 - [x] Fas A bedömd genom Joels dom över det spelbara Fas B-provet (2026-10-30).
 - [x] Fas B — spelbart (2026-10-29): vapen, reload, hopp, fiender, zoner, HUD; `v2/kvarnbyn/RESULTAT-FAS-B.md`
 - [x] Joels dom över Fas B (2026-10-30): bättre än v1, mer action; ville ha raket/flygläge för test → klart
-- [ ] **Botens rensningsfas:** efter att alla zoner återtagits väljer boten fortfarande C som gångmål. Lägg en patrull genom kända vägnätspunkter, utan att läsa osedda fienders positioner. Releaseprovet2026-11-04 nådde900,1s med alla zoner egna,3vakter/9allierade och5fiender kvar; ingen seger. `v2/kvarnbyn/evidence/round-2026-11-04.json`.
+- [ ] **AI fastnar vid Stalleliden:** seedat releaseprov2026-11-04 visar upp till103flyktförsök nära world[40,81] och14vid[61,92]. Proba verklig kapsel/gångriktning där innan ändring; inga generella balansjusteringar. `evidence/patrol-round-2026-11-04.json`.
+- [ ] **Botens avslut/livscykel:** ObjectDB-varningar i editorfixtur och normal botomgång. Felsök separat; spara stdout/stderr åtskilda i framtida prov.
 - [ ] **Omgångstempo och basförsvar:** botprovet2026-11-02 förlorade vid221,5s; ett nytt oseedat prov2026-11-04 efter vaktfix nådde900,1s med alla zoner egna men5fiender kvar. Ingen kontrollerad balansjämförelse; människans runda behövs. Undersök hur tydligt basanfall signaleras och hur allierade försvarar. `v2/kvarnbyn/evidence/round-2026-11-02.json`.
 - [ ] **Joels bedömning av soldat-/vapenpasset** (`v2/kvarnbyn/RESULTAT-SOLDATER.md`): utseende, aktivitet och svårighet.
 - [ ] **Joels bedömning av kvällsljuset** (`v2/kvarnbyn/RESULTAT-KVALL.md`): läsbarhet i strid, stämning och lyktövergångar under promenad.
@@ -102,6 +110,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-05 — **Botens rensningspatrull**:138 kända gatupunkter, målbyte vid ankomst/fastnande, baslarm prioriteras.16mål-/grafprov samt216m/3mål med riktig kapsel i exporterad app passerar. Full rebuild140s och slutexport gröna. Vanliga omgångsprovet förlorade före rensning; ingen seger påstås. `v2/kvarnbyn/RESULTAT-BOTPATRULL.md`.
 
 - [x] 2026-11-04 — **Publiceringskedjan**: separata build/deploy-jobb och entydiga byggpaket även vid omkörning. Riktig GitHub-körning41897151036 samt separat deploy-omkörning gröna. Ingen ändring av v1/v2-innehåll eller Godot-app.
 

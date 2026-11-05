@@ -40,6 +40,8 @@ från det befintliga torget-provet.
 
 ## Resultat och nästa steg
 
+- [Botens rensningspatrull](RESULTAT-BOTPATRULL.md)
+
 - [Basvakter efter förluster](RESULTAT-BASVAKTER.md)
 - [Kartans frontläge och förstärkningshåll](RESULTAT-FRONT.md)
 - [Forsens rörelse och skum](RESULTAT-FORS.md) — tre nya forsvyer i menyn

@@ -67,6 +67,10 @@ step "Kontroll: frontläge, förstärkningshåll och baslarm på kartan"
 rm -f $LOG/front-check.json
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_front.gd -- --no-pointer-lock --output="$ROOT/$LOG/front-check.json" > $LOG/front-check.log 2>&1
 $PY -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["checks"])>=27' $LOG/front-check.json
+step "Kontroll: botens zonmål och rensningspatrull"
+rm -f $LOG/patrol-check.json
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_bot_patrol.gd -- --no-pointer-lock --output="$ROOT/$LOG/patrol-check.json" > $LOG/patrol-check.log 2>&1
+$PY -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["checks"])>=16' $LOG/patrol-check.json
 step "Kontroll: allierades basvakter ersätts efter förluster"
 rm -f $LOG/allied-roles-check.json
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_allied_roles.gd -- --no-pointer-lock --output="$ROOT/$LOG/allied-roles-check.json" > $LOG/allied-roles-check.log 2>&1
@@ -99,6 +103,9 @@ if [[ " $* " != *" --no-export "* ]]; then
   step "Kontroll: frontläget fungerar också i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --no-pointer-lock --front-export-check > $LOG/front-export-check.log 2>&1
   $PY -c 'import json,sys; lines=open(sys.argv[1]).read().splitlines(); r=json.loads(next(x.split("KVARNBYN_FRONT_EXPORT_CHECK ",1)[1] for x in lines if x.startswith("KVARNBYN_FRONT_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/front-export-check.log
+  step "Kontroll: botpatrull med riktig kapsel i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --no-pointer-lock --patrol-export-check > $LOG/patrol-export-check.log 2>&1
+  $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_PATROL_EXPORT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_PATROL_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/patrol-export-check.log
   step "Kontroll: basvakter ersätts också i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --no-pointer-lock --guards-export-check > $LOG/guards-export-check.log 2>&1
   $PY -c 'import json,sys; lines=open(sys.argv[1]).read().splitlines(); r=json.loads(next(x.split("KVARNBYN_GUARDS_EXPORT_CHECK ",1)[1] for x in lines if x.startswith("KVARNBYN_GUARDS_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/guards-export-check.log

@@ -43,6 +43,8 @@ var tactical_map: Control
 var map_previous_paused := false
 var map_previous_mouse_mode := Input.MOUSE_MODE_VISIBLE
 var fx: Node3D
+var bot_patrol = preload("res://scripts/bot_patrol.gd").new()
+var bot_cleanup := false
 var bot_mode := false
 var bot_path := PackedVector3Array()
 var bot_path_i := 0
@@ -57,7 +59,7 @@ func _ready() -> void:
 	options = read_options()
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			break
@@ -185,6 +187,8 @@ func _ready() -> void:
 		run_walk_test()
 	if options.has("quality"):
 		set_quality(int(options["quality"]))
+	if options.has("patrol-export-check"):
+		check_exported_patrol()
 	if options.has("bot"):
 		start_bot()
 
@@ -712,7 +716,50 @@ func run_walk_test() -> void:
 ## Tar zonerna i ordningen C → B → A längs vägnätet, siktar på närmaste synliga fiende inom 60 m
 ## (med lite fel), skjuter, laddar om. Kör med --bot [--speed=3] [--botlimit=900] (sekunder speltid).
 
+func check_exported_patrol() -> void:
+	AudioServer.set_bus_mute(0,true)
+	if game==null:
+		get_tree().quit(3)
+		return
+	# Controlled navigation fixture: real world/player, no battle or hidden targets.
+	game.set_physics_process(false)
+	for cap in game.caps:
+		cap.owner="friendly";cap.contested=false;cap.enemies_in=0
+	started=true
+	player.active=true
+	player.combat_enabled=false
+	overlay.set_open(false)
+	player.bot_input=Vector2.ZERO
+	for frame in range(60):await get_tree().physics_frame
+	var start: Vector3=player.global_position
+	var previous: Vector3=start
+	var travelled := 0.0
+	var grounded := 0
+	var frames := 0
+	bot_timeout=99999.0
+	bot_mode=true
+	for frame in range(60*180):
+		await get_tree().physics_frame
+		var point: Vector3=player.global_position
+		travelled+=Vector2(point.x-previous.x,point.z-previous.z).length()
+		previous=point
+		frames+=1
+		if player.is_on_floor():grounded+=1
+		if bot_patrol.visits>=3 and travelled>30.0:break
+		if not player.alive:break
+	bot_mode=false
+	player.bot_input=Vector2.ZERO
+	var valid: bool=bot_patrol.visits>=3 and travelled>30.0 and player.alive and grounded>0
+	print("KVARNBYN_PATROL_EXPORT_CHECK ",JSON.stringify({"passed":valid,"release":not OS.has_feature("editor"),
+		"scope":"actual imported world/player capsule, controlled friendly zones and no enemies; not a battle result",
+		"frames":frames,"grounded_frames":grounded,"travelled_m":travelled,"patrol":bot_patrol.snapshot(),
+		"start":[start.x,start.y,start.z],"end":[previous.x,previous.y,previous.z]}))
+	get_tree().quit(0 if valid else 3)
+
 func start_bot() -> void:
+	if options.has("bot-seed"):seed(int(options["bot-seed"]))
+	bot_patrol.configure(game.nav)
+	bot_cleanup=false
 	bot_mode = true
 	bot_timeout = float(options.get("botlimit", "900"))
 	Engine.time_scale = float(options.get("speed", "3"))
@@ -721,9 +768,36 @@ func start_bot() -> void:
 	game.ended.connect(func(won: bool): _bot_finish("seger" if won else "förlust"))
 
 func _bot_finish(result: String) -> void:
-	print("KVARNBYN_BOT ", JSON.stringify({"result": result, "state": game.state()}))
+	# Post-run diagnostics only; never supplied to navigation or the map.
+	var remaining := []
+	for soldier in game.enemies:
+		if soldier.alive:
+			remaining.append({"position":[soldier.global_position.x,soldier.global_position.y,soldier.global_position.z],
+				"role":soldier.role,"stuck":soldier.stuck_n})
+	print("KVARNBYN_BOT ", JSON.stringify({"result": result, "state": game.state(), "patrol":bot_patrol.snapshot(),
+		"seed":options.get("bot-seed","unseeded"),"remaining_diagnostics":remaining}))
 	Engine.time_scale = 1.0
 	get_tree().quit(0)
+
+func bot_navigation_goal(delta: float) -> Dictionary:
+	var base: Dictionary=game.base_cap()
+	var alarm: bool=str(base.owner)=="friendly" and bool(base.contested) and int(base.get("enemies_in",0))>0
+	var cleanup: bool=not alarm and game.caps.all(func(c):return str(c.owner)=="friendly")
+	if cleanup:
+		if not bot_cleanup:
+			bot_patrol.configure(game.nav)
+			bot_cleanup=true
+		var patrol_goal: Dictionary=bot_patrol.goal(player.global_position,delta)
+		if not patrol_goal.is_empty():return patrol_goal
+	else:bot_cleanup=false
+	var goal_cap: Dictionary = game.base_cap()
+	for id in ["C", "B", "A"]:
+		for c in game.caps:
+			if c["id"] == id and c["owner"] != "friendly" and goal_cap == game.base_cap() and game.base_cap()["owner"] == "friendly":
+				goal_cap = c
+	if game.base_cap()["owner"] != "friendly" or (game.base_cap()["contested"] and game.base_cap().get("enemies_in", 0) > 0):
+		goal_cap = game.base_cap()
+	return goal_cap
 
 func _physics_process(delta: float) -> void:
 	if not bot_mode or game == null or game.over:
@@ -765,14 +839,7 @@ func _physics_process(delta: float) -> void:
 		return
 	if w.mag < 12 and not w.reloading:
 		w.bot_reload = true
-	# mål: första zonen i C, B, A som inte är vår, annars C
-	var goal_cap: Dictionary = game.base_cap()
-	for id in ["C", "B", "A"]:
-		for c in game.caps:
-			if c["id"] == id and c["owner"] != "friendly" and goal_cap == game.base_cap() and game.base_cap()["owner"] == "friendly":
-				goal_cap = c
-	if game.base_cap()["owner"] != "friendly" or (game.base_cap()["contested"] and game.base_cap().get("enemies_in", 0) > 0):
-		goal_cap = game.base_cap()
+	var goal_cap: Dictionary=bot_navigation_goal(delta)
 	var goal: Vector3 = goal_cap["pos"]
 	bot_repath -= delta
 	if str(goal_cap["id"]) != bot_cap or bot_path.is_empty() or bot_repath <= 0.0:

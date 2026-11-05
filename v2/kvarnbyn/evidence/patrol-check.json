@@ -1,0 +1,78 @@
+{
+	"checks": [
+		{
+			"passed": true,
+			"test": "real_world_and_game_loaded"
+		},
+		{
+			"passed": true,
+			"test": "initial_goal_C"
+		},
+		{
+			"passed": true,
+			"test": "after_C_goal_B"
+		},
+		{
+			"passed": true,
+			"test": "after_B_goal_A"
+		},
+		{
+			"passed": true,
+			"test": "all_owned_starts_patrol"
+		},
+		{
+			"passed": true,
+			"test": "covers_many_district_cells"
+		},
+		{
+			"passed": true,
+			"test": "all_targets_on_real_reachable_main_graph"
+		},
+		{
+			"passed": true,
+			"test": "arrival_advances_target"
+		},
+		{
+			"passed": true,
+			"test": "unseen_enemy_move_does_not_change_target"
+		},
+		{
+			"passed": true,
+			"test": "base_alarm_interrupts_patrol"
+		},
+		{
+			"passed": true,
+			"test": "alarm_end_resumes_patrol"
+		},
+		{
+			"passed": true,
+			"test": "enemy_recapture_restores_capture_goal"
+		},
+		{
+			"passed": true,
+			"test": "whole_route_visits_every_cell_before_repeat"
+		},
+		{
+			"passed": true,
+			"test": "stationary_timer_advances_blocked_goal"
+		},
+		{
+			"passed": true,
+			"test": "real_progress_resets_stall_timer"
+		},
+		{
+			"passed": true,
+			"test": "reset_clears_previous_search"
+		}
+	],
+	"passed": true,
+	"patrol": {
+		"candidates": 138,
+		"cycles": 0,
+		"goal_node": -1,
+		"skipped": 0,
+		"source": "known main navigation component only",
+		"visited": 0
+	},
+	"scope": "real imported world/zone priority and connected nav nodes; simulated arrivals/stalls, not a capsule walk"
+}

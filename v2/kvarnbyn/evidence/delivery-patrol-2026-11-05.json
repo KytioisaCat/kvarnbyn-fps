@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-05",
+  "baseline_commit": "e5b778b",
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "full_rebuild_seconds": 140,
+  "final_fixture_added_after_full_rebuild": "same final import/export followed by16 goal checks and actual exported capsule check",
+  "checks": {
+    "goals": 16,
+    "release_patrol": {
+      "end": [
+        427.271789550781,
+        30.8661823272705,
+        88.982177734375
+      ],
+      "frames": 1904,
+      "grounded_frames": 1904,
+      "passed": true,
+      "patrol": {
+        "candidates": 138,
+        "cycles": 0,
+        "goal_node": 1128,
+        "skipped": 0,
+        "source": "known main navigation component only",
+        "visited": 3
+      },
+      "release": true,
+      "scope": "actual imported world/player capsule, controlled friendly zones and no enemies; not a battle result",
+      "start": [
+        339.989990234375,
+        52.6142539978027,
+        153.190002441406
+      ],
+      "travelled_m": 216.327134210616
+    }
+  },
+  "sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "v2/kvarnbyn/godot/assets/world.glb": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "v2/kvarnbyn/godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "v2/kvarnbyn/godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "v2/kvarnbyn/godot/assets/nav.json": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f",
+    "v2/kvarnbyn/godot/scripts/bot_patrol.gd": "76233d7be8d41947f5b82a23ca6b7623be4a2b56dacad10536142449621cc5a0",
+    "v2/kvarnbyn/godot/scripts/world.gd": "1054eadbc9f314ad7fecd493882bb0a9c7c87108f1dfa9a543b146a1c19e56e0",
+    "v2/kvarnbyn/desktop/Kvarnbyn.zip": "83f99afeb14cd46d3bc1b3a5c612d8746bae36fbd7f167c84c4ff8dc66ca5a45"
+  },
+  "preserved": {
+    "v2/kvarnbyn/blender/world_raw.glb": true,
+    "v2/kvarnbyn/godot/assets/world.glb": true,
+    "v2/kvarnbyn/godot/assets/world_map.png": true,
+    "v2/kvarnbyn/godot/assets/game.json": true,
+    "v2/kvarnbyn/godot/assets/nav.json": true
+  },
+  "normal_round": "patrol-round-2026-11-04.json; loss before cleanup, not patrol proof",
+  "logs": "v2/.tools/kvarnbyn-patrol-20261104/"
+}

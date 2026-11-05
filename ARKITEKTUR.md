@@ -514,3 +514,23 @@ Sista dokumentationspushen (körning41897550441) verifierad grön i försök3.
 Försök1–2 fick ett kvarhängande Pages-serverlås för den redan avslutade föregångaren;
 GET sade succeed och cancel nekades som finished. Ingen mer kodändring krävdes.
 Slutkvitto: `v2/kvarnbyn/evidence/pages-final-check-2026-11-04.json`.
+
+## Botens rensningspatrull (2026-11-04)
+
+Testspelaren använde alltid bas C som gångmål när alla zoner var egna. Nu väljer
+`bot_patrol.gd` en representativ riktig navnod per 65 m-ruta i största anslutna
+vägnätskomponenten. Närmaste obesökta mål besöks först. Efter ett helt varv får
+punkterna besökas igen. Boten tar fortfarande C/B/A och avbryter patrullen vid
+basanfall eller återerövrad zon. Synlig strid har samma prioritet som tidigare.
+
+Patrullens API tar bara navigeringsgrafen, spelarens position och aktiv gångtid.
+Inga osedda fiendepositioner styr målen. Efter 14 sekunders stillastående under
+patrullgång provas nästa mål. Rörelse i en omväg räknas som framsteg; sjunkande
+fågelvägsavstånd krävs inte. Efter omgången får slutrapporten ange återstående
+fiender för felsökning, men dessa uppgifter går aldrig tillbaka till navigatorn.
+
+`verify_bot_patrol.gd` provar riktiga zonmål/grafvägar samt simulerade ankomster
+för alla representativa noder. Dessa är inte gångbevis. Helomgången i release-appen
+prövar sedan den faktiska spelarkapseln. `--bot-seed=N` kan sätta slumpfrö före
+omgångsstart; frö ensamt garanterar inte identiska fysik-/tidsförlopp. Vanlig manuell
+spelstart ändras inte. Inga spelregler eller allierades/fienders AI ändras här.

@@ -1,0 +1,26 @@
+{
+  "end": [
+    427.271789550781,
+    30.8661823272705,
+    88.982177734375
+  ],
+  "frames": 1904,
+  "grounded_frames": 1904,
+  "passed": true,
+  "patrol": {
+    "candidates": 138,
+    "cycles": 0,
+    "goal_node": 1128,
+    "skipped": 0,
+    "source": "known main navigation component only",
+    "visited": 3
+  },
+  "release": true,
+  "scope": "actual imported world/player capsule, controlled friendly zones and no enemies; not a battle result",
+  "start": [
+    339.989990234375,
+    52.6142539978027,
+    153.190002441406
+  ],
+  "travelled_m": 216.327134210616
+}
