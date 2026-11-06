@@ -59,7 +59,7 @@ func _ready() -> void:
 	options = read_options()
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			break
@@ -160,6 +160,8 @@ func _ready() -> void:
 				set_view(index)
 				break
 	load_msec = Time.get_ticks_msec() - start_msec
+	get_viewport().size_changed.connect(func(): call_deferred("refresh_render_scale"))
+	refresh_render_scale()
 	world_ready = true
 	install_bridge()
 	print("KVARNBYN_READY ", JSON.stringify(snapshot()))
@@ -171,6 +173,8 @@ func _ready() -> void:
 		canvas_layer.visible = false
 	if options.has("free-flight"):
 		player.free_flight = true
+	if options.has("render-scale-check"):
+		check_render_scale()
 	if options.has("map-export-check"):
 		check_exported_map()
 	if options.has("guards-export-check"):
@@ -554,11 +558,43 @@ func set_lighting(index: int) -> void:
 	overlay.lighting_selector.select(index)
 	set_quality(quality_index)
 
+func check_render_scale() -> void:
+	AudioServer.set_bus_mute(0,true)
+	var checks := []
+	var window := get_window()
+	for fullscreen in [false,true,false]:
+		window.mode=Window.MODE_FULLSCREEN if fullscreen else Window.MODE_WINDOWED
+		if not fullscreen:window.size=Vector2i(1600,900)
+		for frame in range(30):await get_tree().process_frame
+		for quality in [0,1]:
+			set_quality(quality)
+			for frame in range(3):await get_tree().process_frame
+			var pixels := get_viewport().get_texture().get_size()
+			var scale := get_viewport().scaling_3d_scale
+			var expected := minf(1.0,sqrt(1920.0*1080.0/maxf(1.0,pixels.x*pixels.y)))*(0.85 if quality==1 else 1.0)
+			checks.append({"fullscreen":fullscreen,"quality":quality,"viewport":[pixels.x,pixels.y],"scale":scale,
+				"render_pixels":pixels.x*pixels.y*scale*scale,
+				"passed":absf(scale-expected)<.001 and pixels.x*pixels.y*scale*scale<=1920.0*1080.0*1.001})
+	var result := {"passed":checks.all(func(c):return bool(c.passed)),"checks":checks,"release":not OS.has_feature("editor")}
+	var path: String=str(options.get("output",""))
+	if not path.is_empty():
+		var file:=FileAccess.open(path,FileAccess.WRITE)
+		if file!=null:file.store_string(JSON.stringify(result,"	"))
+	print("KVARNBYN_RENDER_SCALE_CHECK ",JSON.stringify(result))
+	get_tree().quit(0 if result.passed else 3)
+
+func refresh_render_scale() -> void:
+	if not touch_mode:
+		# Use actual viewport pixels, which can exceed the window size with HiDPI/stretch.
+		var pixels := get_viewport().get_texture().get_size()
+		base_render_scale=minf(1.0,sqrt(1920.0*1080.0/maxf(1.0,pixels.x*pixels.y)))
+	get_viewport().scaling_3d_scale=base_render_scale*(0.85 if quality_index==1 else 1.0)
+
 func set_quality(index: int) -> void:
 	index = 1 if index == 1 else 0
 	quality_index = index
 	# 0 = Normal: realtids-GI, SSIL, volymdimma. 1 = Lägre belastning: utan dem, 85 % upplösning.
-	get_viewport().scaling_3d_scale = base_render_scale * (0.85 if index == 1 else 1.0)
+	refresh_render_scale()
 	get_viewport().msaa_3d = Viewport.MSAA_DISABLED if index == 1 else Viewport.MSAA_2X
 	for we in find_children("*", "WorldEnvironment", true, false):
 		var env: Environment = we.environment

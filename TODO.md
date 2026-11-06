@@ -3,11 +3,11 @@
 Idébacklogg. En punkt i taget, ~30 min styck. Bocka av med `[x]` och flytta till
 Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md).
 
-## Aktiv arbetskö — hus och igenkänning först (Joel 2026-11-06)
+## Aktiv arbetskö — flyt och husigenkänning (Joel 2026-11-06)
 
-1. **Individuella hus/fasader/tak prioriteras nu före fler bot-/AI-pass.** Stora delar av världen är fortfarande generiska. Efter Joels prov: välj tydligt avgränsat kvarter och granska husen mot faktiskt synliga referenser; rätta siluett, tak, material, fönster/entréer och anslutande mark. Redovisa varje hus som granskat, uppskattat eller kvarstående.
+1. **Individuella hus/fasader/tak prioriteras nu före fler bot-/AI-pass.** Aktuell inventering:8egna modeller av381; inget allmänt färdiggodkännande. `v2/kvarnbyn/HUSSTATUS-2026-11-06.md`. Stora delar av världen är fortfarande generiska. Efter Joels prov: välj tydligt avgränsat kvarter och granska husen mot faktiskt synliga referenser; rätta siluett, tak, material, fönster/entréer och anslutande mark. Redovisa varje hus som granskat, uppskattat eller kvarstående.
 2. Säkrare underlag för åbankens rundade tegelhus/mark/intag samt M24/M31. Saknade referenser får inte ersättas med påstått korrekta gissningar; fortsätt med andra synliga hus när en fasad är skymd.
-3. Konkreta gång-/AI-fel, bland annat Stallelidens mitt, efter platsarbetet eller om Joels spelprov visar blockerande fel.
+3. **Flyt:** helskärmens pixelbudget rättad (kort prov31→72bilder/s), men tidiga bildstopp på0,5–2,7s återstår. Prova riktig mus/gång, andra gaturum och pipelineräknare. `v2/kvarnbyn/RESULTAT-FLYT.md`. Konkreta gång-/AI-fel, bland annat Stallelidens mitt, efter platsarbetet eller om Joels spelprov visar blockerande fel.
 4. Fortsatt stämning: varma fönster, forsdis och ljudlandskap; tysta agentprov.
 
 ## Omstart 2026-10-22 (läs `OMSTART.md` först)
@@ -110,6 +110,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-06 — **Automatisk 3D-pixelbudget i helskärm:** cirka2,07Mpixlar, bibehållet bildförhållande/UI-yta. Native stickprov31→72bilder/s i normal helskärm;6releasekontroller+15ljusprov gröna. Tidiga hack kvarstår. `v2/kvarnbyn/RESULTAT-FLYT.md`.
 
 - [x] 2026-11-05 — **Botens rensningspatrull**:138 kända gatupunkter, målbyte vid ankomst/fastnande, baslarm prioriteras.16mål-/grafprov samt216m/3mål med riktig kapsel i exporterad app passerar. Full rebuild140s och slutexport gröna. Vanliga omgångsprovet förlorade före rensning; ingen seger påstås. `v2/kvarnbyn/RESULTAT-BOTPATRULL.md`.
 

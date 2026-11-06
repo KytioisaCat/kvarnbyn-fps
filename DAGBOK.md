@@ -31,6 +31,16 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-06 09:29 — ChatGPT Codex — Joels dom: lagg och för låg igenkänning
+
+**Status:** klart — avgränsad flyträttning i uppdaterad Mac-app; Joels igenkänning underkänd, husarbete prioriterat.
+**Gjort:** fem korta nativeprov med roterande kamera i riktig strid: fönster normal65,5/låg115,1FPS; helskärm normal31,0/låg77,1. Helskärmens viewport4763×2990px. Ny automatisk3D-budget1920×1080pixelarea, bibehållet bildförhållande/UI; normal helskärm71,6FPS ochp95bildtid24,3ms mot51,2ms före. Smalt15s-stickprov perprofil, andra appar öppna; inte en helomgångsgaranti. Uppstartsstopp0,5–2,7s kvarstår. Ingen pipelineorsak påstådd utan räknare.
+**Verifierat:**15ljus-/kvalitetsprov och6budgetkontroller i faktisk exporterad Mac-app gröna. Sista begärda fönsteråtergången behåller stor viewport i provet men hålls inom3D-budget; ingen falsk bekräftelse av attOS-övergången slutförts. Alla fem skyddade värld-/kart-/spel-/navfiler sammaSHA som patrullleveransen. Ingen husgeometri ändrad. RESULTAT-FLYT.md, delivery-render-scale-2026-11-06.json, profiler/råloggar i v2/.tools/kvarnbyn-performance-20261106/.
+**Husläge:** faktisk Blenderdispatch/data ger8specialmodeller av381,373via standardsystemet (några delvis rättade). Det betyder inte8korrekta/godkända hus. HUSSTATUS-2026-11-06.md och maskinläsbar inventering sparade. Joel känner inte igen sig; individuella fasader/tak och kvartershelhet är nu viktigare än fler botfunktioner.
+**Nästa:** 1. Avgränsat hus-/kvarterspass med verkliga referenser och samma ögonhöjd före/efter; ta andra synliga hus om M24/M31/intaget förblir skymt. 2. Kvarstående startstopp och verklig mus/gång, andra platser och pipelineräknare. 3. AI/blockerande gångfel därefter. Inga andra appar avslutade; samtliga egna prov avslutade och ljudlösa. Normalt manuellt spel har ljud.
+
+---
+
 ## 2026-11-06 09:24 — ChatGPT Codex — husstatus och manuell spelstart
 
 **Status:** klart — appen öppnad för Joels manuella prov; husarbete omprioriterat.

@@ -534,3 +534,17 @@ för alla representativa noder. Dessa är inte gångbevis. Helomgången i releas
 prövar sedan den faktiska spelarkapseln. `--bot-seed=N` kan sätta slumpfrö före
 omgångsstart; frö ensamt garanterar inte identiska fysik-/tidsförlopp. Vanlig manuell
 spelstart ändras inte. Inga spelregler eller allierades/fienders AI ändras här.
+
+## Helskärmens 3D-budget och Joels igenkänningsdom (2026-11-06)
+
+Joel underkände flytet och byggnadernas igenkänning. Tidigare stationära FPS-prov
+är inget godkännande av hans upplevelse. Native vridprov visade en viewport på
+4763×2990px i helskärm; samma normalbild gick från31till72bilder/s med en2,07Mpx
+3D-budget. `refresh_render_scale()` använder faktisk viewporttexturstorlek och
+uppdateras vid storleks-/kvalitetsändring. UI påverkas inte; touch behåller sin
+befintliga basbudget. Tidiga stora bildstopp är fortfarande oförklarade.
+`profile_game.gd` ger native bildtider och verkliga pixelmått; ingen GPU-tidsproxy.
+
+Husinventeringen visar8egna modellvägar av381, inte8godkända riktiga hus.
+Hus/kvarter med fasader och tak är huvudspåret före mer botarbete. Se
+HUSSTATUS-2026-11-06.md och RESULTAT-FLYT.md i v2/kvarnbyn.

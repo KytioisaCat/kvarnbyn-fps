@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-06",
+  "city_sha256": "b4290402f4d36cb474d6dbf51f79391dba95547b0abeb6a3f57f8568755de445",
+  "core_buildings": 381,
+  "own_model_route": 8,
+  "standard_model_route": 373,
+  "meaning": "Counts Blender dispatch routes, not fully verified houses. Standard route includes some partial corrections, e.g.M30/M31. Distant backdrop houses excluded.",
+  "own_models": [
+    {
+      "id": "w92331981",
+      "name": "Kråkans Krog",
+      "route": "hero",
+      "status": "own model; dimensions/hidden sides partly estimated; recognition not accepted as complete"
+    },
+    {
+      "id": "w92332039",
+      "name": "Götaforsliden 6",
+      "route": "hero",
+      "status": "own model; dimensions/hidden sides partly estimated; recognition not accepted as complete"
+    },
+    {
+      "id": "w92332089",
+      "name": "Götaforsliden 4",
+      "route": "hero",
+      "status": "own model; dimensions/hidden sides partly estimated; recognition not accepted as complete"
+    },
+    {
+      "id": "w92332096",
+      "name": "Gamla brandstationen / Viktualieföreningens hus",
+      "route": "hero",
+      "status": "own model; dimensions/hidden sides partly estimated; recognition not accepted as complete"
+    },
+    {
+      "id": "w92332103",
+      "name": "Corpus Pizzeria",
+      "route": "hero",
+      "status": "own model; dimensions/hidden sides partly estimated; recognition not accepted as complete"
+    },
+    {
+      "id": "w92332120",
+      "name": "Roten M 29",
+      "route": "roten_m29",
+      "status": "own model; dimensions/hidden sides partly estimated; recognition not accepted as complete"
+    },
+    {
+      "id": "w92332122",
+      "name": "Gamla stadshuset / Musikskolan",
+      "route": "hero",
+      "status": "own model; dimensions/hidden sides partly estimated; recognition not accepted as complete"
+    },
+    {
+      "id": "w92332157",
+      "name": "Roten M 25",
+      "route": "stalleliden_m25",
+      "status": "own model; dimensions/hidden sides partly estimated; recognition not accepted as complete"
+    }
+  ]
+}

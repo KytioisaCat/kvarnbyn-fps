@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-06",
+  "baseline_commit": "15953d8",
+  "sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "v2/kvarnbyn/godot/assets/world.glb": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "v2/kvarnbyn/godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "v2/kvarnbyn/godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "v2/kvarnbyn/godot/assets/nav.json": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f",
+    "v2/kvarnbyn/godot/scripts/world.gd": "61ce8891265082277b56a729914f0828b6dc782590c5d4071adf75022923c6e2",
+    "v2/kvarnbyn/desktop/Kvarnbyn.zip": "a6c97c3ce09b7219d0712ee33cc390b53afb6d1c162aae0ee0eb0dacb27876e7"
+  },
+  "preserved": {
+    "v2/kvarnbyn/blender/world_raw.glb": true,
+    "v2/kvarnbyn/godot/assets/world.glb": true,
+    "v2/kvarnbyn/godot/assets/world_map.png": true,
+    "v2/kvarnbyn/godot/assets/game.json": true,
+    "v2/kvarnbyn/godot/assets/nav.json": true
+  },
+  "checks": {
+    "lighting": 15,
+    "native_release_budget": 6
+  },
+  "application": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "limits": "Native editor engine performance probe; actual release verified for render budget/quality, not rebenchmarked for FPS. Startup hitches remain. No new house geometry."
+}

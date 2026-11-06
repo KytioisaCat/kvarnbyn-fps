@@ -1,0 +1,72 @@
+{
+  "checks": [
+    {
+      "fullscreen": false,
+      "passed": true,
+      "quality": 0,
+      "render_pixels": 1000500.0,
+      "scale": 1.0,
+      "viewport": [
+        1334.0,
+        750.0
+      ]
+    },
+    {
+      "fullscreen": false,
+      "passed": true,
+      "quality": 1,
+      "render_pixels": 722861.290551425,
+      "scale": 0.850000023841858,
+      "viewport": [
+        1334.0,
+        750.0
+      ]
+    },
+    {
+      "fullscreen": true,
+      "passed": true,
+      "quality": 0,
+      "render_pixels": 2073600.08175545,
+      "scale": 0.381580889225006,
+      "viewport": [
+        4763.0,
+        2990.0
+      ]
+    },
+    {
+      "fullscreen": true,
+      "passed": true,
+      "quality": 1,
+      "render_pixels": 1498175.92140842,
+      "scale": 0.324343740940094,
+      "viewport": [
+        4763.0,
+        2990.0
+      ]
+    },
+    {
+      "fullscreen": false,
+      "passed": true,
+      "quality": 0,
+      "render_pixels": 2073600.08175545,
+      "scale": 0.381580889225006,
+      "viewport": [
+        4763.0,
+        2990.0
+      ]
+    },
+    {
+      "fullscreen": false,
+      "passed": true,
+      "quality": 1,
+      "render_pixels": 1498175.92140842,
+      "scale": 0.324343740940094,
+      "viewport": [
+        4763.0,
+        2990.0
+      ]
+    }
+  ],
+  "passed": true,
+  "release": true
+}

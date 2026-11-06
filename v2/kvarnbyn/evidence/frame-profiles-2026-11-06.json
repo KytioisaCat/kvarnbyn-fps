@@ -1,0 +1,481 @@
+{
+  "scope": "Five sequential short native editor-engine probes on this M5, six-second warmup,15-second camera turn in actual combat; no walking/whole-map guarantee",
+  "legacy_unit_labels_corrected": "normal/low only: statistical value names corrected; raw logs unchanged",
+  "profiles": {
+    "normal": {
+      "draw_calls": {
+        "samples": 983,
+        "unit": "count",
+        "p50": 2614.0,
+        "p95": 4301.0,
+        "p99": 4367.0,
+        "max": 4385.0
+      },
+      "frames": {
+        "mean_fps": 65.472587866311,
+        "over_33ms": 0,
+        "samples": 983,
+        "unit": "frame_ms",
+        "p50": 14.125,
+        "p95": 24.036,
+        "p99": 29.099,
+        "max": 30.845
+      },
+      "game": {
+        "allied_guards": 3,
+        "allies": 9,
+        "caps": [
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "A",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "B",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 3,
+            "friends_in": 0,
+            "id": "C",
+            "owner": "enemy",
+            "progress": 1.0
+          }
+        ],
+        "deaths": 0,
+        "elapsed_s": 20.4,
+        "enemies": 66,
+        "headshots": 0,
+        "kills": 0,
+        "over": false,
+        "player_alive": true,
+        "player_hp": 100000.0,
+        "reinforcements_left": 3,
+        "running": true,
+        "victory": false
+      },
+      "physics": {
+        "samples": 983,
+        "unit": "ms",
+        "p50": 3.399,
+        "p95": 4.418,
+        "p99": 4.418,
+        "max": 4.418
+      },
+      "quality": 0,
+      "render_scale": 1.0,
+      "renderer": "forward_plus",
+      "scope": "actual native combat world, stationary immortal player, continuously rotating camera; one short probe, not whole-map performance",
+      "screen_scale": 2.0,
+      "triangles": {
+        "samples": 983,
+        "unit": "count",
+        "p50": 2308442.0,
+        "p95": 3801014.0,
+        "p99": 3914652.0,
+        "max": 3929937.0
+      },
+      "viewport_size": "(1334.0, 750.0)",
+      "warmup": {
+        "mean_fps": 65.4355654984971,
+        "over_33ms": 4,
+        "samples": 392,
+        "unit": "frame_ms",
+        "p50": 13.258,
+        "p95": 16.468,
+        "p99": 33.602,
+        "max": 731.261
+      },
+      "window_size": "(1600, 900)",
+      "raw_log": "v2/.tools/kvarnbyn-performance-20261106/normal.log"
+    },
+    "low": {
+      "draw_calls": {
+        "samples": 1728,
+        "unit": "count",
+        "p50": 2606.0,
+        "p95": 4246.0,
+        "p99": 4347.0,
+        "max": 4371.0
+      },
+      "frames": {
+        "mean_fps": 115.135999735614,
+        "over_33ms": 0,
+        "samples": 1728,
+        "unit": "frame_ms",
+        "p50": 9.186,
+        "p95": 12.25,
+        "p99": 14.643,
+        "max": 20.238
+      },
+      "game": {
+        "allied_guards": 3,
+        "allies": 9,
+        "caps": [
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "A",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "B",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 2,
+            "friends_in": 0,
+            "id": "C",
+            "owner": "enemy",
+            "progress": 1.0
+          }
+        ],
+        "deaths": 0,
+        "elapsed_s": 18.4,
+        "enemies": 66,
+        "headshots": 0,
+        "kills": 0,
+        "over": false,
+        "player_alive": true,
+        "player_hp": 100000.0,
+        "reinforcements_left": 3,
+        "running": true,
+        "victory": false
+      },
+      "physics": {
+        "samples": 1728,
+        "unit": "ms",
+        "p50": 3.104,
+        "p95": 3.948,
+        "p99": 3.948,
+        "max": 3.948
+      },
+      "quality": 1,
+      "render_scale": 0.850000023841858,
+      "renderer": "forward_plus",
+      "scope": "actual native combat world, stationary immortal player, continuously rotating camera; one short probe, not whole-map performance",
+      "screen_scale": 2.0,
+      "triangles": {
+        "samples": 1728,
+        "unit": "count",
+        "p50": 2399694.0,
+        "p95": 3811967.0,
+        "p99": 3921148.0,
+        "max": 3942815.0
+      },
+      "viewport_size": "(1334.0, 750.0)",
+      "warmup": {
+        "mean_fps": 64.3790746658834,
+        "over_33ms": 1,
+        "samples": 386,
+        "unit": "frame_ms",
+        "p50": 8.769,
+        "p95": 12.18,
+        "p99": 20.215,
+        "max": 2734.977
+      },
+      "window_size": "(1600, 900)",
+      "raw_log": "v2/.tools/kvarnbyn-performance-20261106/low.log"
+    },
+    "fullscreen-normal": {
+      "draw_calls": {
+        "max": 4191.0,
+        "mean": 2704.58279569892,
+        "p50": 2446.0,
+        "p95": 4056.0,
+        "p99": 4157.0,
+        "samples": 465,
+        "unit": "count"
+      },
+      "frames": {
+        "max": 60.591,
+        "mean": 32.3068408602151,
+        "mean_fps": 30.9531967030386,
+        "over_33ms": 102,
+        "p50": 29.604,
+        "p95": 51.206,
+        "p99": 54.872,
+        "samples": 465,
+        "unit": "frame_ms"
+      },
+      "game": {
+        "allied_guards": 3,
+        "allies": 9,
+        "caps": [
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "A",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "B",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 3,
+            "friends_in": 0,
+            "id": "C",
+            "owner": "enemy",
+            "progress": 1.0
+          }
+        ],
+        "deaths": 0,
+        "elapsed_s": 20.5,
+        "enemies": 66,
+        "headshots": 0,
+        "kills": 0,
+        "over": false,
+        "player_alive": true,
+        "player_hp": 100000.0,
+        "reinforcements_left": 3,
+        "running": true,
+        "victory": false
+      },
+      "physics": {
+        "max": 5.859,
+        "mean": 3.89366451612903,
+        "p50": 3.644,
+        "p95": 5.859,
+        "p99": 5.859,
+        "samples": 465,
+        "unit": "ms"
+      },
+      "quality": 0,
+      "render_scale": 1.0,
+      "renderer": "forward_plus",
+      "scope": "actual native combat world, stationary immortal player, continuously rotating camera; one short probe, not whole-map performance",
+      "screen_scale": 2.0,
+      "triangles": {
+        "max": 4202262.0,
+        "mean": 2535815.77419355,
+        "p50": 2318548.0,
+        "p95": 3995854.0,
+        "p99": 4172655.0,
+        "samples": 465,
+        "unit": "count"
+      },
+      "viewport_size": "(4763.0, 2990.0)",
+      "warmup": {
+        "max": 594.783,
+        "mean": 30.3666091370558,
+        "mean_fps": 32.9309076125895,
+        "over_33ms": 2,
+        "p50": 27.498,
+        "p95": 30.877,
+        "p99": 65.158,
+        "samples": 197,
+        "unit": "frame_ms"
+      },
+      "window_size": "(3024, 1898)",
+      "raw_log": "v2/.tools/kvarnbyn-performance-20261106/fullscreen-normal.log"
+    },
+    "fullscreen-low": {
+      "draw_calls": {
+        "max": 4197.0,
+        "mean": 2706.50474547023,
+        "p50": 2452.0,
+        "p95": 4052.0,
+        "p99": 4152.0,
+        "samples": 1159,
+        "unit": "count"
+      },
+      "frames": {
+        "max": 17.934,
+        "mean": 12.9619050905953,
+        "mean_fps": 77.1491530767002,
+        "over_33ms": 0,
+        "p50": 13.294,
+        "p95": 16.257,
+        "p99": 17.323,
+        "samples": 1159,
+        "unit": "frame_ms"
+      },
+      "game": {
+        "allied_guards": 3,
+        "allies": 9,
+        "caps": [
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "A",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "B",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 3,
+            "friends_in": 0,
+            "id": "C",
+            "owner": "enemy",
+            "progress": 1.0
+          }
+        ],
+        "deaths": 0,
+        "elapsed_s": 20.6,
+        "enemies": 66,
+        "headshots": 0,
+        "kills": 0,
+        "over": false,
+        "player_alive": true,
+        "player_hp": 100000.0,
+        "reinforcements_left": 3,
+        "running": true,
+        "victory": false
+      },
+      "physics": {
+        "max": 4.027,
+        "mean": 3.33932700603968,
+        "p50": 3.289,
+        "p95": 4.027,
+        "p99": 4.027,
+        "samples": 1159,
+        "unit": "ms"
+      },
+      "quality": 1,
+      "render_scale": 0.850000023841858,
+      "renderer": "forward_plus",
+      "scope": "actual native combat world, stationary immortal player, continuously rotating camera; one short probe, not whole-map performance",
+      "screen_scale": 2.0,
+      "triangles": {
+        "max": 4201930.0,
+        "mean": 2542734.34943917,
+        "p50": 2340320.0,
+        "p95": 3974949.0,
+        "p99": 4147570.0,
+        "samples": 1159,
+        "unit": "count"
+      },
+      "viewport_size": "(4763.0, 2990.0)",
+      "warmup": {
+        "max": 500.824,
+        "mean": 13.7338555045872,
+        "mean_fps": 72.8127654806035,
+        "over_33ms": 1,
+        "p50": 12.989,
+        "p95": 15.719,
+        "p99": 19.184,
+        "samples": 436,
+        "unit": "frame_ms"
+      },
+      "window_size": "(3024, 1898)",
+      "raw_log": "v2/.tools/kvarnbyn-performance-20261106/fullscreen-low.log"
+    },
+    "fullscreen-capped": {
+      "draw_calls": {
+        "max": 4188.0,
+        "mean": 2674.66108007449,
+        "p50": 2438.0,
+        "p95": 4055.0,
+        "p99": 4154.0,
+        "samples": 1074,
+        "unit": "count"
+      },
+      "frames": {
+        "max": 34.227,
+        "mean": 13.9747160148976,
+        "mean_fps": 71.5578047478004,
+        "over_33ms": 3,
+        "p50": 13.147,
+        "p95": 24.297,
+        "p99": 30.153,
+        "samples": 1074,
+        "unit": "frame_ms"
+      },
+      "game": {
+        "allied_guards": 3,
+        "allies": 9,
+        "caps": [
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "A",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 0,
+            "friends_in": 0,
+            "id": "B",
+            "owner": "enemy",
+            "progress": 1.0
+          },
+          {
+            "enemies_in": 3,
+            "friends_in": 0,
+            "id": "C",
+            "owner": "enemy",
+            "progress": 1.0
+          }
+        ],
+        "deaths": 0,
+        "elapsed_s": 20.5,
+        "enemies": 66,
+        "headshots": 0,
+        "kills": 0,
+        "over": false,
+        "player_alive": true,
+        "player_hp": 100000.0,
+        "reinforcements_left": 3,
+        "running": true,
+        "victory": false
+      },
+      "physics": {
+        "max": 4.779,
+        "mean": 3.49620204841711,
+        "p50": 3.379,
+        "p95": 4.779,
+        "p99": 4.779,
+        "samples": 1074,
+        "unit": "ms"
+      },
+      "quality": 0,
+      "render_scale": 0.381580889225006,
+      "renderer": "forward_plus",
+      "scope": "actual native combat world, stationary immortal player, continuously rotating camera; one short probe, not whole-map performance",
+      "screen_scale": 2.0,
+      "triangles": {
+        "max": 4202018.0,
+        "mean": 2502201.69459963,
+        "p50": 2312837.0,
+        "p95": 3981450.0,
+        "p99": 4166606.0,
+        "samples": 1074,
+        "unit": "count"
+      },
+      "viewport_size": "(4763.0, 2990.0)",
+      "warmup": {
+        "max": 595.541,
+        "mean": 13.2268167770419,
+        "mean_fps": 75.6039806747547,
+        "over_33ms": 2,
+        "p50": 12.073,
+        "p95": 15.037,
+        "p99": 16.891,
+        "samples": 453,
+        "unit": "frame_ms"
+      },
+      "window_size": "(3024, 1898)",
+      "raw_log": "v2/.tools/kvarnbyn-performance-20261106/fullscreen-capped.log"
+    }
+  }
+}

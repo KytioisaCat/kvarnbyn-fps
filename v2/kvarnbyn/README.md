@@ -40,6 +40,9 @@ från det befintliga torget-provet.
 
 ## Resultat och nästa steg
 
+- [Husstatus: långt ifrån färdigt](HUSSTATUS-2026-11-06.md)
+- [Helskärmsflyt och kvarstående hack](RESULTAT-FLYT.md)
+
 - [Botens rensningspatrull](RESULTAT-BOTPATRULL.md)
 
 - [Basvakter efter förluster](RESULTAT-BASVAKTER.md)
