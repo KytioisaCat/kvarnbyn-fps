@@ -3,11 +3,11 @@
 Idébacklogg. En punkt i taget, ~30 min styck. Bocka av med `[x]` och flytta till
 Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md).
 
-## Aktiv arbetskö för självständiga pass (2026-11-04)
+## Aktiv arbetskö — hus och igenkänning först (Joel 2026-11-06)
 
-1. Patrullen är byggd och kapselprövad. Nästa omgångsarbete: undersök soldater som fastnar vid Stallelidens mitt och nå rensningsfasen i fler vanliga spelprov.
-2. Åtgärda konkreta gång-/AI-fel från omgångarnas slutdiagnostik; gör inte allmänna balansändringar från ett stickprov.
-3. Samla säkrare platsunderlag för åbankens hus/mark/intag och M24/M31. Bygg bara där underlaget räcker.
+1. **Individuella hus/fasader/tak prioriteras nu före fler bot-/AI-pass.** Stora delar av världen är fortfarande generiska. Efter Joels prov: välj tydligt avgränsat kvarter och granska husen mot faktiskt synliga referenser; rätta siluett, tak, material, fönster/entréer och anslutande mark. Redovisa varje hus som granskat, uppskattat eller kvarstående.
+2. Säkrare underlag för åbankens rundade tegelhus/mark/intag samt M24/M31. Saknade referenser får inte ersättas med påstått korrekta gissningar; fortsätt med andra synliga hus när en fasad är skymd.
+3. Konkreta gång-/AI-fel, bland annat Stallelidens mitt, efter platsarbetet eller om Joels spelprov visar blockerande fel.
 4. Fortsatt stämning: varma fönster, forsdis och ljudlandskap; tysta agentprov.
 
 ## Omstart 2026-10-22 (läs `OMSTART.md` först)

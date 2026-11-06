@@ -31,6 +31,15 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-06 09:24 — ChatGPT Codex — husstatus och manuell spelstart
+
+**Status:** klart — appen öppnad för Joels manuella prov; husarbete omprioriterat.
+**Gjort:** läst senaste överlämningar/TODO/arkitektur och husresultat. Förklarat att enskilda hjältehus och M29/M25/M30 bearbetats men att flertalet hus fortfarande är generiska och även bearbetade mått/dolda sidor osäkra. Joel betonar individuella fasader/tak som viktigare fortsatt arbete; TODO:s aktiva kö ändrad därefter.
+**Läge nu:** öppnade lokala `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app` via CUA; fick dess standardfönster Försvara Kvarnbyn. Vid försök att lyfta fönstret noterades användaraktivitet; efterföljande CUA-observationer timeout. Starten är observerad via fönstret, men ingen färdig spelbild kunde kontrolleras. Appen lämnad igång för Joel, vanligt manuellt ljud; inga automatiska motorprov eller speländringar. Senaste datorversionen är lokal; GitHub har kod och äldre webbspår, ingen publicerad aktuell Mac-binär i workflowen.
+**Nästa:** Joels visuella bedömning, därefter avgränsade hus-/kvarterspass med verkliga referenser. Hus/igenkänning före fler botförbättringar. M24/M31 och intagets sammanhängande markunderlag fortsatt osäkra.
+
+---
+
 ## 2026-11-05 17:40 — ChatGPT Codex — slutför patrullprovet
 
 **Status:** klart — patrull i uppdaterad Mac-app, kvarstående AI-/omgångsproblem avgränsade.
