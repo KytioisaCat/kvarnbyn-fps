@@ -720,3 +720,24 @@ vertexvikter och272tvåsidiga murstrålar; muren isoleras från jord som avsiktl
 kan täcka översidan. Byggkedjan kräver detta prov. Verkliga gång-/kapsel-/krokprov
 kompletterar artefaktkontrollen. Bildproven använder samma fem kameror före/efter
 samt två extra från startområdet efter Joels förtydligande.
+
+
+## Civila personliga NPC:er — research och arbetssätt (2026-11-08)
+
+Joel vill ha igenkännbara, unika civila personer i världen, hämtade från lokala
+profiler och kända/betydelsefulla människor med Mölndalskoppling. De är civila
+som spelaren inte ska skjuta på. Detta är ett eget önskat spelinslag; exakta
+skaderegler, reaktioner, vardagsbeteenden och platser är ännu inte beslutade.
+
+Först en bred kandidatlista, sedan Joels uttryckliga urval, därefter bildreferenser
+och unik NPC-design/modellering för de valda. Researchunderlaget finns i
+`v2/kvarnbyn/reference/npc/candidates-2026-11-08.json`:44verkliga personer plus
+fiktiva Ronny Jönsson som separat bonus. Alla är fortfarande ovalda. Källor
+anger född/uppvuxen/bosatt/verksam; en födelseort ensam är inte belägg för
+långvarig lokal förankring. Lindome/Kållered och historiska personer ingår i
+urvalsunderlaget. Biografierna beskriver ortsnivå, inga privata hemadresser eller
+NPC-placeringar. Inga bilder hämtade, ingen modell eller appändring i researchen.
+
+Joel betonar att detta är ett passionsprojekt där det är fritt att byta mellan
+roliga deluppgifter. Oavslutade förbättringar förs i backloggen; en äldre föreslagen
+byggordning begränsar inte hans senare prioriteringar.

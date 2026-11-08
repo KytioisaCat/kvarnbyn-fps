@@ -5,6 +5,10 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Aktiv arbetskö — rörelse, flyt och husigenkänning (Joel 2026-11-08)
 
+**Joels aktuella val: unika civila NPC:er.** Researchlista med44verkliga personer +fiktiva Ronny Jönsson i `v2/kvarnbyn/reference/npc/candidates-2026-11-08.json`. Joel väljer vilka innan bildreferenser laddas ned och unik design/modellering börjar. Civila som spelaren inte ska skjuta på; inga nya stridande. Skade-/reaktionsregler och placeringar bestäms vid implementation. Inga bilder/modeller hämtade eller skapade i researchsteget.
+
+**Passionsprojekt:** förbättringsbackloggen sparas, men Joel väljer vad som känns roligt för stunden. Tidigare föreslagen byggordning ska inte blockera hans nya val av uppgift.
+
 **Kartspår:** första berg-/murpasset klart. Nästa platsarbete är klippfasaden sedd från spawn vid övre Görjelycksgatan: exakta stup/avsatser, sprickor, vegetationens nivåer och villornas igenkänning. Materialmaskerna är första uppskattningar; ingen färdig inmätning. Se `reference/glasberget/README.md` under v2/kvarnbyn.
 
 Vid parallellt arbete lämnar spel-/kartspåren sina status-/backloggändringar i egna
@@ -116,6 +120,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-08 — **Research för civila NPC:er:**44verkliga kandidater med källor för Mölndals-/Lindome-/Kålleredsanknytning, samt tydligt separat fiktiv bonus. Född/uppvuxen/bosatt/verksam skiljs åt. Urvalet väntar på Joel; ingen NPC byggd än.
 
 - [x] 2026-11-08 — **Första berg-/murpasset:** kontinuerlig berg/grönska i kärna och kuliss, rå LiDAR-lutning, särskilt Glasbergets framsida från startområdet, världsprojicerad bergtextur och två kartlagda låga stenmurar. Separat Karta-worktree → integrerad spelapp. Befintlig geometri/höjdfält bevarade; exakt klippform och murarnas öppningar återstår.
 

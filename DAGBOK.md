@@ -33,6 +33,16 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-08 — ChatGPT Codex — civila NPC-kandidater från Mölndal
+
+**Status:** klart — researchlista med44verkliga personer +enfiktiv bonus; väntar på Joels urval.
+**Mål:** lokala profiler och kända/betydelsefulla personer med dokumenterad Mölndalskoppling. Civila, inga stridande. Skilj född/uppvuxen från verksam/bosatt och skilj centrala Mölndal från Lindome/Kållered. Förbättringsbackloggen för världen ligger kvar. Ingen spelkod eller app ändras i denna research.
+**Gjort:** källbelagd struktur i `v2/kvarnbyn/reference/npc/candidates-2026-11-08.json`; lokala/historiska profiler, scen/musik, sport och litteratur. Namn inkluderar Lars Gahrn, Mölndalsrevyns profiler, Per Andersson, Ulla Jacobsson, Oscar Dronjak, Emrik Larsson, Lotta Schelin, Goop, Rune Andréasson, Malin Lindroth och fler. Ronny Jönsson uttryckligen fiktiv. Källor från museer/föreningar/egna presentationer/förlag/SOK och journalistiska intervjuer; några biografier sekundärkällor. Undvik att ange Anders Möllers uppväxt eller Ericas födelseort som Mölndal; källorna skiljer sig. Erica Johansson stavas med c.
+**Nästa:** Joel väljer och kan lägga till egna kandidater. Först därefter porträttreferenser, unik gestaltning och civil-NPC-implementation. Inga bildnedladdningar/modeller, inga motorprov behövdes. TODO/arkitektur noterar att passionsprojektets uppgifter styrs av Joels aktuella lust, med övriga förbättringar kvar i backloggen.
+
+
+---
+
 ## 2026-11-08 — ChatGPT Codex — integration av första berg-/murpasset
 
 **Status:** klart — första material-/murpasset integrerat, ordinarie Mac-app byggd och verifierad.
