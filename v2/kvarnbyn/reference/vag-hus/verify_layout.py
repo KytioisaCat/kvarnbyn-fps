@@ -78,7 +78,7 @@ def main():
             nodes[node]=p
     checks['shared_road_junctions_still_connected']=not disconnected
     detail['shared_node_mismatches']=disconnected
-    checks['three_local_street_reviews_applied']=sum(bool(r.get('width_profile_m'))for r in roads)==3
+    checks['reviewed_street_profiles_applied']=sum(bool(r.get('width_profile_m'))for r in roads)>=3
     kinds={}
     for key in ('roten_mesh_kinds','stalliden_mesh_kinds','stalliden_garden_mesh_kinds','m25_mesh_kinds','north_bank_mesh_kinds'): kinds.update(site.get(key,{}))
     walk_keys=[key for key,kind in kinds.items() if kind in ('asphalt','paving','walkway','trail','gravel','stone')]
@@ -103,6 +103,9 @@ def main():
         all_walks=exported_roads(args.glb,tuple(walk_keys)+('Bridge_deck','Stairs'))
         extra_bad=intrusions(all_walks['visible'],houses)
         checks['exported_walkways_stairs_and_bridge_decks_outside_houses']=not extra_bad
+        collision_bad=intrusions(all_walks['collision'],houses)
+        checks['exported_walk_collisions_outside_houses']=not collision_bad
+        detail['all_walk_collision_intrusions']=collision_bad
         detail['all_walk_floor_intrusions']=extra_bad
         detail['glb_sha256']=hashlib.sha256(args.glb.read_bytes()).hexdigest()
     report=dict(passed=all(checks.values()),checks=checks,detail=detail,buildings_checked=len(houses),roads_checked=len(roads),site_triangles_checked=len(tris))

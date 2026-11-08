@@ -44,6 +44,16 @@
       "heading": 315,
       "observed": "Franckegatan: mycket smal asfalt med granit-/gatstenskant, vitt spjälstaket och grönska till vänster, stenstödd grön slänt till höger. w92332023 framför kameran på västsidan: vit stående panel, vita foder och låg främre sadeltaksgavel, högre bakdel delvis skymd. Exakta delvolym-/takgränser inte kartlagda.",
       "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=hPaHTqMsaC3SKkBSfywOTA"
+    },
+    {
+      "id": "gotafors17",
+      "pano": "KcCRF9O_ugcT21i2VurKLQ",
+      "capture_date": "maj 2026",
+      "lat": 57.6572723,
+      "lon": 12.0314256,
+      "heading": 350,
+      "observed": "Byggnaden på motsatta sidan, w92331939: adress Götaforsliden17 synlig vid indragen entré. Ljusgul puts, gröna fönsterbågar med överljus, naturstenssockel, fyra synliga fönsterrader (översta mindre), indragen entré. Ingen synlig tegelfasad. Takytans exakta form skymd.",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=KcCRF9O_ugcT21i2VurKLQ&heading=350&pitch=10"
     }
   ],
   "roads": [
@@ -170,6 +180,31 @@
         "heights": "low_front_gable_visual_estimate_rear_volume_not_resolved",
         "roof": "gable_observed_dark_covering_existing_material_retained",
         "windows": "mostly_obscured_existing_bay_pattern_assumed"
+      }
+    },
+    "w92331939": {
+      "name": "Götaforsliden 17",
+      "override": {
+        "facade_color": "#e6dfc8",
+        "facade_material": "plaster",
+        "trim_color": "#738568",
+        "sash_color": "#738568",
+        "reviewed_facade": true,
+        "window_muntins": true,
+        "window_style": "transom",
+        "window_width_m": 1.2,
+        "window_height_m": 1.6,
+        "window_bay_m": 2.9,
+        "wall_height_m": 12.8,
+        "base_y_m": 22.2,
+        "base_height_raw_m": 40.2
+      },
+      "source": {
+        "facade": "street_view_may2026_light_plaster_observed_osm_material_corrobates",
+        "trim": "street_view_may2026_green_frames_observed",
+        "windows": "four_rows_upper_transoms_observed_distribution_approximated",
+        "heights": "visual_estimate_from_four_rows_and_street_side_foundation_not_survey",
+        "roof": "existing_flat_assumption_retained_roof_surface_unverified"
       }
     }
   },

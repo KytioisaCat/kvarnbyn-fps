@@ -1,0 +1,410 @@
+{
+	"blockers": [
+		{
+			"expected_blocked": true,
+			"id": "w13698106_house_wall",
+			"passed": true,
+			"ray_blocked": true,
+			"ray_collider": "/root/Kvarnbyn/Varlden/COL_H2_-1__Collision_only/Gångyta",
+			"walk": {
+				"distance_from_start_m": 1.25472211837769,
+				"frames": 60,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.0391445159912109,
+				"maximum_lateral_error_m": 0.00387251889333129,
+				"position": [
+					210.593627929688,
+					20.7402172088623,
+					-38.9878616333008
+				],
+				"reached": false,
+				"reason": "blocked_by_static",
+				"side_colliders": [
+					"/root/Kvarnbyn/Varlden/COL_H2_-1__Collision_only/Gångyta"
+				]
+			}
+		},
+		{
+			"expected_blocked": true,
+			"id": "w43570099_house_wall",
+			"passed": true,
+			"ray_blocked": true,
+			"ray_collider": "/root/Kvarnbyn/Varlden/COL_H2_-1__Collision_only/Gångyta",
+			"walk": {
+				"distance_from_start_m": 1.87042903900146,
+				"frames": 75,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.00827407836914062,
+				"maximum_lateral_error_m": 0.00149556691758335,
+				"position": [
+					284.079254150391,
+					28.2037448883057,
+					-22.5547199249268
+				],
+				"reached": false,
+				"reason": "blocked_by_static",
+				"side_colliders": [
+					"/root/Kvarnbyn/Varlden/COL_H2_-1__Collision_only/Gångyta"
+				]
+			}
+		},
+		{
+			"expected_blocked": true,
+			"id": "w78040332_house_wall",
+			"passed": true,
+			"ray_blocked": true,
+			"ray_collider": "/root/Kvarnbyn/Varlden/COL_H1_1__Collision_only/Gångyta",
+			"walk": {
+				"distance_from_start_m": 1.5945737361908,
+				"frames": 181,
+				"height_profile_checked": false,
+				"maximum_height_error_m": 0.0179786682128906,
+				"maximum_lateral_error_m": 0.00421081762760878,
+				"position": [
+					202.637466430664,
+					38.742561340332,
+					183.512252807617
+				],
+				"reached": false,
+				"reason": "stuck",
+				"side_colliders": [
+					"/root/Kvarnbyn/Varlden/COL_H1_1__Collision_only/Gångyta"
+				]
+			}
+		}
+	],
+	"check_key": "road_ground_checks",
+	"coverage": {
+		"closed_blocker_probes": 3,
+		"ground_points": 9,
+		"open_passage_probes": 0,
+		"walk_paths": 6
+	},
+	"errors": [],
+	"geometry_source": "res://assets/world.glb",
+	"metadata_mtime_unix": 1794172926,
+	"metadata_source": "world_meta.road_ground_checks",
+	"passed": true,
+	"paths": [
+		{
+			"id": "w13698106_up",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 160,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.0565013885498047,
+				"maximum_height_error_m": 0.0375137329101562,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 34.7134857177734,
+				"frames": 758,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.0428805026528458,
+				"maximum_lateral_error_m": 0.0485618859529495,
+				"position": [
+					227.377395629883,
+					23.3603343963623,
+					-40.0981636047363
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "w13698106_down",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 160,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.0565013885498047,
+				"maximum_height_error_m": 0.0375137329101562,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 34.5387077331543,
+				"frames": 757,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.0420510170815973,
+				"maximum_lateral_error_m": 0.0442878492176533,
+				"position": [
+					195.094985961914,
+					17.5722465515137,
+					-28.0994815826416
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "w43570099_up",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 160,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.0179843902587891,
+				"maximum_height_error_m": 0.00278854370117188,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 37.6226959228516,
+				"frames": 759,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.00438822982625453,
+				"maximum_lateral_error_m": 0.0106534827500582,
+				"position": [
+					302.756439208984,
+					28.8783950805664,
+					-22.5868186950684
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "w43570099_down",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 160,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.0179843902587891,
+				"maximum_height_error_m": 0.00278854370117188,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 37.6215553283691,
+				"frames": 759,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.00425505520684055,
+				"maximum_lateral_error_m": 0.0129536613821983,
+				"position": [
+					265.495361328125,
+					27.2919769287109,
+					-25.2733860015869
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "w78040332_up",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 204,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.04095458984375,
+				"maximum_height_error_m": 0.00394439697265625,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 47.7008094787598,
+				"frames": 959,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.00381994033109834,
+				"maximum_lateral_error_m": 0.00360708218067884,
+				"position": [
+					195.592086791992,
+					35.9242210388184,
+					160.595642089844
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		},
+		{
+			"id": "w78040332_down",
+			"passed": true,
+			"surface_samples": {
+				"bad": 0,
+				"count": 204,
+				"first_failures": [],
+				"maximum_adjacent_height_change_m": 0.04095458984375,
+				"maximum_height_error_m": 0.00394439697265625,
+				"passed": true
+			},
+			"walk": {
+				"distance_from_start_m": 47.6827392578125,
+				"frames": 959,
+				"height_profile_checked": true,
+				"maximum_height_error_m": 0.0049466297507621,
+				"maximum_lateral_error_m": 0.00465643126517534,
+				"position": [
+					211.182022094727,
+					39.8252906799316,
+					205.389434814453
+				],
+				"reached": true,
+				"reason": "reached",
+				"side_colliders": []
+			}
+		}
+	],
+	"points": [
+		{
+			"actual": [
+				194.852996826172,
+				17.5261497497559,
+				-27.9659996032715
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_asphalt1_-1__Collision_only/Gångyta",
+			"expected": [
+				194.852996826172,
+				17.5249996185303,
+				-27.9659996032715
+			],
+			"height_error_m": 0.00115013122558594,
+			"id": "w13698106_0",
+			"normal_y": 0.988234102725983,
+			"passed": true
+		},
+		{
+			"actual": [
+				211.080993652344,
+				20.7023181915283,
+				-37.8320007324219
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_asphalt2_-1__Collision_only/Gångyta",
+			"expected": [
+				211.080993652344,
+				20.7029991149902,
+				-37.8320007324219
+			],
+			"height_error_m": 0.000680923461914062,
+			"id": "w13698106_20",
+			"normal_y": 0.98654967546463,
+			"passed": true
+		},
+		{
+			"actual": [
+				227.555999755859,
+				23.3878211975098,
+				-39.8979988098145
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_asphalt2_-1__Collision_only/Gångyta",
+			"expected": [
+				227.555999755859,
+				23.386999130249,
+				-39.8979988098145
+			],
+			"height_error_m": 0.000822067260742188,
+			"id": "w13698106_40",
+			"normal_y": 0.994103372097015,
+			"passed": true
+		},
+		{
+			"actual": [
+				265.226989746094,
+				27.2799739837646,
+				-25.2339992523193
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_street_setts2_-1__Collision_only/Gångyta",
+			"expected": [
+				265.226989746094,
+				27.2819995880127,
+				-25.2339992523193
+			],
+			"height_error_m": 0.00202560424804688,
+			"id": "w43570099_0",
+			"normal_y": 0.999242722988129,
+			"passed": true
+		},
+		{
+			"actual": [
+				284.110992431641,
+				28.1961402893066,
+				-24.4249992370605
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_street_setts2_-1__Collision_only/Gångyta",
+			"expected": [
+				284.110992431641,
+				28.1959991455078,
+				-24.4249992370605
+			],
+			"height_error_m": 0.000141143798828125,
+			"id": "w43570099_20",
+			"normal_y": 0.999010920524597,
+			"passed": true
+		},
+		{
+			"actual": [
+				303.019012451172,
+				28.8842506408691,
+				-22.5610008239746
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_street_setts3_-1__Collision_only/Gångyta",
+			"expected": [
+				303.019012451172,
+				28.8840007781982,
+				-22.5610008239746
+			],
+			"height_error_m": 0.000249862670898438,
+			"id": "w43570099_40",
+			"normal_y": 0.99974250793457,
+			"passed": true
+		},
+		{
+			"actual": [
+				211.251007080078,
+				39.8200569152832,
+				205.65299987793
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_asphalt2_2__Collision_only/Gångyta",
+			"expected": [
+				211.251007080078,
+				39.8240013122559,
+				205.65299987793
+			],
+			"height_error_m": 0.00394439697265625,
+			"id": "w78040332_0",
+			"normal_y": 0.999815046787262,
+			"passed": true
+		},
+		{
+			"actual": [
+				203.882995605469,
+				38.6777801513672,
+				182.341995239258
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_asphalt2_1__Collision_only/Gångyta",
+			"expected": [
+				203.882995605469,
+				38.6780014038086,
+				182.341995239258
+			],
+			"height_error_m": 0.00022125244140625,
+			"id": "w78040332_26",
+			"normal_y": 0.99502021074295,
+			"passed": true
+		},
+		{
+			"actual": [
+				195.494995117188,
+				35.8922462463379,
+				160.360992431641
+			],
+			"collider": "/root/Kvarnbyn/Varlden/COL_asphalt1_1__Collision_only/Gångyta",
+			"expected": [
+				195.494995117188,
+				35.8919982910156,
+				160.360992431641
+			],
+			"height_error_m": 0.000247955322265625,
+			"id": "w78040332_51",
+			"normal_y": 0.994275689125061,
+			"passed": true
+		}
+	],
+	"scope": "actual imported collision geometry and actual player controller",
+	"wall_clock_s": 4.161195,
+	"world_asset_mtime_unix": 1794172928
+}

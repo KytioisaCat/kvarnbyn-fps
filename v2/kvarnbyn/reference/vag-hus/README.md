@@ -24,6 +24,12 @@ spelmaterial eller Git. Skymda fasader är inte granskade.
    inte givet en obelagd gatuadress. Vit panel/foder och låg främre gavel;
    bakre höjd/delvolymer skymda. Uppskattad körbana 3,0 m.
 
+5. **Götaforsliden17**, maj2026, samma panorama vänt norrut: synlig adress
+   vid indragen entré, ljusgul puts och gröna fönster med överljus, naturstenssockel,
+   fyra fönsterrader med mindre översta fönster. Tegelantagandet rättat; totalhöjd
+   och sockelns nivå uppskattade mot gatan. Den tidigare takformen är fortfarande
+   obekräftad. Entréindelning och exakta fönsterlägen behöver eget detaljpass.
+
 ## Diagnos och rättning
 
 Den råa väg-bufferten berörde52hus/väg-par, men det var **inte52ritade fel**:

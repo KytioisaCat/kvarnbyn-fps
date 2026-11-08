@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-08",
+  "source_checks": {
+    "roten": {
+      "passed": true,
+      "points": 11,
+      "paths": 2,
+      "blockers": 2
+    },
+    "stalliden": {
+      "passed": true,
+      "points": 13,
+      "paths": 2,
+      "blockers": 2
+    },
+    "m25": {
+      "passed": true,
+      "points": 3,
+      "paths": 2,
+      "blockers": 2
+    },
+    "northbank": {
+      "passed": true,
+      "points": 6,
+      "paths": 4,
+      "blockers": 4
+    },
+    "roads": {
+      "passed": true,
+      "points": 9,
+      "paths": 6,
+      "blockers": 3
+    },
+    "grapple": [
+      {
+        "passed": true,
+        "checks": 27
+      }
+    ],
+    "civilians": [
+      {
+        "passed": true,
+        "checks": 29
+      }
+    ],
+    "terrain": [
+      {
+        "passed": true,
+        "checks": 7
+      }
+    ],
+    "map": [
+      {
+        "passed": true,
+        "checks": 19
+      }
+    ],
+    "soldiers": [
+      {
+        "passed": true,
+        "checks": 0
+      }
+    ],
+    "patrol": [
+      {
+        "passed": true,
+        "checks": 16
+      }
+    ],
+    "weapon": [
+      {
+        "passed": true,
+        "checks": 13
+      }
+    ]
+  },
+  "notes": [
+    "Two seeded combat rounds were observed; no balance changes or victory claim.",
+    "Native before/final comparisons inspected for five views.",
+    "Movement/gameplay/NPC source and model hashes preserved in road-gameplay-preserved.json."
+  ],
+  "global_walk": {
+    "points": 180,
+    "landed": 180,
+    "failed": 0
+  }
+}

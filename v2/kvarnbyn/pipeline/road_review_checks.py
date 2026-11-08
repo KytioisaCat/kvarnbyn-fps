@@ -25,7 +25,8 @@ def make_checks(city, height_fn, offset):
         middle = line.interpolate(sum(span)/2)
         building = min(city['buildings'],key=lambda b:Polygon(b.get('build_footprint_xz',b['footprint_xz'])).distance(middle))
         polygon = Polygon(building.get('build_footprint_xz',building['footprint_xz']))
-        target = np.array(polygon.representative_point().coords[0])
+        inner = polygon.buffer(-.35)
+        target = np.array(nearest_points(middle,inner if not inner.is_empty else polygon.representative_point())[1].coords[0])
         h = float(height_fn(np.array([middle.x]),np.array([middle.y]))[0])+.03-offset
         blockers.append(dict(id=road['id']+'_house_wall',**{'from':[middle.x,h,middle.y],'to':[float(target[0]),h,float(target[1])]},blocked=True,height_m=1.25))
     return dict(points=points,paths=paths,blockers=blockers)

@@ -117,6 +117,9 @@ if [[ " $* " != *" --no-export "* ]]; then
   ls -la $P/desktop/Kvarnbyn.zip | awk '{printf "  Kvarnbyn.zip %.0f MB\n", $5/1e6}'
   mkdir -p $P/desktop/app
   ditto -x -k $P/desktop/Kvarnbyn.zip $P/desktop/app
+  step "Kontroll: rättade gator med riktig kapsel i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --explore --no-pointer-lock --no-movement-profile --road-export-check > $LOG/road-export-check.log 2> $LOG/road-export-check.stderr.log
+  $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_ROAD_EXPORT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_ROAD_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/road-export-check.log
   step "Kontroll: civila modeller, samtal och skydd i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --no-pointer-lock --no-movement-profile --civilian-export-check > $LOG/civilian-export-check.log 2> $LOG/civilian-export-check.stderr.log
   $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_CIVILIAN_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_CIVILIAN_CHECK "))); assert r["passed"] and r["release"] and len(r["checks"])>=29' $LOG/civilian-export-check.log

@@ -40,9 +40,9 @@ def window(K, name, M, at, w, h, trim, muntins=True, sill=True, muntin_mat=None,
     K.face(name + '_Glass', M['glass_dark'], [at(-w / 2, 0.045, 0), at(w / 2, 0.045, 0), at(w / 2, 0.045, h), at(-w / 2, 0.045, h)],
            [(0, 0), (1, 0), (1, 1), (0, 1)])
     if muntins:
-        vertical = .76 if muntin_style == 't' else 1.0
-        K.box(name, muntin_mat or trim, at(0, 0.07, h * vertical / 2), (0.045, 0.05, h * vertical), *_uv(at))
-        K.box(name, muntin_mat or trim, at(0, 0.07, h * (.76 if muntin_style == 't' else .58)), (w, 0.05, 0.04), *_uv(at))
+        vertical = 0.0 if muntin_style=='transom' else .76 if muntin_style == 't' else 1.0
+        if vertical > 0.0: K.box(name, muntin_mat or trim, at(0, 0.07, h * vertical / 2), (0.045, 0.05, h * vertical), *_uv(at))
+        K.box(name, muntin_mat or trim, at(0, 0.07, h * (.76 if muntin_style in ('t','transom') else .58)), (w, 0.05, 0.04), *_uv(at))
     if sill:
         K.box(name, M['metal_sill'], at(0, 0.13, -0.11), (w + 0.2, 0.2, 0.04), *_uv(at))
 
@@ -71,8 +71,8 @@ def build_house(K, b, M, ground, tile):
     trim = M['trim_dark'] if b['facade_material'] == 'wood' and b['facade_color'] in ('#efece4', '#e9dcae', '#e6d8c0', '#cfccc2') and (h01(b['id'], 'trim') < 0.33) else M['trim_light']
     if b['facade_material'] == 'wood' and b['facade_color'] == '#8e3326':
         trim = M['trim_light']
-    if b.get('reviewed_cottage'): trim = M['reviewed_trim'](b)
-    sash = M['reviewed_sash'](b) if b.get('reviewed_cottage') else trim
+    if b.get('reviewed_cottage') or b.get('reviewed_facade'): trim = M['reviewed_trim'](b)
+    sash = M['reviewed_sash'](b) if b.get('reviewed_cottage') or b.get('reviewed_facade') else trim
     name = 'H%s' % tile
     nm = name
     # sockel
@@ -88,7 +88,8 @@ def build_house(K, b, M, ground, tile):
         K.face(nm + '_Walls', wallmat, [(a[0], -a[1], base + sock), (c[0], -c[1], base + sock), (c[0], -c[1], eave), (a[0], -a[1], eave)])
     K.shell('COL_' + nm, M['collision'], [tuple(p) for p in foot], low, eave - low)
     # fönster och dörr
-    ww, wh, sill_h = WINDOW[arch]; bay = BAY[arch]
+    ww, wh, sill_h = WINDOW[arch]; bay = b.get('window_bay_m',BAY[arch])
+    ww=b.get('window_width_m',ww);wh=b.get('window_height_m',wh)
     sill_h = b.get('window_sill_m', sill_h)
     if arch == 'trahus' and levels == 2 and wall < 5.0 and not b.get('full_window_rows'):
         floors = [(base + sock, 2.55), (base + sock + 2.6, wall - sock - 2.6)]

@@ -42,3 +42,25 @@ Ny byggning körs (egen session5603); därefter optimizer/import/prov i ordning.
 Sex verkliga gångstråk var gröna redan före sista detaljpasset. G18:s för höga
 entré/avsaknad av rätt betongplattform är dokumenterad kvarstående platsfråga,
 inte färdigbedömd. Baslinje-/Street View-underlag och lokala värden sparade.
+
+Reserverar också en avgränsad world.gd-koppling: `--road-export-check` för
+riktiga kapselprov på de nya gatustråken inuti det färdiga Mac-paketet.
+Ingen strids-/rörelselogik ändras. Sex editorstråk + samtliga Roten/Stalleliden/
+M25/åbanksprov gröna. Två riktiga seedade botrundor:108nådde600s med B/C egna,
+109förlorade220,2s. Inget påstående om färdig balans eller jämförelse mot baslinje.
+
+### Källpass klart, integratörens paketering återstår
+
+Fjärde fasadpasset tillagt: Götaforsliden17, faktiskt sedd ljus puts/gröna
+överljusfönster/naturstenssockel, fyra rader. Höjd/bas fortfarande uppskattade.
+Det felaktiga blockerprovet är rättat till närmaste punkt i en säker inre
+polygon; alla nio markpunkter, sex fram/back-gångstråk och tre verkliga husstopp
+gröna. Även ny gemensam runtime-grind `road_check.gd`:19prov gröna i editorn.
+Slutlig artefaktkontroll12grön, synliga/kollisionsvägtrianglar85908/85908 matchar
+aktuell site; även specialgångytor/trappor/brodäck och navgraf fria från husintrång.
+180globala markpunkter och alla äldre Roten/Stalleliden/M25/åbanksstråk gröna.
+Krok/civila/karta/terräng/soldater/patrull/vapen gröna. Native slutbilder i
+`evidence/roads/final/` granskade. Nytt exportpaket02 lägger till samma riktiga
+kapselprov i release; första paketets övriga releaseprov var redan gröna.
+Integratör: kör release19, koppla rätt värld/metadata/nav/karta till main och
+uppdatera ordinarie app med backup. Fortsätt därefter nästa avgränsade kvarter.
