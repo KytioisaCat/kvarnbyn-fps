@@ -16,6 +16,7 @@ from blender_materials import pbr_material, solid_material
 from blender_vegetation import place_tree, load_library
 from blender_finish import apply_finish
 import houses, heroes, roten, stairkit, stalleliden_houses, north_bank_details
+import terrain_details
 
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
@@ -165,6 +166,9 @@ for k in range(CZ - 1):
         pts = [(x, -z, y) for x, y, z in zip([xa, xb, xb, xa], ys, [za, za, zb, zb])][::-1]
         K.face('FarTerrain' + tile_of(xa, za), M['forest'] if h01(i // 6, k // 6) < 0.45 else M['grass'], pts, [(p[0] / 8, p[1] / 8) for p in pts])
 log('terräng kuliss klar')
+
+wall_profiles = terrain_details.build_walls(K, M, ground, CITY)
+log(f'kartlagda låga stenmurar: {len(wall_profiles)} segment')
 
 # ---------- byggda ytor ----------
 MAT = {'asphalt': M['asphalt'], 'paving': M['paving'], 'walkway': M['walkway'], 'trail': M['trail'], 'pitch': M['pitch'], 'playground': M['playground'], 'water': M['water'], 'soil': M['soil']}
@@ -355,6 +359,8 @@ for obj in objects:
     elif any(k in obj.name for k in ['Terrain', 'Water']) or (obj.name.startswith(('Roten_ground_', 'Stalleliden_ground_', 'Northbank_ground_')) and not obj.name.startswith(('Roten_ground_edges', 'Stalleliden_ground_edges', 'Northbank_ground_edges'))):
         bm = bmesh.new(); bm.from_mesh(obj.data); bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=.0001); bm.to_mesh(obj.data); bm.free()
         for poly in obj.data.polygons: poly.use_smooth = True
+        if obj.name.startswith(('Terrain', 'FarTerrain')):
+            terrain_details.paint(obj.data, C if obj.name.startswith('FarTerrain') else T)
 log(f'objekt: {len(objects)}')
 
 # ---------- träd ----------
@@ -418,6 +424,10 @@ views = [
     dict(id='fors-gangbron', name='Forsen – gångbron', position=[71.869,3.588,-3.785], target=[116,1.6,-17.1]),
     dict(id='fors-ovre', name='Forsen – övre loppet', position=[161.038,14.78,-31.765], target=[183,10.8,-44.8]),
     dict(id='oversikt', name='Överblick', position=[180, 150, 330], target=[60, 0, 40], free_flight=True),
+    dict(id='glasberget-fran-start', name='Glasberget – från startplatsen', position=[340,54.9,153], target=[490,60,250]),
+    dict(id='glasberget-klippfasad', name='Glasberget – klippfasaden', position=[388,56,180], target=[490,62,255], free_flight=True),
+    dict(id='lilla-glasberget', name='Lilla Glasberget – berg och grönska', position=[145,35,190], target=[235,46,152], free_flight=True),
+    dict(id='glasberget', name='Glasberget – bergkulissen', position=[405,88,380], target=[635,66,565], free_flight=True),
 ]
 probe = []
 for r in CITY['roads']:
@@ -429,6 +439,7 @@ for r in CITY['roads']:
         if acc > 45 and zx0 + 3 < xa < zx1 - 3 and zz0 + 3 < za < zz1 - 3:
             acc = 0; probe.append([round(xa, 2), round(ground(xa, za), 2), round(za, 2)])
 meta = dict(title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.get('north_bank',{}).get('ground_checks',{}), m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
+            mapped_wall_profiles=wall_profiles,
             spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),
             views=views, bounds=dict(min=[zx0, -40, zz0], max=[zx1, 120, zz1]),
@@ -440,7 +451,8 @@ meta = dict(title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.
 if options.save_blend:
     bpy.ops.wm.save_as_mainfile(filepath=str(OUT / 'world.blend'))
 bpy.ops.export_scene.gltf(filepath=str(OUT / 'world_raw.glb'), export_format='GLB', export_cameras=False, export_lights=False, export_apply=True,
-                          export_yup=True, export_extras=True, export_image_format='AUTO', export_materials='EXPORT')
+                          export_yup=True, export_extras=True, export_image_format='AUTO', export_materials='EXPORT',
+                          export_vertex_color='NAME', export_vertex_color_name='TerrainCover', export_all_vertex_colors=False)
 tris = sum(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in bpy.data.objects if o.type == 'MESH' and not o.name.startswith('COL_') and o.users_collection and not o.name.startswith(('Broadleaf',)) and '_Bark' not in o.name and '_Leaves' not in o.name)
 report = dict(objects=len(bpy.data.objects), meshes=len(bpy.data.meshes), materials=len(bpy.data.materials), triangles_excl_trees=tris,
               trees=len(SITE['trees']), authored_trees=len(SITE.get('authored_trees', [])), shrubs=len(SITE.get('shrubs', [])), raw_glb_mb=round((OUT / 'world_raw.glb').stat().st_size / 1e6, 1), seconds=round(time.time() - T0, 1))

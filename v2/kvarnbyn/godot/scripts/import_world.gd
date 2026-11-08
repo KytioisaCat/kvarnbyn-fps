@@ -2,9 +2,36 @@
 extends EditorScenePostImport
 
 func _post_import(scene: Node) -> Object:
+	paint_terrain(scene)
 	prepare_node(scene, false, scene)
 	instance_trees(scene)
 	return scene
+
+func paint_terrain(scene: Node) -> void:
+	var palette := {}
+	var terrain: Array[MeshInstance3D] = []
+	for node in scene.find_children("*", "MeshInstance3D", true, false):
+		var mi := node as MeshInstance3D
+		if mi.mesh == null:
+			continue
+		for index in range(mi.mesh.get_surface_count()):
+			var material := mi.mesh.surface_get_material(index) as StandardMaterial3D
+			if material != null:
+				palette[material.resource_name] = material
+		if str(mi.name).begins_with("Terrain") or str(mi.name).begins_with("FarTerrain"):
+			terrain.append(mi)
+	assert(palette.has("Bedrock") and palette.has("Grass_ground"), "Terrain palette missing")
+	var rock: StandardMaterial3D = palette["Bedrock"]
+	var grass: StandardMaterial3D = palette["Grass_ground"]
+	var cover := ShaderMaterial.new()
+	cover.resource_name = "Berg_och_gronska"
+	cover.shader = load("res://shaders/terrain_cover.gdshader")
+	cover.set_shader_parameter("rock_albedo", rock.albedo_texture)
+	cover.set_shader_parameter("rock_normal", rock.normal_texture)
+	cover.set_shader_parameter("grass_albedo", grass.albedo_texture)
+	for mi in terrain:
+		mi.material_override = cover
+	print("KVARNBYN_TERRAIN ", terrain.size(), " berg/grönska-meshar")
 
 ## Träden (länkade kopior i Blender) blir MultiMeshInstance3D per 100 m-ruta och mesh:
 ## ett ritanrop per ruta i stället för ett per träd, och rutor bortom 320 m ritas inte.

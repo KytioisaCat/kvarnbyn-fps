@@ -24,6 +24,7 @@ from shapely.strtree import STRtree
 import mapbox_earcut as earcut
 
 from common import ZONE, BACKDROP, DATA, Y_OFFSET, raw_height, land_class
+from terrain_cover import exposure
 from authored_ground import AuthoredGround, SurfaceReference
 from roten_ground import RotenGround
 from stalliden import StallidenGround
@@ -326,7 +327,13 @@ def terrain_grid(bounds, step, conform):
             bed = wl - 0.7
             t = np.clip(1 - dc[inch] / 1.5, 0, 1)
             H[inch] = np.where(dc[inch] <= 0, np.minimum(H[inch], bed), H[inch] * (1 - t) + np.minimum(H[inch], wl + 0.25) * t)
-    cls = land_class(X.ravel(), Z.ravel())
+    xf, zf = X.ravel(), Z.ravel()
+    cls = land_class(xf, zf)
+    # Physical slope before any street/river grading: appearance cannot alter
+    # the surface, collisions, road exemptions or the navigation graph.
+    dx = (raw_height(xf + 1., zf) - raw_height(xf - 1., zf)) / 2.
+    dz = (raw_height(xf, zf + 1.) - raw_height(xf, zf - 1.)) / 2.
+    rock = exposure(xf, zf, np.hypot(dx, dz), cls)
     if conform:
         g = cls.reshape(X.shape[0], X.shape[1], 4)
         k = np.array([1, 4, 6, 4, 1], float); k /= k.sum()
@@ -335,7 +342,8 @@ def terrain_grid(bounds, step, conform):
         cls = g.reshape(-1, 4)
     return dict(x0=float(xs[0]), z0=float(zs[0]), step=step, nx=len(xs), nz=len(zs),
                 heights=[round(float(v) - Y_OFFSET, 3) for v in H],
-                land=[[round(float(a), 2) for a in c] for c in cls] if conform else None)
+                land=[[round(float(a), 2) for a in c] for c in cls],
+                rock_exposure=[round(float(a), 3) for a in rock])
 
 
 tb = work.bounds
