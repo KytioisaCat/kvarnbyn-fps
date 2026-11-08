@@ -8,6 +8,7 @@ const RiverWater = preload("res://scripts/river_water.gd")
 const GameManager = preload("res://scripts/game.gd")
 const HudController = preload("res://scripts/hud.gd")
 const Fx = preload("res://scripts/fx.gd")
+const TerrainCheck = preload("res://scripts/terrain_check.gd")
 const TacticalMap = preload("res://scripts/tactical_map.gd")
 const WORLD_PATH := "res://assets/world.glb"
 const META_PATH := "res://assets/world_meta.json"
@@ -63,7 +64,7 @@ func _ready() -> void:
 			automated_run = true
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check", "movement-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check", "movement-export-check", "terrain-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			automated_run = true
@@ -191,6 +192,10 @@ func _ready() -> void:
 		check_exported_front()
 	if options.has("water-export-check"):
 		check_exported_water()
+	if options.has("terrain-export-check"):
+		var terrain_report := TerrainCheck.new().run(world_instance, metadata)
+		print("KVARNBYN_TERRAIN_EXPORT_CHECK ", JSON.stringify(terrain_report))
+		get_tree().quit(0 if terrain_report.passed else 1)
 	if options.has("capture"):
 		capture_after_frames(str(options["capture"]), int(options.get("frames", "45")))
 	if options.has("probe"):

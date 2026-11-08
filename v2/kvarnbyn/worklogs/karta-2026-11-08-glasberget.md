@@ -63,3 +63,13 @@ Detta är ett första material-/nivåläsbarhetspass, inte en inmätt modell av 
 klippstup. Exakta stup/sprickor, vegetationens avsatser, murarnas grindöppningar
 och villornas riktiga utseende återstår. Uppskattningar får inte märkas som
 platsgranskad färdiggeometri. Ingen datahämtning eller ny textur nedladdad.
+
+## Integrationsutfall
+
+Integrerat från d8d0688 på separat integrationsgren. Samma prövade världspaket;
+prov inuti exporterad app (7terräng,27krok + stad/karta/paus,25rörelse) gröna.
+RefCounted `terrain_check.gd` delar prov mellan editor-wrapper och ljudlöst
+release-alternativ; rebuild kräver båda. Central dagbok/TODO/arkitektur uppdaterade
+av integratören. Ordinarie Mac-app/ZIP levererade; äldre spelprocess lämnad igång.
+Leveransmanifestet i evidence anger pakethashar. Inga stora binärer eller
+referensbilder från webben committas.

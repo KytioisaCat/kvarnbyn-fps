@@ -683,3 +683,40 @@ källcommit/hashar och kopieras till egna skrivbara mappar. Att dela en symlänk
 assets- eller importcachemapp ger ingen arbetsisolering och är därför inte
 arbetsmodellen. Avsikten är färre text- och beteendekonflikter, inte en garanti
 att ändringar av geometri och spelregler aldrig behöver testas ihop.
+
+
+## Berg, hällar och kartlagda låga murar (2026-11-08)
+
+Första kartpasset enligt Joels platsminne och förtydligande: klippfasaden som
+syns över villorna från spawn vid övre Görjelycksgatan prioriteras. Lilla
+Glasberget mellan Franckegatan/Åldermansgatan är ett annat, mindre område.
+Större delen av Glasberget ligger i kulissen; spelgränsen har inte utvidgats.
+Referenser, osäkerheter och faktisk bildgranskning i
+`v2/kvarnbyn/reference/glasberget/README.md`. Sommarbilder skymmer delar av
+bergväggen med vegetation; de belägger inte hela den exakta klippkonturen.
+
+`terrain_cover.py` kombinerar rå DTM-lutning, marktäcke och tre mjuka, uppskattade
+områdesmasker. Väg-/åskärningens konstgjorda lutning används inte som bergbevis;
+klassad byggd mark dämpar berg. Samma kontinuerliga fält samplas på samtliga
+terrängmeshars vertexhörn, exporteras explicit som GLB COLOR_0 och läses av
+`terrain_cover.gdshader`. Berg projiceras på tre världsaxlar och två texturskalor,
+med normaldetalj, för att undvika top-down-utdragning och skarpa materialrutor.
+Material är befintlig CC0 `rock_01` + gräs, inte fototexturer hämtade från Maps.
+Ingen ny terränghöjd, markskärning eller allmän kollisionsförändring ingår.
+
+`terrain_details.py` bygger två befintliga OSM `wall`-linjer, w90143431 och
+w92331953, som låga stenmurar med samma synliga och kolliderande geometri.
+Planläget kommer från kartdata; bredd0,42m och synlig resning0,6–1,45m är
+uppskattade. Fot/överdel följer befintlig mark på båda sidor. Linjerna skär
+inte nuvarande vägbuffertar, men verkliga grind-/trappöppningar är inte inmätta.
+Inga påhittade höga terrassmurar. Grundformen, sprickor och vegetationsavsatser
+behöver ett senare avgränsat plats-/modellpass; detta är bara första läsbarhetspasset.
+
+Artefaktprovet jämför alla8472befintliga meshars expanderade triangelpositioner
++ transform mot tidigare accepterad GLB: alla identiska, bara två murmesh och
+två kollisionsmesh nya. Båda höjdfälten/övriga site-fält och spel/nav/kartdata
+bevarade. `verify_terrain.gd` provar även levererad import, texturberoenden,
+vertexvikter och272tvåsidiga murstrålar; muren isoleras från jord som avsiktligt
+kan täcka översidan. Byggkedjan kräver detta prov. Verkliga gång-/kapsel-/krokprov
+kompletterar artefaktkontrollen. Bildproven använder samma fem kameror före/efter
+samt två extra från startområdet efter Joels förtydligande.

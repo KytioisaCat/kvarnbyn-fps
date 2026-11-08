@@ -33,6 +33,16 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-08 — ChatGPT Codex — integration av första berg-/murpasset
+
+**Status:** klart — första material-/murpasset integrerat, ordinarie Mac-app byggd och verifierad.
+**Gjort:** separat Karta-worktree/gren enligt ARBETSFLÖDEN.md; källa/antaganden och prov i egen uppgiftslogg. Kontinuerligt berg/grönt, världstexturering, två låga OSM-murlinjer och fyra nya granskningsvyer. Joel förtydligade utsikten från övre Görjelycksgatans spawn; huvudprovet riktat dit.
+**Verifierat hittills:** alla8472befintliga meshars triangelpositioner/transform identiska, endast fyra mur-/kollisionsmesh nya. Höjdfält/övriga platsdata oförändrade. 7importprov,272murstrålar,180gångpunkter, Stallelidens kapselprov och27krokprov gröna; native Forward+-bilder granskade. Ingen nedladdning.
+**Leverans:** `evidence/delivery-terrain-2026-11-08.json`, ny `desktop/Kvarnbyn.zip` och ordinarie `.app`. Sju terrängprov inklusive272murstrålar även i release,27krokprov + verklig stad/karta/paus samt25rörelsemenyprov gröna i installerad app. Kartdata/vatten/markhöjder/spelregler bevarade; bara två murkollisioner nya. Nativebilder i `v2/.tools/kvarnbyn-rock-20261108/final/`. Gemensam `terrain_check.gd` används av verify-wrappern och ljudlöst `--terrain-export-check`; båda bygggates. Slutpaketet installerat med tidigare app bevarad lokalt. Joels öppna spelprocess har inte avslutats.
+**Nästa:** Joel startar om appen och bedömer första målningen. Fortsatt exakt klippmodell från startgatans utsikt: sprickor/avsatser/vegetationsnivåer samt murarnas verkliga öppningar. Första passets klippform är fortfarande DTM-förenklad, inte inmätt finmodell. En extern release-script-fixtur fastnade och avslutades; ersatt av verifiering inuti det riktiga releasepaketet. Kända CA/logg-/ObjectDB-varningar sparade separat, inga slutliga skript-/shaderfel.
+
+---
+
 ## 2026-11-08 — ChatGPT Codex — parallella spel- och kartspår
 
 **Status:** klart — två spår formaliserade; inga parallella uppdrag startade ännu.

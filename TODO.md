@@ -5,6 +5,8 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Aktiv arbetskö — rörelse, flyt och husigenkänning (Joel 2026-11-08)
 
+**Kartspår:** första berg-/murpasset klart. Nästa platsarbete är klippfasaden sedd från spawn vid övre Görjelycksgatan: exakta stup/avsatser, sprickor, vegetationens nivåer och villornas igenkänning. Materialmaskerna är första uppskattningar; ingen färdig inmätning. Se `reference/glasberget/README.md` under v2/kvarnbyn.
+
 Vid parallellt arbete lämnar spel-/kartspåren sina status-/backloggändringar i egna
 uppgiftsloggar enligt `ARBETSFLÖDEN.md`. Integratören uppdaterar denna gemensamma kö.
 
@@ -114,6 +116,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-08 — **Första berg-/murpasset:** kontinuerlig berg/grönska i kärna och kuliss, rå LiDAR-lutning, särskilt Glasbergets framsida från startområdet, världsprojicerad bergtextur och två kartlagda låga stenmurar. Separat Karta-worktree → integrerad spelapp. Befintlig geometri/höjdfält bevarade; exakt klippform och murarnas öppningar återstår.
 
 - [x] 2026-11-08 — **Parallella spel-/kartspår formaliserade:** `ARBETSFLÖDEN.md`, filägarskap, separata worktrees/grenar och lokala byggmappar, egna uppgiftsloggar och en integratör till main. Spelbalans flyttad ur site.py till `config/gameplay.json`; samma genererade spel-/nav-/markdata. Inga nya chattar eller arbetskopior startade ännu.
 

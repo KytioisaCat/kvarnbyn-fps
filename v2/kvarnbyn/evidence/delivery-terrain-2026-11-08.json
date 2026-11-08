@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-08",
+  "scope": "First terrain rock/vegetation and mapped low wall pass; integrated Mac app",
+  "karta_source_commit": "d8d0688",
+  "delivery_path": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "hashes": {
+    "godot/assets/world.glb": "8f705acdb00405f19008935de432ad0ed81aa78c88e9ab3cb9718e26a3061f6c",
+    "godot/assets/world_meta.json": "5e649c2272021b6dc9ca8a1e5e587004b21fcd1206009aa5a914eb635f285443",
+    "godot/assets/nav.json": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f",
+    "godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "godot/assets/map.json": "ec346420c00814796ae09366f67056792af0336685aac31bb36297835b98cf43",
+    "godot/assets/river_flow.png": "340287e3e36a9fadce17f89a40658b1f452010e4ef9947bc0b9cef06c01d3222",
+    "godot/shaders/terrain_cover.gdshader": "a7dbf2ce005082048633612e956b6abd1b75afc8a18346656dc231f9b72a72cf",
+    "godot/scripts/terrain_check.gd": "3bb9f4eac0b0852da78a3aab0962e3608e4e1be1dd6219730defaa86f43e9192",
+    "desktop/Kvarnbyn.zip": "5eab2405db667d1bcab0ba46e64a9d1d9bf2051c238db37c7a39791a79ef8217"
+  },
+  "artifact_checks": {
+    "passed": true,
+    "checks": {
+      "existing_mesh_geometry_unchanged": true,
+      "only_mapped_walls_added": true,
+      "height_fields_unchanged": true,
+      "other_site_fields_unchanged": true,
+      "cover_exported_in_primary_color": true
+    },
+    "compared_meshes": 8472,
+    "added": [
+      "Mapped_stone_wall_w90143431__Granite_foundation",
+      "COL_Mapped_stone_wall_w90143431__Collision_only",
+      "Mapped_stone_wall_w92331953__Granite_foundation",
+      "COL_Mapped_stone_wall_w92331953__Collision_only"
+    ],
+    "changed": [],
+    "terrain_primitives": 1016,
+    "cover_vertices": 309048,
+    "blended_vertices": 46258,
+    "baseline_sha256": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "glb_sha256": "8f705acdb00405f19008935de432ad0ed81aa78c88e9ab3cb9718e26a3061f6c"
+  },
+  "release_terrain": {
+    "checks": [
+      {
+        "detail": {
+          "far": 753,
+          "invalid": 0,
+          "total": 1016
+        },
+        "label": "both core and backdrop use terrain cover",
+        "passed": true
+      },
+      {
+        "detail": {},
+        "label": "real rock/normal/grass textures survived GLB import",
+        "passed": true
+      },
+      {
+        "detail": {
+          "max": 1.0,
+          "min": 0.0
+        },
+        "label": "rock and green areas both present",
+        "passed": true
+      },
+      {
+        "detail": {
+          "blended": 46155,
+          "vertices": 309048
+        },
+        "label": "continuous blend data survived GLB import",
+        "passed": true
+      },
+      {
+        "detail": {},
+        "label": "two mapped wall lines exist",
+        "passed": true
+      },
+      {
+        "detail": {},
+        "label": "estimated walls remain low",
+        "passed": true
+      },
+      {
+        "detail": {
+          "hits": 272,
+          "rays": 272
+        },
+        "label": "all wall sections block rays from both sides",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "release": true
+  },
+  "release_grapple": {
+    "passed": true,
+    "release": true,
+    "checks": 27,
+    "city": {
+      "attached": true,
+      "cable_and_anchor_visible": true,
+      "collider": "COL_w92332103__Collision_only",
+      "distance_m": 1.31493055820465,
+      "map_cancels": true,
+      "passed": true,
+      "pause_cancels": true,
+      "reattached": true,
+      "scope": "actual imported city at Gamla torget, camera ray, controller movement, map and pause",
+      "speed_m_s": 7.775634765625,
+      "start": [
+        -8.53777122497559,
+        -0.165715634822845,
+        7.97928524017334
+      ],
+      "still_attached": true
+    }
+  },
+  "release_movement": {
+    "passed": true,
+    "release": true,
+    "checks": 25
+  },
+  "walking": {
+    "passed": true,
+    "landed": 180,
+    "total": 180,
+    "stalliden": true
+  },
+  "native_images": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-rock-20261108/final",
+  "limitations": [
+    "Appearance masks and wall dimensions are first approximations, not a surveyed cliff model.",
+    "Exact cliff faces, ledges, cracks, vegetation levels and wall openings remain.",
+    "No playable-area expansion."
+  ],
+  "logs": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-rock-20261108"
+}
