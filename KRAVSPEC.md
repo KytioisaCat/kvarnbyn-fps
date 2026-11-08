@@ -118,6 +118,10 @@ inte leverera dem).
 Prawn-dräktens gripkrok i **Subnautica 1** som känsloreferens. Fartbygget är avsiktligt
 önskvärt här; om originalet råkade uppnå det genom en bugg saknar betydelse.
 
+**Styrning (Joel 2026-11-08):** håll höger musknapp för kroken och släpp för att
+slungas vidare. WASD-handen ska vara fri under hela förflyttningen. Vapensiktet
+har en separat knapp, Q.
+
 Acceptanskrav:
 
 - Skjut kroken mot terräng eller byggnader; när den fäster börjar den dra in automatiskt.

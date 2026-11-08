@@ -120,7 +120,8 @@ func build_panel() -> void:
 	begin_button.add_theme_color_override("font_hover_color", INK)
 	begin_button.add_theme_font_size_override("font_size", 19)
 	column.add_child(begin_button)
-	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nHåll E: gripkrok · rör dig snett för fart · släpp E för att slungas\nVänster mus: skjut    Höger mus: sikta    R: ladda om    M: karta    Esc: paus\nMellanslag i luften: raket (håll)    F: flygläge för test (Shift = fort)", 14, Color("afc2b8"))
+	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nHåll höger mus: gripkrok · rör dig snett för fart · släpp musknappen för att slungas\nVänster mus: skjut    Q: sikta    R: ladda om    M: karta    Esc: paus\nMellanslag i luften: raket (håll)    F: flygläge för test (Shift = fort)", 14, Color("afc2b8"))
+	instruction_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(instruction_label)
 	settings_row = HBoxContainer.new()
 	settings_row.add_theme_constant_override("separation", 10)
@@ -258,10 +259,10 @@ func _draw() -> void:
 		draw_circle(center, 2.1, Color(0.96, 0.96, 0.91, 0.72))
 		if player != null and player.alive and player.active and not player.free_flight:
 			var hook: Node3D = player.grapple
-			var hint := "Håll E: gripkrok"
+			var hint := "Håll höger mus: gripkrok"
 			var col := Color("dac28b")
 			if hook.attached:
-				hint = "Gripkrok · %d m · %d km/h\nWASD: svinga · släpp E: slungas" % [roundi(hook.harness().distance_to(hook.anchor)), roundi(player.velocity.length() * 3.6)]
+				hint = "Gripkrok · %d m · %d km/h\nWASD: svinga · släpp höger mus: slungas" % [roundi(hook.harness().distance_to(hook.anchor)), roundi(player.velocity.length() * 3.6)]
 				if not player.camera.is_position_behind(hook.anchor):
 					var point: Vector2 = player.camera.unproject_position(hook.anchor)
 					draw_arc(point, 6.0, 0.0, TAU, 20, col, 2.0, true)

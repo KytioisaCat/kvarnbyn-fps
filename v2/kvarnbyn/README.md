@@ -11,12 +11,12 @@ Efter återbyggnad finns den uppackade Mac-appen här:
 open "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app"
 ```
 
-WASD · mus · vänsterklick skjut · högerklick sikta · R ladda om · Shift spring · C huka ·
+WASD · mus · vänsterklick skjut · högerklick gripkrok · Q sikta · R ladda om · Shift spring · C huka ·
 mellanslag hoppa/raketdubbelhopp · F flygtest · M karta · Esc paus.
 
-**Gripkrok:** sikta på ett hus eller terrängen inom 42 m och håll **E**. Kroken
+**Gripkrok:** sikta på ett hus eller terrängen inom 42 m och håll **höger musknapp**. Kroken
 vevar in automatiskt. Håll framåt + sidled för att bygga fart i en sving, hoppa
-och släpp E för att slungas vidare. Farten följer med genom släppet; fäst igen för
+och släpp höger musknapp för att slungas vidare. Farten följer med genom släppet; fäst igen för
 nästa båge. Efter landning bromsar du gradvis, med längre glid om du hukar.
 Linan bryts om ett nytt hinder kommer emellan. Karta, paus och död släpper kroken.
 Fartbygget är en avsiktlig feature med Prawn i Subnautica 1 som referens; se

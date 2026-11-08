@@ -234,7 +234,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 		return
 	if alive and not free_flight:
-		grapple.poll(bot_input == null and Input.is_physical_key_pressed(KEY_E))
+		grapple.poll(bot_input == null and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT))
 	else:
 		grapple.release()
 	var input_vector := touch_move

@@ -583,7 +583,7 @@ förutsättning för funktionen.
 ### Implementationsval för RÖR-01
 
 `grapple.gd` fäster via kameraray mot världens kollisionslager 1, högst 42 m bort.
-Håll E för indragning, släpp för frikoppling. Linan vevar 9 m/s; en begränsad
+Håll höger musknapp för indragning, släpp för frikoppling. Linan vevar 9 m/s; en begränsad
 inåtriktad acceleration och en mjuk längdkorrigering drar kroppen. Spelarens
 normaliserade rörelse projiceras längs svingens tangent, så samma regler gäller
 alla styrvinklar. Minskad faktisk radie stärker tangenthastigheten. Energin
@@ -596,7 +596,7 @@ sin riktning. Markkontakt bromsar gradvis, långsammare vid hukning. Befintlig
 raket kan fortfarande användas utan att skriva över slungningens sidofart.
 Alla förflyttningar går genom riktiga `move_and_slide()`; linan teleporterar aldrig
 kroppen. Krokens obstruction-ray bryter linan vid nya hinder, utan repomslag kring
-hörn. Karta/paus, död, flygtest och omplacering släpper kroken. E måste släppas
+hörn. Karta/paus, död, flygtest och omplacering släpper kroken. Höger musknapp måste släppas
 och tryckas igen efter avbruten lina.
 
 Egen tunn 3D-lina och fästmarkör samt avstånd/fart och svenska styrtips i overlay
@@ -615,3 +615,7 @@ kapsel och verkliga tangenthändelser; värdena är inga generella löften för 
 stadens situationer. Världs-GLB, kartbild, game.json och nav.json är byteidentiska
 med föregående leverans. Fulla byggkedjans nya sista loggläsning föll först på
 inflätad stderr-varning; nya krokprov sparar nu stdout/stderr åtskilda.
+
+Knappval 2026-11-08: Joel flyttade kroken till höger mus för att kunna använda
+WASD fritt under sving. Siktläge flyttat till håll Q; höger mus utlöser inte ADS.
+Instruktioner och prov använder riktiga mushändelser för fäste/släpp.

@@ -31,6 +31,16 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-08 — ChatGPT Codex — gripkrok på högerklick
+
+**Status:** klart — högerklick i ny verifierad Mac-app.
+**Gjort:** `player.gd` använder höger mus för krok, `weapon.gd` håll Q för ADS (botstyrning oförändrad). E utlöser inte kroken. Instruktioner/HUD/README/TODO/KRAVSPEC/arkitektur uppdaterade; menyn radbryter hjälpen. `grapple_check.gd` använder riktiga mushändelser och provar separat E bortkopplad, höger mus utan ADS, Q under krok och släppt Q med kroken kvar. Fixturen nollställer huvudgung mellan jämförande vänster-/högerprov.
+**Verifierat:**26krok-/inmatningsprov,13vapenprov och tidigare kontroller/raket/flyg gröna. Import/export/uppackning genomförda utan ombyggnad av världen. Slutrelease26prov + verkligt hus/karta/paus gröna; native strid27prov inklusive visuellt granskad bild med rätt höger-mustext. Alla fem skyddade värld-/kart-/spel-/navhashar samma som föregående krokleverans. `evidence/delivery-grapple-mouse-2026-11-08.json`; råloggar/bild i `v2/.tools/kvarnbyn-grapple-mouse-20261108/`. Inga nya motorfel; kända headless-avslutsvarningar sparas separat.
+**Läge nu:** `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app` och ZIP uppdaterade lokalt. Alla egna körningar avslutade, Dummy+mastermute; ingen app lämnad igång. Ingen ändring av rörelsefysik eller värld. Playpen/graphify memory orörda.
+**Nästa:** Joel provar höger mus + WASD + hopp/släpp och bedömer känslan. Q är separat siktknapp.
+
+---
+
 ## 2026-11-08 — ChatGPT Codex — bygger Prawn-inspirerad gripkrok
 
 **Status:** klart — RÖR-01 byggd och verifierad i uppdaterad Mac-app; Joels känslobedömning återstår.

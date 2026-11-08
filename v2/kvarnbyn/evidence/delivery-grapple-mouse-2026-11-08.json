@@ -1,0 +1,601 @@
+{
+  "feature": "RÖR-01",
+  "date": "2026-11-08",
+  "controls": {
+    "grapple": "Hold right mouse; release to launch",
+    "ads": "Hold Q",
+    "movement": "WASD"
+  },
+  "release": {
+    "checks": [
+      {
+        "details": null,
+        "name": "normal capsule begins on floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "E no longer fires grapple",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "right mouse does not activate weapon sights",
+        "passed": true
+      },
+      {
+        "details": {
+          "ads": 1.0,
+          "attached": true
+        },
+        "name": "Q activates sights independently of held grapple",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "releasing Q leaves grapple attached",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "miss does not attach or grant momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "wall beyond 42m cannot attach",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "right mouse attaches and keeps reeling through real physics",
+        "passed": true
+      },
+      {
+        "details": 10.4532499313354,
+        "name": "straight pull accelerates beyond sprint",
+        "passed": true
+      },
+      {
+        "details": [
+          10.4532499313354,
+          25.080078125
+        ],
+        "name": "diagonal steering builds more speed than straight pull",
+        "passed": true
+      },
+      {
+        "details": 9.404052734375,
+        "name": "steering creates a swing arc",
+        "passed": true
+      },
+      {
+        "details": [
+          25.0862064361572,
+          25.080078125
+        ],
+        "name": "left and right swing have equal strength",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "city speed budget holds",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "release itself never changes velocity",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "jump during reel lifts actual capsule without rocket",
+        "passed": true
+      },
+      {
+        "details": {
+          "after_m_s": 17.781156539917,
+          "airborne": true,
+          "before_m_s": 17.781156539917
+        },
+        "name": "mouse release detaches and preserves airborne momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "can grapple again while airborne",
+        "passed": true
+      },
+      {
+        "details": 1.1897953748703,
+        "name": "landing returns to controllable ground speed",
+        "passed": true
+      },
+      {
+        "details": -27.7091064453125,
+        "name": "fast capsule stops at solid wall",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "fast capsule does not cross floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "new obstruction breaks cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "death detaches immediately",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "inactive controller detaches and stops",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "suspended input cancels cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "free flight cancels cable and momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reset clears cable and momentum",
+        "passed": true
+      }
+    ],
+    "city": {
+      "attached": true,
+      "cable_and_anchor_visible": true,
+      "collider": "COL_w92332103__Collision_only",
+      "distance_m": 1.96625888347626,
+      "map_cancels": true,
+      "passed": true,
+      "pause_cancels": true,
+      "reattached": true,
+      "scope": "actual imported city at Gamla torget, camera ray, controller movement, map and pause",
+      "speed_m_s": 11.3819589614868,
+      "start": [
+        -8.56069469451904,
+        -0.162686854600906,
+        7.96736907958984
+      ],
+      "still_attached": true
+    },
+    "passed": true,
+    "physics_hz": 60,
+    "release": true,
+    "samples": {
+      "diagonal": {
+        "attached": true,
+        "distance_m": 13.4282178878784,
+        "peak": 25.080078125,
+        "sideways_m": 9.404052734375,
+        "speed": 25.080078125
+      },
+      "left": {
+        "attached": true,
+        "distance_m": 13.4301471710205,
+        "peak": 25.0862064361572,
+        "sideways_m": 9.4031982421875,
+        "speed": 25.0862064361572
+      },
+      "release": {
+        "after_m_s": 17.781156539917,
+        "airborne": true,
+        "before_m_s": 17.781156539917
+      },
+      "straight": {
+        "attached": true,
+        "distance_m": 8.228759765625,
+        "peak": 10.4532499313354,
+        "sideways_m": 0.0,
+        "speed": 10.4532499313354
+      }
+    },
+    "scope": "actual controller, key input, swept capsule collisions in a synthetic fixture; feel requires Joel"
+  },
+  "native": {
+    "checks": [
+      {
+        "details": null,
+        "name": "normal capsule begins on floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "E no longer fires grapple",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "right mouse does not activate weapon sights",
+        "passed": true
+      },
+      {
+        "details": {
+          "ads": 1.0,
+          "attached": true
+        },
+        "name": "Q activates sights independently of held grapple",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "releasing Q leaves grapple attached",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "miss does not attach or grant momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "wall beyond 42m cannot attach",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "right mouse attaches and keeps reeling through real physics",
+        "passed": true
+      },
+      {
+        "details": 10.4532499313354,
+        "name": "straight pull accelerates beyond sprint",
+        "passed": true
+      },
+      {
+        "details": [
+          10.4532499313354,
+          25.080078125
+        ],
+        "name": "diagonal steering builds more speed than straight pull",
+        "passed": true
+      },
+      {
+        "details": 9.404052734375,
+        "name": "steering creates a swing arc",
+        "passed": true
+      },
+      {
+        "details": [
+          25.0862064361572,
+          25.080078125
+        ],
+        "name": "left and right swing have equal strength",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "city speed budget holds",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "release itself never changes velocity",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "jump during reel lifts actual capsule without rocket",
+        "passed": true
+      },
+      {
+        "details": {
+          "after_m_s": 17.781156539917,
+          "airborne": true,
+          "before_m_s": 17.781156539917
+        },
+        "name": "mouse release detaches and preserves airborne momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "can grapple again while airborne",
+        "passed": true
+      },
+      {
+        "details": 1.1897953748703,
+        "name": "landing returns to controllable ground speed",
+        "passed": true
+      },
+      {
+        "details": -27.7091064453125,
+        "name": "fast capsule stops at solid wall",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "fast capsule does not cross floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "new obstruction breaks cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "death detaches immediately",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "inactive controller detaches and stops",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "suspended input cancels cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "free flight cancels cable and momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reset clears cable and momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "native city capture saved",
+        "passed": true
+      }
+    ],
+    "city": {
+      "attached": true,
+      "cable_and_anchor_visible": true,
+      "collider": "COL_w92332103__Collision_only",
+      "distance_m": 1.96625888347626,
+      "map_cancels": true,
+      "passed": true,
+      "pause_cancels": true,
+      "reattached": true,
+      "scope": "actual imported city at Gamla torget, camera ray, controller movement, map and pause",
+      "speed_m_s": 11.3819589614868,
+      "start": [
+        -8.56069469451904,
+        -0.162686854600906,
+        7.96736907958984
+      ],
+      "still_attached": true
+    },
+    "passed": true,
+    "physics_hz": 60,
+    "release": true,
+    "samples": {
+      "diagonal": {
+        "attached": true,
+        "distance_m": 13.4282178878784,
+        "peak": 25.080078125,
+        "sideways_m": 9.404052734375,
+        "speed": 25.080078125
+      },
+      "left": {
+        "attached": true,
+        "distance_m": 13.4301471710205,
+        "peak": 25.0862064361572,
+        "sideways_m": 9.4031982421875,
+        "speed": 25.0862064361572
+      },
+      "release": {
+        "after_m_s": 17.781156539917,
+        "airborne": true,
+        "before_m_s": 17.781156539917
+      },
+      "straight": {
+        "attached": true,
+        "distance_m": 8.228759765625,
+        "peak": 10.4532499313354,
+        "sideways_m": 0.0,
+        "speed": 10.4532499313354
+      }
+    },
+    "scope": "actual controller, key input, swept capsule collisions in a synthetic fixture; feel requires Joel"
+  },
+  "weapon": {
+    "ads": {
+      "ads": 1.0,
+      "asset": "res://assets/weapons/ak5_view.glb",
+      "front_screen": [
+        960.0,
+        540.0
+      ],
+      "mag": 30,
+      "model_loaded": true,
+      "muzzle_camera_local": [
+        0.0,
+        -0.0544500350952148,
+        -0.577650010585785
+      ],
+      "rear_screen": [
+        960.0,
+        540.0
+      ],
+      "reloading": false,
+      "sight_center_error_px": 0.0
+    },
+    "checks": [
+      {
+        "details": null,
+        "pass": true,
+        "test": "imported_asset"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "named_anchors"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "animated_magazine"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "charging_handle"
+      },
+      {
+        "details": {
+          "ads": 1.0,
+          "asset": "res://assets/weapons/ak5_view.glb",
+          "front_screen": [
+            960.0,
+            540.0
+          ],
+          "mag": 30,
+          "model_loaded": true,
+          "muzzle_camera_local": [
+            0.0,
+            -0.0544500350952148,
+            -0.577650010585785
+          ],
+          "rear_screen": [
+            960.0,
+            540.0
+          ],
+          "reloading": false,
+          "sight_center_error_px": 0.0
+        },
+        "pass": true,
+        "test": "ADS_sights_align_with_camera"
+      },
+      {
+        "details": [
+          0.0,
+          -0.0544500350952148,
+          -0.577650010585785
+        ],
+        "pass": true,
+        "test": "muzzle_below_sight_axis"
+      },
+      {
+        "details": {
+          "mag": 21,
+          "shots_in_one_second": 9
+        },
+        "pass": true,
+        "test": "auto_fire_cadence_and_ammo"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "magazine_moves_during_reload"
+      },
+      {
+        "details": {
+          "duration": 1.71666666666667,
+          "expected": 1.7
+        },
+        "pass": true,
+        "test": "tactical_reload_time_and_refill"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "magazine_restored"
+      },
+      {
+        "details": {
+          "duration": 2.21666666666667,
+          "expected": 2.2
+        },
+        "pass": true,
+        "test": "empty_reload_time_and_refill"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "empty_reload_bolt_motion"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "bolt_restored"
+      }
+    ],
+    "engine": {
+      "build": "official",
+      "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+      "hex": 263938,
+      "major": 4,
+      "minor": 7,
+      "patch": 2,
+      "status": "stable",
+      "string": "4.7.2-stable (official)",
+      "timestamp": 0
+    },
+    "hip": {
+      "ads": 0.0,
+      "asset": "res://assets/weapons/ak5_view.glb",
+      "front_screen": [
+        1125.90319824219,
+        630.762817382812
+      ],
+      "mag": 30,
+      "model_loaded": true,
+      "muzzle_camera_local": [
+        0.119999997317791,
+        -0.120100021362305,
+        -0.642650008201599
+      ],
+      "rear_screen": [
+        1361.93579101562,
+        759.892272949219
+      ],
+      "reloading": false,
+      "sight_center_error_px": 458.153900146484
+    },
+    "passed": true,
+    "renderer": "forward_plus"
+  },
+  "controller": {
+    "eye_height_1_65m": true,
+    "final_position": [
+      40.0,
+      0.000838596024550498,
+      0.012919008731842
+    ],
+    "fly_mode": true,
+    "maximum_height": 0.229167863726616,
+    "passed": true,
+    "pause_stops_movement": true,
+    "release_look_keeps_walking": true,
+    "release_move_stops": true,
+    "rocket_distance": 12.49831199646,
+    "rocket_height": 10.7191953659058,
+    "rocket_jump": true,
+    "stopped_at_wall": true,
+    "two_finger_move_and_look": true,
+    "walked_over_20cm_kerb": true
+  },
+  "preserved_assets_sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "v2/kvarnbyn/godot/assets/world.glb": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "v2/kvarnbyn/godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "v2/kvarnbyn/godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "v2/kvarnbyn/godot/assets/nav.json": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f"
+  },
+  "source_sha256": {
+    "player.gd": "2b6574f1c87be8007c503ba2d8d0726b55c9bc7ddbea9772375ad3342ab99cfc",
+    "weapon.gd": "ad12755cb1d317005514dbda60d689130c2a6ce91915310d919b6a368b42f298",
+    "overlay.gd": "fe7e98325436fdcf80b0d0d562f51df95a10c0d267fb47e517832bbcf3ea9280",
+    "grapple_check.gd": "32b883a8287ddd3b228ab532c3e60a10c5f174f40ddc864daad036d28c73858f"
+  },
+  "zip_bytes": 246253997,
+  "local_image": "v2/.tools/kvarnbyn-grapple-mouse-20261108/release.png",
+  "scope": "Input remapping and instructions; grapple physics unchanged. Actual mouse-button events tested in exported Mac app."
+}

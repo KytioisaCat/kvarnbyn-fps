@@ -5,7 +5,7 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Aktiv arbetskö — rörelse, flyt och husigenkänning (Joel 2026-11-08)
 
-1. **Joels prov av gripkrok/rörelse:** **RÖR-01** i KRAVSPEC.md är byggd. Håll E för automatisk indragning, rör dig snett för fart/sving, hoppa och släpp E för slungning. 42 m räckvidd, upp till 30 m/s krokfart; ingen ny jetbooster. Kontrollprov visar större fart med sidostyrning och bevarad fart efter släpp. Bedöm acceleration, svingbåge, bromsning/landning och om korta stadsetapper känns roliga. Justera utifrån det provet, inte mer research om originalets buggstatus.
+1. **Joels prov av gripkrok/rörelse:** **RÖR-01** i KRAVSPEC.md är byggd. Håll höger musknapp för automatisk indragning, rör dig snett för fart/sving, hoppa och släpp höger musknapp för slungning. 42 m räckvidd, upp till 30 m/s krokfart; ingen ny jetbooster. Kontrollprov visar större fart med sidostyrning och bevarad fart efter släpp. Bedöm acceleration, svingbåge, bromsning/landning och om korta stadsetapper känns roliga. Justera utifrån det provet, inte mer research om originalets buggstatus.
 2. **Individuella hus/fasader/tak prioriteras före fler bot-/AI-pass.** Aktuell inventering:8egna modeller av381; inget allmänt färdiggodkännande. `v2/kvarnbyn/HUSSTATUS-2026-11-06.md`. Stora delar av världen är fortfarande generiska. Efter Joels prov: välj tydligt avgränsat kvarter och granska husen mot faktiskt synliga referenser; rätta siluett, tak, material, fönster/entréer och anslutande mark. Redovisa varje hus som granskat, uppskattat eller kvarstående.
 3. Säkrare underlag för åbankens rundade tegelhus/mark/intag samt M24/M31. Saknade referenser får inte ersättas med påstått korrekta gissningar; fortsätt med andra synliga hus när en fasad är skymd.
 4. **Flyt:** helskärmens pixelbudget rättad (kort prov31→72bilder/s), men tidiga bildstopp på0,5–2,7s återstår. Prova riktig mus/gång, andra gaturum och pipelineräknare. `v2/kvarnbyn/RESULTAT-FLYT.md`. Konkreta gång-/AI-fel, bland annat Stallelidens mitt, efter platsarbetet eller om Joels spelprov visar blockerande fel.
@@ -111,6 +111,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-08 — **Gripkrok på högerklick:** håll höger mus för indragning, släpp för slungning; WASD-handen fri. Separat siktläge på håll Q. Svenska instruktioner och riktiga mushändelser i kontrollproven uppdaterade. Ny Mac-app; rörelsefysiken oförändrad.
 
 - [x] 2026-11-08 — **RÖR-01: gripkrok med avsiktligt fartbygge.** Feature/acceptanskrav i KRAVSPEC.md; `grapple.gd`, momentumläge i `player.gd`, lina/fästmarkör och svenska tips. 22 kapsel-/inmatningsprov vid 30/60/120 Hz; 60 Hz gav rak indragning 10,45 m/s mot sned 25,21 m/s. Hopp/släpp bevarar 17,78 m/s horisontellt i luftprovet. Separat kontroll i exporterad app mot verkligt hus samt karta/paus. Mac-app uppdaterad; Joels känslobedömning är kvar ovan.
 

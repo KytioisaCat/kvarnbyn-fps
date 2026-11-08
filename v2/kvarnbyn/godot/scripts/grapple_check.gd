@@ -17,8 +17,15 @@ func key(code: int, pressed: bool) -> void:
 	event.pressed = pressed
 	Input.parse_input_event(event)
 
+func hook_button(pressed: bool) -> void:
+	var event := InputEventMouseButton.new()
+	event.button_index = MOUSE_BUTTON_RIGHT
+	event.pressed = pressed
+	Input.parse_input_event(event)
+
 func release_keys() -> void:
-	for code in [KEY_W, KEY_A, KEY_D, KEY_S, KEY_SHIFT, KEY_SPACE, KEY_E, KEY_C]:
+	hook_button(false)
+	for code in [KEY_W, KEY_A, KEY_D, KEY_S, KEY_SHIFT, KEY_SPACE, KEY_E, KEY_Q, KEY_C]:
 		key(code, false)
 
 func frames(count: int) -> void:
@@ -45,6 +52,9 @@ func reset(where := Vector3(0, 0.05, 5)) -> void:
 	p.free_flight = false
 	p.input_suspended = false
 	p.place_at(origin + where, 0.0, 0.0)
+	p.bob_t = 0.0
+	p.step_t = 0.0
+	p.land_dip = 0.0
 	await frames(25)
 	p.look_toward(origin + Vector3(0, 1, -28))
 
@@ -55,7 +65,7 @@ func launch(diagonal: bool, hz: int, side := KEY_D) -> Dictionary:
 	if diagonal:
 		key(side, true)
 	await frames(roundi(hz * 0.3))
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(2)
 	var attached_at_start: bool = p.grapple.attached
 	var start: Vector3 = p.position
@@ -79,15 +89,32 @@ func run(hz := 60) -> Dictionary:
 	add_child(p)
 	await reset()
 	check("normal capsule begins on floor", p.is_on_floor())
+	key(KEY_E, true)
+	await frames(3)
+	check("E no longer fires grapple", not p.grapple.attached)
+	key(KEY_E, false)
+	# Separata kontroller: höger mus drar inte upp siktet; Q fungerar oberoende.
+	p.combat_enabled = true
+	hook_button(true)
+	await frames(3)
+	check("right mouse does not activate weapon sights", p.grapple.attached and not p.weapon._aim() and p.weapon.ads < 0.01)
+	key(KEY_Q, true)
+	await frames(12)
+	check("Q activates sights independently of held grapple", p.weapon._aim() and p.weapon.ads > 0.5 and p.grapple.attached, {"ads": p.weapon.ads, "attached": p.grapple.attached})
+	key(KEY_Q, false)
+	await frames(12)
+	check("releasing Q leaves grapple attached", p.grapple.attached and p.weapon.ads < 0.01)
+	p.combat_enabled = false
+	await reset()
 	# Miss och räckvidd: det finns en vägg bakom spelaren men ingen i siktriktningen.
 	p.look_toward(p.eye_position() + Vector3(0, 30, 30))
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	check("miss does not attach or grant momentum", not p.grapple.attached and not p.momentum_mode)
 	release_keys()
 	await frames(2)
 	await reset(Vector3(0, 0.05, 25))
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	check("wall beyond 42m cannot attach", not p.grapple.attached)
 	var straight: Dictionary = await launch(false, hz)
@@ -96,15 +123,15 @@ func run(hz := 60) -> Dictionary:
 	samples["straight"] = straight
 	samples["diagonal"] = diagonal
 	samples["left"] = left
-	check("E attaches and keeps reeling through real physics", straight.attached and diagonal.attached)
+	check("right mouse attaches and keeps reeling through real physics", straight.attached and diagonal.attached)
 	check("straight pull accelerates beyond sprint", straight.speed > p.RUN_SPEED + 1.0, straight.speed)
 	check("diagonal steering builds more speed than straight pull", diagonal.speed > straight.speed * 1.15, [straight.speed, diagonal.speed])
 	check("steering creates a swing arc", diagonal.sideways_m > 2.0, diagonal.sideways_m)
-	check("left and right swing have equal strength", absf(left.speed - diagonal.speed) < 0.2)
+	check("left and right swing have equal strength", absf(left.speed - diagonal.speed) < 0.2, [left.speed, diagonal.speed])
 	check("city speed budget holds", maxf(straight.peak, diagonal.peak) <= p.grapple.MAX_SPEED + 0.01)
 	# Riktig markstart, hopp under dragning, därefter släpp i luften.
 	await reset()
-	key(KEY_E, true)
+	hook_button(true)
 	key(KEY_W, true)
 	key(KEY_D, true)
 	await frames(roundi(hz * 0.5))
@@ -116,7 +143,7 @@ func run(hz := 60) -> Dictionary:
 	var velocity_before: Vector3 = p.velocity
 	p.grapple.release()
 	check("release itself never changes velocity", p.velocity.is_equal_approx(velocity_before))
-	key(KEY_E, false)
+	hook_button(false)
 	key(KEY_W, false)
 	key(KEY_D, false)
 	var horizontal_before := Vector2(p.velocity.x, p.velocity.z).length()
@@ -124,13 +151,13 @@ func run(hz := 60) -> Dictionary:
 	var horizontal_after := Vector2(p.velocity.x, p.velocity.z).length()
 	samples["release"] = {"before_m_s": horizontal_before, "after_m_s": horizontal_after, "airborne": not p.is_on_floor()}
 	check("jump during reel lifts actual capsule without rocket", grounded_before_jump and jumped and not p.rocket_used)
-	check("key release detaches and preserves airborne momentum", not p.grapple.attached and horizontal_after > horizontal_before * 0.97 and not p.is_on_floor(), samples.release)
+	check("mouse release detaches and preserves airborne momentum", not p.grapple.attached and horizontal_after > horizontal_before * 0.97 and not p.is_on_floor(), samples.release)
 	# En andra krok fångar den befintliga rörelsen, utan fartnollställning.
 	p.look_toward(origin + Vector3(0, 5, -28))
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(2)
 	check("can grapple again while airborne", p.grapple.attached and Vector2(p.velocity.x, p.velocity.z).length() > horizontal_before * 0.8)
-	key(KEY_E, false)
+	hook_button(false)
 	await frames(hz * 2)
 	check("landing returns to controllable ground speed", p.is_on_floor() and p.velocity.length() < 8.0, p.velocity.length())
 	# Hög fart mot vägg och golv: svept CharacterBody-kollision, ingen teleport.
@@ -142,7 +169,7 @@ func run(hz := 60) -> Dictionary:
 	check("fast capsule does not cross floor", p.position.y >= origin.y - 0.01)
 	# Linan måste släppas vid ett nytt hinder mellan spelare och fästpunkt.
 	await reset()
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	var blocker := solid(Vector3(0, 3, -8), Vector3(40, 6, 1))
 	await frames(4)
@@ -151,27 +178,27 @@ func run(hz := 60) -> Dictionary:
 	await frames(2)
 	# Livscykel: inga kvarhängande krafter efter död, paus eller placering.
 	await reset()
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	p.combat_enabled = true
 	p.damage(1000.0, p.position + Vector3.FORWARD)
 	check("death detaches immediately", not p.grapple.attached and not p.alive)
 	p.combat_enabled = false
 	await reset()
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	p.active = false
 	var before: Vector3 = p.position
 	await frames(5)
 	check("inactive controller detaches and stops", not p.grapple.attached and p.position.is_equal_approx(before))
 	await reset()
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	p.input_suspended = true
 	await frames(2)
 	check("suspended input cancels cable", not p.grapple.attached)
 	await reset()
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	var fly_event := InputEventKey.new()
 	fly_event.physical_keycode = KEY_F
@@ -179,7 +206,7 @@ func run(hz := 60) -> Dictionary:
 	p._unhandled_input(fly_event)
 	check("free flight cancels cable and momentum", not p.grapple.attached and not p.momentum_mode and p.free_flight)
 	await reset()
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	p.place_at(origin + Vector3(0, 2, 5), 0.0, 0.0)
 	check("reset clears cable and momentum", not p.grapple.attached and not p.momentum_mode and p.velocity == Vector3.ZERO)
@@ -222,7 +249,7 @@ func run_city(world: Node3D) -> Dictionary:
 					break
 		if collider_name != "":
 			break
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(3)
 	var latched: bool = city.grapple.attached
 	key(KEY_W, true)
@@ -243,7 +270,7 @@ func run_city(world: Node3D) -> Dictionary:
 	world.set_map_open(false)
 	await frames(2)
 	city.look_toward(target)
-	key(KEY_E, true)
+	hook_button(true)
 	await frames(2)
 	var reattached: bool = city.grapple.attached
 	world.pause_walk()

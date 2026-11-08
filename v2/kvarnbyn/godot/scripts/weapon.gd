@@ -162,7 +162,8 @@ func _trigger() -> bool:
 func _aim() -> bool:
 	if player.bot_input != null:
 		return bot_ads
-	return Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
+	# Tangentsiktet följer can_act, precis som annan tangentstyrning; ingen musknapp.
+	return Input.is_physical_key_pressed(KEY_Q)
 
 func start_reload() -> void:
 	if reloading or mag == mag_size or not player.alive:
