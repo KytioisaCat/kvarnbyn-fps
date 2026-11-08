@@ -553,8 +553,9 @@ HUSSTATUS-2026-11-06.md och RESULTAT-FLYT.md i v2/kvarnbyn.
 
 Joel vill återskapa känslan av infäst krok som vevar in automatiskt, sned löpning
 som bygger fart/sving, därefter hopp och släpp med bibehållen fart. Kvarnbyns korta
-stadsetapper är skalan; Prawn-dräktens jetboosters är inget krav. Detta är underlag
-för ett kommande rörelseprov, inte en genomförd speländring.
+stadsetapper är skalan; Prawn-dräktens jetboosters är inget krav. Ticket **RÖR-01**
+i KRAVSPEC.md beskriver funktionen. Joel har uttryckligen beställt den; fartbygget
+är avsiktligt önskvärt oavsett hur det uppstod i originalet.
 
 Förstahandskälla: Ubensteins [Prawn School, februari 2019](https://forums.unknownworlds.com/discussion/155620/prawn-school-for-everyone-that-doesnt-use-it-because-it-is-slow-50-100-meters-per-second-slow).
 Punkt 2 beskriver acceleration vid gång med infäst krok, särskilt framåt kombinerat
@@ -576,7 +577,41 @@ hela hastighetsvektorn med en riktning mot kroken eller vanlig löpfart. Börja 
 fysikbaserad sving/indragning och utvärdera om mer hjälp behövs för den önskade
 känslan. Fartbygget ska komma ur spelrörelsen; exakt tangentkombination ska inte
 ensam utlösa en bonus. Detta är ett förslag, inte belägg för Subnauticas kod.
-Källorna visar beteendet men fastslår inte om dess orsak är en bugg, särskild
-markacceleration, repfysik eller en kombination. Enbart ordet centrifugalkraft
-förklarar inte energitillskottet. Jämför rak/sneddad dragning och fart efter släpp
-i riktig Godot-kapsel innan känslan bedöms; implementation återstår.
+Källorna är känsloreferenser; att fastställa originalets interna orsak är inte en
+förutsättning för funktionen.
+
+### Implementationsval för RÖR-01
+
+`grapple.gd` fäster via kameraray mot världens kollisionslager 1, högst 42 m bort.
+Håll E för indragning, släpp för frikoppling. Linan vevar 9 m/s; en begränsad
+inåtriktad acceleration och en mjuk längdkorrigering drar kroppen. Spelarens
+normaliserade rörelse projiceras längs svingens tangent, så samma regler gäller
+alla styrvinklar. Minskad faktisk radie stärker tangenthastigheten. Energin
+kommer avsiktligt från vinsch/styrning; detta är en spelmodell. Krokfart högst
+30 m/s. Vanlig löpning behåller sina tidigare värden.
+
+`player.gd` använder ett momentumläge från första infästning. Hopp/släpp behåller
+horisontell fart och luftstyrning lägger bara till rörelse upp till styrfarten i
+sin riktning. Markkontakt bromsar gradvis, långsammare vid hukning. Befintlig
+raket kan fortfarande användas utan att skriva över slungningens sidofart.
+Alla förflyttningar går genom riktiga `move_and_slide()`; linan teleporterar aldrig
+kroppen. Krokens obstruction-ray bryter linan vid nya hinder, utan repomslag kring
+hörn. Karta/paus, död, flygtest och omplacering släpper kroken. E måste släppas
+och tryckas igen efter avbruten lina.
+
+Egen tunn 3D-lina och fästmarkör samt avstånd/fart och svenska styrtips i overlay
+fungerar i både promenad och strid. Inga nya bild-/modelltillgångar laddas ned.
+`verify_grapple.gd`/`grapple_check.gd` provar verklig kapsel, tangenthändelser,
+rak/sneddad dragning, hopp/släpp, kedjning, vägg/golv och livscykel. Inbyggda
+`--grapple-export-check` kör även ray/dragning mot ett riktigt hus vid Gamla torget
+och verklig kart-/paushantering i release-appen. Det är kontrollerade prov,
+inte en människas spelomgång eller ett godkännande av känslan.
+
+Verifierat 2026-11-08: 22 fixturkontroller vid vardera 30/60/120 Hz. Vid 60 Hz gav
+0,8 s indragning efter ansats 10,45 m/s rakt och 25,21 m/s med sned styrning;
+17,78 m/s horisontellt före/efter luftsläpp. Olika fysikfrekvenser ger något olika
+kurvor (sned fart 24,60–25,87 m/s), samma beteende. Provet använder mark, vägg,
+kapsel och verkliga tangenthändelser; värdena är inga generella löften för alla
+stadens situationer. Världs-GLB, kartbild, game.json och nav.json är byteidentiska
+med föregående leverans. Fulla byggkedjans nya sista loggläsning föll först på
+inflätad stderr-varning; nya krokprov sparar nu stdout/stderr åtskilda.

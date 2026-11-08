@@ -6,6 +6,7 @@ extends CharacterBody3D
 
 const Weapon = preload("res://scripts/weapon.gd")
 const SFX = preload("res://scripts/sfx.gd")
+const Grapple = preload("res://scripts/grapple.gd")
 
 const WALK_SPEED := 4.4
 const RUN_SPEED := 6.9
@@ -71,6 +72,8 @@ var hurt_voice: AudioStreamPlayer
 var rocket_voice: AudioStreamPlayer
 var shape: CapsuleShape3D
 var collision: CollisionShape3D
+var grapple: Node3D
+var momentum_mode := false
 
 func _ready() -> void:
 	collision_layer = 2
@@ -93,6 +96,9 @@ func _ready() -> void:
 	camera.far = 900.0
 	camera.current = true
 	add_child(camera)
+	grapple = Grapple.new()
+	grapple.player = self
+	add_child(grapple)
 	weapon = Weapon.new()
 	weapon.player = self
 	camera.add_child(weapon)
@@ -116,6 +122,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F:
 		free_flight = not free_flight
+		grapple.release()
+		momentum_mode = false
 		velocity = Vector3.ZERO
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		var sens: float = MOUSE_SENSITIVITY * (1.0 - 0.45 * weapon.ads)
@@ -185,6 +193,8 @@ func _process(delta: float) -> void:
 	camera.position.x = cos(bob_t * 0.5) * 0.018 * clampf(hspeed / WALK_SPEED, 0.0, 1.4) * (1.0 - weapon.ads)
 	camera.rotation.z = lerpf(camera.rotation.z, (-0.35 if not alive else 0.0), minf(1.0, delta * 3.0))
 	var target_fov := BASE_FOV + (6.0 if sprinting and hspeed > 5.0 else 0.0)
+	if momentum_mode:
+		target_fov = maxf(target_fov, BASE_FOV + clampf((hspeed - RUN_SPEED) * 0.45, 0.0, 10.0))
 	target_fov = lerpf(target_fov, 48.0, weapon.ads)
 	camera.fov = lerpf(camera.fov, target_fov, minf(1.0, delta * 10.0))
 	hurt_flash = maxf(0.0, hurt_flash - delta * 1.6)
@@ -205,6 +215,7 @@ func damage(amount: float, from_pos: Vector3) -> void:
 	if hp <= 0.0:
 		hp = 0.0
 		alive = false
+		grapple.release()
 		weapon.ads = 0.0
 		died.emit()
 
@@ -219,8 +230,13 @@ func revive(at: Vector3, yaw: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	if not active or input_suspended:
+		grapple.release()
 		velocity = Vector3.ZERO
 		return
+	if alive and not free_flight:
+		grapple.poll(bot_input == null and Input.is_physical_key_pressed(KEY_E))
+	else:
+		grapple.release()
 	var input_vector := touch_move
 	var want_sprint := false
 	var want_crouch := false
@@ -277,19 +293,34 @@ func _physics_process(delta: float) -> void:
 			velocity.y += ROCKET_LIFT * delta
 			var forward := -basis.z * ROCKET_DASH
 			var dash_weight := minf(delta * 6.0, 1.0)
-			velocity.x = lerpf(velocity.x, forward.x, dash_weight)
-			velocity.z = lerpf(velocity.z, forward.z, dash_weight)
+			if momentum_mode:
+				accelerate_momentum(-basis.z, ROCKET_DASH, ROCKET_DASH * 6.0, delta)
+			else:
+				velocity.x = lerpf(velocity.x, forward.x, dash_weight)
+				velocity.z = lerpf(velocity.z, forward.z, dash_weight)
 		else:
 			if not space_down:
 				rocket_fuel = 0.0
-			velocity.x = lerpf(velocity.x, direction.x * speed, weight)
-			velocity.z = lerpf(velocity.z, direction.z * speed, weight)
+			if momentum_mode:
+				if not grapple.attached:
+					if grounded:
+						var planar := Vector3(velocity.x, 0.0, velocity.z)
+						planar = planar.move_toward(Vector3.ZERO, delta * (4.0 if crouching else 9.0))
+						velocity.x = planar.x
+						velocity.z = planar.z
+					accelerate_momentum(direction, speed, 30.0 if grounded else 9.0, delta)
+					if grounded and Vector2(velocity.x, velocity.z).length() <= speed + 0.1:
+						momentum_mode = false
+			else:
+				velocity.x = lerpf(velocity.x, direction.x * speed, weight)
+				velocity.z = lerpf(velocity.z, direction.z * speed, weight)
 		if not grounded:
 			velocity.y -= GRAVITY * delta
 		elif alive and (jump_requested or (bot_input == null and Input.is_physical_key_pressed(KEY_SPACE))) and not crouching:
 			velocity.y = JUMP_SPEED
 		else:
 			velocity.y = -0.1
+		grapple.accelerate(direction, delta)
 		if is_on_floor() and direction.length_squared() > 0.01 and velocity.y <= 0.0:
 			var travel := Vector3(velocity.x, 0.0, velocity.z) * delta
 			if test_move(global_transform, travel):
@@ -308,7 +339,18 @@ func _physics_process(delta: float) -> void:
 	space_was_down = space_down
 	jump_requested = false
 
+func accelerate_momentum(direction: Vector3, target_speed: float, acceleration: float, delta: float) -> void:
+	# Styrning får fylla fart i en riktning men tar inte bort en befintlig slungning.
+	if direction.length_squared() < 0.001:
+		return
+	var wish := direction.normalized()
+	var remaining := target_speed * minf(direction.length(), 1.0) - velocity.dot(wish)
+	if remaining > 0.0:
+		velocity += wish * minf(remaining, acceleration * delta)
+
 func reset_touches() -> void:
+	if grapple != null:
+		grapple.release()
 	move_finger = -1
 	look_finger = -1
 	touch_move = Vector2.ZERO
@@ -319,6 +361,10 @@ func place_at(position_value: Vector3, yaw: float, pitch: float, eye_position :=
 	rotation.y = yaw
 	camera.rotation.x = clampf(pitch, -1.37, 1.37)
 	velocity = Vector3.ZERO
+	momentum_mode = false
+	rocket_used = false
+	rocket_fuel = 0.0
+	space_was_down = false
 	recoil = Vector2.ZERO
 	reset_touches()
 
@@ -338,4 +384,6 @@ func snapshot() -> Dictionary:
 		"eye": [camera.global_position.x, camera.global_position.y, camera.global_position.z],
 		"yaw": rotation.y, "pitch": camera.rotation.x,
 		"fov_degrees": camera.fov, "hp": hp, "alive": alive,
-		"on_floor": is_on_floor(), "active": active, "free_flight": free_flight}
+		"on_floor": is_on_floor(), "active": active, "free_flight": free_flight,
+		"velocity": [velocity.x, velocity.y, velocity.z], "momentum_mode": momentum_mode,
+		"grapple": grapple.snapshot()}

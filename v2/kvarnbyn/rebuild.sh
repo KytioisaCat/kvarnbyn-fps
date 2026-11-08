@@ -49,6 +49,9 @@ if grep -qE "SCRIPT ERROR|ERROR:" $LOG/godot-import-1.log $LOG/godot-import-2.lo
 awk '/KVARNBYN_TREES/ { last=$0 } END { if (last != "") print last }' $LOG/godot-import-1.log $LOG/godot-import-2.log
 step "Kontroll: kontroller och gångprov"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_controller.gd 2>&1 | grep -E "KVARNBYN|PASS|FAIL" | tail -3
+step "Kontroll: gripkrokens sving, fartbygge, släpp och kollision"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_grapple.gd > $LOG/grapple-check.log 2> $LOG/grapple-check.stderr.log
+$PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_GRAPPLE_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_GRAPPLE_CHECK "))); assert r["passed"]' $LOG/grapple-check.log
 step "Kontroll: gångytor över hela världen"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --walktest > $LOG/walk-check.log 2>&1
 step "Kontroll: Roten M 29, gård och grind"
@@ -111,5 +114,8 @@ if [[ " $* " != *" --no-export "* ]]; then
   $PY -c 'import json,sys; lines=open(sys.argv[1]).read().splitlines(); r=json.loads(next(x.split("KVARNBYN_GUARDS_EXPORT_CHECK ",1)[1] for x in lines if x.startswith("KVARNBYN_GUARDS_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/guards-export-check.log
   step "Kontroll: flödesfältet finns också i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --explore --no-pointer-lock --water-export-check > $LOG/water-export-check.log 2>&1
+  step "Kontroll: gripkrok, fartbygge och stadskollision i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --explore --no-pointer-lock --grapple-export-check > $LOG/grapple-export-check.log 2> $LOG/grapple-export-check.stderr.log
+  $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_GRAPPLE_EXPORT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_GRAPPLE_EXPORT_CHECK "))); assert r["passed"] and r["release"] and r["city"]["passed"]' $LOG/grapple-export-check.log
 fi
 step "Klart på $(( $(date +%s) - t0 )) s. Kör:  $G --path $P/godot"

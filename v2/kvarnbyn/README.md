@@ -14,6 +14,14 @@ open "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app"
 WASD · mus · vänsterklick skjut · högerklick sikta · R ladda om · Shift spring · C huka ·
 mellanslag hoppa/raketdubbelhopp · F flygtest · M karta · Esc paus.
 
+**Gripkrok:** sikta på ett hus eller terrängen inom 42 m och håll **E**. Kroken
+vevar in automatiskt. Håll framåt + sidled för att bygga fart i en sving, hoppa
+och släpp E för att slungas vidare. Farten följer med genom släppet; fäst igen för
+nästa båge. Efter landning bromsar du gradvis, med längre glid om du hukar.
+Linan bryts om ett nytt hinder kommer emellan. Karta, paus och död släpper kroken.
+Fartbygget är en avsiktlig feature med Prawn i Subnautica 1 som referens; se
+projektets `KRAVSPEC.md`, ticket **RÖR-01**. Joels bedömning av känslan återstår.
+
 Minikartan följer dig med norr uppåt. Den stora kartan pausar spelet och visar
 husen, ån, din riktning, zonerna och allierade. M eller Esc återgår till spelet.
 Röd/blå ton visar läget kring zonerna; den streckade fronten följer ägarbyten.

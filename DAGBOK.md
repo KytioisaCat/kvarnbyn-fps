@@ -31,6 +31,17 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-08 — ChatGPT Codex — bygger Prawn-inspirerad gripkrok
+
+**Status:** klart — RÖR-01 byggd och verifierad i uppdaterad Mac-app; Joels känslobedömning återstår.
+**Gjort:** feature/acceptanskrav i KRAVSPEC.md, TODO/README/arkitektur uppdaterade. `grapple.gd`: håll E, 42 m kameraray, automatisk invevning, tangentiell styrning, avsiktligt fartbygge, högst30m/s. `player.gd`: fart genom hopp/släpp, gradvis markbroms, längre glid vid huk, befintlig raket utan överskrivning av sidofart. Ingen ny booster. 3D-lina/fästmarkör, svensk hjälp och fart/avstånd. Karta/paus/död/flyg/omplacering släpper; hinder bryter linan.
+**Verifierat:**22verkliga kapsel-/tangentprov vid30/60/120Hz.60Hz: rakt10,45m/s, snett25,21m/s; luftsläpp17,78→17,78m/s. Vägg/golv, kedjning, miss/räckvidd, vänster/höger och livscykel gröna. Full byggkedjas gamla gång-/plats-/karta-/front-/patrull-/vakt-/mål-/fors-/träd-/ljus-/soldat-/vapenprov passerade;180globala gångpunkter. Slutlig headlessrelease22prov + verkligt hus och karta/paus gröna; native strid23prov inklusive bild. Båda startade vid torget[-8,56;-0,16;7,97]. Rättat testordningen så game.start inte flyttar tillbaka till basen efter vyvalet. Slutbild visuellt granskad; linans närände tunnad efter första breda kilen.
+**Läge nu:** app `v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app`, ZIP246253338byte lokalt. `evidence/delivery-grapple-2026-11-08.json`; råloggar/bild i `v2/.tools/kvarnbyn-grapple-20261108/`. Alla fem skyddade värld-/kart-/spel-/navfiler byteidentiska med föregående leverans. Soldat-GLB omgenererad av ordinarie byggkedja; nya hashen i soldier-model.json, ingen modellkod ändrad. Inga nedladdningar. Egna motorprocesser avslutade; alla Dummy+mastermute. Byggcache/tidsstämpelbrus återställda; playpen/graphify memory orörda.
+**Varningar:** första slutgrindens JSON-läsning föll på inflätad ObjectDB-stderr, själva proverna passerade. Ny stdout/stderr-separering, slutimport/export och verklig releasekontroll gröna. Vissa headlessprov har avslutsvarningar; native slutprov har tomstderr. Linan bryts vid hinder, inget repomslag kring hörn. Det här är kontrollerade funktionsprov, ingen färdig känslobedömning eller helomgångs-/FPS-garanti.
+**Nästa:** Joel provar E + sned löpning + hopp/släpp och bedömer acceleration, sving, räckvidd och bromsning. Finjustera utifrån det. Hus-/flytbackloggen kvar enligt TODO.
+
+---
+
 ## 2026-11-08 08:32 — ChatGPT Codex — Prawn-gripkrokens fartbygge
 
 **Status:** klart — den specifika tekniken belagd med förstahandsbeskrivningar; ingen spelkod ändrad.

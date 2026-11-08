@@ -1,0 +1,892 @@
+{
+  "feature": "RÖR-01",
+  "date": "2026-11-08",
+  "spec": "KRAVSPEC.md: Rörelse / RÖR-01",
+  "controls": "Hold E to attach and reel; WASD steers; Space jumps; release E to launch.",
+  "fixtures": {
+    "30": {
+      "checks": [
+        {
+          "details": null,
+          "name": "normal capsule begins on floor",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "miss does not attach or grant momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "wall beyond 42m cannot attach",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "E attaches and keeps reeling through real physics",
+          "passed": true
+        },
+        {
+          "details": 11.0536098480225,
+          "name": "straight pull accelerates beyond sprint",
+          "passed": true
+        },
+        {
+          "details": [
+            11.0536098480225,
+            24.6037998199463
+          ],
+          "name": "diagonal steering builds more speed than straight pull",
+          "passed": true
+        },
+        {
+          "details": 9.65380859375,
+          "name": "steering creates a swing arc",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "left and right swing have equal strength",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "city speed budget holds",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "release itself never changes velocity",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "jump during reel lifts actual capsule without rocket",
+          "passed": true
+        },
+        {
+          "details": {
+            "after_m_s": 18.7350444793701,
+            "airborne": true,
+            "before_m_s": 18.7350444793701
+          },
+          "name": "key release detaches and preserves airborne momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "can grapple again while airborne",
+          "passed": true
+        },
+        {
+          "details": 4.20994710922241,
+          "name": "landing returns to controllable ground speed",
+          "passed": true
+        },
+        {
+          "details": -27.7083740234375,
+          "name": "fast capsule stops at solid wall",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "fast capsule does not cross floor",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "new obstruction breaks cable",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "death detaches immediately",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "inactive controller detaches and stops",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "suspended input cancels cable",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "free flight cancels cable and momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "reset clears cable and momentum",
+          "passed": true
+        }
+      ],
+      "passed": true,
+      "physics_hz": 30,
+      "release": false,
+      "samples": {
+        "diagonal": {
+          "attached": true,
+          "distance_m": 13.9475259780884,
+          "peak": 24.6037998199463,
+          "sideways_m": 9.65380859375,
+          "speed": 24.6037998199463
+        },
+        "left": {
+          "attached": true,
+          "distance_m": 13.9495153427124,
+          "peak": 24.611888885498,
+          "sideways_m": 9.652099609375,
+          "speed": 24.611888885498
+        },
+        "release": {
+          "after_m_s": 18.7350444793701,
+          "airborne": true,
+          "before_m_s": 18.7350444793701
+        },
+        "straight": {
+          "attached": true,
+          "distance_m": 8.735595703125,
+          "peak": 11.0536098480225,
+          "sideways_m": 0.0001220703125,
+          "speed": 11.0536098480225
+        }
+      },
+      "scope": "actual controller, key input, swept capsule collisions in a synthetic fixture; feel requires Joel"
+    },
+    "60": {
+      "checks": [
+        {
+          "details": null,
+          "name": "normal capsule begins on floor",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "miss does not attach or grant momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "wall beyond 42m cannot attach",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "E attaches and keeps reeling through real physics",
+          "passed": true
+        },
+        {
+          "details": 10.4532499313354,
+          "name": "straight pull accelerates beyond sprint",
+          "passed": true
+        },
+        {
+          "details": [
+            10.4532499313354,
+            25.2103157043457
+          ],
+          "name": "diagonal steering builds more speed than straight pull",
+          "passed": true
+        },
+        {
+          "details": 9.4156494140625,
+          "name": "steering creates a swing arc",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "left and right swing have equal strength",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "city speed budget holds",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "release itself never changes velocity",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "jump during reel lifts actual capsule without rocket",
+          "passed": true
+        },
+        {
+          "details": {
+            "after_m_s": 17.781156539917,
+            "airborne": true,
+            "before_m_s": 17.781156539917
+          },
+          "name": "key release detaches and preserves airborne momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "can grapple again while airborne",
+          "passed": true
+        },
+        {
+          "details": 1.18978989124298,
+          "name": "landing returns to controllable ground speed",
+          "passed": true
+        },
+        {
+          "details": -27.7091064453125,
+          "name": "fast capsule stops at solid wall",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "fast capsule does not cross floor",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "new obstruction breaks cable",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "death detaches immediately",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "inactive controller detaches and stops",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "suspended input cancels cable",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "free flight cancels cable and momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "reset clears cable and momentum",
+          "passed": true
+        }
+      ],
+      "passed": true,
+      "physics_hz": 60,
+      "release": false,
+      "samples": {
+        "diagonal": {
+          "attached": true,
+          "distance_m": 13.4454021453857,
+          "peak": 25.2103157043457,
+          "sideways_m": 9.4156494140625,
+          "speed": 25.2103157043457
+        },
+        "left": {
+          "attached": true,
+          "distance_m": 13.4296178817749,
+          "peak": 25.0846767425537,
+          "sideways_m": 9.4036865234375,
+          "speed": 25.0846767425537
+        },
+        "release": {
+          "after_m_s": 17.781156539917,
+          "airborne": true,
+          "before_m_s": 17.781156539917
+        },
+        "straight": {
+          "attached": true,
+          "distance_m": 8.228759765625,
+          "peak": 10.4532499313354,
+          "sideways_m": 0.0,
+          "speed": 10.4532499313354
+        }
+      },
+      "scope": "actual controller, key input, swept capsule collisions in a synthetic fixture; feel requires Joel"
+    },
+    "120": {
+      "checks": [
+        {
+          "details": null,
+          "name": "normal capsule begins on floor",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "miss does not attach or grant momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "wall beyond 42m cannot attach",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "E attaches and keeps reeling through real physics",
+          "passed": true
+        },
+        {
+          "details": 10.0688514709473,
+          "name": "straight pull accelerates beyond sprint",
+          "passed": true
+        },
+        {
+          "details": [
+            10.0688514709473,
+            25.8732051849365
+          ],
+          "name": "diagonal steering builds more speed than straight pull",
+          "passed": true
+        },
+        {
+          "details": 9.3792724609375,
+          "name": "steering creates a swing arc",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "left and right swing have equal strength",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "city speed budget holds",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "release itself never changes velocity",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "jump during reel lifts actual capsule without rocket",
+          "passed": true
+        },
+        {
+          "details": {
+            "after_m_s": 17.2685832977295,
+            "airborne": true,
+            "before_m_s": 17.2685832977295
+          },
+          "name": "key release detaches and preserves airborne momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "can grapple again while airborne",
+          "passed": true
+        },
+        {
+          "details": 0.78687447309494,
+          "name": "landing returns to controllable ground speed",
+          "passed": true
+        },
+        {
+          "details": -27.7091064453125,
+          "name": "fast capsule stops at solid wall",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "fast capsule does not cross floor",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "new obstruction breaks cable",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "death detaches immediately",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "inactive controller detaches and stops",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "suspended input cancels cable",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "free flight cancels cable and momentum",
+          "passed": true
+        },
+        {
+          "details": null,
+          "name": "reset clears cable and momentum",
+          "passed": true
+        }
+      ],
+      "passed": true,
+      "physics_hz": 120,
+      "release": false,
+      "samples": {
+        "diagonal": {
+          "attached": true,
+          "distance_m": 13.2936744689941,
+          "peak": 25.8732051849365,
+          "sideways_m": 9.3792724609375,
+          "speed": 25.8732051849365
+        },
+        "left": {
+          "attached": true,
+          "distance_m": 13.2792348861694,
+          "peak": 25.8401794433594,
+          "sideways_m": 9.3798828125,
+          "speed": 25.8401794433594
+        },
+        "release": {
+          "after_m_s": 17.2685832977295,
+          "airborne": true,
+          "before_m_s": 17.2685832977295
+        },
+        "straight": {
+          "attached": true,
+          "distance_m": 7.9144287109375,
+          "peak": 10.0688514709473,
+          "sideways_m": 0.0,
+          "speed": 10.0688514709473
+        }
+      },
+      "scope": "actual controller, key input, swept capsule collisions in a synthetic fixture; feel requires Joel"
+    }
+  },
+  "exported_app": {
+    "checks": [
+      {
+        "details": null,
+        "name": "normal capsule begins on floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "miss does not attach or grant momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "wall beyond 42m cannot attach",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "E attaches and keeps reeling through real physics",
+        "passed": true
+      },
+      {
+        "details": 10.4532499313354,
+        "name": "straight pull accelerates beyond sprint",
+        "passed": true
+      },
+      {
+        "details": [
+          10.4532499313354,
+          25.2103157043457
+        ],
+        "name": "diagonal steering builds more speed than straight pull",
+        "passed": true
+      },
+      {
+        "details": 9.4156494140625,
+        "name": "steering creates a swing arc",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "left and right swing have equal strength",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "city speed budget holds",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "release itself never changes velocity",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "jump during reel lifts actual capsule without rocket",
+        "passed": true
+      },
+      {
+        "details": {
+          "after_m_s": 17.781156539917,
+          "airborne": true,
+          "before_m_s": 17.781156539917
+        },
+        "name": "key release detaches and preserves airborne momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "can grapple again while airborne",
+        "passed": true
+      },
+      {
+        "details": 1.18978989124298,
+        "name": "landing returns to controllable ground speed",
+        "passed": true
+      },
+      {
+        "details": -27.7091064453125,
+        "name": "fast capsule stops at solid wall",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "fast capsule does not cross floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "new obstruction breaks cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "death detaches immediately",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "inactive controller detaches and stops",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "suspended input cancels cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "free flight cancels cable and momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reset clears cable and momentum",
+        "passed": true
+      }
+    ],
+    "city": {
+      "attached": true,
+      "cable_and_anchor_visible": true,
+      "collider": "COL_w92332103__Collision_only",
+      "distance_m": 1.96625888347626,
+      "map_cancels": true,
+      "passed": true,
+      "pause_cancels": true,
+      "reattached": true,
+      "scope": "actual imported city at Gamla torget, camera ray, controller movement, map and pause",
+      "speed_m_s": 11.3819589614868,
+      "start": [
+        -8.56069469451904,
+        -0.162686854600906,
+        7.96736907958984
+      ],
+      "still_attached": true
+    },
+    "passed": true,
+    "physics_hz": 60,
+    "release": true,
+    "samples": {
+      "diagonal": {
+        "attached": true,
+        "distance_m": 13.4454021453857,
+        "peak": 25.2103157043457,
+        "sideways_m": 9.4156494140625,
+        "speed": 25.2103157043457
+      },
+      "left": {
+        "attached": true,
+        "distance_m": 13.4296178817749,
+        "peak": 25.0846767425537,
+        "sideways_m": 9.4036865234375,
+        "speed": 25.0846767425537
+      },
+      "release": {
+        "after_m_s": 17.781156539917,
+        "airborne": true,
+        "before_m_s": 17.781156539917
+      },
+      "straight": {
+        "attached": true,
+        "distance_m": 8.228759765625,
+        "peak": 10.4532499313354,
+        "sideways_m": 0.0,
+        "speed": 10.4532499313354
+      }
+    },
+    "scope": "actual controller, key input, swept capsule collisions in a synthetic fixture; feel requires Joel"
+  },
+  "native_combat": {
+    "checks": [
+      {
+        "details": null,
+        "name": "normal capsule begins on floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "miss does not attach or grant momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "wall beyond 42m cannot attach",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "E attaches and keeps reeling through real physics",
+        "passed": true
+      },
+      {
+        "details": 10.4532499313354,
+        "name": "straight pull accelerates beyond sprint",
+        "passed": true
+      },
+      {
+        "details": [
+          10.4532499313354,
+          25.2103157043457
+        ],
+        "name": "diagonal steering builds more speed than straight pull",
+        "passed": true
+      },
+      {
+        "details": 9.4156494140625,
+        "name": "steering creates a swing arc",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "left and right swing have equal strength",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "city speed budget holds",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "release itself never changes velocity",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "jump during reel lifts actual capsule without rocket",
+        "passed": true
+      },
+      {
+        "details": {
+          "after_m_s": 17.781156539917,
+          "airborne": true,
+          "before_m_s": 17.781156539917
+        },
+        "name": "key release detaches and preserves airborne momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "can grapple again while airborne",
+        "passed": true
+      },
+      {
+        "details": 1.18978989124298,
+        "name": "landing returns to controllable ground speed",
+        "passed": true
+      },
+      {
+        "details": -27.7091064453125,
+        "name": "fast capsule stops at solid wall",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "fast capsule does not cross floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "new obstruction breaks cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "death detaches immediately",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "inactive controller detaches and stops",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "suspended input cancels cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "free flight cancels cable and momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reset clears cable and momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "native city capture saved",
+        "passed": true
+      }
+    ],
+    "city": {
+      "attached": true,
+      "cable_and_anchor_visible": true,
+      "collider": "COL_w92332103__Collision_only",
+      "distance_m": 1.96625888347626,
+      "map_cancels": true,
+      "passed": true,
+      "pause_cancels": true,
+      "reattached": true,
+      "scope": "actual imported city at Gamla torget, camera ray, controller movement, map and pause",
+      "speed_m_s": 11.3819589614868,
+      "start": [
+        -8.56069469451904,
+        -0.162686854600906,
+        7.96736907958984
+      ],
+      "still_attached": true
+    },
+    "passed": true,
+    "physics_hz": 60,
+    "release": true,
+    "samples": {
+      "diagonal": {
+        "attached": true,
+        "distance_m": 13.4454021453857,
+        "peak": 25.2103157043457,
+        "sideways_m": 9.4156494140625,
+        "speed": 25.2103157043457
+      },
+      "left": {
+        "attached": true,
+        "distance_m": 13.4296178817749,
+        "peak": 25.0846767425537,
+        "sideways_m": 9.4036865234375,
+        "speed": 25.0846767425537
+      },
+      "release": {
+        "after_m_s": 17.781156539917,
+        "airborne": true,
+        "before_m_s": 17.781156539917
+      },
+      "straight": {
+        "attached": true,
+        "distance_m": 8.228759765625,
+        "peak": 10.4532499313354,
+        "sideways_m": 0.0,
+        "speed": 10.4532499313354
+      }
+    },
+    "scope": "actual controller, key input, swept capsule collisions in a synthetic fixture; feel requires Joel"
+  },
+  "controller": {
+    "eye_height_1_65m": true,
+    "final_position": [
+      40.0,
+      0.000838596024550498,
+      0.012919008731842
+    ],
+    "fly_mode": true,
+    "maximum_height": 0.229167863726616,
+    "passed": true,
+    "pause_stops_movement": true,
+    "release_look_keeps_walking": true,
+    "release_move_stops": true,
+    "rocket_distance": 12.49831199646,
+    "rocket_height": 10.7191953659058,
+    "rocket_jump": true,
+    "stopped_at_wall": true,
+    "two_finger_move_and_look": true,
+    "walked_over_20cm_kerb": true
+  },
+  "regressions": {
+    "roten-ground-check": true,
+    "stalliden-ground-check": true,
+    "m25-ground-check": true,
+    "north-bank-ground-check": true,
+    "map-check": true,
+    "map-world-check": true,
+    "front-check": true,
+    "patrol-check": true,
+    "allied-roles-check": true,
+    "objective-check": true,
+    "water-check": true,
+    "lighting-check": true
+  },
+  "world_walk": {
+    "failed": 0,
+    "fails": [],
+    "landed": 180,
+    "points": 180
+  },
+  "preserved_assets": {
+    "v2/kvarnbyn/blender/world_raw.glb": {
+      "before": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+      "after": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829"
+    },
+    "v2/kvarnbyn/godot/assets/world.glb": {
+      "before": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+      "after": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d"
+    },
+    "v2/kvarnbyn/godot/assets/world_map.png": {
+      "before": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+      "after": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606"
+    },
+    "v2/kvarnbyn/godot/assets/game.json": {
+      "before": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+      "after": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d"
+    },
+    "v2/kvarnbyn/godot/assets/nav.json": {
+      "before": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f",
+      "after": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f"
+    }
+  },
+  "source_sha256": {
+    "player.gd": "38f7e7fb9b8b3e9b70c55c56797c868e8af54b5a80b5c9e681fe0f70df755a75",
+    "grapple.gd": "f54bad2af294ff89bdc0b2a8466ff32d60f33210012e82ef02eb5963451edd91",
+    "overlay.gd": "91ec885f999be694df71c7c4dd0bb2c18bbd7866fabb8368c05d0b2043af1204",
+    "world.gd": "e75b0751a3c6ff130a76ab8fd9339f881d259b6d1f266323f311196fb781ff80",
+    "grapple_check.gd": "c4d1ea1714a2d566bfe1fa61f0d97d62addf918c4c97b940a6448218f11ef434"
+  },
+  "app": "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "zip_bytes": 246253338,
+  "local_image": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-grapple-20261108/release.png",
+  "build": "Full pipeline and regression gates completed; final JSON parser initially failed because stderr interleaved with stdout. New gates now separate streams; final import/export and release checks passed.",
+  "limitations": [
+    "Controlled physics and city samples; Joel has not yet judged feel.",
+    "Cable releases at an obstruction; no wrapping around corners.",
+    "Some headless runs report ObjectDB cleanup warnings; final native stderr is recorded separately."
+  ]
+}

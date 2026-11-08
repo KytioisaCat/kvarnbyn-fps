@@ -112,6 +112,27 @@ inte leverera dem).
 - **Krav**: **Raketdubbelhopp** med doserbar kraft (kort tryck = liten skjuts,
   hållet = långt kast) — spelets signaturrörelse, arkadundantaget från realismen.
 
+#### RÖR-01 — Gripkrok med fartbygge och slungning (Joel 2026-11-08)
+
+**Beställd feature.** Gör förflyttningen lustfylld och skicklighetsbaserad, med
+Prawn-dräktens gripkrok i **Subnautica 1** som känsloreferens. Fartbygget är avsiktligt
+önskvärt här; om originalet råkade uppnå det genom en bugg saknar betydelse.
+
+Acceptanskrav:
+
+- Skjut kroken mot terräng eller byggnader; när den fäster börjar den dra in automatiskt.
+- Framåt-/sidledsrörelse i förhållande till fästpunkten ska bygga sving och extra fart.
+  Spelaren ska kunna påverka bågen, med större utdelning än enbart rak indragning.
+- Hoppa under indragningen och släpp kroken för att kasta sig vidare. Farten och
+  färdriktningen följer med; inget omedelbart återställande till vanlig löpfart.
+- Det går att kedja förflyttningar genom att fästa igen. Mark, hus, tak och räcken
+  behåller sina kollisioner även i hög fart.
+- Tydlig lina/fästpunkt och svenska instruktioner gör krokens läge begripligt.
+  Miss, släpp, paus, död och återstart ska hanteras utan kvarhängande dragkraft.
+- Anpassa räckvidd och fart till korta stadsetapper. Jetboosters krävs inte.
+- Automatiska prov visar fartbygge, bevarad fart och kollision; Joel bedömer om
+  sving, acceleration och släpp faktiskt känns lika roliga som referensen.
+
 ### Strid
 
 - **Krav**: Automatkarbin med omladdning som bas; träffmarkering och tydlig feedback.

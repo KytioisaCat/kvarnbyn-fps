@@ -59,7 +59,7 @@ func _ready() -> void:
 	options = read_options()
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			break
@@ -193,6 +193,8 @@ func _ready() -> void:
 		set_quality(int(options["quality"]))
 	if options.has("patrol-export-check"):
 		check_exported_patrol()
+	if options.has("grapple-export-check"):
+		check_exported_grapple()
 	if options.has("bot"):
 		start_bot()
 
@@ -399,6 +401,7 @@ func _on_game_ended(won: bool) -> void:
 	hud.show_end(won)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	player.active = false
+	player.grapple.release()
 
 func _on_restart() -> void:
 	hud.hide_end()
@@ -440,6 +443,19 @@ func check_exported_map() -> void:
 		"map":tactical_map.snapshot() if tactical_map != null else {},"release":not OS.has_feature("editor")}
 	print("KVARNBYN_MAP_EXPORT_CHECK ",JSON.stringify(result))
 	get_tree().paused = false
+	get_tree().quit(0 if result.passed else 3)
+
+func check_exported_grapple() -> void:
+	AudioServer.set_bus_mute(0, true)
+	var check_node = load("res://scripts/grapple_check.gd").new()
+	add_child(check_node)
+	var result: Dictionary = await check_node.run()
+	var city: Dictionary = await check_node.run_city(self)
+	result["city"] = city
+	result.passed = result.passed and city.passed
+	print("KVARNBYN_GRAPPLE_EXPORT_CHECK ", JSON.stringify(result))
+	check_node.queue_free()
+	await get_tree().process_frame
 	get_tree().quit(0 if result.passed else 3)
 
 func check_exported_guards() -> void:
@@ -520,6 +536,7 @@ func set_map_open(value: bool) -> void:
 		if not world_ready or not started or overlay.opening or (game != null and game.over):
 			return
 		map_previous_paused = get_tree().paused
+		player.grapple.release()
 		map_previous_mouse_mode = Input.mouse_mode
 		tactical_map.set_expanded(true)
 		update_tactical_map()

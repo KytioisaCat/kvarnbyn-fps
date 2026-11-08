@@ -120,7 +120,7 @@ func build_panel() -> void:
 	begin_button.add_theme_color_override("font_hover_color", INK)
 	begin_button.add_theme_font_size_override("font_size", 19)
 	column.add_child(begin_button)
-	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nVänster mus: skjut    Höger mus: sikta    R: ladda om    M: karta    Esc: paus\nMellanslag i luften: raket (håll)    F: flygläge för test (Shift = fort)", 14, Color("afc2b8"))
+	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nHåll E: gripkrok · rör dig snett för fart · släpp E för att slungas\nVänster mus: skjut    Höger mus: sikta    R: ladda om    M: karta    Esc: paus\nMellanslag i luften: raket (håll)    F: flygläge för test (Shift = fort)", 14, Color("afc2b8"))
 	column.add_child(instruction_label)
 	settings_row = HBoxContainer.new()
 	settings_row.add_theme_constant_override("separation", 10)
@@ -241,6 +241,7 @@ func layout_controls() -> void:
 	touch_hint.size = Vector2(440, 24)
 
 func _process(_delta: float) -> void:
+	queue_redraw()
 	if status_override != "":
 		fps_label.text = status_override
 	elif OS.is_debug_build():
@@ -255,6 +256,23 @@ func _draw() -> void:
 	if reticle_visible:
 		var center := size * 0.5
 		draw_circle(center, 2.1, Color(0.96, 0.96, 0.91, 0.72))
+		if player != null and player.alive and player.active and not player.free_flight:
+			var hook: Node3D = player.grapple
+			var hint := "Håll E: gripkrok"
+			var col := Color("dac28b")
+			if hook.attached:
+				hint = "Gripkrok · %d m · %d km/h\nWASD: svinga · släpp E: slungas" % [roundi(hook.harness().distance_to(hook.anchor)), roundi(player.velocity.length() * 3.6)]
+				if not player.camera.is_position_behind(hook.anchor):
+					var point: Vector2 = player.camera.unproject_position(hook.anchor)
+					draw_arc(point, 6.0, 0.0, TAU, 20, col, 2.0, true)
+			elif hook.feedback_time > 0.0:
+				hint = hook.feedback
+			for index in range(hint.split("\n").size()):
+				var line: String = hint.split("\n")[index]
+				var width := get_theme_default_font().get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
+				var position := Vector2(center.x - width * 0.5, center.y + 48 + index * 20)
+				draw_string(get_theme_default_font(), position + Vector2(1, 2), line, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(0, 0, 0, 0.85))
+				draw_string(get_theme_default_font(), position, line, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, col)
 	if player != null and player.move_finger != -1 and not opening:
 		var radius: float = player.joystick_radius()
 		var anchor: Vector2 = player.move_anchor
