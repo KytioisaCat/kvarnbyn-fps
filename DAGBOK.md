@@ -31,6 +31,15 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-08 08:32 — ChatGPT Codex — Prawn-gripkrokens fartbygge
+
+**Status:** klart — den specifika tekniken belagd med förstahandsbeskrivningar; ingen spelkod ändrad.
+**Gjort:** läst senaste tre överlämningarna, TODO och arkitektur. Prawn School (Ubenstein, februari 2019), punkt 2, beskriver uttryckligen acceleration med infäst krok + framåt/sidled och sedan hopp från gångbar mark. DeFragged på Steam (3 februari 2018) beskriver sidoinfästning, framåtrörelse och släpp med fart. Källor/videolänkar, osäker buggorsak och designhypotes sparade i ARKITEKTUR.md. Research avbockad i TODO; kommande rörelseprov överst i kön efter Joels nya önskemål.
+**Läge nu:** forskningsdelen klar. Inga motorprov, exporter, stora nedladdningar eller ändringar av appen. Videolänkar uppslagna men inga bildrutor granskade. Originalets exakta fysik/buggorsak inte bevisad; extrema farter i guiden är författarens påståenden.
+**Nästa:** Godot-prov av automatisk indragning + sidostyrt fartbygge/sving + hopp/släpp med bevarad fart. Jämför rak/sneddad dragning och riktiga kollisioner; Joel bedömer känslan. Stadsskala; jetboosters inte krav. Övrig hus-/flytbacklogg kvar. `.claude/playpen/` och `graphify-out/memory/` orörda.
+
+---
+
 ## 2026-11-06 09:29 — ChatGPT Codex — Joels dom: lagg och för låg igenkänning
 
 **Status:** klart — avgränsad flyträttning i uppdaterad Mac-app; Joels igenkänning underkänd, husarbete prioriterat.

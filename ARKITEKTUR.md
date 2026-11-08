@@ -548,3 +548,35 @@ befintliga basbudget. Tidiga stora bildstopp är fortfarande oförklarade.
 Husinventeringen visar8egna modellvägar av381, inte8godkända riktiga hus.
 Hus/kvarter med fasader och tak är huvudspåret före mer botarbete. Se
 HUSSTATUS-2026-11-06.md och RESULTAT-FLYT.md i v2/kvarnbyn.
+
+## Rörelsereferens: Prawn-gripkrok i Subnautica 1 (2026-11-08)
+
+Joel vill återskapa känslan av infäst krok som vevar in automatiskt, sned löpning
+som bygger fart/sving, därefter hopp och släpp med bibehållen fart. Kvarnbyns korta
+stadsetapper är skalan; Prawn-dräktens jetboosters är inget krav. Detta är underlag
+för ett kommande rörelseprov, inte en genomförd speländring.
+
+Förstahandskälla: Ubensteins [Prawn School, februari 2019](https://forums.unknownworlds.com/discussion/155620/prawn-school-for-everyone-that-doesnt-use-it-because-it-is-slow-50-100-meters-per-second-slow).
+Punkt 2 beskriver acceleration vid gång med infäst krok, särskilt framåt kombinerat
+med sidled, följt av hopp från gångbar mark. Guiden diskuterar även släppögonblick
+och slingshot. De extrema fartpåståendena är författarens, inte våra mätningar.
+Guidens egna videolänkar: [The Science](https://www.youtube.com/watch?v=7k362SayYyQ)
+och [The Concept](https://www.youtube.com/watch?v=U1H-cxs-5nY). Länkarna uppslagna;
+ingen bildruta/video granskad i denna research.
+
+Oberoende förstahandsbeskrivning: DeFragged, 3 februari 2018, i
+[The prawn suit isnt fun](https://steamcommunity.com/app/264710/discussions/0/1700541698696170114/)
+beskriver att fästa kroken åt sidan, gå framåt i önskad färdriktning och släppa
+efter fartbygget. Det stödjer sned infästning/sving och bevarad fart vid släpp.
+Spelarens egna fysikförklaringar är inte verifierad motorimplementation.
+
+Designhypotes för vårt prov: låt invevning tillföra energi, sidostyrning bygga
+rörelse runt fästpunkten och behåll hastigheten genom hopp/släpp. Ersätt inte
+hela hastighetsvektorn med en riktning mot kroken eller vanlig löpfart. Börja med
+fysikbaserad sving/indragning och utvärdera om mer hjälp behövs för den önskade
+känslan. Fartbygget ska komma ur spelrörelsen; exakt tangentkombination ska inte
+ensam utlösa en bonus. Detta är ett förslag, inte belägg för Subnauticas kod.
+Källorna visar beteendet men fastslår inte om dess orsak är en bugg, särskild
+markacceleration, repfysik eller en kombination. Enbart ordet centrifugalkraft
+förklarar inte energitillskottet. Jämför rak/sneddad dragning och fart efter släpp
+i riktig Godot-kapsel innan känslan bedöms; implementation återstår.
