@@ -14,6 +14,7 @@ import numpy as np
 import shapely
 from shapely.geometry import Polygon, LineString, box, Point
 from shapely.ops import unary_union, linemerge
+from road_layout import corridor, apply_reviews
 
 from common import (ZONE, BACKDROP, DATA, TORGET, Y_OFFSET, V1_ORIGIN, raw_height, ortho_rgb,
                     load_osm, way_xz, stable_hash, r3)
@@ -30,6 +31,8 @@ FACTORY_ID = factory['identification']['correct_osm_way_id']
 roten_m29 = json.loads((DATA.parent / 'reference/roten-m/house.json').read_text())
 stalliden_houses = json.loads((DATA.parent / 'reference/stalliden/houses.json').read_text())
 stalleliden_m25 = json.loads((DATA.parent / 'reference/stalleliden-hus/m25.json').read_text())
+
+street_reviews = json.loads((DATA.parent/'reference/vag-hus/reviews.json').read_text())
 
 # ---------- paletter (assumed: typiska kulörer i Kvarnbyn, inte uppmätta per hus) ----------
 WOOD = ['#efece4', '#efece4', '#e9dcae', '#8e3326', '#8e3326', '#cfccc2', '#bcc6a8', '#bccad0', '#d8b46c', '#e6d8c0']
@@ -202,6 +205,10 @@ for w in ways:
         if spec['id'] == stalleliden_m25['id']:
             spec.update(stalleliden_m25['override']); spec['name'] = stalleliden_m25['name']
             spec['source'].update(stalleliden_m25['source'])
+        street_context = street_reviews['buildings'].get(spec['id'])
+        if street_context:
+            spec.update(street_context['override']); spec['name'] = street_context['name']
+            spec['source'].update(street_context['source'])
         buildings.append(spec); counts[spec['archetype']] += 1
     elif backdrop.contains(c):
         L = poly.minimum_rotated_rectangle
@@ -261,10 +268,13 @@ for g in (river_merged.geoms if hasattr(river_merged, 'geoms') else [river_merge
     waterways.append(dict(name='Mölndalsån', line_xz=[r3(q) for q in coords], channel_width_m=8.5, width_source='assumed'))
 water_polys = [dict(polygon_xz=[r3(q) for q in p.exterior.coords[:-1]]) for p in river_polys if p.geom_type == 'Polygon']
 
+apply_reviews(roads, street_reviews['roads'])
+
 # ---------- byggunderlag: förenklat fotavtryck + gatufasad (Blender saknar shapely) ----------
 street_lines = [LineString(r['line_xz']) for r in roads if r['kind'] not in ('path', 'track') and not r['tunnel']]
 from shapely.strtree import STRtree as _T
 _st = _T(street_lines)
+source_road_space = unary_union([corridor(r, source_width=True) for r in roads if not r['bridge'] and not r['tunnel']])
 for b in buildings:
     if b.get('archetype_family') == 'hero':
         continue
@@ -272,6 +282,14 @@ for b in buildings:
     rect = poly.minimum_rotated_rectangle
     fill = poly.area / max(rect.area, 1e-6)
     simple = b['archetype'] in ('trahus', 'bod', 'offentlig') and fill >= 0.72 and not b.get('keep_osm_footprint')
+    unsafe_extra = rect.difference(poly).intersection(source_road_space).area if simple else 0.0
+    if simple and unsafe_extra > .05:
+        simple = False
+        b['keep_osm_footprint'] = True
+        b['clip_gabled_roof'] = b['roof_rise_m'] > .05 and b['roof_shape'] != 'flat'
+        b['roof_center_xz'] = r3((rect.centroid.x, rect.centroid.y))
+        b['footprint_road_correction_m2'] = round(unsafe_extra, 4)
+        b['source']['build_footprint'] = 'osm_preserved_enclosing_rectangle_would_block_road'
     foot = list(rect.exterior.coords)[:-1] if simple else [tuple(q) for q in (poly if b.get('keep_osm_footprint') else poly.simplify(0.25)).exterior.coords[:-1]]
     if Polygon(foot).exterior.is_ccw: foot = foot[::-1]          # medurs i (x,z) = moturs i Blender (x,−z)
     b['build_footprint_xz'] = [r3(q) for q in foot]

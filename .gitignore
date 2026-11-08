@@ -76,3 +76,5 @@ v2/kvarnbyn/evidence/*.blend
 v2/kvarnbyn/staging/
 
 v2/kvarnbyn/evidence/civilians/*.png
+
+v2/kvarnbyn/evidence/roads/**/*.png

@@ -1,0 +1,990 @@
+[
+  {
+    "road": "w65253658",
+    "name": "Norra Forsåkersgatan",
+    "kind": "residential",
+    "width": 5.5,
+    "bridge": false,
+    "building": "w92500325",
+    "house": "",
+    "address": null,
+    "center": [
+      46.619,
+      339.41
+    ],
+    "built_overlap": 32.83,
+    "osm_overlap": 32.75,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.12
+  },
+  {
+    "road": "w843661076",
+    "name": "Kvarnbygatan",
+    "kind": "residential",
+    "width": 5.5,
+    "bridge": false,
+    "building": "w843661091",
+    "house": "",
+    "address": null,
+    "center": [
+      33.38,
+      -180.097
+    ],
+    "built_overlap": 26.2,
+    "osm_overlap": 26.2,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": -0.01
+  },
+  {
+    "road": "w843661076",
+    "name": "Kvarnbygatan",
+    "kind": "residential",
+    "width": 5.5,
+    "bridge": false,
+    "building": "w843661093",
+    "house": "Kvarnbytornet",
+    "address": null,
+    "center": [
+      135.14,
+      -140.355
+    ],
+    "built_overlap": 21.41,
+    "osm_overlap": 21.41,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": -0.09
+  },
+  {
+    "road": "w43570099",
+    "name": "Royens gata",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332160",
+    "house": "",
+    "address": "Royens gata 1",
+    "center": [
+      278.678,
+      -17.522
+    ],
+    "built_overlap": 18.22,
+    "osm_overlap": 18.21,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.02
+  },
+  {
+    "road": "w843661076",
+    "name": "Kvarnbygatan",
+    "kind": "residential",
+    "width": 5.5,
+    "bridge": false,
+    "building": "w843661092",
+    "house": "",
+    "address": null,
+    "center": [
+      102.599,
+      -157.859
+    ],
+    "built_overlap": 17.24,
+    "osm_overlap": 17.24,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 0.0
+  },
+  {
+    "road": "w13698106",
+    "name": "Götaforsliden",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92331986",
+    "house": "",
+    "address": "Götaforsliden 18",
+    "center": [
+      216.24,
+      -34.372
+    ],
+    "built_overlap": 15.87,
+    "osm_overlap": 15.85,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 7.27
+  },
+  {
+    "road": "w13698106",
+    "name": "Götaforsliden",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332174",
+    "house": "Stora Götafors",
+    "address": null,
+    "center": [
+      130.954,
+      -11.071
+    ],
+    "built_overlap": 15.87,
+    "osm_overlap": 15.87,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 0.0
+  },
+  {
+    "road": "w92332123",
+    "name": "Royens gata",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332170",
+    "house": "",
+    "address": "Royens gata 38",
+    "center": [
+      150.86,
+      93.008
+    ],
+    "built_overlap": 15.7,
+    "osm_overlap": 15.7,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.01
+  },
+  {
+    "road": "w92332123",
+    "name": "Royens gata",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332015",
+    "house": "",
+    "address": "Roten M 35",
+    "center": [
+      130.904,
+      103.121
+    ],
+    "built_overlap": 12.68,
+    "osm_overlap": 12.68,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.04
+  },
+  {
+    "road": "w1200959704",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w92209896",
+    "house": "",
+    "address": "Brunnsgatan 6",
+    "center": [
+      277.788,
+      286.866
+    ],
+    "built_overlap": 10.82,
+    "osm_overlap": 10.82,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": -0.0
+  },
+  {
+    "road": "w78040332",
+    "name": "Franckegatan",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332023",
+    "house": "",
+    "address": null,
+    "center": [
+      199.077,
+      185.43
+    ],
+    "built_overlap": 10.73,
+    "osm_overlap": 5.9,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 10.26
+  },
+  {
+    "road": "w1103112570",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92332021",
+    "house": "",
+    "address": "Stockliden 4",
+    "center": [
+      119.559,
+      140.437
+    ],
+    "built_overlap": 8.15,
+    "osm_overlap": 8.12,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.1
+  },
+  {
+    "road": "w1051465645",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92510381",
+    "house": "",
+    "address": null,
+    "center": [
+      525.319,
+      12.664
+    ],
+    "built_overlap": 6.63,
+    "osm_overlap": 0.0,
+    "centerline_in_house": 1.57,
+    "expanded_house": true,
+    "rect_extra": 16.69
+  },
+  {
+    "road": "w78040329",
+    "name": "Görjelycksgatan",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332097",
+    "house": "",
+    "address": null,
+    "center": [
+      293.31,
+      68.727
+    ],
+    "built_overlap": 6.27,
+    "osm_overlap": 6.23,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.07
+  },
+  {
+    "road": "w92332123",
+    "name": "Royens gata",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332008",
+    "house": "",
+    "address": "Royens gata 6",
+    "center": [
+      222.277,
+      -11.495
+    ],
+    "built_overlap": 6.03,
+    "osm_overlap": 6.02,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 29.63
+  },
+  {
+    "road": "w78040330",
+    "name": "Åldermansgatan",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332146",
+    "house": "",
+    "address": null,
+    "center": [
+      233.064,
+      65.033
+    ],
+    "built_overlap": 4.8,
+    "osm_overlap": 4.79,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.01
+  },
+  {
+    "road": "w43570099",
+    "name": "Royens gata",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332163",
+    "house": "",
+    "address": null,
+    "center": [
+      294.046,
+      -32.197
+    ],
+    "built_overlap": 4.44,
+    "osm_overlap": 0.0,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 34.78
+  },
+  {
+    "road": "w90243539",
+    "name": "Millbergsstigen",
+    "kind": "residential",
+    "width": 5.5,
+    "bridge": false,
+    "building": "w92438757",
+    "house": "",
+    "address": null,
+    "center": [
+      63.456,
+      353.915
+    ],
+    "built_overlap": 3.63,
+    "osm_overlap": 3.63,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 4.43
+  },
+  {
+    "road": "w78040332",
+    "name": "Franckegatan",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332018",
+    "house": "",
+    "address": null,
+    "center": [
+      206.433,
+      170.197
+    ],
+    "built_overlap": 3.19,
+    "osm_overlap": 3.17,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.04
+  },
+  {
+    "road": "w1071431342",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92332090",
+    "house": "",
+    "address": null,
+    "center": [
+      138.417,
+      88.848
+    ],
+    "built_overlap": 3.11,
+    "osm_overlap": 3.11,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.03
+  },
+  {
+    "road": "w1103304833",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w96098432",
+    "house": "",
+    "address": "Skräddaregatan 5",
+    "center": [
+      206.573,
+      -285.7
+    ],
+    "built_overlap": 2.54,
+    "osm_overlap": 0.0,
+    "centerline_in_house": 1.17,
+    "expanded_house": true,
+    "rect_extra": 38.96
+  },
+  {
+    "road": "w461711526",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92332166",
+    "house": "",
+    "address": null,
+    "center": [
+      -2.385,
+      113.447
+    ],
+    "built_overlap": 2.3,
+    "osm_overlap": 0.0,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 69.65
+  },
+  {
+    "road": "w633047967",
+    "name": "Bos gränd",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w797670920",
+    "house": "",
+    "address": "Samuel Norbergs gata 9",
+    "center": [
+      -9.077,
+      -67.181
+    ],
+    "built_overlap": 1.94,
+    "osm_overlap": 1.94,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 0.0
+  },
+  {
+    "road": "w92209886",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92209903",
+    "house": "",
+    "address": null,
+    "center": [
+      25.732,
+      310.868
+    ],
+    "built_overlap": 1.8,
+    "osm_overlap": 1.8,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 0.0
+  },
+  {
+    "road": "w843675810",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w48115243",
+    "house": "Mölndal stadsmuseum",
+    "address": "Kvarnbygatan 12",
+    "center": [
+      251.263,
+      -77.316
+    ],
+    "built_overlap": 1.77,
+    "osm_overlap": 1.77,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 1.78
+  },
+  {
+    "road": "w843661076",
+    "name": "Kvarnbygatan",
+    "kind": "residential",
+    "width": 5.5,
+    "bridge": false,
+    "building": "w1159593170",
+    "house": "",
+    "address": null,
+    "center": [
+      39.482,
+      -156.004
+    ],
+    "built_overlap": 1.52,
+    "osm_overlap": 1.51,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.02
+  },
+  {
+    "road": "w78040332",
+    "name": "Franckegatan",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332049",
+    "house": "",
+    "address": null,
+    "center": [
+      186.322,
+      159.393
+    ],
+    "built_overlap": 1.04,
+    "osm_overlap": 0.0,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 10.04
+  },
+  {
+    "road": "w368140631",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w48115243",
+    "house": "Mölndal stadsmuseum",
+    "address": "Kvarnbygatan 12",
+    "center": [
+      251.263,
+      -77.316
+    ],
+    "built_overlap": 0.98,
+    "osm_overlap": 0.15,
+    "centerline_in_house": 0.06,
+    "expanded_house": false,
+    "rect_extra": 1.78
+  },
+  {
+    "road": "w13698106",
+    "name": "Götaforsliden",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332035",
+    "house": "",
+    "address": null,
+    "center": [
+      93.834,
+      5.373
+    ],
+    "built_overlap": 0.93,
+    "osm_overlap": 0.91,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.07
+  },
+  {
+    "road": "w78040332",
+    "name": "Franckegatan",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332046",
+    "house": "",
+    "address": null,
+    "center": [
+      143.18,
+      113.657
+    ],
+    "built_overlap": 0.93,
+    "osm_overlap": 0.31,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 28.47
+  },
+  {
+    "road": "w456060636",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w629218414",
+    "house": "",
+    "address": null,
+    "center": [
+      -286.383,
+      -226.249
+    ],
+    "built_overlap": 0.87,
+    "osm_overlap": 0.87,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 8.84
+  },
+  {
+    "road": "w1103112569",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92332131",
+    "house": "",
+    "address": null,
+    "center": [
+      132.207,
+      159.615
+    ],
+    "built_overlap": 0.83,
+    "osm_overlap": 0.83,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.06
+  },
+  {
+    "road": "w78040330",
+    "name": "Åldermansgatan",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332108",
+    "house": "",
+    "address": null,
+    "center": [
+      303.843,
+      131.673
+    ],
+    "built_overlap": 0.57,
+    "osm_overlap": 0.55,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.04
+  },
+  {
+    "road": "w90243539",
+    "name": "Millbergsstigen",
+    "kind": "residential",
+    "width": 5.5,
+    "bridge": false,
+    "building": "w92438660",
+    "house": "",
+    "address": null,
+    "center": [
+      75.004,
+      366.532
+    ],
+    "built_overlap": 0.56,
+    "osm_overlap": 0.56,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 9.98
+  },
+  {
+    "road": "w13698106",
+    "name": "Götaforsliden",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92331939",
+    "house": "",
+    "address": null,
+    "center": [
+      226.828,
+      -47.998
+    ],
+    "built_overlap": 0.55,
+    "osm_overlap": 0.55,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 0.0
+  },
+  {
+    "road": "w96098306",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w96098455",
+    "house": "",
+    "address": null,
+    "center": [
+      280.019,
+      -243.153
+    ],
+    "built_overlap": 0.55,
+    "osm_overlap": 0.0,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 22.95
+  },
+  {
+    "road": "w1070599662",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92332130",
+    "house": "",
+    "address": null,
+    "center": [
+      256.006,
+      148.089
+    ],
+    "built_overlap": 0.53,
+    "osm_overlap": 0.39,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 4.4
+  },
+  {
+    "road": "w1103114913",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w95719799",
+    "house": "",
+    "address": null,
+    "center": [
+      -190.809,
+      17.089
+    ],
+    "built_overlap": 0.49,
+    "osm_overlap": 0.49,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 0.0
+  },
+  {
+    "road": "w90243557",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w92331949",
+    "house": "",
+    "address": null,
+    "center": [
+      267.338,
+      230.701
+    ],
+    "built_overlap": 0.47,
+    "osm_overlap": 0.45,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.07
+  },
+  {
+    "road": "w1197238917",
+    "name": "Götaforsliden",
+    "kind": "unclassified",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92331981",
+    "house": "Kråkans Krog",
+    "address": null,
+    "center": [
+      27.797,
+      27.159
+    ],
+    "built_overlap": 0.47,
+    "osm_overlap": 0.47,
+    "centerline_in_house": 0.0,
+    "expanded_house": null,
+    "rect_extra": 0.0
+  },
+  {
+    "road": "w843661089",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w843661094",
+    "house": "",
+    "address": null,
+    "center": [
+      80.32,
+      -193.59
+    ],
+    "built_overlap": 0.46,
+    "osm_overlap": 0.25,
+    "centerline_in_house": 0.12,
+    "expanded_house": false,
+    "rect_extra": 0.33
+  },
+  {
+    "road": "w96098306",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w96098448",
+    "house": "",
+    "address": null,
+    "center": [
+      289.428,
+      -257.758
+    ],
+    "built_overlap": 0.41,
+    "osm_overlap": 0.0,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 25.27
+  },
+  {
+    "road": "w1070603462",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92500301",
+    "house": "",
+    "address": null,
+    "center": [
+      305.214,
+      282.369
+    ],
+    "built_overlap": 0.36,
+    "osm_overlap": 0.26,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 3.47
+  },
+  {
+    "road": "w90243557",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w92331985",
+    "house": "",
+    "address": null,
+    "center": [
+      271.215,
+      217.386
+    ],
+    "built_overlap": 0.24,
+    "osm_overlap": 0.24,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.01
+  },
+  {
+    "road": "w92332123",
+    "name": "Royens gata",
+    "kind": "living_street",
+    "width": 5.0,
+    "bridge": false,
+    "building": "w92332164",
+    "house": "",
+    "address": "Royens gata 34",
+    "center": [
+      117.459,
+      108.885
+    ],
+    "built_overlap": 0.17,
+    "osm_overlap": 0.17,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 19.75
+  },
+  {
+    "road": "w34930250",
+    "name": "",
+    "kind": "path",
+    "width": 1.8,
+    "bridge": false,
+    "building": "w48115243",
+    "house": "Mölndal stadsmuseum",
+    "address": "Kvarnbygatan 12",
+    "center": [
+      251.263,
+      -77.316
+    ],
+    "built_overlap": 0.12,
+    "osm_overlap": 0.12,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 1.78
+  },
+  {
+    "road": "w1070603462",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92500328",
+    "house": "",
+    "address": null,
+    "center": [
+      311.883,
+      292.588
+    ],
+    "built_overlap": 0.12,
+    "osm_overlap": 0.12,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.01
+  },
+  {
+    "road": "w394752536",
+    "name": "Samuel Norbergs gata",
+    "kind": "residential",
+    "width": 5.5,
+    "bridge": false,
+    "building": "w629220980",
+    "house": "",
+    "address": null,
+    "center": [
+      35.203,
+      -112.423
+    ],
+    "built_overlap": 0.11,
+    "osm_overlap": 0.11,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": -0.03
+  },
+  {
+    "road": "w1200959705",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w92500251",
+    "house": "",
+    "address": "Brunnsgatan 67",
+    "center": [
+      433.175,
+      287.294
+    ],
+    "built_overlap": 0.11,
+    "osm_overlap": 0.0,
+    "centerline_in_house": 0.02,
+    "expanded_house": true,
+    "rect_extra": 29.12
+  },
+  {
+    "road": "w843661084",
+    "name": "",
+    "kind": "footway",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w843661093",
+    "house": "Kvarnbytornet",
+    "address": null,
+    "center": [
+      135.14,
+      -140.355
+    ],
+    "built_overlap": 0.08,
+    "osm_overlap": 0.08,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": -0.09
+  },
+  {
+    "road": "w1103116616",
+    "name": "",
+    "kind": "service",
+    "width": 3.5,
+    "bridge": false,
+    "building": "w616074219",
+    "house": "",
+    "address": null,
+    "center": [
+      -343.649,
+      -284.111
+    ],
+    "built_overlap": 0.08,
+    "osm_overlap": 0.08,
+    "centerline_in_house": 0.0,
+    "expanded_house": false,
+    "rect_extra": 0.0
+  },
+  {
+    "road": "w461711525",
+    "name": "Stalliden",
+    "kind": "steps",
+    "width": 2.0,
+    "bridge": false,
+    "building": "w92331938",
+    "house": "",
+    "address": "Roten M 24",
+    "center": [
+      51.805,
+      76.182
+    ],
+    "built_overlap": 0.07,
+    "osm_overlap": 0.07,
+    "centerline_in_house": 0.0,
+    "expanded_house": true,
+    "rect_extra": 0.03
+  }
+]

@@ -113,13 +113,14 @@ def roof_flat(b): return cached(('flat',), lambda: solid_material('Roof_felt', c
 
 DOORS = ['#2f4a3a', '#5a3a28', '#7a2a22', '#3b4a5a', '#24282a', '#6d6a5e']
 BALC = ['#e8e4dc', '#9aa3a8', '#7d5a45', '#c2b59b']
-def door_mat(b): c = DOORS[int(h01(b['id'], 'door') * len(DOORS))]; return cached(('door', c), lambda: solid_material('Door_%s' % c.lstrip('#'), color(c), .55))
+def door_mat(b): c = b.get('door_color', DOORS[int(h01(b['id'], 'door') * len(DOORS))]); return cached(('door', c), lambda: solid_material('Door_%s' % c.lstrip('#'), color(c), .55))
 def balc_mat(b): c = BALC[int(h01(b['id'], 'balc') * len(BALC))]; return cached(('balc', c), lambda: solid_material('Balcony_%s' % c.lstrip('#'), color(c), .6, .2))
 def far_wall(b): c = quant(b['facade_color'], 4); return cached(('far', c), lambda: solid_material('Far_wall_%s' % c.lstrip('#'), color(c), .85))
 def far_roof(b): c = quant(b.get('roof_color', '#555555'), 4); return cached(('farr', c), lambda: solid_material('Far_roof_%s' % c.lstrip('#'), color(c), .8))
 
 
 M.update(wall=wall_mat, roof_for=roof_mat, roof_flat=roof_flat, door=door_mat, balcony=balc_mat, far_wall=far_wall, far_roof=far_roof)
+M['reviewed_plinth'] = lambda b: cached(('reviewed_plinth',b['plinth_color']),lambda:solid_material('Reviewed_plinth_'+b['plinth_color'].lstrip('#'),color(b['plinth_color']),.9))
 M['reviewed_trim'] = lambda b: cached(('reviewed_trim',b['trim_color']),lambda:solid_material('Reviewed_ochre_trim',color(b['trim_color']),.72))
 M['reviewed_sash'] = lambda b: cached(('reviewed_sash',b['sash_color']),lambda:solid_material('Reviewed_redbrown_sash',color(b['sash_color']),.68))
 
@@ -182,6 +183,8 @@ for key, kind in SITE.get('m25_mesh_kinds', {}).items():
     MAT[key] = M[kind]
 for key, kind in SITE.get('north_bank_mesh_kinds', {}).items():
     MAT[key] = M[kind]
+MAT['street_setts'] = M['paving']
+MAT['street_edges'] = M['paving']
 reviewed_setts = roten.sett_segments(CITY)
 for kind, tiles in SITE['meshes'].items():
     mat = MAT[kind]; tm = mat.get('tile_size_m', 3)
@@ -429,6 +432,10 @@ views = [
     dict(id='lilla-glasberget', name='Lilla Glasberget – berg och grönska', position=[145,35,190], target=[235,46,152], free_flight=True),
     dict(id='glasberget', name='Glasberget – bergkulissen', position=[405,88,380], target=[635,66,565], free_flight=True),
 ]
+for study in json.loads((HERE/'reference/vag-hus/views.json').read_text()):
+    x,z=study['camera_xz'];tx,tz=study['target_xz']
+    floor=paved_eye(x,z)
+    views.append(dict(id='road-'+study['id'],name='Gaturunda – '+study['name'],position=floor,target=[tx,floor[1]-.2,tz]))
 probe = []
 for r in CITY['roads']:
     if r['tunnel'] or r['bridge'] or r['kind'] in ('path', 'track', 'steps'): continue
@@ -438,7 +445,7 @@ for r in CITY['roads']:
         L = math.hypot(xb - xa, zb - za); acc += L
         if acc > 45 and zx0 + 3 < xa < zx1 - 3 and zz0 + 3 < za < zz1 - 3:
             acc = 0; probe.append([round(xa, 2), round(ground(xa, za), 2), round(za, 2)])
-meta = dict(title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.get('north_bank',{}).get('ground_checks',{}), m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
+meta = dict(road_ground_checks=SITE.get('road_ground_checks',{}), title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.get('north_bank',{}).get('ground_checks',{}), m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
             mapped_wall_profiles=wall_profiles,
             spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),

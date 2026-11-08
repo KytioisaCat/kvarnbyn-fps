@@ -19,12 +19,14 @@ from pathlib import Path
 import numpy as np
 import shapely
 from shapely.geometry import LineString, Polygon, Point, box, MultiPolygon
-from shapely.ops import unary_union
+from shapely.ops import unary_union, substring
 from shapely.strtree import STRtree
 import mapbox_earcut as earcut
 
 from common import ZONE, BACKDROP, DATA, Y_OFFSET, raw_height, land_class
 from terrain_cover import exposure
+from road_layout import corridor
+from road_review_checks import make_checks
 from authored_ground import AuthoredGround, SurfaceReference
 from roten_ground import RotenGround
 from stalliden import StallidenGround
@@ -139,15 +141,15 @@ for s in city['surfaces']:
 surf_tree = STRtree([p for _, p, _ in surfaces]) if surfaces else None
 
 # ---------- polygoner för gator ----------
-buildings = unary_union([Polygon(b['footprint_xz']).buffer(0) for b in city['buildings']])
+buildings = unary_union([Polygon(b.get('build_footprint_xz', b['footprint_xz'])).buffer(0) for b in city['buildings']])
 drive_lines = [(r, line) for r, line, _, _ in profiles if r['kind'] in DRIVE]
-asphalt = unary_union([line.buffer(r['width_m'] / 2, cap_style=2, join_style=2) for r, line in drive_lines])
+asphalt = unary_union([corridor(r) for r, line in drive_lines])
 def has_sidewalk(r):
     tag = r.get('sidewalk', '')
     if tag in ('no', 'none', 'separate'): return False
     if tag in ('both', 'left', 'right', 'yes'): return True
     return r['kind'] in ('primary', 'secondary', 'tertiary', 'tertiary_link')   # villagator utan tagg: ingen trottoar
-side = unary_union([line.buffer(r['width_m'] / 2 + 1.6, cap_style=2, join_style=2) for r, line in drive_lines if has_sidewalk(r)])
+side = unary_union([corridor(r, extra=1.6) for r, line in drive_lines if has_sidewalk(r)])
 footw = unary_union([line.buffer(r['width_m'] / 2, cap_style=1, join_style=1) for r, line, _, _ in profiles if r['kind'] in FOOT])
 trail = unary_union([line.buffer(r['width_m'] / 2, cap_style=1, join_style=1) for r, line, _, _ in profiles if r['kind'] in TRAIL])
 surf_union = unary_union([p for _, p, _ in surfaces]) if surfaces else Polygon()
@@ -164,7 +166,14 @@ walkway = paving_all.difference(paving)
 trail = trail.difference(asphalt).difference(paving_all).difference(other_u).difference(cut).intersection(work)
 pitch_u = unary_union([p for s, p, _ in surfaces if s['kind'] == 'pitch']).difference(cut).intersection(work) if surfaces else Polygon()
 play_u = unary_union([p for s, p, _ in surfaces if s['kind'] == 'playground']).difference(cut).intersection(work) if surfaces else Polygon()
-urban = unary_union([asphalt, paving_all, pitch_u, play_u])
+edge_bands=[]
+for r,line in drive_lines:
+    if not r.get('width_profile_m'):continue
+    span=r['width_profile_m']
+    extent=substring(line,span[1][0],span[-2][0]).buffer(r['width_m']/2+1)
+    edge_bands.append(corridor(r,extra=.28).difference(corridor(r)).intersection(extent))
+street_edges=unary_union(edge_bands).difference(cut).difference(paving_all).difference(other_u).intersection(work)
+urban = unary_union([asphalt, paving_all, pitch_u, play_u, street_edges])
 # Restore the observed Torget ground description lost in the first large-world pass.
 # Existing asphalt, bridges, buildings, water and other authored OSM surfaces win.
 original_urban = urban
@@ -173,7 +182,7 @@ paving_all = paving_all.union(authored.paving).difference(authored.soil)
 paving = paving.union(authored.paving).difference(authored.soil)
 walkway = walkway.difference(authored.coverage)
 trail = trail.difference(authored.coverage)
-urban = unary_union([asphalt, paving_all, pitch_u, play_u, authored.soil])
+urban = unary_union([asphalt, paving_all, pitch_u, play_u, authored.soil, street_edges])
 log(f'handgranskat torg: {authored.paving.area:.0f} m² sten + {authored.soil.area:.0f} m² planteringsöar (uppskattade konturer)')
 log(f'ytor: asfalt {asphalt.area:.0f} m², gatsten {paving.area:.0f} m², gångbana {walkway.area:.0f} m², stig {trail.area:.0f} m², å {channel.area:.0f} m²')
 
@@ -364,8 +373,11 @@ paving_mesh = triangulate(paving.difference(authored.coverage), surface_height, 
 for tile, triangles in triangulate(authored.paving, surface_height, .13).items():
     paving_mesh.setdefault(tile, []).extend(triangles)
 
+reviewed_setts = unary_union([corridor(r) for r, line in drive_lines if r.get('reviewed_surface') == 'sett']).intersection(asphalt)
 meshes = {
-    'asphalt': triangulate(asphalt, base_surface_height, 0.03),
+    'street_setts': triangulate(reviewed_setts, base_surface_height, .03),
+    'street_edges': triangulate(street_edges, base_surface_height, .03),
+    'asphalt': triangulate(asphalt.difference(reviewed_setts), base_surface_height, 0.03),
     'paving': paving_mesh,
     'walkway': triangulate(walkway, surface_height, 0.12),
     'trail': triangulate(trail, lambda x, z: raw_height(x, z), 0.05),
@@ -695,7 +707,7 @@ log('game.json: zoner ' + ', '.join(c['id'] + '@' + str(c['position']) for c in 
 
 site = dict(meta=dict(note='Markytor för Fas A, genererade av site.py. y = rå höjd − 18 m.', y_offset_m=Y_OFFSET, tile_m=TILE,
                       zone=list(ZONE), backdrop=list(BACKDROP)),
-            terrain=fine, terrain_backdrop=coarse, meshes=meshes, kerbs=kerbs, river_walls=river_walls, bridges=bridges,
+            road_ground_checks=make_checks(city,base_surface_height,Y_OFFSET), terrain=fine, terrain_backdrop=coarse, meshes=meshes, kerbs=kerbs, river_walls=river_walls, bridges=bridges,
             lamps=lamps, trees=trees, stairs=stairs, surfaces=[dict(id=s['id'], kind=s['kind'], plane_raw=[round(float(v), 6) for v in pl]) for s, _, pl in surfaces],
             authored_ground=authored.metadata(), roten_m29=roten.metadata(),
             roten_supports=roten_supports,

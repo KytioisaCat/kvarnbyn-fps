@@ -9,6 +9,8 @@ import argparse, hashlib, json, math, time
 import numpy as np
 from PIL import Image, ImageDraw
 from common import DATA, HERE, ZONE, land_class, raw_height
+from road_layout import width_at
+from shapely.geometry import LineString
 
 PALETTE = {
     'terrain':'#bbc5ac', 'forest':'#81977b', 'rock':'#bcc0b4',
@@ -52,10 +54,18 @@ def generate(city_path, site_path, output, width=2400):
         if road.get('tunnel') or len(road['line_xz'])<2:continue
         xy=[pixel(q) for q in road['line_xz']]
         if road['kind'] not in ('steps','path','track'):
-            draw.line(xy,fill=PALETTE['road_edge'],width=max(2,round(road['width_m']*scale)+2),joint='curve')
+            if road.get('width_profile_m'):
+                line=LineString(road['line_xz']);samples=np.linspace(0,line.length,math.ceil(line.length)+1)
+                for sa,sb in zip(samples,samples[1:]):
+                    a,b=line.interpolate(sa),line.interpolate(sb)
+                    draw.line([pixel((a.x,a.y)),pixel((b.x,b.y))],fill=PALETTE['road_edge'],width=max(2,round(float(width_at(road,(sa+sb)/2))*scale)+2))
+            else:
+                draw.line(xy,fill=PALETTE['road_edge'],width=max(2,round(road['width_m']*scale)+2),joint='curve')
     kinds={k:k for k in PALETTE}
     for key in ['roten_mesh_kinds','stalliden_mesh_kinds','stalliden_garden_mesh_kinds','m25_mesh_kinds','north_bank_mesh_kinds']:
         kinds.update(site.get(key,{}))
+    kinds['street_setts']='paving'
+    kinds['street_edges']='paving'
     kinds.update({k:'trail' for k,v in kinds.items() if v=='gravel'})
     rendered_triangles=0
     # Water first, roads later, bridge decks last: this matches world ownership.

@@ -21,6 +21,8 @@ step "Tolkning: data/city.json"
 (cd $P/pipeline && ../../../$PY interpret.py)
 step "Markytor: data/site.json"
 (cd $P/pipeline && ../../../$PY site.py) | tail -3
+step "Kontroll: gator utanför hus och sammanhängande väganslutningar"
+$PY $P/reference/vag-hus/verify_layout.py > $LOG/road-layout-source.log
 step "Karta: eget kartunderlag ur hus, mark och höjddata"
 $PY $P/pipeline/map_image.py > $LOG/map-build.log
 step "Fors: eget flödesfält ur befintlig vattenprofil"
@@ -32,6 +34,8 @@ step "Optimerar texturer (2k) → godot/assets/world.glb"
 $PY v2/poc/torget/assets-src/optimize_glb.py --input $P/blender/world_raw.glb --output $P/godot/assets/world.glb \
   --report $LOG/glb-qa.json --max-size 2048 --quality 88 > /dev/null
 ls -la $P/godot/assets/world.glb | awk '{printf "  world.glb %.1f MB\n", $5/1e6}'
+step "Kontroll: levererade vägtrianglar och kollisioner klipper inte hus"
+$PY $P/reference/vag-hus/verify_layout.py --glb $P/godot/assets/world.glb > $LOG/road-layout-export.log
 step "Kontroll: exporterade gångtrianglar och växternas markkontakt"
 $PY $P/reference/stalliden/qa-export.py --glb $P/blender/world_raw.glb --site $P/data/site.json --out $LOG/stalliden-mesh-after.json > $LOG/stalliden-mesh-check.log
 step "Kontroll: M25:s exporterade entré och ursprungliga L-kontur"
@@ -61,6 +65,8 @@ $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res:/
 $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_MOVEMENT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_MOVEMENT_CHECK "))); assert r["passed"] and len(r["checks"])>=25' $LOG/movement-check.log
 step "Kontroll: gångytor över hela världen"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --walktest > $LOG/walk-check.log 2>&1
+step "Kontroll: de tre rättade gatorna med riktig spelarkapsel åt båda håll"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --no-movement-profile --check-key=road_ground_checks --report-prefix=KVARNBYN_ROAD_CHECK --output="$ROOT/$LOG/road-walk-check.json" > $LOG/road-walk-check.log 2> $LOG/road-walk-check.stderr.log
 step "Kontroll: Roten M 29, gård och grind"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --output="$ROOT/$LOG/roten-ground-check.json" > $LOG/roten-ground-check.log 2>&1
 step "Kontroll: hela Stalleliden upp och ned samt räcke"

@@ -11,13 +11,33 @@ from modelkit import Frame
 def clipped_roof(K,b,M,material,wallmat,name):
     """Keep an assumed gable while clipping its planes to the original footprint."""
     foot=b['build_footprint_xz'];rect=foot
-    centre=b['centroid_xz'];fr=Frame(centre,b['major_axis_xz'])
+    centre=b.get('roof_center_xz',b['centroid_xz']);fr=Frame(centre,b['major_axis_xz'])
     eave=b['base_y_m']+b['wall_height_m'];rise=b['roof_rise_m'];half=b['minor_width_m']/2
     def local(q):
         dx,dz=q[0]-fr.cx,q[1]-fr.cz
         return (dx*fr.u[0]-dz*fr.u[1],dx*fr.v[0]-dz*fr.v[1])
     points=[local(q) for q in foot]
-    def height(a,c):return eave+rise*max(0.,1-abs(c)/half)
+    hipped=b['roof_shape']=='hipped'
+    planes=[(0.,-rise/half,rise),(0.,rise/half,rise)]
+    if hipped:
+        length=b['major_length_m']/2
+        planes += [(-rise/half,0.,rise*length/half),(rise/half,0.,rise*length/half)]
+    def plane_value(plane,p):return plane[0]*p[0]+plane[1]*p[1]+plane[2]
+    def height(a,c):return eave+max(0.,min(plane_value(p,(a,c)) for p in planes))
+    def roof_region(poly,index):
+        # Split at every roof-plane intersection, including hip diagonals.
+        for other in range(len(planes)):
+            if index==other:continue
+            result=[]
+            for a,c in zip(poly,poly[1:]+poly[:1]):
+                va=plane_value(planes[index],a)-plane_value(planes[other],a)
+                vc=plane_value(planes[index],c)-plane_value(planes[other],c)
+                if va<=1e-8:result.append(a)
+                if (va<=0)!=(vc<=0):
+                    t=va/(va-vc);result.append((a[0]+t*(c[0]-a[0]),a[1]+t*(c[1]-a[1])))
+            poly=result
+            if len(poly)<3:return []
+        return poly
     def clip(poly,side):
         out=[]
         for a,c in zip(poly,poly[1:]+poly[:1]):
@@ -30,8 +50,8 @@ def clipped_roof(K,b,M,material,wallmat,name):
     vv=[Vector((*q,0)) for q in points]
     for tri in tessellate_polygon([vv]):
         source=[vv[i] for i in tri] if isinstance(tri[0],int) else tri
-        for side in (-1,1):
-            q=clip([(v.x,v.y) for v in source],side)
+        for index in range(len(planes)):
+            q=roof_region([(v.x,v.y) for v in source],index)
             if len(q)<3:continue
             face=[Vector(fr.p(a,c,height(a,c))) for a,c in q]
             if (face[1]-face[0]).cross(face[2]-face[0]).z<0:face.reverse()
@@ -39,8 +59,13 @@ def clipped_roof(K,b,M,material,wallmat,name):
             K.face('COL_'+name+'_Roof',M['collision'],face)
     for a,c in zip(points,points[1:]+points[:1]):
         edge=[a,c]
-        if a[1]*c[1]<-1e-8:
-            t=-a[1]/(c[1]-a[1]);edge=[a,(a[0]+t*(c[0]-a[0]),0.),c]
+        times=[0.,1.]
+        for i in range(len(planes)):
+            for j in range(i+1,len(planes)):
+                va=plane_value(planes[i],a)-plane_value(planes[j],a)
+                vc=plane_value(planes[i],c)-plane_value(planes[j],c)
+                if va*vc < -1e-8:times.append(va/(va-vc))
+        edge=[(a[0]+t*(c[0]-a[0]),a[1]+t*(c[1]-a[1])) for t in sorted(set(times))]
         for p,q in zip(edge,edge[1:]):
             face=[]
             for v in [fr.p(*p,eave),fr.p(*q,eave),fr.p(*q,height(*q)),fr.p(*p,height(*p))]:
@@ -74,7 +99,7 @@ def standing_boards(K,b,M,wallmat,foot,floors,ww,wh,sill_h,name,bay):
                     intervals=[(lo,min(hi,bt-.13)) for lo,hi in intervals if lo<bt-.13]+[(max(lo,bt+h+.13),hi) for lo,hi in intervals if hi>bt+h+.13]
             for lo,hi in intervals:
                 if hi-lo<.02:continue
-                K.box(name+'_Standing_boards',wallmat,(A.x+d.x*s+out[0]*.055,A.y+d.y*s+out[1]*.055,(lo+hi)/2),(.032,.035,hi-lo),u)
+                K.box(name+'_Standing_boards',wallmat,(A.x+d.x*s+out[0]*b.get('panel_batten_depth_m',.055),A.y+d.y*s+out[1]*b.get('panel_batten_depth_m',.055),(lo+hi)/2),(.032,b.get('panel_batten_thickness_m',.035),hi-lo),u)
 
 
 def attic_window(K,b,M,trim,sash,name,add_window):

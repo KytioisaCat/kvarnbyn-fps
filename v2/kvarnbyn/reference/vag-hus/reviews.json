@@ -1,0 +1,181 @@
+{
+  "date": "2026-11-08",
+  "note": "Actually inspected Street View. No image pixels distributed. Metric widths and local centre-line offsets are visual estimates, not a survey. Shared OSM junctions remain connected.",
+  "references": [
+    {
+      "id": "torget",
+      "pano": "YaJIiZwNTTUv_t9RHDpvRA",
+      "capture_date": "maj 2026",
+      "lat": 57.656865,
+      "lon": 12.0278262,
+      "heading": 90,
+      "observed": "Kvarnbygatan: asfalt, markerade körfält, gång-/cykelstråk och stenlagda kanter. Ingen generell avsmalning av stora gatan.",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=YaJIiZwNTTUv_t9RHDpvRA"
+    },
+    {
+      "id": "gotafors18",
+      "pano": "KcCRF9O_ugcT21i2VurKLQ",
+      "capture_date": "maj 2026",
+      "lat": 57.6572723,
+      "lon": 12.0314256,
+      "headings": [
+        166.69,
+        270
+      ],
+      "observed": "G18 ljusgul/krämfärgad stående panel, grön dörr och gröna T-formade fönsterbågar, två fulla fönsterrader. Grå putsad sockel med natursten under. Smal asfaltgata och rad av gatsten längs husen. G18 identifierat med adresskartan och husets fotavtryck.",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=KcCRF9O_ugcT21i2VurKLQ"
+    },
+    {
+      "id": "royens1",
+      "pano": "O4h6SOn756rUzgaxsimtlA",
+      "capture_date": "augusti 2024",
+      "lat": 57.6571289,
+      "lon": 12.0323713,
+      "heading": 148.76,
+      "observed": "Royens1: vit stående panel, rödbruna ospröjsade fönster, grå putsad suterrängvåning med fönster och ytterligare två vita fönsterrader. Smal gata belagd med smågatsten som går utanför husväggen. Taket inte tillräckligt granskat.",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=O4h6SOn756rUzgaxsimtlA"
+    },
+    {
+      "id": "francke",
+      "pano": "hPaHTqMsaC3SKkBSfywOTA",
+      "capture_date": "augusti 2024",
+      "lat": 57.6551472,
+      "lon": 12.0312895,
+      "heading": 315,
+      "observed": "Franckegatan: mycket smal asfalt med granit-/gatstenskant, vitt spjälstaket och grönska till vänster, stenstödd grön slänt till höger. w92332023 framför kameran på västsidan: vit stående panel, vita foder och låg främre sadeltaksgavel, högre bakdel delvis skymd. Exakta delvolym-/takgränser inte kartlagda.",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=hPaHTqMsaC3SKkBSfywOTA"
+    }
+  ],
+  "roads": [
+    {
+      "id": "w13698106",
+      "review_id": "gotafors18",
+      "anchor_xz": [
+        215.94,
+        -41.45
+      ],
+      "before_m": 26,
+      "after_m": 14,
+      "transition_m": 9,
+      "width_estimate_m": 2.7,
+      "centre_offset_xz": [
+        -0.48,
+        -0.68
+      ]
+    },
+    {
+      "id": "w43570099",
+      "review_id": "royens1",
+      "anchor_xz": [
+        272.27,
+        -25.48
+      ],
+      "before_m": 8,
+      "after_m": 32,
+      "transition_m": 8,
+      "width_estimate_m": 3.2,
+      "surface": "sett",
+      "centre_offset_xz": [
+        0,
+        -1.15
+      ]
+    },
+    {
+      "id": "w78040332",
+      "review_id": "francke",
+      "anchor_xz": [
+        207.84,
+        195.12
+      ],
+      "before_m": 12,
+      "after_m": 38,
+      "transition_m": 9,
+      "width_estimate_m": 3.0,
+      "centre_offset_xz": [
+        0.25,
+        0
+      ]
+    }
+  ],
+  "buildings": {
+    "w92331986": {
+      "name": "Götaforsliden 18",
+      "override": {
+        "facade_color": "#e6dfc3",
+        "trim_color": "#78926e",
+        "sash_color": "#78926e",
+        "door_color": "#78926e",
+        "plinth_color": "#a7a7a0",
+        "reviewed_cottage": true,
+        "panel_orientation": "vertical",
+        "levels": 2,
+        "full_window_rows": true,
+        "wall_height_m": 5.65,
+        "roof_rise_m": 2.4,
+        "window_style": "t",
+        "panel_batten_depth_m": 0.015,
+        "panel_batten_thickness_m": 0.018
+      },
+      "source": {
+        "facade": "street_view_may2026_observed",
+        "trim": "street_view_may2026_observed",
+        "levels": "two_full_rows_observed",
+        "heights": "visual_estimate_not_survey",
+        "windows": "T_shape_observed_bay_spacing_assumed",
+        "roof": "existing_gable_retained_dimensions_estimated"
+      }
+    },
+    "w92332160": {
+      "name": "Royens gata 1",
+      "override": {
+        "facade_color": "#e7e6dd",
+        "trim_color": "#713e3b",
+        "sash_color": "#713e3b",
+        "plinth_color": "#777d80",
+        "reviewed_cottage": true,
+        "panel_orientation": "vertical",
+        "window_muntins": false,
+        "street_door": false,
+        "basement_windows": true,
+        "full_window_rows": true,
+        "panel_batten_depth_m": 0.015,
+        "panel_batten_thickness_m": 0.018
+      },
+      "source": {
+        "facade": "street_view_aug2024_observed",
+        "trim": "street_view_aug2024_observed",
+        "basement": "grey_plaster_and_window_row_observed",
+        "windows": "unmullioned_glass_observed_distribution_assumed",
+        "heights": "existing_heights_retained_unmeasured",
+        "roof": "unverified_existing_assumption_retained"
+      }
+    },
+    "w92332023": {
+      "name": "Franckegatan, västra gatuhuset",
+      "override": {
+        "facade_color": "#e7e6df",
+        "trim_color": "#e5e4db",
+        "sash_color": "#e5e4db",
+        "reviewed_cottage": true,
+        "panel_orientation": "vertical",
+        "levels": 1,
+        "wall_height_m": 3.25,
+        "roof_rise_m": 1.9,
+        "panel_batten_depth_m": 0.015,
+        "panel_batten_thickness_m": 0.018
+      },
+      "source": {
+        "facade": "street_view_aug2024_white_vertical_panels_observed",
+        "trim": "street_view_aug2024_observed",
+        "heights": "low_front_gable_visual_estimate_rear_volume_not_resolved",
+        "roof": "gable_observed_dark_covering_existing_material_retained",
+        "windows": "mostly_obscured_existing_bay_pattern_assumed"
+      }
+    }
+  },
+  "notes": [
+    "Sidoförskjutningarna är lokala visuella uppskattningar för att ge en rimlig passage mellan de oflyttade OSM-husen, inte korrigeringar uppladdade till OSM.",
+    "0,28 m gatstensbård följer de granskade vägpartierna, med samma höjd som körbanan. Bredden är uppskattad ur bilden.",
+    "Exakta delvolymer och entréplattform vid G18 samt Franckehusets högre bakdel återstår; inga säkra fasaduppgifter överförs till skymda grannhus."
+  ]
+}

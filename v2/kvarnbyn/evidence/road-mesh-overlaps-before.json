@@ -1,0 +1,206 @@
+[
+  {
+    "kind": "asphalt",
+    "building": "w92510381",
+    "address": null,
+    "center": [
+      525.319,
+      12.664
+    ],
+    "base": 29.247,
+    "area": 6.371,
+    "road_y": [
+      29.05,
+      29.11
+    ],
+    "expanded": true,
+    "osm_extra": 16.69
+  },
+  {
+    "kind": "asphalt",
+    "building": "w92332023",
+    "address": null,
+    "center": [
+      199.077,
+      185.43
+    ],
+    "base": 38.372,
+    "area": 4.337,
+    "road_y": [
+      38.09,
+      39.3
+    ],
+    "expanded": true,
+    "osm_extra": 10.26
+  },
+  {
+    "kind": "asphalt",
+    "building": "w92332163",
+    "address": null,
+    "center": [
+      294.046,
+      -32.197
+    ],
+    "base": 27.947,
+    "area": 4.2,
+    "road_y": [
+      28.49,
+      28.74
+    ],
+    "expanded": true,
+    "osm_extra": 34.78
+  },
+  {
+    "kind": "asphalt",
+    "building": "w96098432",
+    "address": "Skräddaregatan 5",
+    "center": [
+      206.573,
+      -285.7
+    ],
+    "base": 45.797,
+    "area": 2.42,
+    "road_y": [
+      45.91,
+      45.94
+    ],
+    "expanded": true,
+    "osm_extra": 38.96
+  },
+  {
+    "kind": "asphalt",
+    "building": "w92332166",
+    "address": null,
+    "center": [
+      -2.385,
+      113.447
+    ],
+    "base": -0.57,
+    "area": 2.151,
+    "road_y": [
+      -2.75,
+      -2.34
+    ],
+    "expanded": true,
+    "osm_extra": 69.65
+  },
+  {
+    "kind": "asphalt",
+    "building": "w92332049",
+    "address": null,
+    "center": [
+      186.322,
+      159.393
+    ],
+    "base": 34.853,
+    "area": 0.916,
+    "road_y": [
+      35.43,
+      35.95
+    ],
+    "expanded": true,
+    "osm_extra": 10.04
+  },
+  {
+    "kind": "asphalt",
+    "building": "w92332046",
+    "address": null,
+    "center": [
+      143.18,
+      113.657
+    ],
+    "base": 25.384,
+    "area": 0.517,
+    "road_y": [
+      25.84,
+      26.38
+    ],
+    "expanded": true,
+    "osm_extra": 28.47
+  },
+  {
+    "kind": "walkway",
+    "building": "w96098455",
+    "address": null,
+    "center": [
+      280.019,
+      -243.153
+    ],
+    "base": 49.585,
+    "area": 0.464,
+    "road_y": [
+      49.38,
+      49.51
+    ],
+    "expanded": true,
+    "osm_extra": 22.95
+  },
+  {
+    "kind": "walkway",
+    "building": "w96098448",
+    "address": null,
+    "center": [
+      289.428,
+      -257.758
+    ],
+    "base": 49.451,
+    "area": 0.327,
+    "road_y": [
+      49.3,
+      49.33
+    ],
+    "expanded": true,
+    "osm_extra": 25.27
+  },
+  {
+    "kind": "asphalt",
+    "building": "w92332130",
+    "address": null,
+    "center": [
+      256.006,
+      148.089
+    ],
+    "base": 46.686,
+    "area": 0.102,
+    "road_y": [
+      46.79,
+      46.87
+    ],
+    "expanded": true,
+    "osm_extra": 4.4
+  },
+  {
+    "kind": "asphalt",
+    "building": "w92500251",
+    "address": "Brunnsgatan 67",
+    "center": [
+      433.175,
+      287.294
+    ],
+    "base": 50.96,
+    "area": 0.052,
+    "road_y": [
+      51.1,
+      51.12
+    ],
+    "expanded": true,
+    "osm_extra": 29.12
+  },
+  {
+    "kind": "asphalt",
+    "building": "w92500301",
+    "address": null,
+    "center": [
+      305.214,
+      282.369
+    ],
+    "base": 39.198,
+    "area": 0.05,
+    "road_y": [
+      39.23,
+      39.28
+    ],
+    "expanded": true,
+    "osm_extra": 3.47
+  }
+]

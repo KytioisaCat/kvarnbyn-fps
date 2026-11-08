@@ -30,7 +30,7 @@ def _edge_frame(a, b):
     return (ax, ay), u, out, L
 
 
-def window(K, name, M, at, w, h, trim, muntins=True, sill=True, muntin_mat=None):
+def window(K, name, M, at, w, h, trim, muntins=True, sill=True, muntin_mat=None, muntin_style="cross"):
     """at(s, depth, height) → Blender-punkt; s längs väggen, depth utåt."""
     t, d = 0.075, 0.11
     K.box(name, trim, at(-w / 2 - t / 2, d / 2, h / 2), (t, d, h + 2 * t), *_uv(at))
@@ -40,8 +40,9 @@ def window(K, name, M, at, w, h, trim, muntins=True, sill=True, muntin_mat=None)
     K.face(name + '_Glass', M['glass_dark'], [at(-w / 2, 0.045, 0), at(w / 2, 0.045, 0), at(w / 2, 0.045, h), at(-w / 2, 0.045, h)],
            [(0, 0), (1, 0), (1, 1), (0, 1)])
     if muntins:
-        K.box(name, muntin_mat or trim, at(0, 0.07, h / 2), (0.045, 0.05, h), *_uv(at))
-        K.box(name, muntin_mat or trim, at(0, 0.07, h * 0.58), (w, 0.05, 0.04), *_uv(at))
+        vertical = .76 if muntin_style == 't' else 1.0
+        K.box(name, muntin_mat or trim, at(0, 0.07, h * vertical / 2), (0.045, 0.05, h * vertical), *_uv(at))
+        K.box(name, muntin_mat or trim, at(0, 0.07, h * (.76 if muntin_style == 't' else .58)), (w, 0.05, 0.04), *_uv(at))
     if sill:
         K.box(name, M['metal_sill'], at(0, 0.13, -0.11), (w + 0.2, 0.2, 0.04), *_uv(at))
 
@@ -80,7 +81,7 @@ def build_house(K, b, M, ground, tile):
     n = len(foot)
     for i in range(n):
         a, c = foot[i], foot[(i + 1) % n]
-        K.face(nm + '_Plinth', M['stone'], [(a[0], -a[1], low), (c[0], -c[1], low), (c[0], -c[1], base + sock), (a[0], -a[1], base + sock)])
+        K.face(nm + '_Plinth', M['reviewed_plinth'](b) if b.get('plinth_color') else M['stone'], [(a[0], -a[1], low), (c[0], -c[1], low), (c[0], -c[1], base + sock), (a[0], -a[1], base + sock)])
     # väggar
     for i in range(n):
         a, c = foot[i], foot[(i + 1) % n]
@@ -102,7 +103,7 @@ def build_house(K, b, M, ground, tile):
         count = max(1, int(L / bay))
         if arch == 'bod' and i != street: count = 0 if L < 5 else 1
         at_edge = lambda s, d, h, ax=ax, ay=ay, u=u, out=out: (ax + u[0] * s + out[0] * d, ay + u[1] * s + out[1] * d, h)
-        door_slot = count // 2 if i == street else -1
+        door_slot = count // 2 if i == street and b.get('street_door',True) else -1
         for f, (fy, fh) in enumerate(floors):
             hh = min(wh, fh - 0.75) if arch != 'industri' else min(wh, fh - 0.9)
             if hh < 0.45: continue
@@ -119,7 +120,12 @@ def build_house(K, b, M, ground, tile):
                     K.box(nm, M['door'](b), at_edge(s, 0.03, base + sock + 1.05), (gw, 0.06, 2.1), u)
                     continue
                 window(K, nm, M, lambda ss, d, h, s=s, fy=fy, sh=sill_h if arch != 'industri' else 0.8: at_edge(s + ss, d, fy + sh + h),
-                       ww, hh, trim, muntins=arch in ('trahus', 'offentlig', 'bod'), muntin_mat=sash)
+                       ww, hh, trim, muntins=b.get('window_muntins',arch in ('trahus', 'offentlig', 'bod')), muntin_mat=sash, muntin_style=b.get('window_style','cross'))
+        if b.get('basement_windows') and i == street:
+            for k in range(count):
+                pos = (k+.5)*L/count
+                at = lambda ss,d,h,pos=pos: at_edge(pos+ss,d,base-1.75+h)
+                window(K,nm+'_Basement',M,at,1.15,1.2,trim,muntins=False)
         # balkonger på flerbostadshusens långsida mot gatan (1960-tal)
         if arch == 'flerbostad' and i == street and levels >= 2 and b['facade_material'] == 'plaster':
             for f, (fy, fh) in enumerate(floors[1:], start=1):
@@ -132,7 +138,7 @@ def build_house(K, b, M, ground, tile):
     # tak
     roofmat = M['roof_for'](b)
     if b.get('clip_gabled_roof'):
-        top = cottage_details.clipped_roof(K,b,M,roofmat,wallmat,'M31')
+        top = cottage_details.clipped_roof(K,b,M,roofmat,wallmat,'M31' if b['id']=='w92332141' else 'Footprint_'+b['id'])
     elif b['roof_shape'] == 'flat' or b['roof_rise_m'] <= 0.05 or not b.get('build_rect'):
         K.polygon(nm + '_Roof', M['roof_flat'](b), [tuple(p) for p in foot], eave + 0.02)
         for i in range(n):
