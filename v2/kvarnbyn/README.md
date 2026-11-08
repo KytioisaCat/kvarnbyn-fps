@@ -12,7 +12,7 @@ open "v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app"
 ```
 
 WASD · mus · vänsterklick skjut · högerklick gripkrok · Q sikta · R ladda om · Shift spring · C huka ·
-mellanslag hoppa/raketdubbelhopp · F flygtest · M karta · Esc paus.
+mellanslag hoppa/raketdubbelhopp · F flygtest · M karta · E prata · Esc paus.
 
 **Gripkrok:** sikta på ett hus eller terrängen inom 42 m och håll **höger musknapp**. Kroken
 vevar in automatiskt. Håll framåt + sidled för att bygga fart i en sving, hoppa
@@ -43,11 +43,25 @@ Pågående basanfall får gul varning i stora kartan.
 Målpilen visar riktning och avstånd till nästa område. En pågående attack mot
 den återtagna basen prioriteras med texten Försvara C.
 
+**Civila på Gamla torget:** Lars Gahrn, Per Andersson, Ronny Jönsson och Linnea
+Rönnqvist har egna stiliserade modeller, kroppstyper, civil klädsel och fem
+animationer var. Lars är lång/mycket smal, Per normalbyggd, Ronny rundare med
+mage och Linnea har en kvinnlig siluett. De promenerar korta sträckor, hälsar
+och kan prata: titta på en person inom 3,8 m och tryck **E**. Replikerna är
+påhittade för spelet. Vymenyn innehåller en genväg till varje person.
+
+De är skyddade civila utan vapen och ingår inte bland stridsmål eller zontagare.
+Ett vådaskott stoppas, personen reagerar och du får en civilvarning; inga blod-,
+träffmarkörs- eller poängeffekter. Soldater håller inne skott när en civil skymmer.
+Bildkällor/designobservationer: `reference/npc/selected-civilians-2026-11-08.json`.
+Referensfotona används lokalt vid formgivning och ingår inte i spelets tillgångar.
+Första modellerna är stiliserade versioner att förfina efter Joels spelprov.
+
 ## Bygg om
 
 Från repots rot: `v2/kvarnbyn/rebuild.sh`. Kräver projektets lokala Blender/Godot-verktyg
 under `v2/.tools/`, Godots macOS-mall och Pythonmiljön `tools/venv/`. Kedjan tolkar data,
-bygger mark/värld, bygger Ak 5/soldat, optimerar GLB, importerar, kör kontrollprov och
+bygger mark/värld, bygger Ak 5/soldat/fyra civila, optimerar GLB, importerar, kör kontrollprov och
 exporterar/packar upp Mac-appen. `--no-export` hoppar över appen; `--bot` kör även en hel botomgång.
 Loggar finns i `evidence/`. Misslyckade bygge-/kontrollsteg avbryter kedjan.
 
@@ -83,3 +97,8 @@ från det befintliga torget-provet.
 - [Referenser och begränsningar för Roten M](reference/roten-m/OBSERVATIONER.md)
 
 Läs alltid de tre senaste posterna i projektets `DAGBOK.md` före nästa pass.
+
+Civilprov: `--headless --fixed-fps 60 --script res://scripts/verify_civilians.gd -- --no-pointer-lock --no-movement-profile` (alltid `--audio-driver Dummy`).
+Samma 29 kontrollprov körs inuti exporterad app med `--civilian-export-check`.
+`blender/build_civilians.py` skapar fyra separata GLB:er ur egen geometri/rigg/animation,
+`civilian_roster.gd` äger placering/rörelse/repliker och `civilian_world.gd` interaktion/UI.

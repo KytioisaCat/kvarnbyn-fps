@@ -1,11 +1,11 @@
 {
   "date": "2026-11-08",
-  "phase": "research_only_awaiting_joel_selection",
+  "phase": "first_four_selected_and_implemented",
   "scope": "Civila unika NPC-kandidater med offentligt belagd Mölndalskoppling. Kandidater är inte godkända rollfigurer.",
-  "real_people": 44,
+  "real_people": 45,
   "fictional_bonus": 1,
-  "images_downloaded": false,
-  "npc_models_created": false,
+  "images_downloaded": true,
+  "npc_models_created": true,
   "notes": [
     "Född i Mölndal innebär inte automatiskt uppvuxen eller långvarigt verksam där.",
     "Lindome/Kållered och verksamhetskopplingar anges separat; historiska och nutida namn blandas i urvalsunderlaget.",
@@ -21,7 +21,7 @@
       "connection": "Mångårig verksamhet vid Mölndals museum och hembygdsförening.",
       "connection_type": "verksam",
       "source": "https://www.mynewsdesk.com/se/nordiska_museet/news/nordiska-museets-medaljoerer-och-stipendiater-2022-456064",
-      "selected_by_joel": false,
+      "selected_by_joel": true,
       "fictional": false
     },
     {
@@ -153,7 +153,7 @@
       "connection": "Uppvuxen i Balltorp; började i Mölndalsrevyn.",
       "connection_type": "uppvuxen/verksam",
       "source": "https://www.molndalsposten.se/nyheter/glada-reaktioner-efter-juryns-besked-i-arhundradets-molndalsbo-ska-fira-till-juni.98e43452-8feb-4ad7-9427-06a67ae63026",
-      "selected_by_joel": false,
+      "selected_by_joel": true,
       "fictional": false
     },
     {
@@ -505,8 +505,19 @@
       "connection": "Figuren är uttryckligen från Mölndal; ingen verklig privatperson.",
       "connection_type": "fiktiv",
       "source": "https://spraktidningen.se/artiklar/jakten-pa-skorrrret-i-molndal/",
-      "selected_by_joel": false,
+      "selected_by_joel": true,
       "fictional": true
+    },
+    {
+      "id": 46,
+      "category": "uttryckligt_tillval",
+      "name": "Linnea Rönnqvist",
+      "known_for": "Journalist och programledare i Nyhetsshowen",
+      "connection": "Tillagd på Joels uttryckliga begäran; Mölndalskoppling inte verifierad.",
+      "connection_type": "user_selected_not_verified_local_connection",
+      "source": "https://www.gp.se/av/Linnea%20R%C3%B6nnqvist",
+      "selected_by_joel": true,
+      "fictional": false
     }
   ]
 }

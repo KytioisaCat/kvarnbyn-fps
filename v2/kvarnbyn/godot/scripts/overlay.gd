@@ -31,6 +31,7 @@ var jump_button: Button
 var touch_hint: Label
 var top_bar: HBoxContainer
 var reticle_visible := false
+var civilian_focus := false
 var has_started := false
 var touch_hint_dismissed := false
 var settings_row: HBoxContainer
@@ -123,7 +124,7 @@ func build_panel() -> void:
 	begin_button.add_theme_color_override("font_hover_color", INK)
 	begin_button.add_theme_font_size_override("font_size", 19)
 	column.add_child(begin_button)
-	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nHåll höger mus: gripkrok · rör dig snett för fart · släpp musknappen för att slungas\nVänster mus: skjut    Q: sikta    R: ladda om    M: karta    Esc: paus\nMellanslag i luften: raket (håll)    F: flygläge för test (Shift = fort)", 14, Color("afc2b8"))
+	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nHåll höger mus: gripkrok · rör dig snett för fart · släpp musknappen för att slungas\nVänster mus: skjut    Q: sikta    R: ladda om    M: karta    E: prata    Esc: paus\nMellanslag i luften: raket (håll)    F: flygläge för test (Shift = fort)", 14, Color("afc2b8"))
 	instruction_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(instruction_label)
 	movement_button = make_button("Rörelse & gripkrok", func(): set_movement_open(true))
@@ -290,7 +291,7 @@ func _draw() -> void:
 	if reticle_visible:
 		var center := size * 0.5
 		draw_circle(center, 2.1, Color(0.96, 0.96, 0.91, 0.72))
-		if player != null and player.alive and player.active and not player.free_flight:
+		if player != null and player.alive and player.active and not player.free_flight and not civilian_focus:
 			var hook: Node3D = player.grapple
 			var hint := "Håll höger mus: gripkrok"
 			var col := Color("dac28b")

@@ -187,9 +187,9 @@ func _shoot(dist: float, in_zone: bool) -> void:
 		return
 	var sight_from := global_position + Vector3.UP * 1.55
 	var sight_to: Vector3 = target.global_position + Vector3.UP * (0.9 if target.get("crouching") else 1.3)
-	var sight_query := PhysicsRayQueryParameters3D.create(sight_from, sight_to, 1)
+	var sight_query := PhysicsRayQueryParameters3D.create(sight_from, sight_to, 1 | 8)
 	var from: Vector3 = muzzle.global_position
-	var muzzle_query := PhysicsRayQueryParameters3D.create(from, sight_to, 1)
+	var muzzle_query := PhysicsRayQueryParameters3D.create(from, sight_to, 1 | 8)
 	# Seeing over a wall does not let the lower gun barrel fire through it.
 	var space := get_world_3d().direct_space_state
 	if not space.intersect_ray(sight_query).is_empty() or not space.intersect_ray(muzzle_query).is_empty():

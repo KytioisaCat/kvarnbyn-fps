@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-08",
+  "purpose": "Visuella referenser för egna stiliserade civila 3D-gestaltningar",
+  "reference_pixels_in_game": false,
+  "downloaded_bytes": 488990,
+  "rights": "Referensfotografiernas rättigheter tillhör respektive rättighetshavare. Inga referensbilder, fototexturer eller tredjepartsmodeller distribueras med dessa NPC:er.",
+  "identification": {
+    "linnea": "https://www.gp.se/av/Linnea%20R%C3%B6nnqvist",
+    "ronny": "https://spraktidningen.se/artiklar/jakten-pa-skorrrret-i-molndal/"
+  },
+  "body_direction_from_joel": {
+    "lars": "Lång och mycket smal",
+    "per": "Normalbyggd",
+    "ronny": "Rundlagd med tydlig mage",
+    "linnea": "Kvinnlig kroppsform"
+  },
+  "notes": [
+    "Ronny är Claes Malmbergs fiktiva scenpersona.",
+    "Linnea är uttryckligen vald av Joel; ingen Mölndalskoppling har påståtts eller verifierats.",
+    "Modellernas mått är konstnärliga uppskattningar, inte personuppgifter eller uppmätningar.",
+    "Replikerna är påhittade spelrepliker, inga verkliga citat. Ingen röstkloning."
+  ],
+  "references": [
+    {
+      "person": "Lars Gahrn",
+      "file_local_authoring_only": "lars-context.jpg",
+      "source_page": "https://www.molndalsposten.se/asikt-och-debatt/asikt/rivning-av-rudstromska-villan-fordarvar-forsaker.e1b32a58-f6da-42dd-a54b-1df83ed046b2",
+      "image_url": "https://www.molndalsposten.se/images/og/e1b32a58-f6da-42dd-a54b-1df83ed046b2/images/4w4B3GP0zeypeLavq0lOlB6vi6pg-WIDE.jpg?quality=75&width=1200",
+      "bytes": 124655,
+      "sha256": "43c3ace038dfc08466e758d762c24a66740637eea1352229470265e8dae40a92",
+      "observed": "Porträtt till vänster: långt vitt skägg, tunna runda glasögon, mörk tygkeps och grått tinninghår.",
+      "visually_reviewed": true,
+      "redistributed": false
+    },
+    {
+      "person": "Per Andersson",
+      "file_local_authoring_only": "per-casual.jpg",
+      "source_page": "https://www.gp.se/kultur-noje/noje-kultur/per-andersson-gor-ny-humorshow.5b32b0e9-866f-5287-8630-367f60ea8407",
+      "image_url": "https://www.gp.se/images/article/5b32b0e9-866f-5287-8630-367f60ea8407/images/00NlEs43tRa7ljKVllA261BahMhw-REGULAR.jpg?quality=75&width=1200",
+      "bytes": 113970,
+      "sha256": "bbfe9ae17fe3d495023eb2409fe28da945cdd52a2c8a6ba34bf79e2eea5f4b41",
+      "observed": "Brun öppen kavaj, blå tröja, kort vågigt brunt hår och gråbrun skäggstubb.",
+      "visually_reviewed": true,
+      "redistributed": false
+    },
+    {
+      "person": "Ronny Jönsson",
+      "file_local_authoring_only": "ronny-stage.jpg",
+      "source_page": "https://www.aftonbladet.se/nojesbladet/a/gPLWPJ/nu-blir-ronny-jonsson-livs-stilscoach",
+      "image_url": "https://images.aftonbladet-cdn.se/v2/images/b4d3ae5e-998d-4899-8156-7b9e2a0026a3?fit=crop&format=auto&h=2070&q=50&s=b4c4e9d1289d9b29c5b21dce3d3e575de5db45d5&w=787",
+      "bytes": 105684,
+      "sha256": "5e7e584f6f00491f60b95d639f3c84d796e0c0c7c757f70a13872af15d0668f3",
+      "observed": "Scenpersona: svart läderkeps med kedja, öppen svart/röd jacka med nitar, bar mage, grå shorts och rundare kropp.",
+      "visually_reviewed": true,
+      "redistributed": false
+    },
+    {
+      "person": "Linnea Rönnqvist",
+      "file_local_authoring_only": "linnea-stairs.jpg",
+      "source_page": "https://www.gp.se/nyhetsshowen/fredrik-wikingsons-bakfylla-efter-oscarsbeskedet.e093d461-c1c2-4a73-9ee4-cc6791376fb8",
+      "image_url": "https://www.gp.se/images/og/e093d461-c1c2-4a73-9ee4-cc6791376fb8/images/1_R4f7n7F0BkIW0iLSbES0xRtPts-WIDE.jpg?quality=75&width=1200",
+      "bytes": 66078,
+      "sha256": "933003c47129edd250cc71ae163a882119c9c8c01dbf6196cce23d2068ba1f7c",
+      "observed": "Linnea till vänster: axellångt mittbenat brunt hår med ljusare toppar, grå tröja, mörka byxor.",
+      "visually_reviewed": true,
+      "redistributed": false
+    },
+    {
+      "person": "Linnea Rönnqvist",
+      "file_local_authoring_only": "linnea-studio.jpg",
+      "source_page": "https://www.gp.se/nyhetsshowen/vasttrafik-fler-hallplatser-ar-i-fara.94b8c716-eea9-4056-9dbb-7a263dd95645",
+      "image_url": "https://www.gp.se/images/og/94b8c716-eea9-4056-9dbb-7a263dd95645/images/1TDzo0CdsVrbrQ-n9yvAigUDdPLQ-WIDE.jpg?quality=75&width=1200",
+      "bytes": 78603,
+      "sha256": "cc65fc9a2b0e5086f400de05f72652eb99fd0ac7353b815cf054a6db813c1885",
+      "observed": "Linnea till vänster, svart överdel, studioutrustning, tydligare hår-/ansiktsreferens.",
+      "visually_reviewed": true,
+      "redistributed": false
+    }
+  ]
+}

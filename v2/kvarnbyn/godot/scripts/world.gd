@@ -9,6 +9,7 @@ const GameManager = preload("res://scripts/game.gd")
 const HudController = preload("res://scripts/hud.gd")
 const Fx = preload("res://scripts/fx.gd")
 const TerrainCheck = preload("res://scripts/terrain_check.gd")
+const CivilianWorld = preload("res://scripts/civilian_world.gd")
 const TacticalMap = preload("res://scripts/tactical_map.gd")
 const WORLD_PATH := "res://assets/world.glb"
 const META_PATH := "res://assets/world_meta.json"
@@ -40,6 +41,7 @@ var street_lights: Node3D
 var river_water: RefCounted
 var game: Node
 var hud: Control
+var civilians: Node3D
 var tactical_map: Control
 var map_previous_paused := false
 var map_previous_mouse_mode := Input.MOUSE_MODE_VISIBLE
@@ -64,7 +66,7 @@ func _ready() -> void:
 			automated_run = true
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check", "movement-export-check", "terrain-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check", "movement-export-check", "terrain-export-check", "civilian-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			automated_run = true
@@ -158,8 +160,13 @@ func _ready() -> void:
 		tactical_map.configure_tactics(game.cfg)
 	tactical_map.close_requested.connect(func(): set_map_open(false))
 	tactical_map.visible = false
+	civilians = CivilianWorld.new()
+	civilians.name = "Civila"
+	add_child(civilians)
+	civilians.setup(self)
 	await get_tree().physics_frame
 	await get_tree().physics_frame
+	civilians.settle()
 	reset_player()
 	if options.has("view"):
 		var requested := str(options["view"])
@@ -192,6 +199,10 @@ func _ready() -> void:
 		check_exported_front()
 	if options.has("water-export-check"):
 		check_exported_water()
+	if options.has("civilian-export-check"):
+		var civilian_report: Dictionary = await preload("res://scripts/civilian_check.gd").new().run(self)
+		print("KVARNBYN_CIVILIAN_CHECK ", JSON.stringify(civilian_report))
+		get_tree().quit(0 if civilian_report.passed else 3)
 	if options.has("terrain-export-check"):
 		var terrain_report := TerrainCheck.new().run(world_instance, metadata)
 		print("KVARNBYN_TERRAIN_EXPORT_CHECK ", JSON.stringify(terrain_report))
@@ -689,7 +700,7 @@ func _process(delta: float) -> void:
 		publish_state()
 
 func snapshot() -> Dictionary:
-	return {"map":tactical_map.snapshot() if tactical_map != null else {},"ready": world_ready, "title": metadata.get("title", "Kvarnbyn"),
+	return {"civilians": civilians.snapshot() if civilians != null else [], "map":tactical_map.snapshot() if tactical_map != null else {},"ready": world_ready, "title": metadata.get("title", "Kvarnbyn"),
 		"load_ms": load_msec, "baked_lightmaps": used_baked_world, "prepared_bake_scene": prepared_bake_scene,
 		"lighting": lighting_mode, "street_lights": street_lights.snapshot() if street_lights != null else {},
 		"water":river_water.snapshot() if river_water!=null else {},

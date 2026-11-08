@@ -41,6 +41,7 @@ $PY $P/reference/stalliden/qa-export.py --area north_bank --glb $P/blender/world
 step "Blender: Ak 5 och riggade soldater"
 $B -b --python-exit-code 1 --python $P/blender/build_ak5.py > $LOG/weapon-build.log 2>&1
 $B -b --python-exit-code 1 --python $P/blender/build_soldier.py > $LOG/soldier-build.log 2>&1
+$B -b --python-exit-code 1 --python $P/blender/build_civilians.py > $LOG/civilian-build.log 2>&1
 step "Godot: import (två varv: importinställningar emellan)"
 $G --audio-driver Dummy --headless --path $P/godot --editor --import --quit > $LOG/godot-import-1.log 2>&1
 $G --audio-driver Dummy --headless --path $P/godot --script res://scripts/configure_import.gd 2>&1 | grep KVARNBYN
@@ -92,6 +93,9 @@ step "Kontroll: trädplaceringar efter import"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_trees.gd -- --explore > $LOG/tree-check.log 2>&1
 step "Kontroll: kvällsljus, gatlyktor och menybyte"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_lighting.gd -- --explore --no-pointer-lock --output="$ROOT/$LOG/lighting-check.json" > $LOG/lighting-check.log 2>&1
+step "Kontroll: fyra civila, kroppstyper, samtal och skydd från strid"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_civilians.gd -- --no-pointer-lock --no-movement-profile > $LOG/civilian-check.log 2> $LOG/civilian-check.stderr.log
+$PY -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["checks"])>=29' $LOG/civilian-check.json
 step "Kontroll: soldatmodell och stridsfysik"
 $G --audio-driver Dummy --headless --path $P/godot --script res://scripts/verify_soldier_visual.gd > $LOG/soldier-visual.log 2>&1
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_soldiers.gd > $LOG/soldier-tactics.log 2>&1
@@ -107,6 +111,9 @@ if [[ " $* " != *" --no-export "* ]]; then
   ls -la $P/desktop/Kvarnbyn.zip | awk '{printf "  Kvarnbyn.zip %.0f MB\n", $5/1e6}'
   mkdir -p $P/desktop/app
   ditto -x -k $P/desktop/Kvarnbyn.zip $P/desktop/app
+  step "Kontroll: civila modeller, samtal och skydd i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --no-pointer-lock --no-movement-profile --civilian-export-check > $LOG/civilian-export-check.log 2> $LOG/civilian-export-check.stderr.log
+  $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_CIVILIAN_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_CIVILIAN_CHECK "))); assert r["passed"] and r["release"] and len(r["checks"])>=29' $LOG/civilian-export-check.log
   step "Kontroll: bergmaterial och murar finns i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless -- --explore --no-pointer-lock --terrain-export-check > $LOG/terrain-export-check.log 2> $LOG/terrain-export-check.stderr.log
   $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_TERRAIN_EXPORT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_TERRAIN_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/terrain-export-check.log

@@ -291,14 +291,16 @@ func _fire() -> void:
 	var r := spread * sqrt(randf())
 	var local_dir := Vector3(cos(angle) * r, sin(angle) * r, -1.0).normalized()
 	var dir := (cam.global_transform.basis * local_dir).normalized()
-	var query := PhysicsRayQueryParameters3D.create(origin, origin + dir * range_m, 1 | 4)
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + dir * range_m, 1 | 4 | 8)
 	query.exclude = [player.get_rid()]
 	var hit := player.get_world_3d().direct_space_state.intersect_ray(query)
 	var end := origin + dir * range_m
 	if not hit.is_empty():
 		end = hit.position
 		var collider = hit.collider
-		if collider != null and collider.has_method("hit"):
+		if collider != null and collider.is_in_group("civilians"):
+			collider.on_accidental_shot(player)
+		elif collider != null and collider.has_method("hit"):
 			var owner_id: int = collider.shape_find_owner(int(hit.shape))
 			var shape_node = collider.shape_owner_get_owner(owner_id)
 			var head: bool = shape_node != null and str(shape_node.name) == "Head"

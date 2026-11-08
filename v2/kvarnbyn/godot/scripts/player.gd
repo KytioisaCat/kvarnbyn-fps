@@ -72,7 +72,7 @@ var momentum_mode := false
 
 func _ready() -> void:
 	collision_layer = 2
-	collision_mask = 1
+	collision_mask = 1 | 8
 	floor_snap_length = 0.5
 	floor_max_angle = deg_to_rad(55.0)
 	floor_stop_on_slope = true

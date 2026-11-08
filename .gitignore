@@ -74,3 +74,5 @@ v2/kvarnbyn/assets-src/soldier/downloads/
 v2/kvarnbyn/**/__pycache__/
 v2/kvarnbyn/evidence/*.blend
 v2/kvarnbyn/staging/
+
+v2/kvarnbyn/evidence/civilians/*.png

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "lars",
+    "name": "Lars Gahrn",
+    "path": "civilian_lars.glb",
+    "sha256": "1bb6cab12f97b301ebee8d9045b57dcf986e60505189ff5a5b63335c0a00ebf3",
+    "bytes": 1141800,
+    "bones": 16,
+    "triangles": 29044,
+    "materials": 21,
+    "clips": [
+      "Idle",
+      "Walk",
+      "Talk",
+      "Wave",
+      "Startle"
+    ],
+    "source": "Own authored geometry and animation; reference photos not embedded",
+    "forward": "+Z in Godot; runtime model rotated PI to match player/soldier headings",
+    "height_estimated_m": 1.88,
+    "body_type": "long and very slim"
+  },
+  {
+    "id": "per",
+    "name": "Per Andersson",
+    "path": "civilian_per.glb",
+    "sha256": "c1708e8337ad3150ad23ac1e9e1948e4550e9625f06745052ef09b4438da33b0",
+    "bytes": 1406208,
+    "bones": 16,
+    "triangles": 34818,
+    "materials": 18,
+    "clips": [
+      "Idle",
+      "Walk",
+      "Talk",
+      "Wave",
+      "Startle"
+    ],
+    "source": "Own authored geometry and animation; reference photos not embedded",
+    "forward": "+Z in Godot; runtime model rotated PI to match player/soldier headings",
+    "height_estimated_m": 1.8,
+    "body_type": "average build"
+  },
+  {
+    "id": "ronny",
+    "name": "Ronny Jönsson",
+    "path": "civilian_ronny.glb",
+    "sha256": "22038ef084264b017c954697fb6292971fdeaea9c4505253c27c8e3e1cf99b2e",
+    "bytes": 1105744,
+    "bones": 16,
+    "triangles": 27366,
+    "materials": 18,
+    "clips": [
+      "Idle",
+      "Walk",
+      "Talk",
+      "Wave",
+      "Startle"
+    ],
+    "source": "Own authored geometry and animation; reference photos not embedded",
+    "forward": "+Z in Godot; runtime model rotated PI to match player/soldier headings",
+    "height_estimated_m": 1.77,
+    "body_type": "round belly and broad torso"
+  },
+  {
+    "id": "linnea",
+    "name": "Linnea Rönnqvist",
+    "path": "civilian_linnea.glb",
+    "sha256": "e8259bbd4f75dafdfccb80bbcaf3db58aaa4c8c119a6db370d5df9a6f989da2f",
+    "bytes": 918524,
+    "bones": 16,
+    "triangles": 23256,
+    "materials": 17,
+    "clips": [
+      "Idle",
+      "Walk",
+      "Talk",
+      "Wave",
+      "Startle"
+    ],
+    "source": "Own authored geometry and animation; reference photos not embedded",
+    "forward": "+Z in Godot; runtime model rotated PI to match player/soldier headings",
+    "height_estimated_m": 1.69,
+    "body_type": "female silhouette, defined waist and hips"
+  }
+]
