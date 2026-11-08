@@ -24,3 +24,15 @@ Redovisa observerat och uppskattat per hus. Om en fasad är skymd: arbeta vidare
 med ett annat belagt hus i stället för att åter fastna i samma referenssökning.
 
 [Maskinläsbar inventering](evidence/house-status-2026-11-06.json).
+
+
+## Tillägg 2026-11-08 — första gaturundorna
+
+Fortfarande8egna specialmodeller av381, ingen generell färdigförklaring.
+Fyra ytterligare fasadpass i standardsystemet har nu faktiskt bildgranskats:
+Götaforsliden17 och18, Royens gata1 och västra gatuhuset vid Franckegatan.
+Kulörer/material, fönsterkaraktär och vissa höjder förbättrade; inte fullständiga
+porträtt av husen. G17:s tak/entréindelning, G18:s entréplattform och Franckehusets
+bakre delvolym återstår. Separat återställdes13OSM-konturer som husförenklingen
+annars förstorat ut i gatan. Det är en geometrirättning, inte tretton nya
+visuellt godkända hus. Underlag: `reference/vag-hus/reviews.json`.

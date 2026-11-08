@@ -33,6 +33,16 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-08 — ChatGPT Codex — första gaturundorna levererade; fortsättning pågår
+
+**Status:** delpass klart, fortsatt iterering beställd tills tillgängliga tokens tar slut. Nästa avgränsade område är startkvarteren vid övre Görjelycksgatan.
+**Gjort:** Karta-grenen `codex/karta/vag-hus` (2d53472 +54c9beb) integrerad från egen arbetskopia. Faktiskt granskad Street View vid torget, Götaforsliden17/18, Royens1 och Franckegatan. Material/fönster och vissa uppskattade nivåer förbättrade på fyra fasader.13förstorade hus återställda till OSM-kontur; hus/kollision/mark använder samma fotavtryck. Tre lokala vägprofiler/linjer, medföljande infart och låga stenbårder. Originalhusens positioner, spelregler/rörelse/civila/deras fyra GLB:er bevarade. Säkert/uppskattat/kvarstående dokumenterat i `reference/vag-hus/` och RESULTAT-GATURUNDOR.md; inga Street View-pixlar i produkten.
+**Verifierat:**12artefaktgrindar,381hus/352vägar.85908synliga +85908kollisionsvägtrianglar exakt mot aktuell site efter millimeterkvantisering; inga husintrång även för författade gångytor/trappor/brodäck, ingen navkant genom hus.9markpunkter +6riktiga kapselstråk +3huskontakter gröna, samt alla äldre Roten/Stalleliden/M25/åbanksstråk och180globala markpunkter. Native före/slutbilder från samma fem kameror + riktig releasebild granskade. Release från installerad app: gator19, civila29, krok27 +stad, rörelse25, terräng7, karta och vatten gröna. Två seedade botrundor:108tidsgräns600s med B/C egna;109förlust220,2s. Ingen balansjämförelse eller seger hävdas.
+**Leverans:** ordinarie `desktop/app/Försvara Kvarnbyn.app` och ZIP uppdaterade, förra NPC-appen/ZIP bevarade i `v2/.tools/kvarnbyn-roads-20261108/previous/`. Sammanförda källor reproducerade city/site/nav/game/kartbild/kartmetadata byteidentiskt med den verifierade arbetskopian. Validerad värld/metadata kopierade som sammanhållet paket, egen importcache. `evidence/delivery-roads-2026-11-08.json` anger hashar/slutgrindar. Lokala bilder i `evidence/roads/`, råloggar i `v2/.tools/kvarnbyn-roads-20261108/`. Ny runtime-grind `--road-export-check`; rebuild kräver även geometri- och kapselgrindarna. Inga egna spelprocesser kvar vid installation, ingen användarprocess avslutad. Kända CA/ObjectDB-varningar separerade, inga slutliga skript-/shader-/resursfel.
+**Nästa/kvar:** fortsätt nya områden enligt Joels uttryckliga långuppdrag. G18:s entréplattform, G17:s tak/entréindelning och Franckehusets högre bakdel behöver egna detaljpass; resten av staden är långt ifrån färdig. Första ytan får inte misstas för ett generellt igenkänningsgodkännande. Playpen och graphify memory fortsatt orörda.
+
+---
+
 ## 2026-11-08 — ChatGPT Codex — fyra unika civila i Mac-appen
 
 **Status:** klart — NPC-01 integrerat, ordinarie app/ZIP uppdaterade och verifierade.

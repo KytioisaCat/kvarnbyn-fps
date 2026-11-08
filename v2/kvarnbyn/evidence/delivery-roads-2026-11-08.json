@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-08",
+  "source_commit": "54c9beb",
+  "app": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "zip": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/Kvarnbyn.zip",
+  "zip_bytes": 249496567,
+  "zip_sha256": "a62007aef639452ef5aac235f41959417ea20aa81f692a2f9bcee1d750c89c92",
+  "payload": {
+    "Contents/MacOS/Försvara Kvarnbyn": "ba9d4bdf58ee4f86887246f9b7f67a347e30081bf835557192e87fea1d795d74",
+    "Contents/Resources/Försvara Kvarnbyn.pck": "e129ec68e23138ab263fe83db6c758b0aa64e0b83ce99a2c052377105b76fb89"
+  },
+  "world_artifacts": {
+    "world.glb": "6888e17d63157d0bb60e0a45684cceb5cd1434cc8cd3ec469bfaf3aa64b75460",
+    "world_meta.json": "abb2775c1272dcad385b31b5bec754551f5b4e30998f291b7372dfde361e3cb0",
+    "nav.json": "9eba61f38eda3942c6438f8816147d38bb4359ebc6c4bc354c263a96502f7e48",
+    "game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "world_map.png": "3dd1939cb690952cda2819889941ec8b12634630e9f641e6f78604b221bb1672",
+    "map.json": "a1e83f949c2c2ca5ce1bf0878a3205c52b8abcf3803dd0d7f0ba9760d0b3954c",
+    "river_flow.png": "340287e3e36a9fadce17f89a40658b1f452010e4ef9947bc0b9cef06c01d3222",
+    "river_flow.json": "5aa920e7fad83f564770edba07f92af1461dcedf11da2ebc9ac721bf4ac06e73"
+  },
+  "previous_app": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-roads-20261108/previous/Försvara Kvarnbyn.app",
+  "geometry_checks": 12,
+  "houses_checked": 381,
+  "roads_checked": 352,
+  "restored_footprints": 13,
+  "reviewed_street_parts": 3,
+  "reviewed_facades": 4,
+  "runtime_road_checks": 19,
+  "street_view_pixels_in_assets": false,
+  "native_release_capture": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/evidence/roads/release-gotafors.png",
+  "installed_checks": {
+    "road": {
+      "passed": true,
+      "checks": 19
+    },
+    "civilian": {
+      "passed": true,
+      "checks": 29
+    },
+    "grapple": {
+      "passed": true,
+      "checks": 27
+    },
+    "movement": {
+      "passed": true,
+      "checks": 25
+    },
+    "terrain": {
+      "passed": true,
+      "checks": 7
+    },
+    "map": {
+      "passed": true,
+      "checks": 0
+    },
+    "water": {
+      "passed": true,
+      "checks": 0
+    }
+  }
+}

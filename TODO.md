@@ -5,7 +5,15 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Aktiv arbetskö — rörelse, flyt och husigenkänning (Joel 2026-11-08)
 
-**Joels aktuella val: unika civila NPC:er.** Första fyra byggda: Lars Gahrn,
+**Joels aktuella val: fortsatta Street View-rundor tills tokenutrymmet tar slut.**
+Första gaturundorna vid Götaforsliden/Royens gata/Franckegatan är byggda och
+levererade i verifierad app:13återställda huskonturer, tre lokala gatulinjer/bredder,
+stenbårder och fyra fasadpass. Utökad global kontroll av381hus/352vägar samt
+faktiska gång-/kollisionsprov. Nästa område: övre Görjelycksgatan/startkvarteren.
+Entréplattform vid G18, G17:s tak/entrédetaljer och Franckehusets bakdel kräver
+fortsatt separat granskning. Säkra observationer och uppskattningar hålls isär.
+
+**Civila NPC:er, första pass klart.** Första fyra byggda: Lars Gahrn,
 Per Andersson, fiktiva Ronny Jönsson och Linnea Rönnqvist från Nyhetsshowen.
 Olika kroppstyper/civila kläder/egna rörelser, placerade på Gamla torget. Vymenyn
 har genvägar och **E** ger en påhittad spelreplik. Skyddade civila utan stridsmål,
@@ -127,6 +135,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-08 — **Första gaturundorna mot Street View:**13felaktigt utvidgade hus återställda till OSM-konturer; markklippning samma kontur som huset. Tre lokala vägprofiler och fyra fasadpass, stenlagda vägkanter. Inga väg-/gångintrång i exporterad kontroll mot381hus, sex kapselstråk fram/back och19releaseprov. Fortsatt iterering beställd; detta är inte färdigbedömning av hela staden.
 
 - [x] 2026-11-08 — **NPC-01: fyra unika civila:** egna referensbaserade modeller, tydliga kroppstyper och fem animationer; lugna rörelser, E-samtal och fyra vygenvägar på torget. Skyddade från skada/stridsmål/poäng; 29 prov i release. Ordinarie Mac-app uppdaterad. Första stiliserade likheter, Joels bedömning återstår.
 

@@ -1,6 +1,6 @@
 # Karta — gator mot hus, referensrundor
 
-**Status:** pågår. **Startcommit:**1b14efc. **Gren:**codex/karta/vag-hus.
+**Status:** klart och integrerat; nytt områdespass följer. **Startcommit:**1b14efc. **Gren:**codex/karta/vag-hus.
 **Arbetskopia:**/private/tmp/kvarnbyn-karta-vagar.
 
 Joel vill ha flera granskningsrundor mot Street View, bättre hus/gaturum och
@@ -64,3 +64,10 @@ Krok/civila/karta/terräng/soldater/patrull/vapen gröna. Native slutbilder i
 kapselprov i release; första paketets övriga releaseprov var redan gröna.
 Integratör: kör release19, koppla rätt värld/metadata/nav/karta till main och
 uppdatera ordinarie app med backup. Fortsätt därefter nästa avgränsade kvarter.
+
+## Integrerat 2026-11-08
+
+54c9beb integrerad, källorna reproducerade city/site/nav/game/karta byteidentiskt
+på main. Ordinarie app/ZIP installerade med NPC-versionen bevarad. Installerade
+slutgrindar gator19/civila29/krok27/rörelse25/terräng7/karta/vatten gröna.
+Centrala statusdokument uppdaterade. Fortsätt nästa område i nytt avgränsat spår.

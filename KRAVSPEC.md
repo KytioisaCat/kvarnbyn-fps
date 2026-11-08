@@ -52,6 +52,16 @@ inte leverera dem).
   asfalt, gräs, skog, berg i dagen. Skogen ska vara tät, blockera sikt och kännas
   som skog — med framkomliga stigar.
 
+### Samspel mellan gator och hus
+
+- **Krav:** gator och gångstråk ska löpa utanför husens väggar, med verkliga
+  sammanhängande passager och rimliga bredder. Förenklade husmodeller får inte
+  förstoras ut i gatan. Rättningar ska följa granskade referenser och bevara
+  anslutande vägar, entréer, trappor och gångbarhet.
+- **Arbetssätt:** jämför flera avgränsade gaturum mot Street View, rätta och
+  prova i spelet. Skilj bildbelagda detaljer från uppskattade mått och dolda
+  delar; ett godkänt delpass innebär inte att hela stadens hus är färdiga.
+
 ### Bebyggelse
 
 - **Krav**: Byggnader på riktiga lägen med riktiga fotavtryck och rimliga proportioner.

@@ -774,3 +774,58 @@ granskade. Evidens i `evidence/civilian-*.json` och lokal `evidence/civilians/`.
 Joel betonar att detta är ett passionsprojekt där det är fritt att byta mellan
 roliga deluppgifter. Oavslutade förbättringar förs i backloggen; en äldre föreslagen
 byggordning begränsar inte hans senare prioriteringar.
+
+
+## Gaturundor: gemensamt hus-/vägunderlag (2026-11-08)
+
+Joel vill nu iterera olika områden mot faktiskt granskad Street View tills
+agentens tillgängliga tokens tar slut. Spara fungerande delpass, bygg verifierad
+app och fortsätt andra kvarter; lämna ingen otestad stor ändring som enda leverans.
+
+Första diagnosen:52råa väg-buffert/hus-par innebar inte52ritade fel. Site.py
+klippte redan bort OSM-fotavtryck. Kontroll av färdiga trianglar fann12intrång,
+cirka21,9m², i hus som byggaren förstorat till omslutande rektanglar. Därför måste
+husmodell, kollision och markklippning använda samma kontur. OSM-husens läge är
+inte automatiskt fel eller rätt; varken vägar eller hus flyttas på ren förmodan.
+
+`interpret.py` bevarar nu originalkonturen när dess rektangelförenkling skulle
+blockera ett vägstråk (13hus). `houses.py`/`cottage_details.py` klipper tidigare
+antaget sadel-/valmtak mot den konkava konturen och undviker en ogrundad platt
+ersättning. `site.py` klipper mot `build_footprint_xz`, samma kontur som kollideraren.
+Inga ursprungliga huspositioner har flyttats i detta pass.
+
+`reference/vag-hus/reviews.json` innehåller faktiska panoramor/datum/observationer
+och separat märkta uppskattningar. Torget/Kvarnbygatan är brett och lämnades;
+Götaforsliden17/18, Royens1 och västra gatuhuset vid Franckegatan fick fyra
+fasadpass. Material, fönsterkaraktär och vissa nivåer rättade; dolda sidor,
+entréplattformar, tak/delvolymer är fortsatt uppskattade eller kvarstående.
+Inga Street View-pixlar distribueras.
+
+Tre lokala smalgatupartier har uppskattade bredder2,7/3,2/3,0m. `road_layout.py`
+bär höjdoberoende sidoförskjutning och mjuka breddövergångar; samma korridor
+används för vägbana, markbearbetning, trottoarer och kartlinjer. Varje flyttad
+OSM-knut följer alla anslutna vägar, inklusive en infart i detta pass. Nya
+övergångspunkter har `node_ids:null`; ursprungliga koordinater/knutar sparas i
+`source_line_xz`/`source_node_ids`. Runtime-navformatet är oförändrat; ingen
+kvarvarande navkant går genom husens insida i kontrollen. Sidoförskjutningar är
+visuella uppskattningar, inte inmätning eller uppladdade kartändringar.
+
+`street_setts` och `street_edges` har samma färdiga höjd som körbanan (+.03),
+inte gångbanans högre lager. Granitbården är cirka28cm enligt bildtolkning.
+Materialbytet skapar ingen extra fysiknivå. Map_image känner samma ytägande och
+breddprofiler. Spelbalans/rörelse/civila/deras GLB:er är bevarade med filhashar.
+
+`verify_layout.py` läser verklig site och levererad GLB:381hus/352vägar,
+alla primära väg-/gångtrianglar matchar site och synlig/kollisionsgeometri.
+Utökad kontroll omfattar författade gångytor, trappor och brodäck. Nullrapport
+för intrång gäller den kontrollerade kärnan och dessa byggda ytor, inte ett
+allmänt påstående om varje fasad/terrängdetalj. `road_review_checks.py` ger nio
+markpunkter, tre stråk åt båda håll och tre husstopp, provade med riktig spelare
+via verify_roten. Ny `road_check.gd`/`--road-export-check` ger19 motsvarande
+kapsel-/golv-/väggprov i det färdiga paketet; ny flagga gör agentkörningen tyst
+och hoppar över Joels rörelseprofil. Rebuild kräver båda grindarna.
+
+Native före/slutbilder med samma fem kameror och faktisk releasebild granskade.
+180globala gångpunkter, äldre plats-/spelprov och två seedade botrundor körda.
+Seed108nådde600s med B/C egna;109förlorade220,2s. Ingen balansjämförelse eller
+seger hävdas. Källa/rålogg/uppskattning/leveransmanifest hålls separata.

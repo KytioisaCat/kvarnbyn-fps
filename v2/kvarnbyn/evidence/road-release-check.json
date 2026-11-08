@@ -1,0 +1,181 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "passed": true,
+      "test": "road_walk_metadata_packaged"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w13698106_0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w13698106_20_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w13698106_40_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w43570099_0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w43570099_20_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w43570099_40_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040332_0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040332_26_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040332_51_floor"
+    },
+    {
+      "detail": {
+        "frames": 758,
+        "id": "w13698106_up",
+        "length_m": 37.9561352729797,
+        "max_height_error_m": 0.0424957275390625,
+        "reached": true
+      },
+      "passed": true,
+      "test": "w13698106_up_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 757,
+        "id": "w13698106_down",
+        "length_m": 37.9561352729797,
+        "max_height_error_m": 0.0419902801513672,
+        "reached": true
+      },
+      "passed": true,
+      "test": "w13698106_down_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 759,
+        "id": "w43570099_up",
+        "length_m": 37.9933486580849,
+        "max_height_error_m": 0.00483322143554688,
+        "reached": true
+      },
+      "passed": true,
+      "test": "w43570099_up_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 759,
+        "id": "w43570099_down",
+        "length_m": 37.9933486580849,
+        "max_height_error_m": 0.0039825439453125,
+        "reached": true
+      },
+      "passed": true,
+      "test": "w43570099_down_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 959,
+        "id": "w78040332_up",
+        "length_m": 47.9993285536766,
+        "max_height_error_m": 0.00381851196289062,
+        "reached": true
+      },
+      "passed": true,
+      "test": "w78040332_up_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 959,
+        "id": "w78040332_down",
+        "length_m": 47.9993285536766,
+        "max_height_error_m": 0.00503158569335938,
+        "reached": true
+      },
+      "passed": true,
+      "test": "w78040332_down_actual_capsule"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w13698106_house_wall_actual_wall"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w43570099_house_wall_actual_wall"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040332_house_wall_actual_wall"
+    }
+  ],
+  "passed": true,
+  "paths": [
+    {
+      "frames": 758,
+      "id": "w13698106_up",
+      "length_m": 37.9561352729797,
+      "max_height_error_m": 0.0424957275390625,
+      "reached": true
+    },
+    {
+      "frames": 757,
+      "id": "w13698106_down",
+      "length_m": 37.9561352729797,
+      "max_height_error_m": 0.0419902801513672,
+      "reached": true
+    },
+    {
+      "frames": 759,
+      "id": "w43570099_up",
+      "length_m": 37.9933486580849,
+      "max_height_error_m": 0.00483322143554688,
+      "reached": true
+    },
+    {
+      "frames": 759,
+      "id": "w43570099_down",
+      "length_m": 37.9933486580849,
+      "max_height_error_m": 0.0039825439453125,
+      "reached": true
+    },
+    {
+      "frames": 959,
+      "id": "w78040332_up",
+      "length_m": 47.9993285536766,
+      "max_height_error_m": 0.00381851196289062,
+      "reached": true
+    },
+    {
+      "frames": 959,
+      "id": "w78040332_down",
+      "length_m": 47.9993285536766,
+      "max_height_error_m": 0.00503158569335938,
+      "reached": true
+    }
+  ],
+  "release": true
+}

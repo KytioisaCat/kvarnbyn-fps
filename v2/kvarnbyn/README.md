@@ -57,6 +57,12 @@ Bildkällor/designobservationer: `reference/npc/selected-civilians-2026-11-08.js
 Referensfotona används lokalt vid formgivning och ingår inte i spelets tillgångar.
 Första modellerna är stiliserade versioner att förfina efter Joels spelprov.
 
+**Gaturundor:** vymenyn har fem genvägar som börjar **Gaturunda**. Första passet
+rättar tre lokala vägpartier vid Götaforsliden/Royens gata/Franckegatan,
+13förstorade huskonturer och fyra fasader. Street View-referenser och osäkerheter
+finns i `reference/vag-hus/README.md`. Det är ett delpass; stora delar av världens
+fasader och tomter är fortfarande generiska eller uppskattade.
+
 ## Bygg om
 
 Från repots rot: `v2/kvarnbyn/rebuild.sh`. Kräver projektets lokala Blender/Godot-verktyg
@@ -102,3 +108,8 @@ Civilprov: `--headless --fixed-fps 60 --script res://scripts/verify_civilians.gd
 Samma 29 kontrollprov körs inuti exporterad app med `--civilian-export-check`.
 `blender/build_civilians.py` skapar fyra separata GLB:er ur egen geometri/rigg/animation,
 `civilian_roster.gd` äger placering/rörelse/repliker och `civilian_world.gd` interaktion/UI.
+
+Gatu-/huskontroll: `tools/venv/bin/python v2/kvarnbyn/reference/vag-hus/verify_layout.py --glb v2/kvarnbyn/godot/assets/world.glb`.
+Den färdiga appens ljudlösa `--road-export-check` provar golv, väggar och de tre
+stråken med den riktiga spelarkapseln åt båda håll; kör med `--explore`,
+`--no-pointer-lock`, `--no-movement-profile`, `--fixed-fps 60` och `--audio-driver Dummy`.
