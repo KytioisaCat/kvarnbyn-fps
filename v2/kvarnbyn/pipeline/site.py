@@ -676,15 +676,12 @@ for x, z in [v1(104.7, -65.1), v1(-100, 350), v1(850, 300), v1(-200, -390)]:
     x = min(max(x, ZONE[0] + 8), ZONE[2] - 8); z = min(max(z, ZONE[1] + 8), ZONE[3] - 8)
     entries.append([round(x, 2), round(gy(x, z), 2), round(z, 2)])
 sx, sz = v1(447.2, 53.0)
-game = dict(note='Spelregler Fas B — siffror ur v1 (public/game.js), antal soldater nedskalat; justera här.',
-            caps=caps, base_cap='C', player_spawn=[round(sx, 2), round(gy(sx, sz), 2), round(sz, 2)], enemy_entries=entries,
-            occupation=dict(count=60, min_distance_from_spawn=170, infiltrators=6, garrison_share=0.55),
-            reinforcements=dict(waves=3, size=14, interval_s=50, max_alive=90),
-            allies=dict(count=9, guards=3, respawn_interval_s=45),
-            capture=dict(enemy_rate=0.035, friendly_rate=0.1, max_count=3),
-            player=dict(hp=100, regen_delay_s=5, regen_per_s=25, respawn_s=5),
-            weapon=dict(name='Ak 5', mag=30, rpm=600, damage_body=40, damage_head=100, reload_s=1.7, range_m=400),
-            soldier=dict(hp=100, speed=[2.6, 3.5], sight_m=75, engage_m=70, fire_interval_s=[0.75, 1.35], damage=[6, 11], enemy_fire_interval_scale=.92, enemy_accuracy_scale=1.08))
+# Spelspåret äger balans; kartspåret äger koordinater. Samma runtimeformat.
+rules = json.loads((HERE / 'config/gameplay.json').read_text())
+game = dict(note=rules['note'], caps=caps, base_cap=rules['base_cap'],
+            player_spawn=[round(sx, 2), round(gy(sx, sz), 2), round(sz, 2)], enemy_entries=entries)
+for key in ('occupation', 'reinforcements', 'allies', 'capture', 'player', 'weapon', 'soldier'):
+    game[key] = rules[key]
 (GA / 'game.json').write_text(json.dumps(game, ensure_ascii=False, indent=1))
 log('game.json: zoner ' + ', '.join(c['id'] + '@' + str(c['position']) for c in caps))
 

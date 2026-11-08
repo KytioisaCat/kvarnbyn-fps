@@ -9,6 +9,8 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
    agenten slutade, vad som är halvfärdigt och vad som är trasigt.
 2. **Skriv ett inlägg när du börjar** (en rad räcker: vem, när, vad du tänker göra) — så syns
    det om du dör mitt i passet.
+   Under parallellt arbete skriver respektive spel-/kartspår i sin egen uppgiftslogg
+   enligt `ARBETSFLÖDEN.md`; integratören skriver här och sammanför överlämningarna.
 3. **Skriv klart inlägget innan du tar slut**, helst vid varje delsteg. Om du märker att tokens
    tar slut: skriv dagboken FÖRE nästa tunga kommando. Ett ofullständigt inlägg är bättre än inget.
 4. **Nyaste inlägget överst.** Format nedan. Kort och konkret: filer, kommandon, siffror.
@@ -28,6 +30,16 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 **Nästa:** numrerad lista, första punkten = det nästa agent ska göra först
 **Varningar:** fällor, saker som inte får göras, beslut som väntar på Joel
 ```
+
+---
+
+## 2026-11-08 — ChatGPT Codex — parallella spel- och kartspår
+
+**Status:** klart — två spår formaliserade; inga parallella uppdrag startade ännu.
+**Gjort:** `ARBETSFLÖDEN.md` beskriver Spel/Karta/Integration, egna worktrees/grenar och skrivbara byggmappar, filägarskap, delade gränssnitt, uppgiftsloggar och en integratör till main/app. CLAUDE.md/AGENTS.md uppdaterade och exakt identiska; centrala dagboks-/TODO-regler förtydligade för parallellt arbete. Spelbalans flyttad från kartbyggaren site.py till egen `config/gameplay.json`; geografiska koordinater stannar hos kartspåret. Rörelsemenyn levererad separat i cfd953c.
+**Verifierat:** riktig pipeline till isolerad `staging/workflows-20261108/` gav byteidentiska game.json, nav.json och site.json mot accepterad leverans. Inga aktiva tillgångar överskrivna. `evidence/workflow-separation-2026-11-08.json`. Filägarreglerna skiljer uttryckligen vapen-/soldatbyggare från övriga Blender-filer och gemensamma world/overlay/import/export-filer.
+**Läge nu:** nya Mac-appen med24rörelsereglage är redan byggd/verifierad; arbetsflödesändringen är dokumentation + offlinekonfiguration och ändrar inte spelet. Inga nya chattar, grenar eller worktrees skapade. Inga nedladdningar. Arbetsloggexempel och startkommandon finns i guiden; worker-spåren skriver inte samtidigt i centrala statusdokument.
+**Nästa:** Joel kan beställa ett Spel-uppdrag och ett Karta-uppdrag i separata arbetskopior. Integrera en färdig ändring i taget och gör gemensamt spel-/gångprov före main/app. Befintliga stora ignorerade tillgångar måste finnas lokalt i varje arbetskopia; skrivbara symlänkar mellan spåren är inte tillåten isolering.
 
 ---
 

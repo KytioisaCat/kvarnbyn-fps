@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-08",
+  "scope": "Extract gameplay rules from map generator; real staging pipeline output compared byte-for-byte with accepted active artifacts. No active assets overwritten.",
+  "checks": {
+    "game.json": {
+      "byte_identical": true,
+      "sha256": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d"
+    },
+    "nav.json": {
+      "byte_identical": true,
+      "sha256": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f"
+    },
+    "site.json": {
+      "byte_identical": true,
+      "sha256": "95017a742f3add276ff4559dc361bd8a2aeb1fa19c130d1da32bf158837c3e1f"
+    }
+  },
+  "instructions_identical": true,
+  "worktrees_created": false
+}

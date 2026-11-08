@@ -5,6 +5,9 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Aktiv arbetskö — rörelse, flyt och husigenkänning (Joel 2026-11-08)
 
+Vid parallellt arbete lämnar spel-/kartspåren sina status-/backloggändringar i egna
+uppgiftsloggar enligt `ARBETSFLÖDEN.md`. Integratören uppdaterar denna gemensamma kö.
+
 1. **Joels finjustering av rörelsen:** effekterna någorlunda rätt enligt första provet. Indragning/dragacceleration sänkta till6m/s och20m/s², markbroms till3,5m/s² och hukbroms1,5m/s². **Esc** öppnar **Rörelse & gripkrok**,24reglage med sifferfält, sparning, återställning och kopiering. **RÖR-01/02** i KRAVSPEC.md. Joel provar/kopierar värden för att hitta rätt känsla; höger mus för kroken, Q för sikte. Ändra utifrån hans prov, inte mer research om originalets buggstatus.
 2. **Individuella hus/fasader/tak prioriteras före fler bot-/AI-pass.** Aktuell inventering:8egna modeller av381; inget allmänt färdiggodkännande. `v2/kvarnbyn/HUSSTATUS-2026-11-06.md`. Stora delar av världen är fortfarande generiska. Efter Joels prov: välj tydligt avgränsat kvarter och granska husen mot faktiskt synliga referenser; rätta siluett, tak, material, fönster/entréer och anslutande mark. Redovisa varje hus som granskat, uppskattat eller kvarstående.
 3. Säkrare underlag för åbankens rundade tegelhus/mark/intag samt M24/M31. Saknade referenser får inte ersättas med påstått korrekta gissningar; fortsätt med andra synliga hus när en fasad är skymd.
@@ -111,6 +114,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-08 — **Parallella spel-/kartspår formaliserade:** `ARBETSFLÖDEN.md`, filägarskap, separata worktrees/grenar och lokala byggmappar, egna uppgiftsloggar och en integratör till main. Spelbalans flyttad ur site.py till `config/gameplay.json`; samma genererade spel-/nav-/markdata. Inga nya chattar eller arbetskopior startade ännu.
 
 - [x] 2026-11-08 — **RÖR-02: rörelsemeny för speltest:**24reglage med sifferfält/enheter, fyra flikar direkt via Esc, lokal profil, återställning/kopiering och valbar fartmätare. Mjukare drag och längre glid som standard. Riktig kapsel jämförd med olika reglage; Esc-sparning av decimaler och profilsparning prövade utan att ändra Joels profil.
 

@@ -657,3 +657,29 @@ kopieringsknappen skriver svenska namn, tal och enheter till urklipp vid klick.
 decimaltal vid Esc, profilretur och faktisk kapselrörelse med samma värdepaket
 som menyn redigerar. Jämförelser av indragning, sidostyrning, farttak, markglid
 och luftmotstånd är funktionella prov; Joels speltest avgör slutvärdena.
+
+## Två parallella arbetsflöden (2026-11-08)
+
+Joel vill kunna arbeta med spelkonfiguration/spelkänsla och karta samtidigt.
+`ARBETSFLÖDEN.md` formaliserar Spel, Karta och Integration. Arbetsspåren har egna
+worktrees/grenar, byggutdata och uppgiftsloggar. Integratören äger centrala
+statusdokument och main/Joels spelapp. Det gäller när parallellt arbete används;
+vanliga ensampass har kvar ordinarie dagbok. Inga nya chattar eller worktrees
+startades när arbetssättet dokumenterades.
+
+En faktisk koppling togs bort: balanseringsdelarna i `site.py` flyttades till
+`v2/kvarnbyn/config/gameplay.json`. Spelspåret kan nu ändra antal, förstärkningar,
+HP, vapen-/soldatsiffror och fångsttakt utan att redigera kartbyggaren. Kartspåret
+äger fortfarande zon-/spawn-/infallslägen. `site.py` kombinerar de två källorna
+till oförändrat runtimeformat. Riktig körning med --stage-dir gav byteidentiska
+game.json, nav.json och site.json; `evidence/workflow-separation-2026-11-08.json`.
+Inga aktiva världsfiler eller den nybyggda rörelseappen ändrades av separationen.
+
+Gemensamma kopplingspunkter (world/overlay, import/export, projektinställningar,
+byggkedja och dataformat) samordnas; en skrivare åt gången per reserverad ändring.
+Genererade JSON-filer tas fram från sammanförda källor vid integration i stället
+för att två spår konkurrerar om dem. Stora lokala världspaket identifieras av
+källcommit/hashar och kopieras till egna skrivbara mappar. Att dela en symlänkad
+assets- eller importcachemapp ger ingen arbetsisolering och är därför inte
+arbetsmodellen. Avsikten är färre text- och beteendekonflikter, inte en garanti
+att ändringar av geometri och spelregler aldrig behöver testas ihop.

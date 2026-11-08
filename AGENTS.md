@@ -11,6 +11,13 @@ nya idéer i backloggen i stället för att hålla dem i huvudet.
 och beslutslogg med motiv (varför saker är som de är). Uppdatera den när nya
 beslut fattas eller gamla omprövas.
 
+**Parallellt arbete:** läs **`ARBETSFLÖDEN.md`** innan ett spel- eller kartspår
+startas. Varje spår har egen worktree/gren och egen uppgiftslogg i
+`v2/kvarnbyn/worklogs/`. Under parallellt arbete skriver arbetsspåren där i stället
+för att samtidigt redigera centrala DAGBOK/TODO/ARKITEKTUR/KRAVSPEC; integratören
+sammanför status och uppdaterar main/Joels ordinarie app. Detta undantag gäller
+loggplaceringen, inte kravet att läsa överlämningarna eller redovisa prov.
+
 ## Vad detta är
 
 Joels barndoms-FPS: försvara Kvarnbyn i Mölndal mot en invasion, byggt på riktig
@@ -52,6 +59,11 @@ binärer (GLB, EXR, .blend, exporter) committas inte.
 
 ## Arbetsflöden
 
+- **Spel och karta parallellt:** följ filägarskap och integrationsrutin i
+  `ARBETSFLÖDEN.md`. Spelbalans finns i `v2/kvarnbyn/config/gameplay.json`,
+  rörelsevärden i `godot/scripts/movement_settings.gd`. Ändra inte kartbyggaren
+  för soldatantal/eldintervall. Världs-/importcache-/exportmappar får inte delas
+  skrivbart mellan samtidiga arbetskopior. Gemensamma kopplingsfiler samordnas.
 - **Hitta i koden — fråga grafen först, läs filen sen.** `graphify-out/` är ett index
   över projektet (~245 noder: funktionerna i `game.js` + pipelinen, plus besluten ur
   ARKITEKTUR.md/KRAVSPEC.md). Kostar ett par kB kontext i stället för 3 000 rader:
@@ -83,6 +95,7 @@ binärer (GLB, EXR, .blend, exporter) committas inte.
   v1 på roten, v2 under `/v2/`; sajten: https://kytioisacat.github.io/kvarnbyn-fps/ (v2:
   https://kytioisacat.github.io/kvarnbyn-fps/v2/) — repo: KytioisaCat/kvarnbyn-fps
   (Joels privata GitHub-konto, INTE jobbkontot; aldrig GitLab)
+  Under parallellt arbete pushar arbetsspåren egna grenar; bara integratören uppdaterar main.
 
 ## Fällor (dyrt inlärda)
 
