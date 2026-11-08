@@ -5,7 +5,14 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Aktiv arbetskö — rörelse, flyt och husigenkänning (Joel 2026-11-08)
 
-**Joels aktuella val: unika civila NPC:er.** Researchlista med44verkliga personer +fiktiva Ronny Jönsson i `v2/kvarnbyn/reference/npc/candidates-2026-11-08.json`. Joel väljer vilka innan bildreferenser laddas ned och unik design/modellering börjar. Civila som spelaren inte ska skjuta på; inga nya stridande. Skade-/reaktionsregler och placeringar bestäms vid implementation. Inga bilder/modeller hämtade eller skapade i researchsteget.
+**Joels aktuella val: unika civila NPC:er.** Första fyra byggda: Lars Gahrn,
+Per Andersson, fiktiva Ronny Jönsson och Linnea Rönnqvist från Nyhetsshowen.
+Olika kroppstyper/civila kläder/egna rörelser, placerade på Gamla torget. Vymenyn
+har genvägar och **E** ger en påhittad spelreplik. Skyddade civila utan stridsmål,
+skada/blod/poäng. 29 civilprov även i exporterad app gröna. Nästa: Joels bedömning
+av igenkänning, kroppar, hållning och vardagsanimationer; förfina porträttlikhet.
+Bildkällor/design i `v2/kvarnbyn/reference/npc/selected-civilians-2026-11-08.json`.
+Övriga kandidater väntar på nytt uttryckligt urval.
 
 **Passionsprojekt:** förbättringsbackloggen sparas, men Joel väljer vad som känns roligt för stunden. Tidigare föreslagen byggordning ska inte blockera hans nya val av uppgift.
 
@@ -121,7 +128,9 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 
 ## Klart
 
-- [x] 2026-11-08 — **Research för civila NPC:er:**44verkliga kandidater med källor för Mölndals-/Lindome-/Kålleredsanknytning, samt tydligt separat fiktiv bonus. Född/uppvuxen/bosatt/verksam skiljs åt. Urvalet väntar på Joel; ingen NPC byggd än.
+- [x] 2026-11-08 — **NPC-01: fyra unika civila:** egna referensbaserade modeller, tydliga kroppstyper och fem animationer; lugna rörelser, E-samtal och fyra vygenvägar på torget. Skyddade från skada/stridsmål/poäng; 29 prov i release. Ordinarie Mac-app uppdaterad. Första stiliserade likheter, Joels bedömning återstår.
+
+- [x] 2026-11-08 — **Research för civila NPC:er:**44verkliga kandidater med källor för Mölndals-/Lindome-/Kålleredsanknytning, samt tydligt separat fiktiv bonus. Född/uppvuxen/bosatt/verksam skiljs åt. Researchsteget följdes av Joels urval och NPC-01 ovan.
 
 - [x] 2026-11-08 — **Första berg-/murpasset:** kontinuerlig berg/grönska i kärna och kuliss, rå LiDAR-lutning, särskilt Glasbergets framsida från startområdet, världsprojicerad bergtextur och två kartlagda låga stenmurar. Separat Karta-worktree → integrerad spelapp. Befintlig geometri/höjdfält bevarade; exakt klippform och murarnas öppningar återstår.
 

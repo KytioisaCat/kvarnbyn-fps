@@ -104,6 +104,27 @@ inte leverera dem).
 - **Önskemål**: Fiendevariation — snabba/svaga rusare, tungt infanteri, prickskyttar
   som håller avstånd; blandning som varierar trycket.
 
+### Civila personliga NPC:er
+
+#### NPC-01 — Igenkännbara civila med egna kroppar (Joel 2026-11-08)
+
+**Önskemål:** personer som Joel väljer ska kunna finnas i världen som unika
+civila. Första urvalet: Lars Gahrn, Per Andersson, fiktiva Ronny Jönsson och
+Linnea Rönnqvist från Nyhetsshowen. Offentliga bildreferenser ska styra klädsel,
+hår och ansiktsdrag. Tydliga siluetter och vardaglig hållning ska skilja dem
+från soldaterna redan på avstånd: Lars lång/mycket smal, Ronny rundlagd,
+Per normalbyggd och Linnea med kvinnlig kroppsform.
+
+De ska kunna existera och röra sig lugnt i miljön utan att vara stridande.
+Spelaren ska förstå att de är civila som ska skyddas. De ska inte väljas som
+stridsmål eller ge stridspoäng; ett vådaskott ska få en tydlig civilreaktion.
+Kort kontakt/samtal ska vara möjlig utan att påhittade repliker presenteras
+som verkliga citat. Fler personer läggs till efter Joels uttryckliga urval.
+
+**Acceptans:** de fyra går att hitta i spelvärlden, känna isär även utan namn,
+och skilja från soldater genom kropp, kläder, utrustning och rörelse. Joels
+bedömning av igenkänning avgör fortsatt finjustering.
+
 ### Rörelse
 
 - **Krav**: Springa, sprinta, hoppa, huka (hukning ska bryta fiendens siktlinjer

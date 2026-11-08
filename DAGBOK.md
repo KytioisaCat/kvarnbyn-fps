@@ -33,6 +33,17 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-08 — ChatGPT Codex — fyra unika civila i Mac-appen
+
+**Status:** klart — NPC-01 integrerat, ordinarie app/ZIP uppdaterade och verifierade.
+**Mål/urval:** Lars Gahrn, Per Andersson, fiktiva Ronny Jönsson och Linnea Rönnqvist från Nyhetsshowen. Joels förtydligande: Lars lång/mycket smal, Per normalbyggd, Ronny rundlagd, Linnea kvinnlig siluett. Fyra egna civila modeller, vardagskläder, riggar/animationer; tydligt skilda från soldatmodellen i granskad jämförelsebild. Första stiliserade likheter, Joels igenkänningsbedömning återstår.
+**Gjort:** Spel-gren/worktree `codex/spel/civila`, källa1ae6b2a integrerad. Fem faktiska referensbilder granskade; URL/hash/observationer i `reference/npc/selected-civilians-2026-11-08.json`. Inga fotopixlar i spelet. Fyra personer på torgets hårdgjorda ytor, korta promenader/hälsningar och E-samtal med påhittade textrepliker. Fyra vygenvägar. Skyddade civila: eget lager8, inga stridsmål/zontagare, vapen eller skade-API; vådaskott stannar med reaktion/varning utan blod/markör/poäng. Soldatens sikt/mynning håller inne skott när civil skymmer. Krok kvar höger mus, sikte Q; spelaren kolliderar med personerna.
+**Verifierat:**29 riktiga civila stadsprov både editor och installerad release, inklusive kropp-/huvudskott, fysisk E/sikt/hinder, markgång, importerad animation, pausad UI och omstart utan dubbletter. Source-regression vapen13/krok27/rörelse25/karta19/terräng7 inklusive272murstrålar + kontroller/soldattaktik gröna. Installerad app: civila29, krok27 + verklig stad, rörelse25, terräng7 och kartresurser gröna. Åtta värld-/kart-/spelfiler byteidentiska. Native Forward+-bilder på torget, ansikten och jämförelse med soldat granskade; även riktig releasebild.
+**Leverans:** `evidence/delivery-civilians-2026-11-08.json`, ordinarie `desktop/app/Försvara Kvarnbyn.app` och `desktop/Kvarnbyn.zip`. Tidigare app/ZIP bevarade i `v2/.tools/kvarnbyn-civilians-20261108/previous/`; verifierad ny app kopierad separat och bytt på plats, ingen pågående spelprocess avslutad. Modeller, råloggar och referensfoton finns lokalt i ordinarie projekt; inga stora binärer committade. Byggaren/rebuild/exportlistan tar med alla fyra modeller och kräver civilprov. Första isolerade exporten saknade GLB-resurser; explicit resurslista rättad före leverans. Kända CA-/ObjectDB-avslutsvarningar separerade från slutrapporternas stdout, inga slutliga script/shader/resursfel.
+**Nästa:** Joel öppnar appen och väljer Gamla torget – personnamn i vymenyn. E nära personen. Förfina framför allt porträttlikhet, hår/kläder och naturligare animation efter hans omdöme. Ingen verifierad Mölndalskoppling påstås för Linnea; hon är ett uttryckligt tillval. Övriga kandidatnamn kräver nytt urval. Befintlig hus/klipp-/flytbacklogg kvar; playpen och graphify memory orörda.
+
+---
+
 ## 2026-11-08 — ChatGPT Codex — civila NPC-kandidater från Mölndal
 
 **Status:** klart — researchlista med44verkliga personer +enfiktiv bonus; väntar på Joels urval.

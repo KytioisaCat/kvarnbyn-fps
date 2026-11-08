@@ -48,3 +48,11 @@ Integratören återstår att lägga till centrala TODO/arkitektur/krav/dagboksan
 kopiera lokala modellutdata och installera verifierad app/ZIP på Joels ordinarie plats.
 Stora GLB/foton/exporter/bildprov committas inte. Reproducerbar byggare, importinställningar,
 rigg/runtime/källmanifest och små kontrollrapporter committas.
+
+## Integrerat 2026-11-08
+
+Källcommit1ae6b2a införd i main. Centrala krav/TODO/arkitektur/dagbok uppdaterade.
+Lokala modeller/referenser/bildprov kopierade; ordinarie app och ZIP ersatta med
+verifierat paket och förra versionen bevarad. Slutlig installerad app klarade
+29civilprov,27krokprov med stad,25rörelseprov,7terrängprov och kartkontroll.
+Native releasebild granskad. Leveranskvitto i `evidence/delivery-civilians-2026-11-08.json`.

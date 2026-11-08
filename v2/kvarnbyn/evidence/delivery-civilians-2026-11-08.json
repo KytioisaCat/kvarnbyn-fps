@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-08",
+  "source_commit": "1ae6b2a",
+  "app": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "zip": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/Kvarnbyn.zip",
+  "zip_bytes": 248795701,
+  "zip_sha256": "3c6ed58d6cc8c0478214188d414b2727a585967a9386940f4cbbb7927dffa4d4",
+  "bundle_payload": {
+    "Contents/MacOS/Försvara Kvarnbyn": "c977cde6111c9655e6bd6872fc32147579e9308e2a397c4cac0a43b2265e115d",
+    "Contents/Resources/Försvara Kvarnbyn.pck": "400f490253088bc425565e37bb425ed5e99c479c1ee99b26b7096faff5356bac"
+  },
+  "previous_app": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-civilians-20261108/previous/Försvara Kvarnbyn.app",
+  "protected": {
+    "world.glb": "8f705acdb00405f19008935de432ad0ed81aa78c88e9ab3cb9718e26a3061f6c",
+    "world_meta.json": "5e649c2272021b6dc9ca8a1e5e587004b21fcd1206009aa5a914eb635f285443",
+    "nav.json": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f",
+    "game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "map.json": "ec346420c00814796ae09366f67056792af0336685aac31bb36297835b98cf43",
+    "river_flow.png": "340287e3e36a9fadce17f89a40658b1f452010e4ef9947bc0b9cef06c01d3222",
+    "river_flow.json": "5aa920e7fad83f564770edba07f92af1461dcedf11da2ebc9ac721bf4ac06e73"
+  },
+  "reference_pixels_shipped": false,
+  "native_review": [
+    "civilian-soldier-comparison.png",
+    "world-conversation.png",
+    "world-linnea.png",
+    "world-per.png",
+    "world-ronny.png",
+    "release-lars.png"
+  ],
+  "civilian_release_checks": 29,
+  "audio_driver_in_agent_tests": "Dummy",
+  "installed_checks": {
+    "civilian": {
+      "passed": true,
+      "release": true,
+      "checks": 29
+    },
+    "grapple": {
+      "passed": true,
+      "release": true,
+      "checks": 27
+    },
+    "movement": {
+      "passed": true,
+      "release": true,
+      "checks": 25
+    },
+    "terrain": {
+      "passed": true,
+      "release": true,
+      "checks": 7
+    },
+    "map": {
+      "passed": true,
+      "release": true,
+      "checks": 0
+    }
+  },
+  "local_reference_directory": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-civilians-20261108/references",
+  "native_release_capture": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/evidence/civilians/release-lars.png",
+  "known_engine_warnings": "CA-certificate warning in headless runs; ObjectDB cleanup warnings retained separately. No final script/shader/resource errors."
+}

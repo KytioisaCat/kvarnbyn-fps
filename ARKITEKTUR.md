@@ -722,21 +722,54 @@ kompletterar artefaktkontrollen. Bildproven använder samma fem kameror före/ef
 samt två extra från startområdet efter Joels förtydligande.
 
 
-## Civila personliga NPC:er — research och arbetssätt (2026-11-08)
+## Civila personliga NPC:er — NPC-01 (2026-11-08)
 
-Joel vill ha igenkännbara, unika civila personer i världen, hämtade från lokala
-profiler och kända/betydelsefulla människor med Mölndalskoppling. De är civila
-som spelaren inte ska skjuta på. Detta är ett eget önskat spelinslag; exakta
-skaderegler, reaktioner, vardagsbeteenden och platser är ännu inte beslutade.
+Joel valde Lars Gahrn, Per Andersson, fiktiva Ronny Jönsson och lade till Linnea
+Rönnqvist från Nyhetsshowen. Fyra skyddade civila på Gamla torget, egna stiliserade
+kroppar/kläder/huvuden: Lars lång/mycket smal, Per normalbyggd, Ronny rundlagd med
+mage, Linnea kvinnlig siluett. Inga soldatmesh eller vapen återanvänds. Kroppsmått
+är konstnärliga uppskattningar enligt Joels riktning, inte uppmätta personmått.
+Första gestaltningarna behöver Joels igenkänningsbedömning och fortsatt finform.
 
-Först en bred kandidatlista, sedan Joels uttryckliga urval, därefter bildreferenser
-och unik NPC-design/modellering för de valda. Researchunderlaget finns i
-`v2/kvarnbyn/reference/npc/candidates-2026-11-08.json`:44verkliga personer plus
-fiktiva Ronny Jönsson som separat bonus. Alla är fortfarande ovalda. Källor
-anger född/uppvuxen/bosatt/verksam; en födelseort ensam är inte belägg för
-långvarig lokal förankring. Lindome/Kållered och historiska personer ingår i
-urvalsunderlaget. Biografierna beskriver ortsnivå, inga privata hemadresser eller
-NPC-placeringar. Inga bilder hämtade, ingen modell eller appändring i researchen.
+Urvalsunderlaget `reference/npc/candidates-2026-11-08.json` under v2/kvarnbyn
+innehåller45verkliga personer +fiktiva Ronny efter Linneas tillägg; fyra valda.
+Linnea är uttryckligt tillval, ingen verifierad Mölndalskoppling påstås. Källor
+skiljer född/uppvuxen/bosatt/verksam och stad/Lindome/Kållered. Inga privata
+hemadresser används; de fiktiva spelplaceringarna är inte biografiska uppgifter.
+Fem nedladdade/granskade referensfoton och deras URL/hash/observationer dokumenteras
+separat i `reference/npc/selected-civilians-2026-11-08.json`. Fotona ligger endast
+lokalt i `v2/.tools/kvarnbyn-civilians-20261108/references/`; de ingår inte som
+foton eller texturer i spelet och deras originalrättigheter påstås inte vara fria.
+
+`blender/build_civilians.py` bygger fyra separata GLB med egen geometri/material,
+16-bensrigg och Idle/Walk/Talk/Wave/Startle. `civilian_roster.gd` äger de fyra
+personernas plats, korta promenadsträcka, takt och påhittade spelrepliker. Inga
+verkliga citat eller klonade röster. `civilian.gd` äger fysik/animation/reaktioner,
+`civilian_world.gd` spawn/interaktion/UI. Världens GLB och geografiska metadata
+byggs inte om för NPC:er; vymenyn får fyra runtime-genvägar till personer.
+
+**Skyddad civil är ett första implementationsbeslut:** egen grupp/lager8,
+inte soldier-team, allierad/fiendepool, AI-mål, zontagare eller hälsa/skade-API.
+Spelarens skott stannar med civilreaktion/varning, utan blod, träffmarkör eller
+poäng. Soldatens sikt- och mynningsstrålar omfattar8 och avstår om civil skymmer.
+Spelarkapseln omfattar8 så personer inte blir spöken; NPC:er undviker klippor och
+hinder och korta promenader provades på torgets hårdgjorda ytor. Krok använder
+bara världslagret1 och kan inte fästa på personer. Dessa regler gör civila tydliga
+och skyddade utan att bygga nya stridsmål eller straff-/uppdragssystem.
+
+Titta inom3,8m och tryck **E** för en kort textreplik. Ray mot1|8 kräver fri sikt;
+namn/Civil och Prata visas vid fokus. Civilhjälpen ersätter allmän krokhjälp i
+samma yta. UI uppdateras även när trädet pausats för att döljas i menyn; aktörer
+är PAUSABLE. Död/paus/karta/inaktiv spelare stoppar interaktionen, omstart skapar
+inte dubbletter. Kroken är kvar på höger mus och sikte på Q.
+
+29 riktiga stadsprov i `civilian_check.gd`, verify-wrapper och
+`--civilian-export-check`: import/animation/kroppar, markgång, fysisk E, sikt/hinder,
+pausad UI, riktiga kropp-/huvudskott utan skada/blood/score, soldatblockering och
+omstart. Exporten måste uttryckligen lista fyra modellresurser; enbart skriptets
+preloads räckte inte med dagens resursfilter. Byggkedjan bygger dem och kräver
+civilprov i editor/release. Native Forward+-bilder och jämförelse med soldat
+granskade. Evidens i `evidence/civilian-*.json` och lokal `evidence/civilians/`.
 
 Joel betonar att detta är ett passionsprojekt där det är fritt att byta mellan
 roliga deluppgifter. Oavslutade förbättringar förs i backloggen; en äldre föreslagen
