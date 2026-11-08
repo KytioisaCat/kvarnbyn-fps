@@ -22,6 +22,19 @@ Linan bryts om ett nytt hinder kommer emellan. Karta, paus och död släpper kro
 Fartbygget är en avsiktlig feature med Prawn i Subnautica 1 som referens; se
 projektets `KRAVSPEC.md`, ticket **RÖR-01**. Joels bedömning av känslan återstår.
 
+**Finjustera själv:** tryck **Esc** för **Rörelse & gripkrok**. Fyra flikar har
+24 reglage med exakta sifferfält och enheter: Gripkrok, Efter släpp, Gång & hopp
+och Raket. Ändra ett reglage eller skriv ett tal, tryck Esc och prova. Dina värden
+sparas lokalt mellan starter. **Återställ standard** ger tillbaka startvärdena;
+**Kopiera värden** låter dig dela hela uppsättningen i chatten. **Övriga
+inställningar** öppnar den tidigare menyn för bland annat bildkvalitet och ljus.
+Fartmätaren kan slås av/på i rörelsemenyn och visar markfart även efter kroksläpp.
+
+Nya standardvärden efter Joels prov: indragning **6 m/s** (tidigare 9),
+dragacceleration **20 m/s²** (32), markbroms **3,5 m/s²** (9) och hukbroms
+**1,5 m/s²** (4). Svingacceleration är fortsatt **19 m/s²**, farttak **30 m/s**
+och luftmotstånd **0**. Alla dessa finns i menyn.
+
 Minikartan följer dig med norr uppåt. Den stora kartan pausar spelet och visar
 husen, ån, din riktning, zonerna och allierade. M eller Esc återgår till spelet.
 Röd/blå ton visar läget kring zonerna; den streckade fronten följer ägarbyten.

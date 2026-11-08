@@ -31,6 +31,16 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-08 — ChatGPT Codex — rörelsereglage för Joels speltest
+
+**Status:** klart — RÖR-02 i ny verifierad Mac-app; Joels kalibrering återstår.
+**Gjort:**24parametrar i `movement_settings.gd`; fyra flikar i `movement_panel.gd`, direkt via Esc. Reglage + exakta LineEdit-fält/enheter/hjälp, lokal profil, standardåterställning, kopiering och valbar fartmätare. Standard: indragning9→6m/s, dragacceleration32→20m/s², slacktillägg7→4m/s, markbroms9→3,5m/s² och hukbroms4→1,5m/s². Momentumbroms går mjukt ända till stopp utan WASD. RÖR-02/README/TODO/arkitektur uppdaterade.
+**Verifierat:**25meny-/spar-/fysikprov i release,27native inklusive två granskade bilder. Faktisk Esc applicerar skriven7,25 före återgång/sparning. Låg/hög markbroms gav14/6m/s kvar efter1s; styrreglage och farttak prövade med riktig kapsel. Separat releasekrok27prov + stad/hus/karta/paus grön. Vanliga kontroller/raket/flyg,13vapenprov, kart-/Esc-prov och riktigt Roten-gångstråk gröna. Alla fem skyddade värld-/kart-/spel-/navhashar identiska. Prov använder temporära profiler, aldrig Joels `user://movement.cfg`; automatiska flaggor/verify-skript hoppar över användarprofilen.
+**Läge nu:** ny app/ZIP i `v2/kvarnbyn/desktop/`, runtime-import/export utan världsombyggnad. `evidence/delivery-movement-2026-11-08.json`; råloggar/bilder i `v2/.tools/kvarnbyn-movement-20261108/`. Egna tester ljudlösa och avslutade; eventuell redan öppen äldre spelprocess är Joels och har inte avslutats. Starta om appen för nya menyn. Kända enstaka headless-avslutsvarningar, inga motor-/skriptfel i slutproven.
+**Nästa:** Joel provar/reglerar själv och kan klistra in Kopiera värden i chatten. Han har också bett om formaliserade parallella spel-/kartspår; det arbetet följer separat, inte en ny speländring.
+
+---
+
 ## 2026-11-08 — ChatGPT Codex — gripkrok på högerklick
 
 **Status:** klart — högerklick i ny verifierad Mac-app.

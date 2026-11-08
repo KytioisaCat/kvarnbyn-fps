@@ -52,6 +52,9 @@ $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res:/
 step "Kontroll: gripkrokens sving, fartbygge, släpp och kollision"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_grapple.gd > $LOG/grapple-check.log 2> $LOG/grapple-check.stderr.log
 $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_GRAPPLE_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_GRAPPLE_CHECK "))); assert r["passed"]' $LOG/grapple-check.log
+step "Kontroll: rörelsemeny, sparning och verklig effekt av reglagen"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_movement.gd -- --no-pointer-lock --no-movement-profile > $LOG/movement-check.log 2> $LOG/movement-check.stderr.log
+$PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_MOVEMENT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_MOVEMENT_CHECK "))); assert r["passed"] and len(r["checks"])>=25' $LOG/movement-check.log
 step "Kontroll: gångytor över hela världen"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --walktest > $LOG/walk-check.log 2>&1
 step "Kontroll: Roten M 29, gård och grind"
@@ -117,5 +120,8 @@ if [[ " $* " != *" --no-export "* ]]; then
   step "Kontroll: gripkrok, fartbygge och stadskollision i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --explore --no-pointer-lock --grapple-export-check > $LOG/grapple-export-check.log 2> $LOG/grapple-export-check.stderr.log
   $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_GRAPPLE_EXPORT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_GRAPPLE_EXPORT_CHECK "))); assert r["passed"] and r["release"] and r["city"]["passed"]' $LOG/grapple-export-check.log
+  step "Kontroll: rörelsereglagen i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --no-pointer-lock --movement-export-check > $LOG/movement-export-check.log 2> $LOG/movement-export-check.stderr.log
+  $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_MOVEMENT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_MOVEMENT_CHECK "))); assert r["passed"] and r["release"] and len(r["checks"])>=25' $LOG/movement-export-check.log
 fi
 step "Klart på $(( $(date +%s) - t0 )) s. Kör:  $G --path $P/godot"

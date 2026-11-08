@@ -124,11 +124,11 @@ func run(hz := 60) -> Dictionary:
 	samples["diagonal"] = diagonal
 	samples["left"] = left
 	check("right mouse attaches and keeps reeling through real physics", straight.attached and diagonal.attached)
-	check("straight pull accelerates beyond sprint", straight.speed > p.RUN_SPEED + 1.0, straight.speed)
+	check("straight pull accelerates toward reel speed", straight.speed > p.movement.get_value("reel_speed") * 0.8, straight.speed)
 	check("diagonal steering builds more speed than straight pull", diagonal.speed > straight.speed * 1.15, [straight.speed, diagonal.speed])
 	check("steering creates a swing arc", diagonal.sideways_m > 2.0, diagonal.sideways_m)
 	check("left and right swing have equal strength", absf(left.speed - diagonal.speed) < 0.2, [left.speed, diagonal.speed])
-	check("city speed budget holds", maxf(straight.peak, diagonal.peak) <= p.grapple.MAX_SPEED + 0.01)
+	check("city speed budget holds", maxf(straight.peak, diagonal.peak) <= p.movement.get_value("max_speed") + 0.01)
 	# Riktig markstart, hopp under dragning, därefter släpp i luften.
 	await reset()
 	hook_button(true)
@@ -159,7 +159,9 @@ func run(hz := 60) -> Dictionary:
 	check("can grapple again while airborne", p.grapple.attached and Vector2(p.velocity.x, p.velocity.z).length() > horizontal_before * 0.8)
 	hook_button(false)
 	await frames(hz * 2)
-	check("landing returns to controllable ground speed", p.is_on_floor() and p.velocity.length() < 8.0, p.velocity.length())
+	check("landing keeps speed while gradually braking", p.is_on_floor() and p.velocity.length() < horizontal_before and p.velocity.length() > 1.0, p.velocity.length())
+	await frames(hz * 4)
+	check("continued ground braking eventually stops", p.velocity.length() < 0.2, p.velocity.length())
 	# Hög fart mot vägg och golv: svept CharacterBody-kollision, ingen teleport.
 	await reset(Vector3(0, 1, -23))
 	p.velocity = Vector3(0, 0, -30)
@@ -277,7 +279,7 @@ func run_city(world: Node3D) -> Dictionary:
 	var pause_cancelled: bool = not city.grapple.attached and not city.active
 	release_keys()
 	get_tree().paused = false
-	return {"passed": collider_name != "" and latched and still_attached and moved > 0.5 and speed > city.WALK_SPEED and visual and map_cancelled and reattached and pause_cancelled,
+	return {"passed": collider_name != "" and latched and still_attached and moved > 0.5 and speed > city.movement.get_value("walk_speed") and visual and map_cancelled and reattached and pause_cancelled,
 		"start": [start.x, start.y, start.z],
 		"collider": collider_name, "attached": latched, "still_attached": still_attached,
 		"distance_m": moved, "speed_m_s": speed, "cable_and_anchor_visible": visual,

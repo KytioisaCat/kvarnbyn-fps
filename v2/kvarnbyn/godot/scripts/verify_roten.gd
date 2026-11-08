@@ -236,7 +236,7 @@ func walk_path(points: Array[Vector3], speed: float, tolerance: float, blocked_c
 		length_m += flat_distance(points[index], points[index + 1])
 	if length_m < 0.5:
 		return {"reached": false, "reason": "route_shorter_than_0_5m"}
-	speed = clampf(speed, 0.5, PlayerController.WALK_SPEED)
+	speed = clampf(speed, 0.5, controller.movement.get_value("walk_speed"))
 	var budget := maxi(180, ceili((length_m / speed * 3.0 + 3.0) * 60.0))
 	var next := 1
 	var progress_window: Vector3 = controller.position
@@ -262,7 +262,7 @@ func walk_path(points: Array[Vector3], speed: float, tolerance: float, blocked_c
 			toward = points[next] - controller.position
 			toward.y = 0.0
 		controller.rotation.y = atan2(-toward.x, -toward.z)
-		controller.bot_input = Vector2(0, -speed / PlayerController.WALK_SPEED)
+		controller.bot_input = Vector2(0, -speed / controller.movement.get_value("walk_speed"))
 		await physics_frame
 		used_frames += 1
 		var actual: Vector3 = controller.position

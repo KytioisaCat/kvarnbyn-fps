@@ -1,0 +1,1180 @@
+{
+  "feature": "RÖR-02",
+  "date": "2026-11-08",
+  "release": {
+    "checks": [
+      {
+        "details": null,
+        "name": "Escape opens movement menu and pauses battle",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "all 24 values have sliders and exact number fields",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "slower pull and longer landing glide are defaults",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "slider updates runtime value and number field",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "exact number field updates slider and runtime",
+        "passed": true
+      },
+      {
+        "details": {
+          "active": true,
+          "runtime": 7.25,
+          "saved": 7.25,
+          "text": "7.25"
+        },
+        "name": "Escape applies and saves a typed decimal before resuming",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "every slider is bound to its actual movement parameter",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reset button restores all new defaults",
+        "passed": true
+      },
+      {
+        "details": "(820.0, 428.0)",
+        "name": "menu fits desktop and small window",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "decimal values and speed display survive profile reload",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "out of range values are bounded",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "non finite values are ignored",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "settings are independent per player",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "share text contains every parameter with units",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "speed meter toggle reaches game state",
+        "passed": true
+      },
+      {
+        "details": {
+          "fast": 12.0003232955933,
+          "slow": 6.71989440917969
+        },
+        "name": "menu changes actual reel speed in capsule simulation",
+        "passed": true
+      },
+      {
+        "details": {
+          "off": 8.97956562042236,
+          "on": 21.9398975372314
+        },
+        "name": "menu changes actual swing acceleration",
+        "passed": true
+      },
+      {
+        "details": 11.9996089935303,
+        "name": "menu speed limit constrains actual capsule",
+        "passed": true
+      },
+      {
+        "details": {
+          "gentle": {
+            "distance": 14.9837646484375,
+            "on_floor": true,
+            "speed": 13.9999732971191
+          },
+          "strong": {
+            "distance": 10.9168701171875,
+            "on_floor": true,
+            "speed": 5.99998712539673
+          }
+        },
+        "name": "lower landing brake keeps speed and travels farther",
+        "passed": true
+      },
+      {
+        "details": {
+          "damped": 9.76480102539062,
+          "free": 15.8333330154419
+        },
+        "name": "air drag slider affects flight after release",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "Escape resumes game and hides tuning controls",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reopening menu preserves edited state",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "other settings remain accessible",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "movement button returns to tuning menu",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "continue button resumes actual game",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "release": true,
+    "scope": "actual Escape/menu controls, isolated persistence, and actual capsule physics driven by those controls",
+    "settings": {
+      "show_speed": true,
+      "values": {
+        "air_drag": 0.0,
+        "air_response": 2.2,
+        "air_steer": 9.0,
+        "crouch_drag": 1.5,
+        "crouch_speed": 2.3,
+        "gravity": 16.0,
+        "ground_drag": 3.5,
+        "ground_steer": 30.0,
+        "jump_speed": 5.1,
+        "max_speed": 30.0,
+        "pull_accel": 20.0,
+        "reach": 42.0,
+        "reel_speed": 6.0,
+        "rocket_dash": 17.0,
+        "rocket_fuel": 0.45,
+        "rocket_lift": 30.0,
+        "rope_catchup": 4.0,
+        "rope_stiffness": 8.0,
+        "run_speed": 6.9,
+        "swing_accel": 19.0,
+        "swing_boost": 1.0,
+        "walk_brake": 14.0,
+        "walk_response": 11.0,
+        "walk_speed": 4.4
+      }
+    }
+  },
+  "native": {
+    "checks": [
+      {
+        "details": null,
+        "name": "Escape opens movement menu and pauses battle",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "all 24 values have sliders and exact number fields",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "slower pull and longer landing glide are defaults",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "slider updates runtime value and number field",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "exact number field updates slider and runtime",
+        "passed": true
+      },
+      {
+        "details": {
+          "active": true,
+          "runtime": 7.25,
+          "saved": 7.25,
+          "text": "7.25"
+        },
+        "name": "Escape applies and saves a typed decimal before resuming",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "every slider is bound to its actual movement parameter",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reset button restores all new defaults",
+        "passed": true
+      },
+      {
+        "details": "(820.0, 428.0)",
+        "name": "menu fits desktop and small window",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "decimal values and speed display survive profile reload",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "out of range values are bounded",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "non finite values are ignored",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "settings are independent per player",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "share text contains every parameter with units",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "speed meter toggle reaches game state",
+        "passed": true
+      },
+      {
+        "details": {
+          "fast": 12.0003232955933,
+          "slow": 6.71989440917969
+        },
+        "name": "menu changes actual reel speed in capsule simulation",
+        "passed": true
+      },
+      {
+        "details": {
+          "off": 8.97956562042236,
+          "on": 21.9398975372314
+        },
+        "name": "menu changes actual swing acceleration",
+        "passed": true
+      },
+      {
+        "details": 11.9996089935303,
+        "name": "menu speed limit constrains actual capsule",
+        "passed": true
+      },
+      {
+        "details": {
+          "gentle": {
+            "distance": 14.9837646484375,
+            "on_floor": true,
+            "speed": 13.9999732971191
+          },
+          "strong": {
+            "distance": 10.9168701171875,
+            "on_floor": true,
+            "speed": 5.99998712539673
+          }
+        },
+        "name": "lower landing brake keeps speed and travels farther",
+        "passed": true
+      },
+      {
+        "details": {
+          "damped": 9.76480102539062,
+          "free": 15.8333330154419
+        },
+        "name": "air drag slider affects flight after release",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "native tuning menu capture",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "native landing controls capture",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "Escape resumes game and hides tuning controls",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reopening menu preserves edited state",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "other settings remain accessible",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "movement button returns to tuning menu",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "continue button resumes actual game",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "release": true,
+    "scope": "actual Escape/menu controls, isolated persistence, and actual capsule physics driven by those controls",
+    "settings": {
+      "show_speed": true,
+      "values": {
+        "air_drag": 0.0,
+        "air_response": 2.2,
+        "air_steer": 9.0,
+        "crouch_drag": 1.5,
+        "crouch_speed": 2.3,
+        "gravity": 16.0,
+        "ground_drag": 3.5,
+        "ground_steer": 30.0,
+        "jump_speed": 5.1,
+        "max_speed": 30.0,
+        "pull_accel": 20.0,
+        "reach": 42.0,
+        "reel_speed": 6.0,
+        "rocket_dash": 17.0,
+        "rocket_fuel": 0.45,
+        "rocket_lift": 30.0,
+        "rope_catchup": 4.0,
+        "rope_stiffness": 8.0,
+        "run_speed": 6.9,
+        "swing_accel": 19.0,
+        "swing_boost": 1.0,
+        "walk_brake": 14.0,
+        "walk_response": 11.0,
+        "walk_speed": 4.4
+      }
+    }
+  },
+  "grapple_release": {
+    "checks": [
+      {
+        "details": null,
+        "name": "normal capsule begins on floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "E no longer fires grapple",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "right mouse does not activate weapon sights",
+        "passed": true
+      },
+      {
+        "details": {
+          "ads": 1.0,
+          "attached": true
+        },
+        "name": "Q activates sights independently of held grapple",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "releasing Q leaves grapple attached",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "miss does not attach or grant momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "wall beyond 42m cannot attach",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "right mouse attaches and keeps reeling through real physics",
+        "passed": true
+      },
+      {
+        "details": 6.80024290084839,
+        "name": "straight pull accelerates toward reel speed",
+        "passed": true
+      },
+      {
+        "details": [
+          6.80024290084839,
+          21.9398975372314
+        ],
+        "name": "diagonal steering builds more speed than straight pull",
+        "passed": true
+      },
+      {
+        "details": 9.1673583984375,
+        "name": "steering creates a swing arc",
+        "passed": true
+      },
+      {
+        "details": [
+          21.9470825195312,
+          21.9398975372314
+        ],
+        "name": "left and right swing have equal strength",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "city speed budget holds",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "release itself never changes velocity",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "jump during reel lifts actual capsule without rocket",
+        "passed": true
+      },
+      {
+        "details": {
+          "after_m_s": 13.2729988098145,
+          "airborne": true,
+          "before_m_s": 13.2729988098145
+        },
+        "name": "mouse release detaches and preserves airborne momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "can grapple again while airborne",
+        "passed": true
+      },
+      {
+        "details": 7.82711887359619,
+        "name": "landing keeps speed while gradually braking",
+        "passed": true
+      },
+      {
+        "details": 0.0,
+        "name": "continued ground braking eventually stops",
+        "passed": true
+      },
+      {
+        "details": -27.703125,
+        "name": "fast capsule stops at solid wall",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "fast capsule does not cross floor",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "new obstruction breaks cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "death detaches immediately",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "inactive controller detaches and stops",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "suspended input cancels cable",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "free flight cancels cable and momentum",
+        "passed": true
+      },
+      {
+        "details": null,
+        "name": "reset clears cable and momentum",
+        "passed": true
+      }
+    ],
+    "city": {
+      "attached": true,
+      "cable_and_anchor_visible": true,
+      "collider": "COL_w92332103__Collision_only",
+      "distance_m": 1.31493055820465,
+      "map_cancels": true,
+      "passed": true,
+      "pause_cancels": true,
+      "reattached": true,
+      "scope": "actual imported city at Gamla torget, camera ray, controller movement, map and pause",
+      "speed_m_s": 7.775634765625,
+      "start": [
+        -8.53777122497559,
+        -0.165715634822845,
+        7.97928524017334
+      ],
+      "still_attached": true
+    },
+    "passed": true,
+    "physics_hz": 60,
+    "release": true,
+    "samples": {
+      "diagonal": {
+        "attached": true,
+        "distance_m": 11.2849788665771,
+        "peak": 21.9398975372314,
+        "sideways_m": 9.1673583984375,
+        "speed": 21.9398975372314
+      },
+      "left": {
+        "attached": true,
+        "distance_m": 11.2887773513794,
+        "peak": 21.9470825195312,
+        "sideways_m": 9.1680908203125,
+        "speed": 21.9470825195312
+      },
+      "release": {
+        "after_m_s": 13.2729988098145,
+        "airborne": true,
+        "before_m_s": 13.2729988098145
+      },
+      "straight": {
+        "attached": true,
+        "distance_m": 5.4395751953125,
+        "peak": 6.80024290084839,
+        "sideways_m": 0.0,
+        "speed": 6.80024290084839
+      }
+    },
+    "scope": "actual controller, key input, swept capsule collisions in a synthetic fixture; feel requires Joel"
+  },
+  "controller": {
+    "eye_height_1_65m": true,
+    "final_position": [
+      40.0,
+      0.000838596024550498,
+      0.012919008731842
+    ],
+    "fly_mode": true,
+    "maximum_height": 0.229167863726616,
+    "passed": true,
+    "pause_stops_movement": true,
+    "release_look_keeps_walking": true,
+    "release_move_stops": true,
+    "rocket_distance": 12.49831199646,
+    "rocket_height": 10.7191953659058,
+    "rocket_jump": true,
+    "stopped_at_wall": true,
+    "two_finger_move_and_look": true,
+    "walked_over_20cm_kerb": true
+  },
+  "weapon": {
+    "ads": {
+      "ads": 1.0,
+      "asset": "res://assets/weapons/ak5_view.glb",
+      "front_screen": [
+        960.0,
+        540.0
+      ],
+      "mag": 30,
+      "model_loaded": true,
+      "muzzle_camera_local": [
+        0.0,
+        -0.0544500350952148,
+        -0.577650010585785
+      ],
+      "rear_screen": [
+        960.0,
+        540.0
+      ],
+      "reloading": false,
+      "sight_center_error_px": 0.0
+    },
+    "checks": [
+      {
+        "details": null,
+        "pass": true,
+        "test": "imported_asset"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "named_anchors"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "animated_magazine"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "charging_handle"
+      },
+      {
+        "details": {
+          "ads": 1.0,
+          "asset": "res://assets/weapons/ak5_view.glb",
+          "front_screen": [
+            960.0,
+            540.0
+          ],
+          "mag": 30,
+          "model_loaded": true,
+          "muzzle_camera_local": [
+            0.0,
+            -0.0544500350952148,
+            -0.577650010585785
+          ],
+          "rear_screen": [
+            960.0,
+            540.0
+          ],
+          "reloading": false,
+          "sight_center_error_px": 0.0
+        },
+        "pass": true,
+        "test": "ADS_sights_align_with_camera"
+      },
+      {
+        "details": [
+          0.0,
+          -0.0544500350952148,
+          -0.577650010585785
+        ],
+        "pass": true,
+        "test": "muzzle_below_sight_axis"
+      },
+      {
+        "details": {
+          "mag": 21,
+          "shots_in_one_second": 9
+        },
+        "pass": true,
+        "test": "auto_fire_cadence_and_ammo"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "magazine_moves_during_reload"
+      },
+      {
+        "details": {
+          "duration": 1.71666666666667,
+          "expected": 1.7
+        },
+        "pass": true,
+        "test": "tactical_reload_time_and_refill"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "magazine_restored"
+      },
+      {
+        "details": {
+          "duration": 2.21666666666667,
+          "expected": 2.2
+        },
+        "pass": true,
+        "test": "empty_reload_time_and_refill"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "empty_reload_bolt_motion"
+      },
+      {
+        "details": null,
+        "pass": true,
+        "test": "bolt_restored"
+      }
+    ],
+    "engine": {
+      "build": "official",
+      "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+      "hex": 263938,
+      "major": 4,
+      "minor": 7,
+      "patch": 2,
+      "status": "stable",
+      "string": "4.7.2-stable (official)",
+      "timestamp": 0
+    },
+    "hip": {
+      "ads": 0.0,
+      "asset": "res://assets/weapons/ak5_view.glb",
+      "front_screen": [
+        1125.90319824219,
+        630.762817382812
+      ],
+      "mag": 30,
+      "model_loaded": true,
+      "muzzle_camera_local": [
+        0.119999997317791,
+        -0.120100021362305,
+        -0.642650008201599
+      ],
+      "rear_screen": [
+        1361.93579101562,
+        759.892272949219
+      ],
+      "reloading": false,
+      "sight_center_error_px": 458.153900146484
+    },
+    "passed": true,
+    "renderer": "forward_plus"
+  },
+  "map_world": {
+    "checks": [
+      {
+        "passed": true,
+        "test": "actual_world_ready"
+      },
+      {
+        "passed": true,
+        "test": "actual_combat_loaded"
+      },
+      {
+        "passed": true,
+        "test": "real_map_assets_loaded"
+      },
+      {
+        "passed": true,
+        "test": "minimap_visible_during_play"
+      },
+      {
+        "passed": true,
+        "test": "physical_m_opens_full_map"
+      },
+      {
+        "passed": true,
+        "test": "map_pauses_actual_tree"
+      },
+      {
+        "passed": true,
+        "test": "map_releases_pointer"
+      },
+      {
+        "passed": true,
+        "test": "map_stops_player_and_battle"
+      },
+      {
+        "passed": true,
+        "test": "escape_closes_map_and_resumes"
+      },
+      {
+        "passed": true,
+        "test": "pointer_mode_restored"
+      },
+      {
+        "passed": true,
+        "test": "repeated_m_toggles_resume_without_extra_controls"
+      },
+      {
+        "passed": true,
+        "test": "normal_escape_pause_menu_works"
+      },
+      {
+        "passed": true,
+        "test": "m_respects_existing_pause_menu"
+      },
+      {
+        "passed": true,
+        "test": "pause_menu_resumes_normally"
+      },
+      {
+        "passed": true,
+        "test": "close_button_resumes_actual_world"
+      },
+      {
+        "passed": true,
+        "test": "actual_zone_ownership_reaches_map"
+      },
+      {
+        "passed": true,
+        "test": "no_enemy_position_radar"
+      },
+      {
+        "passed": true,
+        "test": "end_screen_hides_map"
+      },
+      {
+        "passed": true,
+        "test": "m_does_not_cover_end_screen"
+      }
+    ],
+    "passed": true,
+    "scope": "actual imported world, combat, map, physical M/Esc input and pause"
+  },
+  "ground": {
+    "blockers": [
+      {
+        "expected_blocked": false,
+        "id": "m29_open_gate",
+        "passed": true,
+        "ray_blocked": false,
+        "ray_collider": "",
+        "walk": {
+          "distance_from_start_m": 2.21811437606812,
+          "frames": 71,
+          "height_profile_checked": false,
+          "maximum_height_error_m": 0.268700051518206,
+          "maximum_lateral_error_m": 2.75081729341764e-05,
+          "position": [
+            109.875595092773,
+            23.7580947875977,
+            120.12956237793
+          ],
+          "reached": true,
+          "reason": "reached",
+          "side_colliders": []
+        }
+      },
+      {
+        "expected_blocked": true,
+        "id": "m29_vine_fence_block",
+        "passed": true,
+        "ray_blocked": true,
+        "ray_collider": "/root/Kvarnbyn/Varlden/COL_Young_tree0_1__Collision_only/Gångyta",
+        "walk": {
+          "distance_from_start_m": 0.439199775457382,
+          "frames": 15,
+          "height_profile_checked": false,
+          "maximum_height_error_m": 0.0790978765448642,
+          "maximum_lateral_error_m": 0.307044953107834,
+          "position": [
+            97.0980072021484,
+            23.0796127319336,
+            125.976631164551
+          ],
+          "reached": false,
+          "reason": "blocked_by_static",
+          "side_colliders": [
+            "/root/Kvarnbyn/Varlden/COL_Roten_fence__Collision_only/Gångyta",
+            "/root/Kvarnbyn/Varlden/COL_Young_tree0_1__Collision_only/Gångyta"
+          ]
+        }
+      }
+    ],
+    "check_key": "m29_ground_checks",
+    "coverage": {
+      "closed_blocker_probes": 1,
+      "ground_points": 11,
+      "open_passage_probes": 1,
+      "walk_paths": 2
+    },
+    "errors": [],
+    "geometry_source": "res://assets/world.glb",
+    "metadata_mtime_unix": 1794123914,
+    "metadata_source": "world_meta.m29_ground_checks",
+    "passed": true,
+    "paths": [
+      {
+        "id": "m29_courtyard_entry",
+        "passed": true,
+        "surface_samples": {
+          "bad": 0,
+          "count": 72,
+          "first_failures": [],
+          "maximum_adjacent_height_change_m": 0.0613002777099609,
+          "maximum_height_error_m": 0.0132026672363281,
+          "passed": true
+        },
+        "walk": {
+          "distance_from_start_m": 10.0315961837769,
+          "frames": 278,
+          "height_profile_checked": true,
+          "maximum_height_error_m": 0.0188005675497784,
+          "maximum_lateral_error_m": 0.00196158536709845,
+          "position": [
+            101.485580444336,
+            23.7788314819336,
+            120.088981628418
+          ],
+          "reached": true,
+          "reason": "reached",
+          "side_colliders": []
+        }
+      },
+      {
+        "id": "m29_open_gate_steps",
+        "passed": true,
+        "surface_samples": {
+          "bad": 0,
+          "count": 48,
+          "first_failures": [],
+          "maximum_adjacent_height_change_m": 0.0917949676513672,
+          "maximum_height_error_m": 0.0220375061035156,
+          "passed": true
+        },
+        "walk": {
+          "distance_from_start_m": 6.21721267700195,
+          "frames": 174,
+          "height_profile_checked": true,
+          "maximum_height_error_m": 0.0358677706685526,
+          "maximum_lateral_error_m": 0.000505731615703553,
+          "position": [
+            109.610572814941,
+            23.7588787078857,
+            120.308212280273
+          ],
+          "reached": true,
+          "reason": "reached",
+          "side_colliders": []
+        }
+      }
+    ],
+    "points": [
+      {
+        "actual": [
+          103.478584289551,
+          23.7779998779297,
+          118.843421936035
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_courtyard1_1__Collision_only/Gångyta",
+        "expected": [
+          103.478584289551,
+          23.7783298492432,
+          118.843421936035
+        ],
+        "height_error_m": 0.000329971313476562,
+        "id": "m29_courtyard",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          109.850975036621,
+          23.757999420166,
+          120.146141052246
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_landing1_1__Collision_only/Gångyta",
+        "expected": [
+          109.850975036621,
+          23.7583312988281,
+          120.146141052246
+        ],
+        "height_error_m": 0.000331878662109375,
+        "id": "m29_front_landing",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          91.4858779907227,
+          23.9041118621826,
+          117.83772277832
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_west_bedrock0_1__Collision_only/Gångyta",
+        "expected": [
+          91.4858779907227,
+          23.9593524932861,
+          117.83772277832
+        ],
+        "height_error_m": 0.0552406311035156,
+        "id": "m29_west_bedrock",
+        "normal_y": 0.96090567111969,
+        "passed": true
+      },
+      {
+        "actual": [
+          101.041046142578,
+          23.2322940826416,
+          129.321044921875
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_south_bedrock1_1__Collision_only/Gångyta",
+        "expected": [
+          101.041046142578,
+          23.250659942627,
+          129.321044921875
+        ],
+        "height_error_m": 0.0183658599853516,
+        "id": "m29_south_bedrock",
+        "normal_y": 0.999768793582916,
+        "passed": true
+      },
+      {
+        "actual": [
+          108.696678161621,
+          23.873010635376,
+          118.659896850586
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_bedrock1_1__Collision_only/Gångyta",
+        "expected": [
+          108.696678161621,
+          23.8975009918213,
+          118.659896850586
+        ],
+        "height_error_m": 0.0244903564453125,
+        "id": "m29_front_bedrock",
+        "normal_y": 0.988353788852692,
+        "passed": true
+      },
+      {
+        "actual": [
+          99.354621887207,
+          23.0709991455078,
+          127.555526733398
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_sitting_pad0_1__Collision_only/Gångyta",
+        "expected": [
+          99.354621887207,
+          23.0706596374512,
+          127.555526733398
+        ],
+        "height_error_m": 0.000339508056640625,
+        "id": "m29_sitting_pad",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          112.218170166016,
+          23.0517711639404,
+          118.768013000488
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_gate_approach1_1__Collision_only/Gångyta",
+        "expected": [
+          112.218170166016,
+          23.0561962127686,
+          118.768013000488
+        ],
+        "height_error_m": 0.004425048828125,
+        "id": "m29_gate_approach",
+        "normal_y": 0.892940044403076,
+        "passed": true
+      },
+      {
+        "actual": [
+          107.572654724121,
+          23.8499774932861,
+          117.162498474121
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_gravel_entry1_1__Collision_only/Gångyta",
+        "expected": [
+          107.572654724121,
+          23.849494934082,
+          117.162498474121
+        ],
+        "height_error_m": 0.000482559204101562,
+        "id": "m29_gravel_entry",
+        "normal_y": 0.985750317573547,
+        "passed": true
+      },
+      {
+        "actual": [
+          109.755882263184,
+          23.757999420166,
+          119.005836486816
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_front_planting1_1__Collision_only/Gångyta",
+        "expected": [
+          109.755882263184,
+          23.7583312988281,
+          119.005836486816
+        ],
+        "height_error_m": 0.000331878662109375,
+        "id": "m29_front_planting",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          93.5881652832031,
+          23.7419986724854,
+          121.821250915527
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_west_grass0_1__Collision_only/Gångyta",
+        "expected": [
+          93.5881652832031,
+          23.7422199249268,
+          121.821250915527
+        ],
+        "height_error_m": 0.00022125244140625,
+        "id": "m29_west_grass",
+        "normal_y": 1.0,
+        "passed": true
+      },
+      {
+        "actual": [
+          100.957168579102,
+          23.0600185394287,
+          127.555526733398
+        ],
+        "collider": "/root/Kvarnbyn/Varlden/COL_Roten_ground_m29_m29_south_grass1_1__Collision_only/Gångyta",
+        "expected": [
+          100.957168579102,
+          23.0638675689697,
+          127.555526733398
+        ],
+        "height_error_m": 0.00384902954101562,
+        "id": "m29_south_grass",
+        "normal_y": 0.990602672100067,
+        "passed": true
+      }
+    ],
+    "scope": "actual imported collision geometry and actual player controller",
+    "wall_clock_s": 0.374719,
+    "world_asset_mtime_unix": 1794123930
+  },
+  "preserved_assets_sha256": {
+    "v2/kvarnbyn/blender/world_raw.glb": "918f97f94efdb29052ce487a05018f92a6e93bb4679351df3c780a72b4a75829",
+    "v2/kvarnbyn/godot/assets/world.glb": "dae551a87b5aa4a7b681f05391a52f451df9c3e9e703a4a247f5077ddc211a5d",
+    "v2/kvarnbyn/godot/assets/world_map.png": "26927933d90beaaaf166144ab1a1e1798fe6c412291c0cc303a726ad77d18606",
+    "v2/kvarnbyn/godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "v2/kvarnbyn/godot/assets/nav.json": "d46b91a799adffbc77ac8b37ebdd45cc051f690e53fc066cd2698de7c323e06f"
+  },
+  "source_sha256": {
+    "player.gd": "3c326571978a57ae3cecdd74d3496e3168311dd62c75b92800fb026bb584c468",
+    "grapple.gd": "4fafd1dddfccc2789b25b61fa02df3012204e69815cee1c8a6faefb772ba891c",
+    "movement_settings.gd": "054a96b7417bccb0e10cc2316799ef0b53a53fdbfd80096d18f1f63b615a2c31",
+    "movement_panel.gd": "e4262d87298219f24833600a08c883343b56d159e1ac0e1b4b2aff7509c84337",
+    "movement_check.gd": "08e4fd89473d9711dd6612af9f97aa7ba5369a1e2cc403d7232bce16ff5310b7",
+    "overlay.gd": "9c8cdf9fbb3843866b5a543c794a34f227176be94f107aa0133a2c4bae8caa64",
+    "world.gd": "a6eba7571a482007b1f4d863d1c0a81b950d6d6cf48d34af06388e99fd25515e"
+  },
+  "zip_bytes": 246277940,
+  "local_images": [
+    "v2/.tools/kvarnbyn-movement-20261108/release-menu.png",
+    "v2/.tools/kvarnbyn-movement-20261108/release-menu-landing.png"
+  ],
+  "scope": "Runtime-only rebuild. 24 sliders and exact numeric fields; pause/resume, temporary profile persistence and real capsule physics. No world changes. Human tuning remains."
+}

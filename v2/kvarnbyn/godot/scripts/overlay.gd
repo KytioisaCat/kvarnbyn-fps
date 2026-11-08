@@ -12,6 +12,7 @@ signal lighting_changed(index: int)
 const INK := Color("183532")
 const PAPER := Color("f1f0e8")
 const BRASS := Color("b9aa80")
+const MovementPanel = preload("res://scripts/movement_panel.gd")
 
 var touch_mode := false
 var player: CharacterBody3D
@@ -37,6 +38,8 @@ var quality_selector: OptionButton
 var lighting_selector: OptionButton
 var available_views: Array = []
 var status_override := ""
+var movement_panel: PanelContainer
+var movement_button: Button
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -123,6 +126,8 @@ func build_panel() -> void:
 	instruction_label = text_label("WASD: gå    Shift: spring    C: huka    Mellanslag: hoppa\nHåll höger mus: gripkrok · rör dig snett för fart · släpp musknappen för att slungas\nVänster mus: skjut    Q: sikta    R: ladda om    M: karta    Esc: paus\nMellanslag i luften: raket (håll)    F: flygläge för test (Shift = fort)", 14, Color("afc2b8"))
 	instruction_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(instruction_label)
+	movement_button = make_button("Rörelse & gripkrok", func(): set_movement_open(true))
+	column.add_child(movement_button)
 	settings_row = HBoxContainer.new()
 	settings_row.add_theme_constant_override("separation", 10)
 	column.add_child(settings_row)
@@ -173,6 +178,12 @@ func build_chrome() -> void:
 	add_child(touch_hint)
 
 func configure(metadata: Dictionary, is_touch: bool) -> void:
+	if movement_panel == null:
+		movement_panel = MovementPanel.new()
+		add_child(movement_panel)
+		movement_panel.configure(player.movement)
+		movement_panel.closed.connect(func(): set_movement_open(false))
+		movement_panel.resume_requested.connect(func(): begin_requested.emit())
 	touch_mode = is_touch
 	title_label.text = str(metadata.get("title", "Kvarnbyn"))
 	status_label.text = title_label.text
@@ -210,8 +221,20 @@ func set_open(value: bool, first_time := false) -> void:
 	jump_button.visible = touch_mode and not value
 	touch_hint.visible = touch_mode and not value and not touch_hint_dismissed
 	reticle_visible = not value
+	set_movement_open(value and has_started and not first_time)
 	layout_controls()
 	queue_redraw()
+
+func set_movement_open(value: bool) -> void:
+	if movement_panel == null:
+		return
+	if not value and movement_panel.visible:
+		movement_panel.flush_save()
+	movement_panel.visible = value and opening
+	main_panel.visible = opening and not movement_panel.visible
+	if movement_panel.visible:
+		movement_panel.sync_all()
+	movement_panel.fit(get_viewport_rect().size)
 
 func show_error(message: String) -> void:
 	description_label.text = message
@@ -223,6 +246,8 @@ func layout_controls() -> void:
 		return
 	var viewport_size := get_viewport_rect().size
 	var margin := 24.0
+	if movement_panel != null:
+		movement_panel.fit(viewport_size)
 	var panel_width := minf(430.0, viewport_size.x - margin * 2.0)
 	description_label.visible = not touch_mode
 	instruction_label.visible = not touch_mode or not has_started
@@ -254,6 +279,14 @@ func _process(_delta: float) -> void:
 		queue_redraw()
 
 func _draw() -> void:
+	if player != null and player.active and player.alive and not opening and player.movement.show_speed:
+		var horizontal: float = Vector2(player.velocity.x, player.velocity.z).length()
+		var state := "Gripkrok" if player.grapple.attached else ("Mark" if player.is_on_floor() else "Luft")
+		var text := "%s · %.1f m/s · %.0f km/h" % [state, horizontal, horizontal * 3.6]
+		var width := get_theme_default_font().get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x
+		var point := Vector2((size.x - width) * 0.5, size.y - 65)
+		draw_string(get_theme_default_font(), point + Vector2(1, 2), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color(0, 0, 0, 0.9))
+		draw_string(get_theme_default_font(), point, text, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, PAPER)
 	if reticle_visible:
 		var center := size * 0.5
 		draw_circle(center, 2.1, Color(0.96, 0.96, 0.91, 0.72))

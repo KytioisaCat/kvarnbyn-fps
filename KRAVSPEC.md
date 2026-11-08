@@ -137,6 +137,19 @@ Acceptanskrav:
 - Automatiska prov visar fartbygge, bevarad fart och kollision; Joel bedömer om
   sving, acceleration och släpp faktiskt känns lika roliga som referensen.
 
+#### RÖR-02 — Justera rörelsen under speltest (Joel 2026-11-08)
+
+- Esc öppnar en pausad rörelsemeny med reglage och exakta, redigerbara tal.
+- Krokens indragning, acceleration, sving, räckvidd och farttak samt bromsning
+  på marken, hukglid och luftstyrning ska kunna finjusteras var för sig.
+- Gång, sprint, hopp, tyngdkraft och raketens kraft/tid ska också vara åtkomliga.
+- Visa enheter och korta förklaringar. Ändringar gäller nästa rörelse direkt när
+  spelet återupptas. Det ska vara lätt att ändra lite och prova igen.
+- Spara värden mellan starter, erbjud återställning och kopiering av hela
+  uppsättningen för att kunna dela ett lyckat prov. Valbar fartmätare under spel.
+- Första justering efter Joels prov: lugnare indragning och långsammare
+  inbromsning efter landning. Automatiska prov får inte ändra Joels sparade profil.
+
 ### Strid
 
 - **Krav**: Automatkarbin med omladdning som bas; träffmarkering och tydlig feedback.

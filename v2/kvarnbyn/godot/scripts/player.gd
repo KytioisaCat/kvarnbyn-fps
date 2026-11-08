@@ -7,12 +7,10 @@ extends CharacterBody3D
 const Weapon = preload("res://scripts/weapon.gd")
 const SFX = preload("res://scripts/sfx.gd")
 const Grapple = preload("res://scripts/grapple.gd")
+const MovementSettings = preload("res://scripts/movement_settings.gd")
 
-const WALK_SPEED := 4.4
-const RUN_SPEED := 6.9
-const CROUCH_SPEED := 2.3
-const JUMP_SPEED := 5.1
-const GRAVITY := 16.0
+var movement = MovementSettings.new()
+
 const EYE_HEIGHT := 1.65
 const CROUCH_EYE := 1.05
 const MOUSE_SENSITIVITY := 0.0021
@@ -20,9 +18,6 @@ const TOUCH_SENSITIVITY := 0.0032
 const STEP_HEIGHT := 0.23
 const BASE_FOV := 72.0
 # raketdubbelhopp (v1): mellanslag i luften tänder raketen, håll för mer kraft
-const ROCKET_FUEL := 0.45
-const ROCKET_LIFT := 30.0
-const ROCKET_DASH := 17.0
 # flygläge (felsökning, F): fritt genom väggar, ingen skada
 const FLY_SPEED := 22.0
 const FLY_FAST := 60.0
@@ -188,13 +183,13 @@ func _process(delta: float) -> void:
 			step_t = 0.0
 			footstep.pitch_scale = randf_range(0.85, 1.1)
 			footstep.play()
-	var bob: float = sin(bob_t) * 0.035 * (1.0 - weapon.ads * 0.8) * clampf(hspeed / WALK_SPEED, 0.0, 1.4)
+	var bob: float = sin(bob_t) * 0.035 * (1.0 - weapon.ads * 0.8) * clampf(hspeed / movement.get_value("walk_speed"), 0.0, 1.4)
 	camera.position.y = eye_height + bob - land_dip
-	camera.position.x = cos(bob_t * 0.5) * 0.018 * clampf(hspeed / WALK_SPEED, 0.0, 1.4) * (1.0 - weapon.ads)
+	camera.position.x = cos(bob_t * 0.5) * 0.018 * clampf(hspeed / movement.get_value("walk_speed"), 0.0, 1.4) * (1.0 - weapon.ads)
 	camera.rotation.z = lerpf(camera.rotation.z, (-0.35 if not alive else 0.0), minf(1.0, delta * 3.0))
 	var target_fov := BASE_FOV + (6.0 if sprinting and hspeed > 5.0 else 0.0)
 	if momentum_mode:
-		target_fov = maxf(target_fov, BASE_FOV + clampf((hspeed - RUN_SPEED) * 0.45, 0.0, 10.0))
+		target_fov = maxf(target_fov, BASE_FOV + clampf((hspeed - movement.get_value("run_speed")) * 0.45, 0.0, 10.0))
 	target_fov = lerpf(target_fov, 48.0, weapon.ads)
 	camera.fov = lerpf(camera.fov, target_fov, minf(1.0, delta * 10.0))
 	hurt_flash = maxf(0.0, hurt_flash - delta * 1.6)
@@ -261,13 +256,13 @@ func _physics_process(delta: float) -> void:
 	sprinting = want_sprint and not crouching and input_vector.y < -0.3 and weapon.ads < 0.3
 	shape.height = 1.2 if crouching else 1.76
 	collision.position.y = shape.height / 2.0
-	var speed := CROUCH_SPEED if crouching else (RUN_SPEED if sprinting else WALK_SPEED)
+	var speed: float = movement.get_value("crouch_speed" if crouching else ("run_speed" if sprinting else "walk_speed"))
 	speed *= 1.0 - 0.35 * weapon.ads
 	var direction := basis * Vector3(input_vector.x, 0.0, input_vector.y)
 	var grounded := is_on_floor()
-	var accel := 11.0 if grounded else 2.2
+	var accel: float = movement.get_value("walk_response" if grounded else "air_response")
 	if direction.length_squared() < 0.01 and grounded:
-		accel = 14.0
+		accel = movement.get_value("walk_brake")
 	var weight := minf(delta * accel, 1.0)
 	var space_down := jump_requested or (bot_input == null and alive and Input.is_physical_key_pressed(KEY_SPACE))
 	if free_flight:
@@ -284,17 +279,18 @@ func _physics_process(delta: float) -> void:
 	else:
 		if space_down and not space_was_down and not grounded and not rocket_used and alive:
 			rocket_used = true
-			rocket_fuel = ROCKET_FUEL
+			rocket_fuel = movement.get_value("rocket_fuel")
 			velocity.y = maxf(velocity.y + 4.0, 6.0)
 			rocket_voice.play()
 		if rocket_fuel > 0.0 and space_down and not grounded:
 			# raketen brinner: lyft och fart framåt dit man tittar
 			rocket_fuel -= delta
-			velocity.y += ROCKET_LIFT * delta
-			var forward := -basis.z * ROCKET_DASH
+			velocity.y += movement.get_value("rocket_lift") * delta
+			var rocket_dash: float = movement.get_value("rocket_dash")
+			var forward := -basis.z * rocket_dash
 			var dash_weight := minf(delta * 6.0, 1.0)
 			if momentum_mode:
-				accelerate_momentum(-basis.z, ROCKET_DASH, ROCKET_DASH * 6.0, delta)
+				accelerate_momentum(-basis.z, rocket_dash, rocket_dash * 6.0, delta)
 			else:
 				velocity.x = lerpf(velocity.x, forward.x, dash_weight)
 				velocity.z = lerpf(velocity.z, forward.z, dash_weight)
@@ -305,19 +301,24 @@ func _physics_process(delta: float) -> void:
 				if not grapple.attached:
 					if grounded:
 						var planar := Vector3(velocity.x, 0.0, velocity.z)
-						planar = planar.move_toward(Vector3.ZERO, delta * (4.0 if crouching else 9.0))
+						planar = planar.move_toward(Vector3.ZERO, delta * movement.get_value("crouch_drag" if crouching else "ground_drag"))
 						velocity.x = planar.x
 						velocity.z = planar.z
-					accelerate_momentum(direction, speed, 30.0 if grounded else 9.0, delta)
-					if grounded and Vector2(velocity.x, velocity.z).length() <= speed + 0.1:
+					if not grounded:
+						var drag: float = exp(-movement.get_value("air_drag") * delta)
+						velocity.x *= drag
+						velocity.z *= drag
+					accelerate_momentum(direction, speed, movement.get_value("ground_steer" if grounded else "air_steer"), delta)
+					var finish_speed := speed + 0.1 if direction.length_squared() > 0.001 else 0.1
+					if grounded and Vector2(velocity.x, velocity.z).length() <= finish_speed:
 						momentum_mode = false
 			else:
 				velocity.x = lerpf(velocity.x, direction.x * speed, weight)
 				velocity.z = lerpf(velocity.z, direction.z * speed, weight)
 		if not grounded:
-			velocity.y -= GRAVITY * delta
+			velocity.y -= movement.get_value("gravity") * delta
 		elif alive and (jump_requested or (bot_input == null and Input.is_physical_key_pressed(KEY_SPACE))) and not crouching:
-			velocity.y = JUMP_SPEED
+			velocity.y = movement.get_value("jump_speed")
 		else:
 			velocity.y = -0.1
 		grapple.accelerate(direction, delta)
@@ -386,4 +387,4 @@ func snapshot() -> Dictionary:
 		"fov_degrees": camera.fov, "hp": hp, "alive": alive,
 		"on_floor": is_on_floor(), "active": active, "free_flight": free_flight,
 		"velocity": [velocity.x, velocity.y, velocity.z], "momentum_mode": momentum_mode,
-		"grapple": grapple.snapshot()}
+		"grapple": grapple.snapshot(), "movement": movement.snapshot()}

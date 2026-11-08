@@ -57,11 +57,16 @@ var bot_timeout := 900.0
 func _ready() -> void:
 	var start_msec := Time.get_ticks_msec()
 	options = read_options()
+	var automated_run := options.has("no-movement-profile")
+	for argument in OS.get_cmdline_args():
+		if "/verify_" in argument:
+			automated_run = true
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check", "movement-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
+			automated_run = true
 			break
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	metadata = load_metadata()
@@ -78,6 +83,9 @@ func _ready() -> void:
 	player = PlayerController.new()
 	player.name = "Spelare"
 	add_child(player)
+	player.movement.persistence_enabled = not automated_run
+	if not automated_run:
+		player.movement.load_profile()
 	canvas_layer = CanvasLayer.new()
 	canvas_layer.name = "Gränssnitt"
 	add_child(canvas_layer)
@@ -195,6 +203,8 @@ func _ready() -> void:
 		check_exported_patrol()
 	if options.has("grapple-export-check"):
 		check_exported_grapple()
+	if options.has("movement-export-check"):
+		check_exported_movement()
 	if options.has("bot"):
 		start_bot()
 
@@ -455,6 +465,16 @@ func check_exported_grapple() -> void:
 	result.passed = result.passed and city.passed
 	print("KVARNBYN_GRAPPLE_EXPORT_CHECK ", JSON.stringify(result))
 	check_node.queue_free()
+	await get_tree().process_frame
+	get_tree().quit(0 if result.passed else 3)
+
+func check_exported_movement() -> void:
+	var checker = load("res://scripts/movement_check.gd").new()
+	add_child(checker)
+	var result: Dictionary = await checker.run(self)
+	print("KVARNBYN_MOVEMENT_CHECK ", JSON.stringify(result))
+	get_tree().paused = false
+	checker.queue_free()
 	await get_tree().process_frame
 	get_tree().quit(0 if result.passed else 3)
 

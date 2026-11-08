@@ -619,3 +619,41 @@ inflätad stderr-varning; nya krokprov sparar nu stdout/stderr åtskilda.
 Knappval 2026-11-08: Joel flyttade kroken till höger mus för att kunna använda
 WASD fritt under sving. Siktläge flyttat till håll Q; höger mus utlöser inte ADS.
 Instruktioner och prov använder riktiga mushändelser för fäste/släpp.
+
+## RÖR-02: justerbar rörelse och Joels första kalibrering (2026-11-08)
+
+Joel bedömer att effekterna finns men vill sänka indragningen och bromsas
+långsammare efter landning. `movement_settings.gd` är nu enda källan för 24
+rörelsevärden, med standard/min/max/steg/enhet/förklaring. Varje spelare har ett
+eget paket; `player.gd` och `grapple.gd` läser det direkt i fysiksteget. Inga
+gamla fasta rörelsekonstanter skriver över menyvärden. Fasta kollisionsmått,
+kamerans ögonhöjd och testflygningens fart är inte del av kalibreringsmenyn.
+
+Nya standarder: reel_speed9→6m/s, pull_accel32→20m/s², rope_catchup7→4m/s,
+ground_drag9→3,5m/s² och crouch_drag4→1,5m/s². Svingacceleration19m/s²,
+farttak30m/s och räckvidd42m bevarade. Luftmotstånd0 bevarar horisontell fart;
+ett högre menyvärde använder exponentiell dämpning efter släpp. Utan WASD
+bromsas momentum med valt markvärde ända till stillastående, utan den tidigare
+snabba övergången till vanlig gångbroms vid cirka4,4m/s. Med WASD går rörelsen
+tillbaka till vanlig gång när överfarten är borta.
+
+`movement_panel.gd` visar fyra flikar i befintligt grönt/mässingsfärgat UI.
+Esc öppnar denna vy direkt under omgång; en knapp tar fram övriga inställningar.
+HSlider och sifferfält är två vyer av samma värde, med förklaringar och enheter.
+Sifferfält använder LineEdit med en separat enhet; Enter, fokusbyte och Esc
+applicerar texten. Punkt och svenskt decimalkomma accepteras. Vid Esc appliceras
+pågående sifferfält före sparning.
+Sparning är fördröjd0,35s efter ändringar och sker dessutom när menyn stängs.
+Fartmätaren visar horisontell m/s och km/h samt Mark/Luft/Gripkrok.
+
+Normal värld laddar `user://movement.cfg`; profilen sparas lokalt och committas
+inte. Okända värden ignoreras, kända tal begränsas till tillåtet intervall och
+icke-finita tal avvisas. Automatiska flaggor, --no-movement-profile och verify_-
+skript laddar/sparar inte Joels profil. Meny-/sparproven använder unika temporära
+filer och återställer denna isolering. Återställning påverkar hela uppsättningen;
+kopieringsknappen skriver svenska namn, tal och enheter till urklipp vid klick.
+
+`movement_check.gd` provar riktig Esc-paus/återgång, alla reglage/sifferfält,
+decimaltal vid Esc, profilretur och faktisk kapselrörelse med samma värdepaket
+som menyn redigerar. Jämförelser av indragning, sidostyrning, farttak, markglid
+och luftmotstånd är funktionella prov; Joels speltest avgör slutvärdena.

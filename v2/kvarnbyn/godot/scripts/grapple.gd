@@ -2,12 +2,7 @@ extends Node3D
 
 ## En motordriven, mjuk lina: invevning + tangentiell styrning. Ingen teleportering.
 ## Svingens energi kommer från vinschen och spelaren; släpp ändrar aldrig hastigheten.
-const REACH := 42.0
 const MIN_DISTANCE := 2.0
-const REEL_SPEED := 9.0
-const PULL_ACCEL := 32.0
-const SWING_ACCEL := 19.0
-const MAX_SPEED := 30.0
 
 var player: CharacterBody3D
 var attached := false
@@ -54,7 +49,7 @@ func harness() -> Vector3:
 
 func cast_target() -> Dictionary:
 	var origin: Vector3 = player.camera.global_position
-	var end: Vector3 = origin - player.camera.global_basis.z * REACH
+	var end: Vector3 = origin - player.camera.global_basis.z * player.movement.get_value("reach")
 	var query := PhysicsRayQueryParameters3D.create(origin, end, 1, [player.get_rid()])
 	return player.get_world_3d().direct_space_state.intersect_ray(query)
 
@@ -63,7 +58,7 @@ func try_attach() -> bool:
 		return false
 	var hit := cast_target()
 	if hit.is_empty() or harness().distance_to(hit.position) < MIN_DISTANCE:
-		feedback = "Ingen fästpunkt inom 42 m"
+		feedback = "Ingen fästpunkt inom %d m" % roundi(player.movement.get_value("reach"))
 		feedback_time = 0.8
 		return false
 	anchor_body = hit.collider as Node3D
@@ -105,7 +100,7 @@ func accelerate(wish: Vector3, delta: float) -> void:
 	anchor = anchor_body.to_global(anchor_local)
 	var offset := anchor - harness()
 	var distance := offset.length()
-	if distance < 1.3 or distance > REACH * 1.4:
+	if distance < 1.3 or distance > player.movement.get_value("reach") * 1.4:
 		release()
 		return
 	var radial := offset / distance
@@ -116,20 +111,21 @@ func accelerate(wish: Vector3, delta: float) -> void:
 		feedback_time = 0.8
 		release()
 		return
-	rope_length = maxf(1.3, rope_length - REEL_SPEED * delta)
+	rope_length = maxf(1.3, rope_length - player.movement.get_value("reel_speed") * delta)
 	var inward := player.velocity.dot(radial)
 	var tangent := player.velocity - radial * inward
 	if distance > rope_length - 0.25:
 		# Kortare svingradie höjer tangenthastigheten (vinschen utför arbete).
 		# Använd faktisk radie, inte nominell linlängd, så ett hinder inte laddar fart.
-		tangent *= clampf(previous_distance / distance, 1.0, 1.06)
+		var gain := clampf(previous_distance / distance, 1.0, 1.06)
+		tangent *= 1.0 + (gain - 1.0) * player.movement.get_value("swing_boost")
 		inward = maxf(inward, 0.0)
-	var target_pull := REEL_SPEED + clampf((distance - rope_length) * 8.0, 0.0, 7.0)
-	inward += minf(PULL_ACCEL * delta, maxf(0.0, target_pull - inward))
+	var target_pull: float = player.movement.get_value("reel_speed") + clampf((distance - rope_length) * player.movement.get_value("rope_stiffness"), 0.0, player.movement.get_value("rope_catchup"))
+	inward += minf(player.movement.get_value("pull_accel") * delta, maxf(0.0, target_pull - inward))
 	# Samma analogvektor för W, A/D och diagonal; ingen tangentkombinationsbonus.
 	var steering := wish - radial * wish.dot(radial)
-	tangent += steering * SWING_ACCEL * delta
-	player.velocity = (radial * inward + tangent).limit_length(MAX_SPEED)
+	tangent += steering * player.movement.get_value("swing_accel") * delta
+	player.velocity = (radial * inward + tangent).limit_length(player.movement.get_value("max_speed"))
 	previous_distance = distance
 
 func _process(delta: float) -> void:
@@ -145,4 +141,4 @@ func _process(delta: float) -> void:
 
 func snapshot() -> Dictionary:
 	return {"attached": attached, "anchor": [anchor.x, anchor.y, anchor.z],
-		"rope_length": rope_length, "reach": REACH}
+		"rope_length": rope_length, "reach": player.movement.get_value("reach")}
