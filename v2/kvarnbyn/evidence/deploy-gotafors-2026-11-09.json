@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-09",
+  "source_commit": "f479d43a97ce1745b47a942c9869f8b9542f788d",
+  "run_id": 42571916824,
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/KytioisaCat/kvarnbyn-fps/actions/runs/42571916824",
+  "note": "Repository publishing workflow; current Godot Mac app is delivered locally, not by this web workflow."
+}
