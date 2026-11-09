@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-09",
+  "source_commit": "a5ebaf0",
+  "app": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "zip": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/Kvarnbyn.zip",
+  "zip_sha256": "c14fccfbc115a75088c1a085198bdf84f3a226e888d86e84c4b32674bfddb348",
+  "payload": {
+    "Contents/Info.plist": "5c4f54e06d43cca28783a8aa4cb6b7d6b2b763ad9bda8f6c8cfee8e46464c566",
+    "Contents/MacOS/Försvara Kvarnbyn": "6f8d7df3b1b3be7a2818e9dfbf57627d5c15153a59233387c6076f1e46207e44",
+    "Contents/PkgInfo": "7e50a30efad50208a173203ced60818d693bb61266b75aa10927d1a2adce80cb",
+    "Contents/Resources/Försvara Kvarnbyn.pck": "2ad6c7f1bc675bb75ea4adf8e7733b027c65c75a3438d481ca6ec5c8724484e4",
+    "Contents/Resources/PrivacyInfo.xcprivacy": "0535353bb08c25b8ce5ed9ac7e442a5994f402e0f6cbc4bed668cfc63c2ceac3",
+    "Contents/Resources/icon.icns": "06e755cc77286f1af72db10fcf7932cc1832f69f0ca613f09f9d8e5e162d0953",
+    "Contents/_CodeSignature/CodeResources": "810678ea37c9af3015aa041ed141b0e62e8ed952c5e509ec5e3eede5fc0a7037"
+  },
+  "world_artifacts": {
+    "data/city.json": "7f90e291a338739bef1d92bce49d0928c3b43c232bc9e9410ab6f78579d49d38",
+    "data/site.json": "87ca2603cb8f8a8ec7ccadb534d47b6deac622d3490e72511c0702af92d301c4",
+    "godot/assets/world.glb": "f742007e55b916bda5b37ec0c3e7396324ef2a3abffc60ffd8d6f2b21a0d3197",
+    "godot/assets/world_meta.json": "6804f1e77d47b5c85242c41740649b100268a861418a0e840447c03ad63409c7",
+    "godot/assets/world_map.png": "8f63fa8ac862ea4502ff1d2256606d8b5fe25078fe941e02978390427b47f831",
+    "godot/assets/map.json": "0d5f2e590f1fbda39201699723a9a0ba820b98c8cf254f5238fbcfea83b25c60",
+    "godot/assets/nav.json": "68d38cdb04f79d1e4c99c349d4d725fa4842b6dbb19b7cbd03411420a54b7d72",
+    "godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d"
+  },
+  "previous_app": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-gotafors-20261109/previous/Försvara Kvarnbyn.app",
+  "checks": {
+    "entrance": {
+      "passed": true,
+      "release": true,
+      "checks": 13,
+      "log": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-gotafors-20261109/installed-entrance.log"
+    },
+    "map": {
+      "passed": true,
+      "release": true,
+      "checks": 0,
+      "log": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-gotafors-20261109/installed-map.log"
+    },
+    "road": {
+      "passed": true,
+      "release": true,
+      "checks": 31,
+      "log": "/private/tmp/kvarnbyn-karta-gotafors/v2/.tools/release-road.log"
+    },
+    "roof": {
+      "passed": true,
+      "release": true,
+      "checks": 76,
+      "log": "/private/tmp/kvarnbyn-karta-gotafors/v2/.tools/release-roof.log"
+    }
+  },
+  "geometry": {
+    "passed": true,
+    "checks": {
+      "built_street_surfaces_outside_all_house_walls": true,
+      "road_blocking_house_expansions_removed": true,
+      "shared_road_junctions_still_connected": true,
+      "reviewed_street_profiles_applied": true,
+      "authored_walkways_outside_house_interiors": true,
+      "navigation_edges_do_not_cross_house_interiors": true,
+      "exported_visible_roads_outside_house_walls": true,
+      "exported_collision_roads_outside_house_walls": true,
+      "exported_roads_match_current_site_geometry": true,
+      "exported_visible_and_collision_roads_match": true,
+      "exported_walkways_stairs_and_bridge_decks_outside_houses": true,
+      "exported_walk_collisions_outside_houses": true
+    },
+    "detail": {
+      "site_intrusions": [],
+      "corrected_house_ids": [
+        "w92332023",
+        "w92332046",
+        "w92332049",
+        "w92332130",
+        "w92332163",
+        "w92332166",
+        "w92500251",
+        "w92500301",
+        "w92500325",
+        "w92510381",
+        "w96098432",
+        "w96098448",
+        "w96098455"
+      ],
+      "shared_node_mismatches": [],
+      "authored_walkway_intrusions": [],
+      "blocked_nav_edges": [],
+      "visible_intrusions": [],
+      "collision_intrusions": [],
+      "exported_road_triangles": {
+        "visible": 88458,
+        "collision": 88458
+      },
+      "all_walk_collision_intrusions": [],
+      "all_walk_floor_intrusions": [],
+      "glb_sha256": "f742007e55b916bda5b37ec0c3e7396324ef2a3abffc60ffd8d6f2b21a0d3197"
+    },
+    "buildings_checked": 381,
+    "roads_checked": 352,
+    "site_triangles_checked": 88458
+  },
+  "estimated_platform": {
+    "source": "Observed G18 platform and rail; dimensions and connection treads estimated",
+    "top_y_m": 22.959,
+    "connection_y_m": 22.268,
+    "step_count_estimated": 4
+  },
+  "protected_files": {
+    "godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+    "config/gameplay.json": "70d38632e337044738434e88a11d920202fc6a767e008f87b853401239550a80",
+    "godot/scripts/player.gd": "a040013ce7f8a5a0a0e48ac266dee9c664bc1cd2e42d1d519e88dc663dc180bf",
+    "godot/scripts/weapon.gd": "9ba9d955671e61bae27c43a2614c891cbb35cf1e7e18ec526c9c2007280cc575",
+    "godot/scripts/grapple.gd": "4fafd1dddfccc2789b25b61fa02df3012204e69815cee1c8a6faefb772ba891c",
+    "godot/scripts/movement_settings.gd": "054a96b7417bccb0e10cc2316799ef0b53a53fdbfd80096d18f1f63b615a2c31",
+    "godot/scripts/civilian.gd": "21df1e437e1b979a9bec62618357d3be61466715fc141ebcf143533fe2fb150e",
+    "godot/scripts/civilian_roster.gd": "950c68dcf150fa79901c38d5b20d72ce4069c37f505a386fc2b17c6120e4e8ed",
+    "godot/scripts/civilian_world.gd": "4322d49c902acb64ee16387d29644d3e50d2e81f9e25fcefea6169f3509b9958",
+    "godot/assets/characters/civilian_lars.glb": "1bb6cab12f97b301ebee8d9045b57dcf986e60505189ff5a5b63335c0a00ebf3",
+    "godot/assets/characters/civilian_linnea.glb": "e8259bbd4f75dafdfccb80bbcaf3db58aaa4c8c119a6db370d5df9a6f989da2f",
+    "godot/assets/characters/civilian_per.glb": "c1708e8337ad3150ad23ac1e9e1948e4550e9625f06745052ef09b4438da33b0",
+    "godot/assets/characters/civilian_ronny.glb": "22038ef084264b017c954697fb6292971fdeaea9c4505253c27c8e3e1cf99b2e"
+  },
+  "street_view_pixels_distributed": false,
+  "remaining": [
+    "Lattice/gate/heat pump",
+    "G17 facade subdivision and entrance levels",
+    "Parking markings/planting",
+    "Street-shadow readability"
+  ]
+}

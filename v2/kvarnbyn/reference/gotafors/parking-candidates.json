@@ -1,0 +1,65 @@
+{
+  "note": "OSM candidates only; exact boundaries/markings/entrances not visually verified. Do not invent parking stripes from these polygons.",
+  "candidates": [
+    {
+      "id": "w92332137",
+      "distance_from_g18_m": 28.7,
+      "centroid_xz": [
+        267.26,
+        -39.46
+      ],
+      "area_m2": 811.0,
+      "verified_against_street_view": false
+    },
+    {
+      "id": "w368138678",
+      "distance_from_g18_m": 31.9,
+      "centroid_xz": [
+        197.04,
+        1.9
+      ],
+      "area_m2": 373.5,
+      "verified_against_street_view": false
+    },
+    {
+      "id": "w440486574",
+      "distance_from_g18_m": 39.4,
+      "centroid_xz": [
+        156.85,
+        -49.4
+      ],
+      "area_m2": 385.9,
+      "verified_against_street_view": false
+    },
+    {
+      "id": "w997736285",
+      "distance_from_g18_m": 67.9,
+      "centroid_xz": [
+        269.76,
+        -96.19
+      ],
+      "area_m2": 205.2,
+      "verified_against_street_view": false
+    },
+    {
+      "id": "w843661095",
+      "distance_from_g18_m": 81.5,
+      "centroid_xz": [
+        192.98,
+        -130.23
+      ],
+      "area_m2": 396.2,
+      "verified_against_street_view": false
+    },
+    {
+      "id": "w997736284",
+      "distance_from_g18_m": 88.0,
+      "centroid_xz": [
+        312.92,
+        -63.65
+      ],
+      "area_m2": 260.3,
+      "verified_against_street_view": false
+    }
+  ]
+}

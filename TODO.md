@@ -10,7 +10,7 @@ Götaforsliden: fasader, trappor/entréer och igenkännliga parkeringar. Mindre
 planteringar där de hjälper platsen; häckar/träd/gatsten lägre prioritet.
 Takrättningen är byggd och klarar76 verkliga takprov i Mac-release. Fyra trähus
 vid startkorsningen är förbättrade med faktisk Street View; sammanfogade deltak,
-verandor och tomter återstår. Nästa platsprov: G17/G18:s entréer/plattformar.
+verandor och tomter återstår. G18:s första plattforms-/räckes-/trappanslutning är nu byggd och klarar13platsprov i Mac-release. Nästa: spaljé/smådetaljer, G17:s delfasader/portar och parkeringar. Sex OSM-kandidater finns i `reference/gotafors/parking-candidates.json` under spelprojektet, ännu inte visuellt verifierade.
 
 **Joels aktuella val: fortsatta Street View-rundor tills tokenutrymmet tar slut.**
 Första gaturundorna vid Götaforsliden/Royens gata/Franckegatan är byggda och
@@ -41,6 +41,8 @@ uppgiftsloggar enligt `ARBETSFLÖDEN.md`. Integratören uppdaterar denna gemensa
 3. Säkrare underlag för åbankens rundade tegelhus/mark/intag samt M24/M31. Saknade referenser får inte ersättas med påstått korrekta gissningar; fortsätt med andra synliga hus när en fasad är skymd.
 4. **Flyt:** helskärmens pixelbudget rättad (kort prov31→72bilder/s), men tidiga bildstopp på0,5–2,7s återstår. Prova riktig mus/gång, andra gaturum och pipelineräknare. `v2/kvarnbyn/RESULTAT-FLYT.md`. Konkreta gång-/AI-fel, bland annat Stallelidens mitt, efter platsarbetet eller om Joels spelprov visar blockerande fel.
 5. Fortsatt stämning: varma fönster, forsdis och ljudlandskap; tysta agentprov.
+
+- [ ] **G18:s skuggläsbarhet:** huset står mörkt i den trånga gatans nativebilder. Prova miljöljus/indirekt ljus separat utan att ändra kvällslägets stämning eller ge falskt ljusa granskningsbilder.
 
 ## Omstart 2026-10-22 (läs `OMSTART.md` först)
 
@@ -142,6 +144,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-09 — **Götaforsliden18:s entré:** upphöjd plattform, räcke och fysisk nivåanslutning; väg/mark bortskuren under den,13platsprov +31gatu-/76takprov gröna i Mac-release. Mått och dolda steg uppskattade. `reference/gotafors/`.
 
 - [x] 2026-11-09 — **Gångbara tak + startkvarter:** verkliga lutande tak/kupor/skorstenar kolliderar;76takprov i installerad Mac-app,0saknade taktrianglar. Fyra trähus och två grusvergekantade gator granskade. G18-dörr/G17-balkonger rättade. `v2/kvarnbyn/RESULTAT-TAK.md`.
 

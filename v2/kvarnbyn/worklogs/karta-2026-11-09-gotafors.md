@@ -1,6 +1,6 @@
 # Karta — Götaforslidens entréer och närfasader
 
-**Status:** pågår. **Startcommit:**e35a855. **Gren:**codex/karta/gotafors-entres.
+**Status:** klart, integrerat och installerat i ordinarie app. **Startcommit:**e35a855. **Gren:**codex/karta/gotafors-entres.
 **Arbetskopia:**/private/tmp/kvarnbyn-karta-gotafors.
 
 Joel vill fortsätta med fasader/trappor/portar/parkeringars igenkänning kring
@@ -67,3 +67,8 @@ Geometrigrind12 grön:88458synliga/kollisionsvägtrianglar exakt mot aktuell sit
 fortsatt0saknade kollisionsytor. Vägen/markytan är bortskuren under entrén.
 G18-vygenväg använder nu övre panoramapunkten. Föregående app ligger kvar tills
 integratören reproducerat paketets data och genomfört separat namnbyte.
+
+Slutkvitto: installerad entré13 +karta gröna. Samtliga appfiler matchar det
+verifierade paketet;8världsfiler byteidentiska efter integration. Native releasevy
+granskad. Manifest i ordinarie projekt evidence/delivery-gotafors-2026-11-09.json.
+Tak-03 bevarad lokalt;13skyddade spel-/NPC-filer fortfarande byteidentiska.

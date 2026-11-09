@@ -847,3 +847,20 @@ inte andra platsprovs olika views-scheman. Observerade grusverger är egen yttyp
 med samma mark-/kollisionshöjd; kartan läser samma mesh. G18:s observerade
 asymmetriska dörrposition stöds av street_bays_m/street_door_index. Mått förblir
 visuella uppskattningar. Delvolymer med osäkra tak får inga svävande vindsfönster.
+
+
+## G18:s entréyta (2026-11-09)
+
+`reference/gotafors/entrance.json` håller observerade drag och uppskattade mått.
+`gotafors_details.py` bygger samma synliga/fysiska plattform, vilplan, steg och
+räcke. `site.py` skär bort asfalt/markband under stödet utifrån samma källmått;
+vägjusteringen används även för karta/nav. Ett separat metadatafält med riktiga
+golv-/kapsel-/räckesprov levereras i world_meta. RoadCheck är parameteriserad
+för detta: plana gator har kvar25cm transienttolerans, trappor35cm, båda måste
+sluta på riktig mark med <16cm vilohöjdfel. Detta ändrar ingen spelarfysik.
+`--entrance-export-check` är tyst och ingår i rebuild/releasegrindarna.
+
+Kameror provas mot kolliderande byggnader; en Street View-punkt/uppskattad
+sidoförskjutning får inte okritiskt sätta granskningskameran på ett tak.
+Entrégenvägen använder nu övre gatans panoramapunkt. Valfri FOV i bildfixturen
+gör att samma trånga gaturum kan jämföras från identiska före-/efterkameror.

@@ -279,3 +279,13 @@ samt fästa gripkroken på dem. Befintlig lutningsgräns gäller fortfarande.
 Godkännande: oberoende kontroll av levererad GLB samt verklig spelarkapsel och
 krok på vanliga, handbyggda och konturklippta tak i både editor och release.
 Genomfört:0saknade av29540uppåtvända taktrianglar;15tak,76kontroller gröna.
+
+
+### PLATS-G18 — sammanhängande entré och gata (2026-11-09)
+
+Observerad upphöjd plattform och räcke ska hänga samman fysiskt med dörrtröskel
+och gatans nivå. Vägen ska ha fri passage och skäras bort under stödet. Mått
+och skymd nivåanslutning märks som uppskattningar. Godkännande: faktisk
+spelarkapsel från gatuyta till dörr och tillbaka, golv-/räckeskontakt i editor
+och installerad Mac-app, samt kontroll av levererad synlig/kolliderande geometri.
+Första platsprovet klart:13kontroller, övriga gatu-/takgrindar fortsatt gröna.

@@ -33,6 +33,16 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-09 — ChatGPT Codex — första entréprovet på Götaforsliden18
+
+**Status:** klart och installerat delpass; fler hus-/platsdetaljer kvar i backloggen. Karta `codex/karta/gotafors-entres`,83caaed+a5ebaf0 från egen arbetskopia.
+**Gjort:** faktiskt granskade maj2026-panoramor på båda sidor om G18. Upphöjd betongplattform5,5×1,05m, ljust tvåliggarräcke och nivåanslutning från gatan;4uppskattade steg à17,3×34cm och nedre vilplan. Mått/stegräkning tolkade, inte påstådda observationer bakom spaljén. Plattformen ersätter generisk dörrplatta. Ytterligare lokal linjeförskjutning ger passage; asfalt/mark skärs bort under entrén. Ingen husposition eller spelarfysik ändrad. Källa/antagande i `reference/gotafors/`.
+**Verifierat:**13verkliga entréprov även i Mac-release:9golvpunkter, två8m-kapselstråk från riktig gata till dörren/tillbaka samt räcke. Slutlig markkontakt och0,08/0,95cm vilohöjdfel.26,5cm kortvarigt trappstegslyft ryms inom entréns35cm transientgräns; plana gators25cm-gräns behålls och alla stråk får nu efterkontroll <16cm/markkontakt.31gatuprov och76takprov gröna i release.12GLB-grindar,88458vägtrianglar,0intrång inklusive nya entréytor,0saknade takkollisioner. Native före/slut från samma två kameror granskade. Skuggorna kring G18 är mörka; läsbarhet kvar som förbättringsidé.
+**Integration:** city/site/nav/game/kartbild/kartmetadata återskapade byteidentiskt; värld/metadata väljs från det verifierade paketet.13skyddade spel-/NPC-hashar oförändrade. Ordinarie app/ZIP uppdaterade genom separat staging/namnbyte, tak-03 bevarad i `v2/.tools/kvarnbyn-gotafors-20261109/previous/`. Installerade appens entré13/karta gröna; alla payloadhashar samma som verifierat paket. Native releasevy granskad. `evidence/delivery-gotafors-2026-11-09.json`. Inga spelprocesser kvar, ingen användarprocess avslutad.
+**Nästa:** G18-spaljé/värmepump och noggrannare anslutningsproportioner, G17:s L-formade delfasader/portar/våningsnivåer, sedan parkeringsmarkeringar och små planteringar. Inga stora bild-/modelldownloads, inga Google-pixlar distribuerade. Playpen/graphify memory orörda.
+
+---
+
 ## 2026-11-09 — ChatGPT Codex — gångbara tak och startkvarterets trähus
 
 **Status:** delpass klart och installerat, fortsatt platsarbete pågår. Joels fortsatta beställning: fler fasader/trappor/entréer kring Götaforsliden; häckar/träd/gatsten lägre prioritet.
