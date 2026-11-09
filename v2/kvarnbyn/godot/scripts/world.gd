@@ -208,7 +208,9 @@ func _ready() -> void:
 		print("KVARNBYN_ROOF_CHECK ",JSON.stringify(roof_report))
 		get_tree().quit(0 if roof_report.passed else 3)
 	if options.has("entrance-export-check"):
-		var entrance_report: Dictionary = await preload("res://scripts/road_check.gd").new().run(self,"gotafors_ground_checks",2,3)
+		# Stair step-up can briefly lift the capsule above the interpolated route.
+		# Require exact floor contact after settling; flat-road tolerance stays .25.
+		var entrance_report: Dictionary = await preload("res://scripts/road_check.gd").new().run(self,"gotafors_ground_checks",2,3,.35)
 		print("KVARNBYN_ENTRANCE_CHECK ",JSON.stringify(entrance_report))
 		get_tree().quit(0 if entrance_report.passed else 3)
 	if options.has("civilian-export-check"):

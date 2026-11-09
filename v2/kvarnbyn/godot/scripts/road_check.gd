@@ -23,7 +23,7 @@ func expected_height(point: Vector3, route: Array) -> float:
 			closest=distance
 			height=on_path.y
 	return height
-func run(world: Node3D, metadata_key := "road_ground_checks", minimum_paths := 6, minimum_points := 9) -> Dictionary:
+func run(world: Node3D, metadata_key := "road_ground_checks", minimum_paths := 6, minimum_points := 9, height_tolerance_m := .25) -> Dictionary:
 	AudioServer.set_bus_mute(0,true)
 	var tree := world.get_tree()
 	var p = world.player
@@ -70,9 +70,11 @@ func run(world: Node3D, metadata_key := "road_ground_checks", minimum_paths := 6
 			used_frames+=1
 			maximum_error=maxf(maximum_error,absf(p.global_position.y-expected_height(p.global_position,route)))
 		p.bot_input=Vector2.ZERO
-		var result := {"id":spec.id,"reached":index==route.size(),"max_height_error_m":maximum_error,"frames":used_frames,"length_m":length}
+		for frame in range(25):await tree.physics_frame
+		var settled_error: float=absf(p.global_position.y-expected_height(p.global_position,route))
+		var result := {"id":spec.id,"reached":index==route.size(),"max_height_error_m":maximum_error,"settled_height_error_m":settled_error,"settled_on_floor":p.is_on_floor(),"frames":used_frames,"length_m":length}
 		paths.append(result)
-		check(str(spec.id)+"_actual_capsule",result.reached and maximum_error<.25,result)
+		check(str(spec.id)+"_actual_capsule",result.reached and maximum_error<height_tolerance_m and p.is_on_floor() and settled_error<.16,result)
 	for spec in metadata.blockers:
 		var a := xyz(spec["from"])+Vector3.UP*float(spec.get("height_m",1.25))
 		var b := xyz(spec["to"])+Vector3.UP*float(spec.get("height_m",1.25))

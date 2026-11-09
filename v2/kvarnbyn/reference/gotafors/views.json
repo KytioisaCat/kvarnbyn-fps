@@ -10,7 +10,7 @@
       216.26,
       -39.08
     ],
-    "target_above_camera_m": 0.4,
+    "target_above_camera_m": -0.7,
     "fov_degrees": 95
   },
   {
@@ -24,7 +24,7 @@
       218,
       -40
     ],
-    "target_above_camera_m": -0.3,
+    "target_above_camera_m": -0.5,
     "fov_degrees": 85
   }
 ]

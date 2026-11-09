@@ -1,0 +1,107 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "passed": true,
+      "test": "gotafors_ground_checks_packaged"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-1_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-2_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-3_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-4_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-5_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-6_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-7_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-platform-8_floor"
+    },
+    {
+      "detail": {
+        "frames": 159,
+        "id": "g18-to-door",
+        "length_m": 7.99726420640945,
+        "max_height_error_m": 0.264778137207031,
+        "reached": true,
+        "settled_height_error_m": 0.000822067260742188,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "g18-to-door_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 158,
+        "id": "g18-from-door",
+        "length_m": 7.99726420640945,
+        "max_height_error_m": 0.186861038208008,
+        "reached": true,
+        "settled_height_error_m": 0.00952720642089844,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "g18-from-door_actual_capsule"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "g18-rail_actual_wall"
+    }
+  ],
+  "passed": true,
+  "paths": [
+    {
+      "frames": 159,
+      "id": "g18-to-door",
+      "length_m": 7.99726420640945,
+      "max_height_error_m": 0.264778137207031,
+      "reached": true,
+      "settled_height_error_m": 0.000822067260742188,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 158,
+      "id": "g18-from-door",
+      "length_m": 7.99726420640945,
+      "max_height_error_m": 0.186861038208008,
+      "reached": true,
+      "settled_height_error_m": 0.00952720642089844,
+      "settled_on_floor": true
+    }
+  ],
+  "release": true
+}

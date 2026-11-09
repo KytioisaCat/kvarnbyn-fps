@@ -447,7 +447,7 @@ for review_file in sorted((HERE/'reference').glob('*/reviews.json')):
         x,z=study['camera_xz'];tx,tz=study['target_xz']
         floor=paved_eye(x,z)
         views.append(dict(id='road-'+study['id'],name='Gaturunda – '+study['name'],position=floor,target=[tx,floor[1]+study.get('target_above_camera_m',-.2),tz]))
-views.append(dict(id='g18-platform',name='Götaforsliden 18 – entrén',position=paved_eye(214.5,-42.9),target=[217,24.2,-39.7]))
+views.append(dict(id='g18-platform',name='Götaforsliden 18 – entrén',position=paved_eye(225.55,-42.77),target=[217.15,23.8,-39.8]))
 probe = []
 for r in CITY['roads']:
     if r['tunnel'] or r['bridge'] or r['kind'] in ('path', 'track', 'steps'): continue

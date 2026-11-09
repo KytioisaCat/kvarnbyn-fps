@@ -1,0 +1,333 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "passed": true,
+      "test": "road_ground_checks_packaged"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w13698106_0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w13698106_20_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w13698106_40_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w43570099_0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w43570099_20_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w43570099_40_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040331_0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040331_26_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040331_51_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040332_0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040332_26_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040332_51_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w1197238918_0_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w1197238918_37_floor"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w1197238918_74_floor"
+    },
+    {
+      "detail": {
+        "frames": 758,
+        "id": "w13698106_up",
+        "length_m": 37.9561203122139,
+        "max_height_error_m": 0.0230350494384766,
+        "reached": true,
+        "settled_height_error_m": 0.00152015686035156,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w13698106_up_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 757,
+        "id": "w13698106_down",
+        "length_m": 37.9561203122139,
+        "max_height_error_m": 0.0233306884765625,
+        "reached": true,
+        "settled_height_error_m": 0.00278282165527344,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w13698106_down_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 759,
+        "id": "w43570099_up",
+        "length_m": 37.9933486580849,
+        "max_height_error_m": 0.00484657287597656,
+        "reached": true,
+        "settled_height_error_m": 0.00109291076660156,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w43570099_up_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 759,
+        "id": "w43570099_down",
+        "length_m": 37.9933486580849,
+        "max_height_error_m": 0.0039825439453125,
+        "reached": true,
+        "settled_height_error_m": 0.000612258911132812,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w43570099_down_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 978,
+        "id": "w78040331_up",
+        "length_m": 48.9509130120277,
+        "max_height_error_m": 0.016510009765625,
+        "reached": true,
+        "settled_height_error_m": 0.00128555297851562,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w78040331_up_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 978,
+        "id": "w78040331_down",
+        "length_m": 48.9509130120277,
+        "max_height_error_m": 0.0179176330566406,
+        "reached": true,
+        "settled_height_error_m": 0.000102996826171875,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w78040331_down_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 959,
+        "id": "w78040332_up",
+        "length_m": 47.9993285536766,
+        "max_height_error_m": 0.00407028198242188,
+        "reached": true,
+        "settled_height_error_m": 0.00318527221679688,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w78040332_up_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 959,
+        "id": "w78040332_down",
+        "length_m": 47.9993285536766,
+        "max_height_error_m": 0.005035400390625,
+        "reached": true,
+        "settled_height_error_m": 0.00262069702148438,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w78040332_down_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 1439,
+        "id": "w1197238918_up",
+        "length_m": 71.9991121292114,
+        "max_height_error_m": 0.0158767700195312,
+        "reached": true,
+        "settled_height_error_m": 0.000644683837890625,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w1197238918_up_actual_capsule"
+    },
+    {
+      "detail": {
+        "frames": 1439,
+        "id": "w1197238918_down",
+        "length_m": 71.9991121292114,
+        "max_height_error_m": 0.0159225463867188,
+        "reached": true,
+        "settled_height_error_m": 0.00074005126953125,
+        "settled_on_floor": true
+      },
+      "passed": true,
+      "test": "w1197238918_down_actual_capsule"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w13698106_house_wall_actual_wall"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w43570099_house_wall_actual_wall"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040331_house_wall_actual_wall"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w78040332_house_wall_actual_wall"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w1197238918_house_wall_actual_wall"
+    }
+  ],
+  "passed": true,
+  "paths": [
+    {
+      "frames": 758,
+      "id": "w13698106_up",
+      "length_m": 37.9561203122139,
+      "max_height_error_m": 0.0230350494384766,
+      "reached": true,
+      "settled_height_error_m": 0.00152015686035156,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 757,
+      "id": "w13698106_down",
+      "length_m": 37.9561203122139,
+      "max_height_error_m": 0.0233306884765625,
+      "reached": true,
+      "settled_height_error_m": 0.00278282165527344,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 759,
+      "id": "w43570099_up",
+      "length_m": 37.9933486580849,
+      "max_height_error_m": 0.00484657287597656,
+      "reached": true,
+      "settled_height_error_m": 0.00109291076660156,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 759,
+      "id": "w43570099_down",
+      "length_m": 37.9933486580849,
+      "max_height_error_m": 0.0039825439453125,
+      "reached": true,
+      "settled_height_error_m": 0.000612258911132812,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 978,
+      "id": "w78040331_up",
+      "length_m": 48.9509130120277,
+      "max_height_error_m": 0.016510009765625,
+      "reached": true,
+      "settled_height_error_m": 0.00128555297851562,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 978,
+      "id": "w78040331_down",
+      "length_m": 48.9509130120277,
+      "max_height_error_m": 0.0179176330566406,
+      "reached": true,
+      "settled_height_error_m": 0.000102996826171875,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 959,
+      "id": "w78040332_up",
+      "length_m": 47.9993285536766,
+      "max_height_error_m": 0.00407028198242188,
+      "reached": true,
+      "settled_height_error_m": 0.00318527221679688,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 959,
+      "id": "w78040332_down",
+      "length_m": 47.9993285536766,
+      "max_height_error_m": 0.005035400390625,
+      "reached": true,
+      "settled_height_error_m": 0.00262069702148438,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 1439,
+      "id": "w1197238918_up",
+      "length_m": 71.9991121292114,
+      "max_height_error_m": 0.0158767700195312,
+      "reached": true,
+      "settled_height_error_m": 0.000644683837890625,
+      "settled_on_floor": true
+    },
+    {
+      "frames": 1439,
+      "id": "w1197238918_down",
+      "length_m": 71.9991121292114,
+      "max_height_error_m": 0.0159225463867188,
+      "reached": true,
+      "settled_height_error_m": 0.00074005126953125,
+      "settled_on_floor": true
+    }
+  ],
+  "release": true
+}

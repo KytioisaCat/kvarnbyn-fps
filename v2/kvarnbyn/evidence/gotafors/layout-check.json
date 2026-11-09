@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "checks": {
+    "built_street_surfaces_outside_all_house_walls": true,
+    "road_blocking_house_expansions_removed": true,
+    "shared_road_junctions_still_connected": true,
+    "reviewed_street_profiles_applied": true,
+    "authored_walkways_outside_house_interiors": true,
+    "navigation_edges_do_not_cross_house_interiors": true,
+    "exported_visible_roads_outside_house_walls": true,
+    "exported_collision_roads_outside_house_walls": true,
+    "exported_roads_match_current_site_geometry": true,
+    "exported_visible_and_collision_roads_match": true,
+    "exported_walkways_stairs_and_bridge_decks_outside_houses": true,
+    "exported_walk_collisions_outside_houses": true
+  },
+  "detail": {
+    "site_intrusions": [],
+    "corrected_house_ids": [
+      "w92332023",
+      "w92332046",
+      "w92332049",
+      "w92332130",
+      "w92332163",
+      "w92332166",
+      "w92500251",
+      "w92500301",
+      "w92500325",
+      "w92510381",
+      "w96098432",
+      "w96098448",
+      "w96098455"
+    ],
+    "shared_node_mismatches": [],
+    "authored_walkway_intrusions": [],
+    "blocked_nav_edges": [],
+    "visible_intrusions": [],
+    "collision_intrusions": [],
+    "exported_road_triangles": {
+      "visible": 88458,
+      "collision": 88458
+    },
+    "all_walk_collision_intrusions": [],
+    "all_walk_floor_intrusions": [],
+    "glb_sha256": "f742007e55b916bda5b37ec0c3e7396324ef2a3abffc60ffd8d6f2b21a0d3197"
+  },
+  "buildings_checked": 381,
+  "roads_checked": 352,
+  "site_triangles_checked": 88458
+}

@@ -6,7 +6,7 @@ datum, riktningar och observationer i `entrance.json`. Ingen fotopixel i spelet.
 G18 har en lång upphöjd betongplattform vid den gulgröna dörren, ljusa enkla
 räcken, naturstensgrund och spaljé runt övre hörnet. Första provet bygger själva
 plattformen och tvåliggarräcket; spaljé, värmepump och smådetaljer återstår.
-Alla mått och anslutningssteg är uppskattningar. Tre steg här är en funktionell
+Alla mått och anslutningssteg är uppskattningar. Fyra steg i slutprovet är en funktionell
 anpassning mellan dörrtröskeln och levererad gatuhöjd, inte en observerad
 stegräkning bakom spaljén. Stegprovet ska bedömas med detta förbehåll.
 

@@ -40,3 +40,30 @@ utökas att starta på riktig väglinje, inte genom placering på första steget
 Markytorna skärs även bort under entréns stöd/anslutning; vägen ska inte bara
 döljas under en ny låda. Entréns samma källmått styr skärningen. Slutlig byggning
 och utökat gatuanslutningsprov återstår före export/integration.
+
+Slutanslutningen nåddes åt båda håll från riktig gata, men trappans legitima
+step-up gav26,5cm tillfälligt höjdfel mot en interpolerad mittlinje. Plana
+gators25cm-gräns behålls; entréprovet får35cm transientgräns och ett nytt
+strängare krav efter25vilofysiksteg: riktig markkontakt och <16cm fel.
+Ingen spelarfysik ändras. Kamerans vymenyval flyttas till övre panoramapunkten
+för att undvika en gammal kamera som låg inne i G17. Ny slutbyggning krävs.
+
+Efter markskärningen blev det slutliga nedre vilplanet22,268m och antalet
+anslutningssteg4 (cirka17,3cm höga,34cm djupa), inte den första prototypens3.
+Det utökade provet från gatan når båda målen:26,5/18,7cm transient, men bara
+0,08/0,95cm höjdfel efter vila och riktig markkontakt.13kontroller gröna.
+
+## Slutprov klart för integration
+
+Slutpaket v2/.tools/Kvarnbyn-gotafors-01.zip och entrance-app-01. Release:
+entré13, gator31 och tak76 gröna, med riktig kapsel/markkontakt.13entréprov
+innefattar gatuanslutning,9golvpunkter,2gångstråk (cirka8m vardera) och räcke.
+Native slutbilder från båda sidor granskade mot omtagna före-bilder. G18 står
+mörkt i gatans skugga; plattformens form/anslutning är synlig, men skuggornas
+läsbarhet är en separat förbättringsidé. Inga bildpixlar från Google i produkten.
+
+Geometrigrind12 grön:88458synliga/kollisionsvägtrianglar exakt mot aktuell site,
+0husintrång inklusive exporterade plattforms-/steg-/vilplansytor. Takgeometrin
+fortsatt0saknade kollisionsytor. Vägen/markytan är bortskuren under entrén.
+G18-vygenväg använder nu övre panoramapunkten. Föregående app ligger kvar tills
+integratören reproducerat paketets data och genomfört separat namnbyte.
