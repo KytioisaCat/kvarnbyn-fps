@@ -17,6 +17,7 @@ from blender_vegetation import place_tree, load_library
 from blender_finish import apply_finish
 import houses, heroes, roten, stairkit, stalleliden_houses, north_bank_details
 import terrain_details
+import roof_collisions
 
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
@@ -185,6 +186,7 @@ for key, kind in SITE.get('north_bank_mesh_kinds', {}).items():
     MAT[key] = M[kind]
 MAT['street_setts'] = M['paving']
 MAT['street_edges'] = M['paving']
+MAT['street_gravel_edges'] = M['trail']
 reviewed_setts = roten.sett_segments(CITY)
 for kind, tiles in SITE['meshes'].items():
     mat = MAT[kind]; tm = mat.get('tile_size_m', 3)
@@ -356,6 +358,8 @@ for (xa, za), (xb, zb) in [((zx0, zz0), (zx1, zz0)), ((zx1, zz0), (zx1, zz1)), (
     L = math.hypot(xb - xa, zb - za)
     K.box('COL_Bounds', M['collision'], ((xa + xb) / 2, -(za + zb) / 2, 40), (L + 2, 1.0, 140), ((xb - xa) / L, -(zb - za) / L))
 
+roof_physics = roof_collisions.complete(K,M['collision'])
+log('gångbara tak: '+json.dumps({k:v for k,v in roof_physics.items() if k!='checks'}))
 objects = K.finish()
 for obj in objects:
     if obj.name.startswith('COL_'): obj.hide_render = True; obj.display_type = 'WIRE'
@@ -405,7 +409,7 @@ def paved_eye(x, z):
 
 
 views = [
-    dict(id='spawn', name='Görjelycksgatan (start)', position=eye(*pts['spawn']), target=[pts['spawn'][0] - 60, ground(*pts['spawn']) + 4, pts['spawn'][1] - 70]),
+    dict(id='spawn', name='Start – Görjelyck / Åldermans', position=eye(*pts['spawn']), target=[pts['spawn'][0] - 60, ground(*pts['spawn']) + 4, pts['spawn'][1] - 70]),
     dict(id='torget', name='Gamla torget', position=paved_eye(-8.5, 8), target=[-40, 4.5, -8]),
     dict(id='krakan', name='Kråkans krog', position=eye(8, 48), target=[11, 2.2, 30]),
     dict(id='roten', name='Roten M', position=eye(pts['cap_B'][0] + 14, pts['cap_B'][1] + 12), target=[pts['cap_B'][0] - 30, ground(*pts['cap_B']) + 3, pts['cap_B'][1] - 25]),
@@ -432,10 +436,13 @@ views = [
     dict(id='lilla-glasberget', name='Lilla Glasberget – berg och grönska', position=[145,35,190], target=[235,46,152], free_flight=True),
     dict(id='glasberget', name='Glasberget – bergkulissen', position=[405,88,380], target=[635,66,565], free_flight=True),
 ]
-for study in json.loads((HERE/'reference/vag-hus/views.json').read_text()):
-    x,z=study['camera_xz'];tx,tz=study['target_xz']
-    floor=paved_eye(x,z)
-    views.append(dict(id='road-'+study['id'],name='Gaturunda – '+study['name'],position=floor,target=[tx,floor[1]-.2,tz]))
+for review_file in sorted((HERE/'reference').glob('*/reviews.json')):
+    views_file=review_file.with_name('views.json')
+    if not views_file.exists():continue
+    for study in json.loads(views_file.read_text()):
+        x,z=study['camera_xz'];tx,tz=study['target_xz']
+        floor=paved_eye(x,z)
+        views.append(dict(id='road-'+study['id'],name='Gaturunda – '+study['name'],position=floor,target=[tx,floor[1]+study.get('target_above_camera_m',-.2),tz]))
 probe = []
 for r in CITY['roads']:
     if r['tunnel'] or r['bridge'] or r['kind'] in ('path', 'track', 'steps'): continue
@@ -445,7 +452,7 @@ for r in CITY['roads']:
         L = math.hypot(xb - xa, zb - za); acc += L
         if acc > 45 and zx0 + 3 < xa < zx1 - 3 and zz0 + 3 < za < zz1 - 3:
             acc = 0; probe.append([round(xa, 2), round(ground(xa, za), 2), round(za, 2)])
-meta = dict(road_ground_checks=SITE.get('road_ground_checks',{}), title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.get('north_bank',{}).get('ground_checks',{}), m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
+meta = dict(roof_physics=roof_physics,road_ground_checks=SITE.get('road_ground_checks',{}), title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.get('north_bank',{}).get('ground_checks',{}), m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
             mapped_wall_profiles=wall_profiles,
             spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),

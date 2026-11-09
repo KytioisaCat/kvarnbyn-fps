@@ -66,7 +66,7 @@ func _ready() -> void:
 			automated_run = true
 	lighting_mode = "evening" if options.get("lighting", "day") == "evening" else "day"
 	# Automated work must stay quiet while Joel uses the computer.
-	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check", "movement-export-check", "terrain-export-check", "civilian-export-check", "road-export-check"]:
+	for test_option in ["mute", "capture", "probe", "walktest", "bot", "map-export-check", "water-export-check", "front-export-check", "guards-export-check", "patrol-export-check", "render-scale-check", "grapple-export-check", "movement-export-check", "terrain-export-check", "civilian-export-check", "road-export-check", "roof-export-check"]:
 		if options.has(test_option):
 			AudioServer.set_bus_mute(0, true)
 			automated_run = true
@@ -203,6 +203,10 @@ func _ready() -> void:
 		var road_report: Dictionary = await preload("res://scripts/road_check.gd").new().run(self)
 		print("KVARNBYN_ROAD_EXPORT_CHECK ",JSON.stringify(road_report))
 		get_tree().quit(0 if road_report.passed else 3)
+	if options.has("roof-export-check"):
+		var roof_report: Dictionary = await preload("res://scripts/roof_check.gd").new().run(self)
+		print("KVARNBYN_ROOF_CHECK ",JSON.stringify(roof_report))
+		get_tree().quit(0 if roof_report.passed else 3)
 	if options.has("civilian-export-check"):
 		var civilian_report: Dictionary = await preload("res://scripts/civilian_check.gd").new().run(self)
 		print("KVARNBYN_CIVILIAN_CHECK ", JSON.stringify(civilian_report))

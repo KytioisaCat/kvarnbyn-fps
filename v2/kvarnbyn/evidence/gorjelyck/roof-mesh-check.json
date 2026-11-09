@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "visible_upward_roof_triangles": 29540,
+  "collision_upward_roof_triangles": 30197,
+  "missing_collision_triangles": 0,
+  "scope": "all delivered visible upward roof faces; no builder functions used"
+}

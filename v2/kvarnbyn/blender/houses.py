@@ -103,13 +103,16 @@ def build_house(K, b, M, ground, tile):
         if L < 2.3: continue
         count = max(1, int(L / bay))
         if arch == 'bod' and i != street: count = 0 if L < 5 else 1
+        positions = b.get('street_bays_m',[]) if i == street else []
+        if not positions: positions = [(k+.5)*L/count for k in range(count)]
+        count = len(positions)
         at_edge = lambda s, d, h, ax=ax, ay=ay, u=u, out=out: (ax + u[0] * s + out[0] * d, ay + u[1] * s + out[1] * d, h)
-        door_slot = count // 2 if i == street and b.get('street_door',True) else -1
+        door_slot = b.get('street_door_index',count//2) if i == street and b.get('street_door',True) else -1
         for f, (fy, fh) in enumerate(floors):
             hh = min(wh, fh - 0.75) if arch != 'industri' else min(wh, fh - 0.9)
             if hh < 0.45: continue
             for k in range(count):
-                s = (k + 0.5) * L / count
+                s = positions[k]
                 at = lambda ss, d, h, s=s, fy=fy: at_edge(s + ss, d, fy + h)
                 if f == 0 and k == door_slot and arch != 'industri':
                     dw = 1.0 if arch in ('trahus', 'bod') else 1.4
@@ -128,7 +131,7 @@ def build_house(K, b, M, ground, tile):
                 at = lambda ss,d,h,pos=pos: at_edge(pos+ss,d,base-1.75+h)
                 window(K,nm+'_Basement',M,at,1.15,1.2,trim,muntins=False)
         # balkonger på flerbostadshusens långsida mot gatan (1960-tal)
-        if arch == 'flerbostad' and i == street and levels >= 2 and b['facade_material'] == 'plaster':
+        if arch == 'flerbostad' and i == street and levels >= 2 and b['facade_material'] == 'plaster' and b.get('balconies',True):
             for f, (fy, fh) in enumerate(floors[1:], start=1):
                 for k in range(0, count, 2):
                     s = (k + 0.5) * L / count
@@ -158,6 +161,7 @@ def build_house(K, b, M, ground, tile):
     detail_name = 'Reviewed_' + b['id']
     cottage_details.standing_boards(K,b,M,wallmat,foot,floors,ww,wh,sill_h,detail_name,bay)
     cottage_details.attic_window(K,b,M,trim,sash,detail_name,window)
+    cottage_details.roof_dormer(K,b,M,trim,sash,detail_name,window)
     if b.get('sign'):
         a, c = foot[street], foot[(street + 1) % n]
         (ax, ay), u, out, L = _edge_frame(a, c)

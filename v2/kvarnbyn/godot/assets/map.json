@@ -107,14 +107,14 @@
     "Höjddata: Lantmäteriet"
   ],
   "source": {
-    "city_sha256": "6f94cc805b15d4c8250e24207a21f8312c819145fa3c999ea5ad08f35cc170a8",
-    "site_sha256": "1ae2f63e7e93123ed3ff70ca4dd8ab3ad8612eacb3dddbc97584be1103418135",
+    "city_sha256": "8c6f797f6f54a23e6f51d03e2dbe3f17f5e9421f33185cd5d37382c92d1c6787",
+    "site_sha256": "56462fc817091cc2a7d62dc46aed810c73424bb02e8814d2d04a31b73e61d7bd",
     "method": "Own cartography; rendered surface triangles and built footprints, land classes and LiDAR hillshade; no external map pixels"
   },
   "counts": {
     "buildings": 381,
     "roads": 352,
-    "surface_triangles": 116575,
+    "surface_triangles": 119241,
     "bridges": 16
   }
 }

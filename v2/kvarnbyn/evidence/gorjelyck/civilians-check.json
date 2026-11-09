@@ -1,0 +1,345 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "passed": true,
+      "test": "four_unique_people_in_real_world"
+    },
+    {
+      "detail": {
+        "accidental_shots": 0,
+        "animation": "Idle",
+        "clips": [
+          "Idle",
+          "Startle",
+          "Talk",
+          "Walk",
+          "Wave"
+        ],
+        "height": 1.88,
+        "id": "lars",
+        "name": "Lars Gahrn",
+        "position": [
+          -25.0,
+          0.00894988980144262,
+          -2.0
+        ],
+        "radius": 0.23,
+        "talks": 0,
+        "walked_m": 0.0
+      },
+      "passed": true,
+      "test": "lars_own_model_rig_five_clips"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "lars_civilian_not_damageable_or_armed"
+    },
+    {
+      "detail": {
+        "accidental_shots": 0,
+        "animation": "Idle",
+        "clips": [
+          "Idle",
+          "Startle",
+          "Talk",
+          "Walk",
+          "Wave"
+        ],
+        "height": 1.8,
+        "id": "per",
+        "name": "Per Andersson",
+        "position": [
+          -31.0,
+          -0.0325997918844223,
+          -4.0
+        ],
+        "radius": 0.29,
+        "talks": 0,
+        "walked_m": 0.0
+      },
+      "passed": true,
+      "test": "per_own_model_rig_five_clips"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "per_civilian_not_damageable_or_armed"
+    },
+    {
+      "detail": {
+        "accidental_shots": 0,
+        "animation": "Idle",
+        "clips": [
+          "Idle",
+          "Startle",
+          "Talk",
+          "Walk",
+          "Wave"
+        ],
+        "height": 1.77,
+        "id": "ronny",
+        "name": "Ronny J\u00f6nsson",
+        "position": [
+          -33.0,
+          -0.184493407607079,
+          7.0
+        ],
+        "radius": 0.38,
+        "talks": 0,
+        "walked_m": 0.0
+      },
+      "passed": true,
+      "test": "ronny_own_model_rig_five_clips"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "ronny_civilian_not_damageable_or_armed"
+    },
+    {
+      "detail": {
+        "accidental_shots": 0,
+        "animation": "Idle",
+        "clips": [
+          "Idle",
+          "Startle",
+          "Talk",
+          "Walk",
+          "Wave"
+        ],
+        "height": 1.69,
+        "id": "linnea",
+        "name": "Linnea R\u00f6nnqvist",
+        "position": [
+          -15.0,
+          -0.0768960565328598,
+          2.0
+        ],
+        "radius": 0.28,
+        "talks": 0,
+        "walked_m": 0.0
+      },
+      "passed": true,
+      "test": "linnea_own_model_rig_five_clips"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "linnea_civilian_not_damageable_or_armed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "imported_animation_moves_actual_arm_bones"
+    },
+    {
+      "detail": [
+        "Lars Gahrn",
+        "Per Andersson",
+        "Ronny J\u00f6nsson",
+        "Linnea R\u00f6nnqvist"
+      ],
+      "passed": true,
+      "test": "identities_and_meshes_distinct"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "body_proportions_distinct"
+    },
+    {
+      "detail": {
+        "floor_error": 0.000851079821586609,
+        "walked": 1.33828659262508
+      },
+      "passed": true,
+      "test": "lars_grounded_walk_in_actual_city"
+    },
+    {
+      "detail": {
+        "floor_error": 0.000850100070238113,
+        "walked": 1.35229459963739
+      },
+      "passed": true,
+      "test": "per_grounded_walk_in_actual_city"
+    },
+    {
+      "detail": {
+        "floor_error": 0.000947102904319763,
+        "walked": 1.27849086560309
+      },
+      "passed": true,
+      "test": "ronny_grounded_walk_in_actual_city"
+    },
+    {
+      "detail": {
+        "floor_error": 0.000915962737053633,
+        "walked": 1.21516959089786
+      },
+      "passed": true,
+      "test": "linnea_grounded_walk_in_actual_city"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "pause_stops_civilian_movement_and_time"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "physical_E_talks_to_aimed_civilian"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "talk_cooldown_prevents_repeated_press"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "cannot_talk_when_looking_away"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "pause_hides_civilian_UI_and_disables_talk"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "cannot_talk_through_world_obstacle"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "grapple_does_not_attach_to_civilian"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "civilians_excluded_from_combat_target_pools"
+    },
+    {
+      "detail": {
+        "civilian_shots": 2,
+        "enemy_hp": 100.0
+      },
+      "passed": true,
+      "test": "real_body_and_head_shots_stop_at_civilian"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "civilian_shots_have_no_blood_hitmarkers_or_score"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "accidental_shot_warns_and_startles"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "soldiers_hold_fire_when_civilian_blocks_line"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "round_restart_does_not_duplicate_civilians"
+    }
+  ],
+  "passed": true,
+  "people": [
+    {
+      "accidental_shots": 0,
+      "animation": "Walk",
+      "clips": [
+        "Idle",
+        "Startle",
+        "Talk",
+        "Walk",
+        "Wave"
+      ],
+      "height": 1.88,
+      "id": "lars",
+      "name": "Lars Gahrn",
+      "position": [
+        -23.6858997344971,
+        -0.0948138982057571,
+        -1.74941694736481
+      ],
+      "radius": 0.23,
+      "talks": 0,
+      "walked_m": 1.33828659262508
+    },
+    {
+      "accidental_shots": 2,
+      "animation": "Startle",
+      "clips": [
+        "Idle",
+        "Startle",
+        "Talk",
+        "Walk",
+        "Wave"
+      ],
+      "height": 1.8,
+      "id": "per",
+      "name": "Per Andersson",
+      "position": [
+        -31.0,
+        -0.0325997918844223,
+        -4.0
+      ],
+      "radius": 0.29,
+      "talks": 1,
+      "walked_m": 1.35229459963739
+    },
+    {
+      "accidental_shots": 0,
+      "animation": "Idle",
+      "clips": [
+        "Idle",
+        "Startle",
+        "Talk",
+        "Walk",
+        "Wave"
+      ],
+      "height": 1.77,
+      "id": "ronny",
+      "name": "Ronny J\u00f6nsson",
+      "position": [
+        -31.7709999084473,
+        -0.171179667115211,
+        7.35226917266846
+      ],
+      "radius": 0.38,
+      "talks": 0,
+      "walked_m": 1.27849086560309
+    },
+    {
+      "accidental_shots": 0,
+      "animation": "Idle",
+      "clips": [
+        "Idle",
+        "Startle",
+        "Talk",
+        "Walk",
+        "Wave"
+      ],
+      "height": 1.69,
+      "id": "linnea",
+      "name": "Linnea R\u00f6nnqvist",
+      "position": [
+        -16.1330032348633,
+        -0.00429491372779012,
+        2.43684196472168
+      ],
+      "radius": 0.28,
+      "talks": 0,
+      "walked_m": 1.21516959089786
+    }
+  ],
+  "release": false
+}

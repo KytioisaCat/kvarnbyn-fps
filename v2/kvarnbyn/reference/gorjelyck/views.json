@@ -1,0 +1,6 @@
+[
+  {"id":"ald-white-west","name":"Startkvarteret – vita trähuset","camera_xz":[343.417,156.42],"target_xz":[357.549,153.203],"target_above_camera_m":1.2},
+  {"id":"ald-white-east","name":"Åldermansgatan – vita verandan","camera_xz":[364.65,169.42],"target_xz":[373.729,151.978],"target_above_camera_m":0.6},
+  {"id":"ald-red","name":"Åldermansgatan – röda trähuset","camera_xz":[364.65,169.42],"target_xz":[380.309,165.185],"target_above_camera_m":1.2},
+  {"id":"ald-yellow","name":"Åldermansgatan – gula trähuset","camera_xz":[336.5,164.6],"target_xz":[318.623,185.423],"target_above_camera_m":0.3}
+]

@@ -1,0 +1,522 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "passed": true,
+      "test": "roof_cases_packaged"
+    },
+    {
+      "detail": {
+        "expected": "(184.8456, 45.942, 364.0544)",
+        "hit": "(184.8456, 45.94107, 364.0544)"
+      },
+      "passed": true,
+      "test": "H1_3_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H1_3_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(184.8456, 46.00385, 364.0544)",
+        "roof": "(184.8456, 45.942, 364.0544)"
+      },
+      "passed": true,
+      "test": "H1_3_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H1_3_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.19565138220787,
+        "height_error_m": 0.0520439147949219
+      },
+      "passed": true,
+      "test": "H1_3_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(86.3282, 25.499, 124.5929)",
+        "hit": "(86.3282, 25.49885, 124.5929)"
+      },
+      "passed": true,
+      "test": "H0_1_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H0_1_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(86.3282, 25.5751, 124.5929)",
+        "roof": "(86.3282, 25.499, 124.5929)"
+      },
+      "passed": true,
+      "test": "H0_1_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H0_1_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.195200234651566,
+        "height_error_m": 0.0663490295410156
+      },
+      "passed": true,
+      "test": "H0_1_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(246.8894, 50.055, 372.7173)",
+        "hit": "(246.8894, 50.0557, 372.7173)"
+      },
+      "passed": true,
+      "test": "H2_3_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H2_3_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(246.8894, 50.11744, 372.7173)",
+        "roof": "(246.8894, 50.055, 372.7173)"
+      },
+      "passed": true,
+      "test": "H2_3_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H2_3_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.195432364940643,
+        "height_error_m": 0.0520286560058594
+      },
+      "passed": true,
+      "test": "H2_3_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(-155.5352, 6.493, 55.2615)",
+        "hit": "(-155.5352, 6.49288, 55.2615)"
+      },
+      "passed": true,
+      "test": "H-2_0_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H-2_0_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(-155.5352, 6.514914, 55.2615)",
+        "roof": "(-155.5352, 6.493, 55.2615)"
+      },
+      "passed": true,
+      "test": "H-2_0_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H-2_0_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.194517388939857,
+        "height_error_m": 0.0172510147094727
+      },
+      "passed": true,
+      "test": "H-2_0_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(351.0983, 59.061, -272.4798)",
+        "hit": "(351.0983, 59.0605, -272.4798)"
+      },
+      "passed": true,
+      "test": "H3_-3_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H3_-3_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(351.0983, 59.1208, -272.4798)",
+        "roof": "(351.0983, 59.061, -272.4798)"
+      },
+      "passed": true,
+      "test": "H3_-3_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "H3_-3_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.195586234331131,
+        "height_error_m": 0.0495033264160156
+      },
+      "passed": true,
+      "test": "H3_-3_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(12.3165, 5.9026, 28.0169)",
+        "hit": "(12.3165, 6.138544, 28.0169)"
+      },
+      "passed": true,
+      "test": "krakan_west_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "krakan_west_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(12.3165, 6.162717, 28.0169)",
+        "roof": "(12.3165, 5.9026, 28.0169)"
+      },
+      "passed": true,
+      "test": "krakan_west_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "krakan_west_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.19451005756855,
+        "height_error_m": 0.247951507568359
+      },
+      "passed": true,
+      "test": "krakan_west_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(23.9614, 4.025, 25.7599)",
+        "hit": "(23.9614, 4.02503, 25.7599)"
+      },
+      "passed": true,
+      "test": "krakan_link_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "krakan_link_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(23.9614, 4.039976, 25.7599)",
+        "roof": "(23.9614, 4.025, 25.7599)"
+      },
+      "passed": true,
+      "test": "krakan_link_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "krakan_link_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.192179039120674,
+        "height_error_m": 0.0222201347351074
+      },
+      "passed": true,
+      "test": "krakan_link_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(28.938, 7.642, 55.1336)",
+        "hit": "(28.938, 7.641942, 55.1336)"
+      },
+      "passed": true,
+      "test": "w92332089_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w92332089_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(28.938, 7.654663, 55.1336)",
+        "roof": "(28.938, 7.642, 55.1336)"
+      },
+      "passed": true,
+      "test": "w92332089_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w92332089_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.194221675395966,
+        "height_error_m": 0.00990438461303711
+      },
+      "passed": true,
+      "test": "w92332089_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(-11.0502, 7.3, -26.5069)",
+        "hit": "(-11.0502, 7.300056, -26.5069)"
+      },
+      "passed": true,
+      "test": "w92332103_RoofSouth_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w92332103_RoofSouth_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(-11.0502, 7.331826, -26.5069)",
+        "roof": "(-11.0502, 7.3, -26.5069)"
+      },
+      "passed": true,
+      "test": "w92332103_RoofSouth_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "w92332103_RoofSouth_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.192257687449455,
+        "height_error_m": 0.0178422927856445
+      },
+      "passed": true,
+      "test": "w92332103_RoofSouth_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(108.1967, 28.0714, 123.3856)",
+        "hit": "(108.1967, 28.07139, 123.3856)"
+      },
+      "passed": true,
+      "test": "Roten_M29_Roof_street_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Roten_M29_Roof_street_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(108.1967, 28.13208, 123.3856)",
+        "roof": "(108.1967, 28.0714, 123.3856)"
+      },
+      "passed": true,
+      "test": "Roten_M29_Roof_street_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Roten_M29_Roof_street_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.188473373651505,
+        "height_error_m": 0.0988941192626953
+      },
+      "passed": true,
+      "test": "Roten_M29_Roof_street_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(361.8673, 58.1126, 154.6478)",
+        "hit": "(361.8673, 58.11266, 154.6478)"
+      },
+      "passed": true,
+      "test": "Footprint_w92331966_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w92331966_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(361.8673, 58.14773, 154.6478)",
+        "roof": "(361.8673, 58.1126, 154.6478)"
+      },
+      "passed": true,
+      "test": "Footprint_w92331966_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w92331966_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.18065071105957,
+        "height_error_m": 0.125988006591797
+      },
+      "passed": true,
+      "test": "Footprint_w92331966_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(253.6004, 52.6419, 153.1906)",
+        "hit": "(253.6004, 52.64197, 153.1906)"
+      },
+      "passed": true,
+      "test": "Footprint_w92332130_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w92332130_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(253.6004, 52.70963, 153.1906)",
+        "roof": "(253.6004, 52.6419, 153.1906)"
+      },
+      "passed": true,
+      "test": "Footprint_w92332130_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w92332130_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.19391605257988,
+        "height_error_m": 0.0540504455566406
+      },
+      "passed": true,
+      "test": "Footprint_w92332130_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(-6.8244, 8.1718, 115.6128)",
+        "hit": "(-6.8244, 8.171782, 115.6128)"
+      },
+      "passed": true,
+      "test": "Footprint_w92332166_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w92332166_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(-6.8244, 8.238648, 115.6128)",
+        "roof": "(-6.8244, 8.1718, 115.6128)"
+      },
+      "passed": true,
+      "test": "Footprint_w92332166_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w92332166_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.193646013736725,
+        "height_error_m": 0.00277233123779297
+      },
+      "passed": true,
+      "test": "Footprint_w92332166_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(305.7751, 47.0906, 285.9574)",
+        "hit": "(305.7751, 47.09055, 285.9574)"
+      },
+      "passed": true,
+      "test": "Footprint_w92500301_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w92500301_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(305.7751, 47.15688, 285.9574)",
+        "roof": "(305.7751, 47.0906, 285.9574)"
+      },
+      "passed": true,
+      "test": "Footprint_w92500301_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w92500301_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.193069398403168,
+        "height_error_m": 0.0812416076660156
+      },
+      "passed": true,
+      "test": "Footprint_w92500301_Roof_walked_on_roof"
+    },
+    {
+      "detail": {
+        "expected": "(208.9573, 55.7933, -282.0217)",
+        "hit": "(208.9573, 55.79329, -282.0217)"
+      },
+      "passed": true,
+      "test": "Footprint_w96098432_Roof_roof_surface"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w96098432_Roof_grapple_attached_to_roof"
+    },
+    {
+      "detail": {
+        "feet": "(208.9573, 55.86059, -282.0217)",
+        "roof": "(208.9573, 55.7933, -282.0217)"
+      },
+      "passed": true,
+      "test": "Footprint_w96098432_Roof_landed"
+    },
+    {
+      "detail": null,
+      "passed": true,
+      "test": "Footprint_w96098432_Roof_stood_still"
+    },
+    {
+      "detail": {
+        "distance_m": 0.181169345974922,
+        "height_error_m": 0.157581329345703
+      },
+      "passed": true,
+      "test": "Footprint_w96098432_Roof_walked_on_roof"
+    }
+  ],
+  "passed": true,
+  "release": false,
+  "roofs": 15
+}

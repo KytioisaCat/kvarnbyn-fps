@@ -36,6 +36,8 @@ $PY v2/poc/torget/assets-src/optimize_glb.py --input $P/blender/world_raw.glb --
 ls -la $P/godot/assets/world.glb | awk '{printf "  world.glb %.1f MB\n", $5/1e6}'
 step "Kontroll: levererade vägtrianglar och kollisioner klipper inte hus"
 $PY $P/reference/vag-hus/verify_layout.py --glb $P/godot/assets/world.glb > $LOG/road-layout-export.log
+step "Kontroll: synliga takplan har motsvarande kollisionsytor"
+$PY $P/reference/gorjelyck/verify_roofs.py > $LOG/roof-mesh-check.log
 step "Kontroll: exporterade gångtrianglar och växternas markkontakt"
 $PY $P/reference/stalliden/qa-export.py --glb $P/blender/world_raw.glb --site $P/data/site.json --out $LOG/stalliden-mesh-after.json > $LOG/stalliden-mesh-check.log
 step "Kontroll: M25:s exporterade entré och ursprungliga L-kontur"
@@ -67,6 +69,9 @@ step "Kontroll: gångytor över hela världen"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --walktest > $LOG/walk-check.log 2>&1
 step "Kontroll: de tre rättade gatorna med riktig spelarkapsel åt båda håll"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --no-movement-profile --check-key=road_ground_checks --report-prefix=KVARNBYN_ROAD_CHECK --output="$ROOT/$LOG/road-walk-check.json" > $LOG/road-walk-check.log 2> $LOG/road-walk-check.stderr.log
+step "Kontroll: landning, stillastående, gång och gripkrok på riktiga tak"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --no-pointer-lock --no-movement-profile --roof-export-check > $LOG/roof-check.log 2> $LOG/roof-check.stderr.log
+$PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_ROOF_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_ROOF_CHECK "))); assert r["passed"] and r["roofs"]>=6' $LOG/roof-check.log
 step "Kontroll: Roten M 29, gård och grind"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --output="$ROOT/$LOG/roten-ground-check.json" > $LOG/roten-ground-check.log 2>&1
 step "Kontroll: hela Stalleliden upp och ned samt räcke"
@@ -120,6 +125,9 @@ if [[ " $* " != *" --no-export "* ]]; then
   step "Kontroll: rättade gator med riktig kapsel i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --explore --no-pointer-lock --no-movement-profile --road-export-check > $LOG/road-export-check.log 2> $LOG/road-export-check.stderr.log
   $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_ROAD_EXPORT_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_ROAD_EXPORT_CHECK "))); assert r["passed"] and r["release"]' $LOG/road-export-check.log
+  step "Kontroll: riktiga tak och gripkrok i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --explore --no-pointer-lock --no-movement-profile --roof-export-check > $LOG/roof-export-check.log 2> $LOG/roof-export-check.stderr.log
+  $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_ROOF_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_ROOF_CHECK "))); assert r["passed"] and r["release"] and r["roofs"]>=6' $LOG/roof-export-check.log
   step "Kontroll: civila modeller, samtal och skydd i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --no-pointer-lock --no-movement-profile --civilian-export-check > $LOG/civilian-export-check.log 2> $LOG/civilian-export-check.stderr.log
   $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_CIVILIAN_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_CIVILIAN_CHECK "))); assert r["passed"] and r["release"] and len(r["checks"])>=29' $LOG/civilian-export-check.log

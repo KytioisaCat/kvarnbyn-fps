@@ -124,14 +124,20 @@
         "roof_rise_m": 2.4,
         "window_style": "t",
         "panel_batten_depth_m": 0.015,
-        "panel_batten_thickness_m": 0.018
+        "panel_batten_thickness_m": 0.018,
+        "street_bays_m": [
+          1.85,
+          6.5,
+          9.8
+        ],
+        "street_door_index": 0
       },
       "source": {
         "facade": "street_view_may2026_observed",
         "trim": "street_view_may2026_observed",
         "levels": "two_full_rows_observed",
         "heights": "visual_estimate_not_survey",
-        "windows": "T_shape_observed_bay_spacing_assumed",
+        "windows": "three_street_bays_and_uphill_end_door_observed_metric_spacing_estimated",
         "roof": "existing_gable_retained_dimensions_estimated"
       }
     },
@@ -197,7 +203,8 @@
         "window_bay_m": 2.9,
         "wall_height_m": 12.8,
         "base_y_m": 22.2,
-        "base_height_raw_m": 40.2
+        "base_height_raw_m": 40.2,
+        "balconies": false
       },
       "source": {
         "facade": "street_view_may2026_light_plaster_observed_osm_material_corrobates",
@@ -211,6 +218,7 @@
   "notes": [
     "Sidoförskjutningarna är lokala visuella uppskattningar för att ge en rimlig passage mellan de oflyttade OSM-husen, inte korrigeringar uppladdade till OSM.",
     "0,28 m gatstensbård följer de granskade vägpartierna, med samma höjd som körbanan. Bredden är uppskattad ur bilden.",
-    "Exakta delvolymer och entréplattform vid G18 samt Franckehusets högre bakdel återstår; inga säkra fasaduppgifter överförs till skymda grannhus."
+    "Exakta delvolymer och entréplattform vid G18 samt Franckehusets högre bakdel återstår; inga säkra fasaduppgifter överförs till skymda grannhus.",
+    "Närgranskning 2026-11-09: G18:s gröna dörr i övre änden av gatufasaden, inte mitt i väggen. G17 har inte de generiska utkragande balkongerna. Entréplattform/räcken behöver fortsatt eget sammanhängande gångprov."
   ]
 }

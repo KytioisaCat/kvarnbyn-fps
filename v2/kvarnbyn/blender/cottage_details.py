@@ -88,9 +88,10 @@ def standing_boards(K,b,M,wallmat,foot,floors,ww,wh,sill_h,name,bay):
         for f,(fy,fh) in enumerate(floors):
             hh=min(wh,fh-.75)
             if L<2.3 or hh<.45:continue
-            for k in range(count):
-                s=(k+.5)*L/count
-                door=f==0 and i==street and k==count//2
+            positions=b.get('street_bays_m',[]) if i==street else []
+            if not positions:positions=[(k+.5)*L/count for k in range(count)]
+            for k,s in enumerate(positions):
+                door=f==0 and i==street and k==b.get('street_door_index',len(positions)//2) and b.get('street_door',True)
                 cuts.append((s,base+sock if door else fy+sill_h,1.0 if door else ww,2.1 if door else hh))
         for j in range(math.floor(L/.18)+1):
             s=min(L-.02,j*.18+.01);intervals=[(base+sock,base+b['wall_height_m'])]
@@ -108,10 +109,17 @@ def attic_window(K,b,M,trim,sash,name,add_window):
     foot=b['build_footprint_xz'];centre=[sum(q[i] for q in foot)/len(foot) for i in (0,1)]
     # modelkit.roof puts its gable at the .32 m overhang, not the wall plane.
     # Place the opening in front of that plane so the solid gable cannot hide it.
-    fr=Frame(centre,b['major_axis_xz']);a=spec.get('end',1)*(b['major_length_m']/2+.34)
+    fr=Frame(b.get('roof_center_xz',centre),b['major_axis_xz']);a=spec.get('end',1)*(b['major_length_m']/2+.34)
     side=1 if a>=0 else -1;eave=b['base_y_m']+b['wall_height_m'];y=eave+spec['above_eave_m']
     at=lambda s,d,h:fr.p(a+side*d,s,y+h)
-    add_window(K,name,M,at,spec['width_m'],spec['height_m'],trim,muntin_mat=sash)
+    if spec.get('front_xz'):
+        x,z=spec['front_xz']
+        at=lambda s,d,h:(x+fr.v[0]*s+fr.u[0]*side*(d+.045),-z+fr.v[1]*s+fr.u[1]*side*(d+.045),y+h)
+    lights=spec.get('vertical_lights',0)
+    add_window(K,name,M,at,spec['width_m'],spec['height_m'],trim,muntin_mat=sash,muntins=not lights)
+    for i in range(1,lights):
+        K.box(name+'_Attic_lights',sash,at(spec['width_m']*(i/lights-.5),.07,spec['height_m']/2),(.045,.05,spec['height_m']),fr.v)
+    if spec.get('front_xz'):return
     # Standing strips on the observed front gable, outside the attic opening.
     half=b['minor_width_m']/2
     for i in range(math.ceil(2*half/.18)):
@@ -121,3 +129,31 @@ def attic_window(K,b,M,trim,sash,name,add_window):
             intervals=[(eave,y-.12),(y+spec['height_m']+.12,top)]
         for lo,hi in intervals:
             if hi-lo>.02:K.beam(name+'_Gable_boards',M['wall'](b),fr.p(a+side*.045,c,lo),fr.p(a+side*.045,c,hi),.016,4)
+
+
+def roof_dormer(K,b,M,trim,sash,name,add_window):
+    """Observed small street gable; roof valleys meet the main roof planes.
+
+    Dimensions live in the area review. Both visible roof/cheeks and collider
+    faces share the same vertices; the main roof remains underneath.
+    """
+    spec=b.get('roof_dormer')
+    if not spec:return
+    fr=Frame(b['roof_center_xz'],b['major_axis_xz'])
+    side=spec['side'];half=b['minor_width_m']/2+.32
+    eave=b['base_y_m']+b['wall_height_m'];rise=b['roof_rise_m']
+    a=spec['centre_a_m'];w=spec['width_m']/2
+    low=eave+spec['side_above_eave_m'];high=eave+spec['ridge_above_eave_m']
+    front=side*(half+.03)
+    join=lambda height:side*half*(1-(height-eave)/rise)
+    at=lambda s,d,h:fr.p(a+s,front+side*d,eave+h)
+    def face(label,mat,points):
+        K.face(name+label,mat,points);K.face(name+label,mat,points[::-1])
+        K.face('COL_'+name+label,M['collision'],points)
+    front_points=[fr.p(a-w,front,eave-.02),fr.p(a+w,front,eave-.02),fr.p(a+w,front,low),fr.p(a,front,high),fr.p(a-w,front,low)]
+    face('_Dormer_front',M['wall'](b),front_points)
+    for sign in (-1,1):
+        face('_Dormer_roof',M['roof_for'](b),[fr.p(a,front,high+.025),fr.p(a+sign*w,front,low+.025),fr.p(a+sign*w,join(low),low+.025),fr.p(a,join(high),high+.025)])
+        face('_Dormer_cheek',M['wall'](b),[fr.p(a+sign*w,front,eave),fr.p(a+sign*w,join(low),low),fr.p(a+sign*w,front,low)])
+        K.beam(name+'_Dormer_barge',trim,fr.p(a,front+side*.045,high),fr.p(a+sign*w,front+side*.045,low),.055,4)
+    add_window(K,name+'_Dormer_window',M,lambda s,d,h:at(s,d,spec['window_above_eave_m']+h),spec['window_width_m'],spec['window_height_m'],trim,muntin_mat=sash)

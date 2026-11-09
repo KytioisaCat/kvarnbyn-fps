@@ -67,6 +67,7 @@ def apply_reviews(roads, reviews):
         road['width_source'] = 'street_view_visual_estimate_not_survey'
         road['review_id'] = review['review_id']
         if review.get('surface'): road['reviewed_surface'] = review['surface']
+        road['reviewed_edge'] = review.get('edge', 'sett')
 
     # Move reviewed centre lines locally, tapering to their original endpoints.
     # A shared OSM node moves once for every connected way, including driveways.

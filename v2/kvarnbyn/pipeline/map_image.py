@@ -66,6 +66,7 @@ def generate(city_path, site_path, output, width=2400):
         kinds.update(site.get(key,{}))
     kinds['street_setts']='paving'
     kinds['street_edges']='paving'
+    kinds['street_gravel_edges']='trail'
     kinds.update({k:'trail' for k,v in kinds.items() if v=='gravel'})
     rendered_triangles=0
     # Water first, roads later, bridge decks last: this matches world ownership.

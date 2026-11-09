@@ -32,7 +32,19 @@ roten_m29 = json.loads((DATA.parent / 'reference/roten-m/house.json').read_text(
 stalliden_houses = json.loads((DATA.parent / 'reference/stalliden/houses.json').read_text())
 stalleliden_m25 = json.loads((DATA.parent / 'reference/stalleliden-hus/m25.json').read_text())
 
-street_reviews = json.loads((DATA.parent/'reference/vag-hus/reviews.json').read_text())
+street_reviews = {'buildings': {}, 'roads': []}
+reviewed_road_ids = set()
+for review_file in sorted((DATA.parent/'reference').glob('*/reviews.json')):
+    review = json.loads(review_file.read_text())
+    for building_id, context in review.get('buildings', {}).items():
+        if building_id in street_reviews['buildings']:
+            raise ValueError(f'Dubbelt husunderlag: {building_id} i {review_file}')
+        street_reviews['buildings'][building_id] = context
+    for road in review.get('roads', []):
+        if road['id'] in reviewed_road_ids:
+            raise ValueError(f'Dubbelt vägunderlag: {road["id"]} i {review_file}')
+        reviewed_road_ids.add(road['id'])
+        street_reviews['roads'].append(road)
 
 # ---------- paletter (assumed: typiska kulörer i Kvarnbyn, inte uppmätta per hus) ----------
 WOOD = ['#efece4', '#efece4', '#e9dcae', '#8e3326', '#8e3326', '#cfccc2', '#bcc6a8', '#bccad0', '#d8b46c', '#e6d8c0']

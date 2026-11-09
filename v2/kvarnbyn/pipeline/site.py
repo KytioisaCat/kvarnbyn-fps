@@ -167,13 +167,17 @@ trail = trail.difference(asphalt).difference(paving_all).difference(other_u).dif
 pitch_u = unary_union([p for s, p, _ in surfaces if s['kind'] == 'pitch']).difference(cut).intersection(work) if surfaces else Polygon()
 play_u = unary_union([p for s, p, _ in surfaces if s['kind'] == 'playground']).difference(cut).intersection(work) if surfaces else Polygon()
 edge_bands=[]
+gravel_edge_bands=[]
 for r,line in drive_lines:
     if not r.get('width_profile_m'):continue
     span=r['width_profile_m']
     extent=substring(line,span[1][0],span[-2][0]).buffer(r['width_m']/2+1)
-    edge_bands.append(corridor(r,extra=.28).difference(corridor(r)).intersection(extent))
+    is_gravel = r.get('reviewed_edge') == 'gravel'
+    bands = gravel_edge_bands if is_gravel else edge_bands
+    bands.append(corridor(r,extra=.65 if is_gravel else .28).difference(corridor(r)).intersection(extent))
 street_edges=unary_union(edge_bands).difference(cut).difference(paving_all).difference(other_u).intersection(work)
-urban = unary_union([asphalt, paving_all, pitch_u, play_u, street_edges])
+street_gravel_edges=unary_union(gravel_edge_bands).difference(cut).difference(paving_all).difference(other_u).difference(asphalt).intersection(work)
+urban = unary_union([asphalt, paving_all, pitch_u, play_u, street_edges, street_gravel_edges])
 # Restore the observed Torget ground description lost in the first large-world pass.
 # Existing asphalt, bridges, buildings, water and other authored OSM surfaces win.
 original_urban = urban
@@ -182,7 +186,7 @@ paving_all = paving_all.union(authored.paving).difference(authored.soil)
 paving = paving.union(authored.paving).difference(authored.soil)
 walkway = walkway.difference(authored.coverage)
 trail = trail.difference(authored.coverage)
-urban = unary_union([asphalt, paving_all, pitch_u, play_u, authored.soil, street_edges])
+urban = unary_union([asphalt, paving_all, pitch_u, play_u, authored.soil, street_edges, street_gravel_edges])
 log(f'handgranskat torg: {authored.paving.area:.0f} m² sten + {authored.soil.area:.0f} m² planteringsöar (uppskattade konturer)')
 log(f'ytor: asfalt {asphalt.area:.0f} m², gatsten {paving.area:.0f} m², gångbana {walkway.area:.0f} m², stig {trail.area:.0f} m², å {channel.area:.0f} m²')
 
@@ -377,6 +381,7 @@ reviewed_setts = unary_union([corridor(r) for r, line in drive_lines if r.get('r
 meshes = {
     'street_setts': triangulate(reviewed_setts, base_surface_height, .03),
     'street_edges': triangulate(street_edges, base_surface_height, .03),
+    'street_gravel_edges': triangulate(street_gravel_edges, base_surface_height, .03),
     'asphalt': triangulate(asphalt.difference(reviewed_setts), base_surface_height, 0.03),
     'paving': paving_mesh,
     'walkway': triangulate(walkway, surface_height, 0.12),

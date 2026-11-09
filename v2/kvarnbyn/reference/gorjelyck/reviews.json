@@ -1,0 +1,256 @@
+{
+  "date": "2026-11-08",
+  "note": "Faktiskt granskad Street View. Mått är visuella uppskattningar. Inga bildpixlar används eller distribueras. Panoramats adressrubrik identifierar inte säkert husen.",
+  "references": [
+    {
+      "id": "ald-start",
+      "pano": "VBuJQsrYYaReS7hyXwMNvg",
+      "capture_date": "augusti 2024",
+      "lat": 57.6554949,
+      "lon": 12.0335659,
+      "headings": [
+        90,
+        135,
+        205
+      ],
+      "observed": "Korsningen Görjelycksgatan/Åldermansgatan. Vit stående panel och vita spröjsfönster på västra huset, låg huvudvåning och vind, rött äldre tegeltak och central takkupa mot gatan. Gult lågt trähus åt sydväst har vit gavelomfattning och tredelat frontfönster. Skymt gult hus bakom trädet får inga överförda fasaduppgifter.",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=VBuJQsrYYaReS7hyXwMNvg"
+    },
+    {
+      "id": "ald-east",
+      "pano": "iEyLLDfV_kT06W2163IgWQ",
+      "capture_date": "augusti 2024",
+      "lat": 57.6553781,
+      "lon": 12.0339224,
+      "headings": [
+        90,
+        290
+      ],
+      "observed": "Fortsättning längs Åldermansgatan. Rött lågt trähus med vita foder/knutar, flera gavlar, röda pannor. Närmaste vita östra del har separat gavel och veranda med vita stolpar/räcke. Stenmurar och grönskande häckar längs tomterna. Gatan har asfalt och grus-/gräsverge, ingen rad smågatsten.",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=iEyLLDfV_kT06W2163IgWQ"
+    },
+    {
+      "id": "ald-loop-old",
+      "pano": "e8lHW-53mpHH1r-cugFozg",
+      "capture_date": "juni 2011",
+      "lat": 57.6553671,
+      "lon": 12.0333759,
+      "heading": 180,
+      "observed": "Äldre, delvis skymd vy av sydvästra gula husets stående panel och fönster. Endast stödreferens, 2024-vyn styr kulör/takform. Kartans titel Roten K 23 är inte antagen adress för något hus.",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=e8lHW-53mpHH1r-cugFozg"
+    }
+  ],
+  "buildings": {
+    "w92331966": {
+      "name": "Åldermansgatan – vita västra trähuset",
+      "override": {
+        "reviewed_cottage": true,
+        "facade_material": "wood",
+        "panel_orientation": "vertical",
+        "levels": 1,
+        "window_style": "cross",
+        "window_muntins": true,
+        "street_door": false,
+        "panel_batten_depth_m": 0.015,
+        "panel_batten_thickness_m": 0.018,
+        "trim_color": "#e9e8df",
+        "sash_color": "#e9e8df",
+        "roof_material": "roof_tiles",
+        "keep_osm_footprint": true,
+        "clip_gabled_roof": true,
+        "facade_color": "#e5e5dd",
+        "wall_height_m": 3.0,
+        "roof_rise_m": 2.65,
+        "roof_shape": "gabled",
+        "roof_center_xz": [
+          357.651,
+          152.946
+        ],
+        "gable_window": {
+          "end": -1,
+          "front_xz": [
+            352.045,
+            149.837
+          ],
+          "above_eave_m": 0.5,
+          "width_m": 0.9,
+          "height_m": 1.05
+        },
+        "roof_dormer": {
+          "side": -1,
+          "centre_a_m": 0,
+          "width_m": 2.1,
+          "side_above_eave_m": 0.5,
+          "ridge_above_eave_m": 1.85,
+          "window_width_m": 0.9,
+          "window_height_m": 1.05,
+          "window_above_eave_m": 0.12
+        }
+      },
+      "source": {
+        "facade": "street_view_aug2024_vertical_wood_observed",
+        "trim": "street_view_aug2024_white_trim_observed",
+        "levels": "one_full_storey_and_attic_observed",
+        "heights": "visual_estimate_not_survey",
+        "roof": "pitched_tile_observed_main_ridge_estimated_complex_rear_join_unresolved",
+        "windows": "white_cross_bars_observed_main_bay_distribution_assumed",
+        "footprint": "original_osm_contour_preserved",
+        "dormer": "central_street_facing_gable_dormer_observed_dimensions_estimated"
+      }
+    },
+    "w92500208": {
+      "name": "Åldermansgatan – vita östra verandahuset",
+      "override": {
+        "reviewed_cottage": true,
+        "facade_material": "wood",
+        "panel_orientation": "vertical",
+        "levels": 1,
+        "window_style": "cross",
+        "window_muntins": true,
+        "street_door": false,
+        "panel_batten_depth_m": 0.015,
+        "panel_batten_thickness_m": 0.018,
+        "trim_color": "#e9e8df",
+        "sash_color": "#e9e8df",
+        "roof_material": "roof_tiles",
+        "keep_osm_footprint": true,
+        "clip_gabled_roof": true,
+        "facade_color": "#e5e5dd",
+        "wall_height_m": 2.85,
+        "roof_rise_m": 1.9,
+        "roof_shape": "gabled",
+        "roof_center_xz": [
+          372.789,
+          152.147
+        ]
+      },
+      "source": {
+        "facade": "street_view_aug2024_vertical_wood_observed",
+        "trim": "street_view_aug2024_white_trim_observed",
+        "levels": "one_full_storey_and_attic_observed",
+        "heights": "visual_estimate_not_survey",
+        "roof": "pitched_tile_observed_main_ridge_estimated_complex_rear_join_unresolved",
+        "windows": "gable_opening_observed_joined_roof_volume_unresolved_not_floated_in_front_of_wall",
+        "footprint": "original_osm_contour_preserved",
+        "porch": "white_posts_and_railing_observed_not_yet_modelled"
+      }
+    },
+    "w92500355": {
+      "name": "Åldermansgatan – röda trähuset",
+      "override": {
+        "reviewed_cottage": true,
+        "facade_material": "wood",
+        "panel_orientation": "vertical",
+        "levels": 1,
+        "window_style": "cross",
+        "window_muntins": true,
+        "street_door": false,
+        "panel_batten_depth_m": 0.015,
+        "panel_batten_thickness_m": 0.018,
+        "trim_color": "#e9e8df",
+        "sash_color": "#e9e8df",
+        "roof_material": "roof_tiles",
+        "keep_osm_footprint": true,
+        "clip_gabled_roof": true,
+        "facade_color": "#943e35",
+        "wall_height_m": 3.1,
+        "roof_rise_m": 2.65,
+        "roof_shape": "gabled",
+        "roof_center_xz": [
+          380.182,
+          165.752
+        ]
+      },
+      "source": {
+        "facade": "street_view_aug2024_vertical_wood_observed",
+        "trim": "street_view_aug2024_white_trim_observed",
+        "levels": "one_full_storey_and_attic_observed",
+        "heights": "visual_estimate_not_survey",
+        "roof": "pitched_tile_observed_main_ridge_estimated_complex_rear_join_unresolved",
+        "windows": "white_cross_bars_observed_main_bay_distribution_assumed",
+        "footprint": "original_osm_contour_preserved"
+      }
+    },
+    "w92332156": {
+      "name": "Åldermansgatan – gula trähuset",
+      "override": {
+        "reviewed_cottage": true,
+        "facade_material": "wood",
+        "panel_orientation": "vertical",
+        "levels": 1,
+        "window_style": "cross",
+        "window_muntins": true,
+        "street_door": false,
+        "panel_batten_depth_m": 0.015,
+        "panel_batten_thickness_m": 0.018,
+        "trim_color": "#e9e8df",
+        "sash_color": "#e9e8df",
+        "roof_material": "roof_tiles",
+        "keep_osm_footprint": true,
+        "clip_gabled_roof": true,
+        "facade_color": "#dfd0a0",
+        "wall_height_m": 3.05,
+        "roof_rise_m": 2.55,
+        "roof_shape": "gabled",
+        "roof_center_xz": [
+          318.605,
+          184.779
+        ],
+        "gable_window": {
+          "end": 1,
+          "front_xz": [
+            322.056,
+            179.915
+          ],
+          "above_eave_m": 0.28,
+          "width_m": 1.5,
+          "height_m": 1.15,
+          "vertical_lights": 3
+        }
+      },
+      "source": {
+        "facade": "street_view_aug2024_vertical_wood_observed",
+        "trim": "street_view_aug2024_white_trim_observed",
+        "levels": "one_full_storey_and_attic_observed",
+        "heights": "visual_estimate_not_survey",
+        "roof": "pitched_tile_observed_main_ridge_estimated_complex_rear_join_unresolved",
+        "windows": "front_gable_three_vertical_lights_observed_lower_pattern_assumed",
+        "footprint": "original_osm_contour_preserved"
+      }
+    }
+  },
+  "roads": [
+    {
+      "id": "w1197238918",
+      "review_id": "ald-start",
+      "anchor_xz": [
+        361,
+        168
+      ],
+      "before_m": 40,
+      "after_m": 34,
+      "transition_m": 8,
+      "width_estimate_m": 4.3,
+      "edge": "gravel"
+    },
+    {
+      "id": "w78040331",
+      "review_id": "ald-start",
+      "anchor_xz": [
+        323,
+        168
+      ],
+      "before_m": 24,
+      "after_m": 27,
+      "transition_m": 8,
+      "width_estimate_m": 3.0,
+      "edge": "gravel"
+    }
+  ],
+  "notes": [
+    "Startpunkten ligger kvar vid korsningen, inte flyttad efter Street Views adressrubrik.",
+    "Fyra hus matchade med fotavtryck, ordning längs gatan och två panoramapunkter. Inga husnummer uppfunna.",
+    "Förgreningens grusverge uppskattad till 0,65 m; asfaltbredderna 4,3/3,0 m är visuella uppskattningar.",
+    "Veranda/spjälstaket, stenmurar, häckar och röda husets exakta deltak återstår. Takens osynliga baksidor är fortfarande tolkade."
+  ]
+}

@@ -19,7 +19,7 @@ def transform(node):
     m=np.eye(4);m[:3,:3]=rot@np.diag(node.get('scale',[1,1,1]));m[:3,3]=node.get('translation',[0,0,0]);return m
 
 
-def exported_roads(path, extra_names=()):
+def exported_roads(path, extra_names=(), include_roads=True, exclude_prefixes=()):
     data=path.read_bytes();size=struct.unpack_from('<I',data,12)[0];doc=json.loads(data[20:20+size]);start=28+size
     def acc(index):
         a=doc['accessors'][index];v=doc['bufferViews'][a['bufferView']]
@@ -28,7 +28,7 @@ def exported_roads(path, extra_names=()):
     result={'visible':[],'collision':[]}
     def visit(index,parent):
         node=doc['nodes'][index];m=parent@transform(node);name=node.get('name','')
-        if 'mesh' in node and (re.match(r'^(?:COL_)?(?:asphalt|paving|walkway|trail|street_setts|street_edges)-?\d+_-?\d+__',name,re.I) or any(prefix.lower() in name.lower() for prefix in extra_names)):
+        if 'mesh' in node and not name.startswith(exclude_prefixes) and ((include_roads and re.match(r'^(?:COL_)?(?:asphalt|paving|walkway|trail|street_setts|street_edges|street_gravel_edges)-?\d+_-?\d+__',name,re.I)) or any(prefix.lower() in name.lower() for prefix in extra_names)):
             for primitive in doc['meshes'][node['mesh']]['primitives']:
                 vertices=acc(primitive['attributes']['POSITION']).astype(float)
                 vertices=(np.c_[vertices,np.ones(len(vertices))]@m.T)[:,:3]
@@ -64,7 +64,7 @@ def main():
     args=parser.parse_args()
     city=json.loads((ROOT/'data/city.json').read_text());site=json.loads((ROOT/'data/site.json').read_text())
     houses=city['buildings'];roads=city['roads'];checks={};detail={}
-    tris=np.array([t for kind,tiles in site['meshes'].items()if kind in('asphalt','paving','walkway','trail','street_setts','street_edges')for ts in tiles.values()for t in ts])
+    tris=np.array([t for kind,tiles in site['meshes'].items()if kind in('asphalt','paving','walkway','trail','street_setts','street_edges','street_gravel_edges')for ts in tiles.values()for t in ts])
     bad=intrusions(tris,houses);checks['built_street_surfaces_outside_all_house_walls']=not bad;detail['site_intrusions']=bad
     corrected=[b for b in houses if b.get('footprint_road_correction_m2')]
     known={b['building'] for b in json.loads((ROOT/'evidence/road-mesh-overlaps-before.json').read_text())}

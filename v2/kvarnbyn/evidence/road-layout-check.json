@@ -37,14 +37,14 @@
     "visible_intrusions": [],
     "collision_intrusions": [],
     "exported_road_triangles": {
-      "visible": 85908,
-      "collision": 85908
+      "visible": 88574,
+      "collision": 88574
     },
     "all_walk_collision_intrusions": [],
     "all_walk_floor_intrusions": [],
-    "glb_sha256": "6888e17d63157d0bb60e0a45684cceb5cd1434cc8cd3ec469bfaf3aa64b75460"
+    "glb_sha256": "70731c3a8459093e610a04b1011b7b81ca8621cdf692f37f9f7f0a9f9864a45a"
   },
   "buildings_checked": 381,
   "roads_checked": 352,
-  "site_triangles_checked": 85908
+  "site_triangles_checked": 88574
 }
