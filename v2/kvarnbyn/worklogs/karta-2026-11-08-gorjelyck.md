@@ -54,3 +54,8 @@ byggning igen. Källor/startkvarter finns isolerade här, ännu inte integrerade
 Slutpaket byggs separat som v2/.tools/Kvarnbyn-tak-02.zip. Ej installerat ännu.
 Råloggar lokalt v2/.tools/*-delivery*, *-final* och roof-*. Kända CA/ObjectDB-
 avslutsvarningar separerade från stdout. Inga Street View-pixlar distribueras.
+
+Integrationskontrollen reproducerade city/site/nav/game byteidentiskt. Kartbilden
+var också identisk, men map.json bar city-hashen före den sista fönsterplaceringen.
+Kartmetadata omgenererad före leverans; nytt slutpaket tak-03 väljs. Inga ändrade
+pixlar eller gångytor. Detta är skälet till omexporten, inte ett nytt kartpass.
