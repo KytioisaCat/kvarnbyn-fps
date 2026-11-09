@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-09",
+  "source_commit": "167cc18",
+  "app": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/app/Försvara Kvarnbyn.app",
+  "zip": "/Users/joel/Workspace/kvarnbyn/v2/kvarnbyn/desktop/Kvarnbyn.zip",
+  "zip_sha256": "0fd082b11fb860d43c01559f3499f14ecb23570bc3c43cce233ac73a6e3a8a35",
+  "payload": {
+    "Contents/Info.plist": "5c4f54e06d43cca28783a8aa4cb6b7d6b2b763ad9bda8f6c8cfee8e46464c566",
+    "Contents/MacOS/Försvara Kvarnbyn": "c7f49e13ac4021b33ede371be1d47f58f93503ff257e6c6b58b5f1c79820ca97",
+    "Contents/PkgInfo": "7e50a30efad50208a173203ced60818d693bb61266b75aa10927d1a2adce80cb",
+    "Contents/Resources/Försvara Kvarnbyn.pck": "eeceb6bb59166f207c16776a69d0b47cefcb70fc10d559247874dfe39275061f",
+    "Contents/Resources/PrivacyInfo.xcprivacy": "0535353bb08c25b8ce5ed9ac7e442a5994f402e0f6cbc4bed668cfc63c2ceac3",
+    "Contents/Resources/icon.icns": "06e755cc77286f1af72db10fcf7932cc1832f69f0ca613f09f9d8e5e162d0953",
+    "Contents/_CodeSignature/CodeResources": "f3360af81434da10bfccecb24dd72d91ab83cccd621dcb542aebbd04b8a2c493"
+  },
+  "world_artifacts": {
+    "data/city.json": "0e0883b661305c1d539f99462668b9635086b13b9b11fffe4ef5f72f0c66d190",
+    "data/site.json": "56462fc817091cc2a7d62dc46aed810c73424bb02e8814d2d04a31b73e61d7bd",
+    "godot/assets/world.glb": "70731c3a8459093e610a04b1011b7b81ca8621cdf692f37f9f7f0a9f9864a45a",
+    "godot/assets/world_meta.json": "3f7b363f2f89171618aa2393307d12817b0d7dae9ae371d557501ae9c357d17c",
+    "godot/assets/world_map.png": "2c658cc853fe240962047feabc0017ec1980eebdce277c95617cfe7a783177d9",
+    "godot/assets/map.json": "b80164fb71d389adb7225d762f4630d6a790c69c2bd187691bb9396c99b5a235",
+    "godot/assets/nav.json": "9eba61f38eda3942c6438f8816147d38bb4359ebc6c4bc354c263a96502f7e48",
+    "godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d"
+  },
+  "previous_app": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-tak-20261109/previous/Försvara Kvarnbyn.app",
+  "checks": {
+    "roof": {
+      "passed": true,
+      "release": true,
+      "checks": 76,
+      "log": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-tak-20261109/installed-roof.log",
+      "package": "tak-03"
+    },
+    "map": {
+      "passed": true,
+      "release": true,
+      "checks": 0,
+      "log": "/Users/joel/Workspace/kvarnbyn/v2/.tools/kvarnbyn-tak-20261109/installed-map.log",
+      "package": "tak-03"
+    },
+    "civilian": {
+      "passed": true,
+      "release": true,
+      "checks": 29,
+      "log": "/private/tmp/kvarnbyn-karta-gorjelyck/v2/.tools/release03-civilian.log",
+      "package": "tak-03"
+    },
+    "road": {
+      "passed": true,
+      "release": true,
+      "checks": 31,
+      "log": "/private/tmp/kvarnbyn-karta-gorjelyck/v2/.tools/release-roads.log",
+      "package": "tak-02; same world/script hashes; map source hash corrected in tak-03"
+    },
+    "grapple": {
+      "passed": true,
+      "release": true,
+      "checks": 27,
+      "log": "/private/tmp/kvarnbyn-karta-gorjelyck/v2/.tools/release-grapple.log",
+      "package": "tak-02; same world/script hashes; map source hash corrected in tak-03"
+    },
+    "movement": {
+      "passed": true,
+      "release": true,
+      "checks": 25,
+      "log": "/private/tmp/kvarnbyn-karta-gorjelyck/v2/.tools/release-movement.log",
+      "package": "tak-02; same world/script hashes; map source hash corrected in tak-03"
+    },
+    "terrain": {
+      "passed": true,
+      "release": true,
+      "checks": 7,
+      "log": "/private/tmp/kvarnbyn-karta-gorjelyck/v2/.tools/release-terrain.log",
+      "package": "tak-02; same world/script hashes; map source hash corrected in tak-03"
+    }
+  },
+  "roof_geometry": {
+    "passed": true,
+    "visible_upward_roof_triangles": 29540,
+    "collision_upward_roof_triangles": 30197,
+    "missing_collision_triangles": 0,
+    "scope": "all delivered visible upward roof faces; no builder functions used"
+  },
+  "street_geometry": {
+    "built_street_surfaces_outside_all_house_walls": true,
+    "road_blocking_house_expansions_removed": true,
+    "shared_road_junctions_still_connected": true,
+    "reviewed_street_profiles_applied": true,
+    "authored_walkways_outside_house_interiors": true,
+    "navigation_edges_do_not_cross_house_interiors": true,
+    "exported_visible_roads_outside_house_walls": true,
+    "exported_collision_roads_outside_house_walls": true,
+    "exported_roads_match_current_site_geometry": true,
+    "exported_visible_and_collision_roads_match": true,
+    "exported_walkways_stairs_and_bridge_decks_outside_houses": true,
+    "exported_walk_collisions_outside_houses": true
+  },
+  "reviewed_house_ids": [
+    "w92331966",
+    "w92500208",
+    "w92500355",
+    "w92332156"
+  ],
+  "remaining": "Joined roof subdivisions/verandas/gardens; G17/G18 platforms/entrances require next actual-view pass.",
+  "street_view_pixels_distributed": false
+}

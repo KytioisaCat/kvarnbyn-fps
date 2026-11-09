@@ -5,11 +5,18 @@ Klart-sektionen med datum. Claude: läs denna fil vid sessionstart (se CLAUDE.md
 
 ## Aktiv arbetskö — rörelse, flyt och husigenkänning (Joel 2026-11-08)
 
+**Joels prioritering 2026-11-09:** gångbara sadeltak, därefter fler husdetaljer kring
+Götaforsliden: fasader, trappor/entréer och igenkännliga parkeringar. Mindre
+planteringar där de hjälper platsen; häckar/träd/gatsten lägre prioritet.
+Takrättningen är byggd och klarar76 verkliga takprov i Mac-release. Fyra trähus
+vid startkorsningen är förbättrade med faktisk Street View; sammanfogade deltak,
+verandor och tomter återstår. Nästa platsprov: G17/G18:s entréer/plattformar.
+
 **Joels aktuella val: fortsatta Street View-rundor tills tokenutrymmet tar slut.**
 Första gaturundorna vid Götaforsliden/Royens gata/Franckegatan är byggda och
 levererade i verifierad app:13återställda huskonturer, tre lokala gatulinjer/bredder,
 stenbårder och fyra fasadpass. Utökad global kontroll av381hus/352vägar samt
-faktiska gång-/kollisionsprov. Nästa område: övre Görjelycksgatan/startkvarteren.
+faktiska gång-/kollisionsprov. Startkvarteret vid Görjelyck/Åldermans har därefter fått fyra huspass och två gatuprofiler. Nästa område: fortsatta entrédetaljer på Götaforsliden.
 Entréplattform vid G18, G17:s tak/entrédetaljer och Franckehusets bakdel kräver
 fortsatt separat granskning. Säkra observationer och uppskattningar hålls isär.
 
@@ -135,6 +142,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 - [ ] Motorbyte UE5 + Cesium om projektet växer (datapipelinen återanvänds)
 
 ## Klart
+
+- [x] 2026-11-09 — **Gångbara tak + startkvarter:** verkliga lutande tak/kupor/skorstenar kolliderar;76takprov i installerad Mac-app,0saknade taktrianglar. Fyra trähus och två grusvergekantade gator granskade. G18-dörr/G17-balkonger rättade. `v2/kvarnbyn/RESULTAT-TAK.md`.
 
 - [x] 2026-11-08 — **Första gaturundorna mot Street View:**13felaktigt utvidgade hus återställda till OSM-konturer; markklippning samma kontur som huset. Tre lokala vägprofiler och fyra fasadpass, stenlagda vägkanter. Inga väg-/gångintrång i exporterad kontroll mot381hus, sex kapselstråk fram/back och19releaseprov. Fortsatt iterering beställd; detta är inte färdigbedömning av hela staden.
 

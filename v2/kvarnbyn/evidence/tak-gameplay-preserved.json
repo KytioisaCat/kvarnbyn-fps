@@ -1,0 +1,15 @@
+{
+  "godot/assets/game.json": "5752daaa07ff6347293f4e6cb31603b587bbe30b69edd246b94c1019b4f4741d",
+  "config/gameplay.json": "70d38632e337044738434e88a11d920202fc6a767e008f87b853401239550a80",
+  "godot/scripts/player.gd": "a040013ce7f8a5a0a0e48ac266dee9c664bc1cd2e42d1d519e88dc663dc180bf",
+  "godot/scripts/weapon.gd": "9ba9d955671e61bae27c43a2614c891cbb35cf1e7e18ec526c9c2007280cc575",
+  "godot/scripts/grapple.gd": "4fafd1dddfccc2789b25b61fa02df3012204e69815cee1c8a6faefb772ba891c",
+  "godot/scripts/movement_settings.gd": "054a96b7417bccb0e10cc2316799ef0b53a53fdbfd80096d18f1f63b615a2c31",
+  "godot/scripts/civilian.gd": "21df1e437e1b979a9bec62618357d3be61466715fc141ebcf143533fe2fb150e",
+  "godot/scripts/civilian_roster.gd": "950c68dcf150fa79901c38d5b20d72ce4069c37f505a386fc2b17c6120e4e8ed",
+  "godot/scripts/civilian_world.gd": "4322d49c902acb64ee16387d29644d3e50d2e81f9e25fcefea6169f3509b9958",
+  "godot/assets/characters/civilian_lars.glb": "1bb6cab12f97b301ebee8d9045b57dcf986e60505189ff5a5b63335c0a00ebf3",
+  "godot/assets/characters/civilian_linnea.glb": "e8259bbd4f75dafdfccb80bbcaf3db58aaa4c8c119a6db370d5df9a6f989da2f",
+  "godot/assets/characters/civilian_per.glb": "c1708e8337ad3150ad23ac1e9e1948e4550e9625f06745052ef09b4438da33b0",
+  "godot/assets/characters/civilian_ronny.glb": "22038ef084264b017c954697fb6292971fdeaea9c4505253c27c8e3e1cf99b2e"
+}

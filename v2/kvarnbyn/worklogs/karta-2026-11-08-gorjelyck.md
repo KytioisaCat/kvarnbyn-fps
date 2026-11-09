@@ -1,6 +1,6 @@
 # Karta — övre Görjelycksgatan / startkvarteret
 
-**Status:** pågår. **Startcommit:**aed6132. **Gren:**codex/karta/gorjelyck.
+**Status:** klart för detta delpass, integrerat i main och ordinarie app2026-11-09. **Startcommit:**aed6132. **Gren:**codex/karta/gorjelyck.
 **Arbetskopia:**/private/tmp/kvarnbyn-karta-gorjelyck.
 
 Fortsättning på Joels uttryckliga beställning att iterera olika områden tills
@@ -59,3 +59,10 @@ Integrationskontrollen reproducerade city/site/nav/game byteidentiskt. Kartbilde
 var också identisk, men map.json bar city-hashen före den sista fönsterplaceringen.
 Kartmetadata omgenererad före leverans; nytt slutpaket tak-03 väljs. Inga ändrade
 pixlar eller gångytor. Detta är skälet till omexporten, inte ett nytt kartpass.
+
+Slutkvitto: tak-03 installerad och samtliga apppayloadhashar matchar.76takprov i
+installerad app +kartresurser gröna; civila29 i tak-03. De övriga releasegrindarna
+är från geometriskt/kodmässigt identiska tak-02 (endast map.json-källhash byttes).
+8världsfiler jämförda, identiska efter integration. Manifest i ordinarie projekt
+evidence/delivery-roofs-2026-11-09.json; tidigare app bevarad därs v2/.tools/
+kvarnbyn-tak-20261109/previous. Fortsatt Götaforsarbete får egen logg/arbetskopia.

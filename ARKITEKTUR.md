@@ -829,3 +829,21 @@ Native före/slutbilder med samma fem kameror och faktisk releasebild granskade.
 180globala gångpunkter, äldre plats-/spelprov och två seedade botrundor körda.
 Seed108nådde600s med B/C egna;109förlorade220,2s. Ingen balansjämförelse eller
 seger hävdas. Källa/rålogg/uppskattning/leveransmanifest hålls separata.
+
+
+## Gångbara tak och separata gaturundor (2026-11-09)
+
+Lokala `blender/roof_collisions.py` kompletterar synliga tak/kupor/skorstenar
+före Kit.finish. Takplanet självt ger fysisk gångyta; inga osynliga lådtak och
+ingen global ökning av spelarens lutningsgräns. Exakta redan kolliderande
+polygoner dupliceras inte. Bakgrundshus utanför spelområdet undantas.
+GLB-kontroll jämför faktisk synlig uppåtvänd takgeometri med kollisionsytor,
+inklusive alternativ tesselleringsdiagonal på samma plan. Gemensamt runtimeprov
+provar riktig kapsel och krok på15tak i editor/release. Båda är rebuild-grindar.
+
+Flera avgränsade `reference/*/reviews.json` kombineras av interpret; dubbla
+hus-/väg-id stoppar bygget. Endast deras vyfiler används som nya gaturundor,
+inte andra platsprovs olika views-scheman. Observerade grusverger är egen yttyp
+med samma mark-/kollisionshöjd; kartan läser samma mesh. G18:s observerade
+asymmetriska dörrposition stöds av street_bays_m/street_door_index. Mått förblir
+visuella uppskattningar. Delvolymer med osäkra tak får inga svävande vindsfönster.

@@ -33,6 +33,17 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-09 — ChatGPT Codex — gångbara tak och startkvarterets trähus
+
+**Status:** delpass klart och installerat, fortsatt platsarbete pågår. Joels fortsatta beställning: fler fasader/trappor/entréer kring Götaforsliden; häckar/träd/gatsten lägre prioritet.
+**Gjort:** Karta-spåret `codex/karta/gorjelyck`,7734694+167cc18. Fyra låga trähus granskade från två riktiga Street View-punkter vid Åldermans/Görjelyckskorsningen: panel/färg, höjder, tak, kupa och vindsfönster. Två gatubredder med grusverge. Källa och visuella uppskattningar i `reference/gorjelyck/`. Dolda bakdelar/verandor återstår. G18-dörr flyttad till observerad övre gatubay; G17:s påhittade balkonger borttagna. Ett flytande antaget vindsfönster upptäckt i bildprov och borttaget.
+**Takfelet:** många synliga sadel-/valmtak hade bara huskroppens kollision. Ny lokal `roof_collisions.py` kompletterar verkliga takplan, kupor och skorstenar före export. Frysta modelkit och spelarens lutningsgräns ändras inte. Oberoende GLB-prov:29540uppåtvända taktrianglar i spelområdet täckta,0saknade; bakgrundshus utanför zonen undantas. Gemensam `--roof-export-check`:15riktiga tak ×landning/stillastående/gång/krok +metadata =76 gröna i editor och Mac-release. Native fysisk landning har3,5cm fot-/takskillnad, bild granskad.
+**Övriga prov:**12geometrigrindar,381hus/352vägar,88574synliga+kollisionsvägtrianglar,0husintrång, delade korsningar/navkanter gröna.31gatuprov och180globala markpunkter gröna. Release: civila29, rörelse25, krok27+stad, terräng7 gröna. Samtliga13skyddade spel-/NPC-filer har exakt tidigare hash. Karta/mark/site/nav/game reproducerade; kartbild identisk men sista city-hash i map.json behövde omgenereras före slutpaketet tak-03.
+**Leverans:** ordinarie app/ZIP uppdaterade genom separat staging och namnbyte; tidigare version bevarad i `v2/.tools/kvarnbyn-tak-20261109/previous/`. Samma8världsfiler byteidentiska efter integration, appens samtliga payloadfiler samma hash som verifierad tak-03. Installerade appens tak76/karta och tak-03:s civila29 gröna. Övriga releaseprov från tak-02 har samma värld/kod; bara kartans källhash korrigerad i03. `evidence/delivery-roofs-2026-11-09.json`. Inget användarspel avslutat.
+**Nästa:** fortsätt faktisk närgranskning av Götaforsliden17/18: plattform/portar/räcke, synliga trappanslutningar och parkeringar. G18:s upphöjda plattform måste samordnas med den sluttande gatans verkliga fria utrymme; ingen dold trappa påhittad. Startkvarterets sammanfogade deltak och verandor fortfarande inte färdiga specialmodeller. Playpen/graphify memory orörda.
+
+---
+
 ## 2026-11-08 — ChatGPT Codex — första gaturundorna levererade; fortsättning pågår
 
 **Status:** delpass klart, fortsatt iterering beställd tills tillgängliga tokens tar slut. Nästa avgränsade område är startkvarteren vid övre Görjelycksgatan.

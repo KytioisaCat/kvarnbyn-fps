@@ -269,3 +269,13 @@ möjligt utan nya beställningar.
 | Dokumenterad domänkunskap | ARKITEKTUR.md (beslut med motiv, kalibreringar, dyrt inlärda fällor), TODO.md, CLAUDE.md | Egen |
 | Ev. promenadfoton hos Joel | Fasadfoton med GPS/EXIF från promenader (omfattning obekräftad) | Egna foton |
 | Distributionskanal | GitHub-repo + automatisk publicering till webblänk | — |
+
+
+### TAK-01 — gångbara tak (2026-11-09)
+
+Synliga takfall, kupor och skorstenar i spelområdet ska ha motsvarande fysisk
+geometri. Spelaren ska kunna landa, stå still och gå på rimligt lutande tak,
+samt fästa gripkroken på dem. Befintlig lutningsgräns gäller fortfarande.
+Godkännande: oberoende kontroll av levererad GLB samt verklig spelarkapsel och
+krok på vanliga, handbyggda och konturklippta tak i både editor och release.
+Genomfört:0saknade av29540uppåtvända taktrianglar;15tak,76kontroller gröna.
