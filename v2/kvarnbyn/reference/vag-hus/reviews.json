@@ -69,8 +69,8 @@
       "transition_m": 9,
       "width_estimate_m": 2.7,
       "centre_offset_xz": [
-        -0.48,
-        -0.68
+        -1.05,
+        -1.39
       ]
     },
     {
@@ -130,7 +130,8 @@
           6.5,
           9.8
         ],
-        "street_door_index": 0
+        "street_door_index": 0,
+        "door_step": false
       },
       "source": {
         "facade": "street_view_may2026_observed",
@@ -219,6 +220,7 @@
     "Sidoförskjutningarna är lokala visuella uppskattningar för att ge en rimlig passage mellan de oflyttade OSM-husen, inte korrigeringar uppladdade till OSM.",
     "0,28 m gatstensbård följer de granskade vägpartierna, med samma höjd som körbanan. Bredden är uppskattad ur bilden.",
     "Exakta delvolymer och entréplattform vid G18 samt Franckehusets högre bakdel återstår; inga säkra fasaduppgifter överförs till skymda grannhus.",
-    "Närgranskning 2026-11-09: G18:s gröna dörr i övre änden av gatufasaden, inte mitt i väggen. G17 har inte de generiska utkragande balkongerna. Entréplattform/räcken behöver fortsatt eget sammanhängande gångprov."
+    "Närgranskning 2026-11-09: G18:s gröna dörr i övre änden av gatufasaden, inte mitt i väggen. G17 har inte de generiska utkragande balkongerna. Entréplattform/räcken behöver fortsatt eget sammanhängande gångprov.",
+    "G18-platformspass 2026-11-09: ytterligare lokal sidoförskjutning för observerad entréplattform. Mått fortfarande uppskattade; fria passager kontrolleras fysiskt."
   ]
 }

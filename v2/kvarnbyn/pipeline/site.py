@@ -157,7 +157,14 @@ parking_u = unary_union([p for s, p, _ in surfaces if s['kind'] == 'parking']) i
 square_u = unary_union([p for s, p, _ in surfaces if s['kind'] == 'square']) if surfaces else Polygon()
 other_u = unary_union([p for s, p, _ in surfaces if s['kind'] in ('pitch', 'playground')]) if surfaces else Polygon()
 bridge_clear = unary_union([LineString(r['line_xz']).buffer(r['width_m'] / 2 + 0.3, cap_style=2) for r, _ in bridge_roads]) if bridge_roads else Polygon()
-cut = buildings.buffer(0.05).union(channel.buffer(0.05)).union(bridge_clear)
+entrance_reference=json.loads((DATA.parent/'reference/gotafors/entrance.json').read_text())
+entrance_house=next(b for b in city['buildings']if b['id']==entrance_reference['building'])
+entrance_foot=entrance_house['build_footprint_xz'];entrance_index=entrance_house['street_edge']
+entrance_a=np.array(entrance_foot[entrance_index]);entrance_b=np.array(entrance_foot[(entrance_index+1)%len(entrance_foot)])
+entrance_u=(entrance_b-entrance_a)/np.linalg.norm(entrance_b-entrance_a);entrance_n=np.array([-entrance_u[1],entrance_u[0]])
+entrance_spec=entrance_reference['estimates']
+entrance_coverage=Polygon([entrance_a+entrance_u*s+entrance_n*d for s,d in [(-entrance_spec['entry_length_m'],.06),(entrance_spec['to_s_m'],.06),(entrance_spec['to_s_m'],entrance_spec['depth_m']),(-entrance_spec['entry_length_m'],entrance_spec['depth_m'])]])
+cut = buildings.buffer(0.05).union(channel.buffer(0.05)).union(bridge_clear).union(entrance_coverage)
 asphalt = asphalt.union(parking_u).difference(square_u).difference(other_u).difference(cut).intersection(work)
 centre = Point(0, 0).buffer(140)                       # gatsten kring Gamla torget, annars asfalterad gångbana
 paving_all = side.union(footw).union(square_u).difference(asphalt).difference(other_u).difference(cut).intersection(work)
@@ -177,7 +184,7 @@ for r,line in drive_lines:
     bands.append(corridor(r,extra=.65 if is_gravel else .28).difference(corridor(r)).intersection(extent))
 street_edges=unary_union(edge_bands).difference(cut).difference(paving_all).difference(other_u).intersection(work)
 street_gravel_edges=unary_union(gravel_edge_bands).difference(cut).difference(paving_all).difference(other_u).difference(asphalt).intersection(work)
-urban = unary_union([asphalt, paving_all, pitch_u, play_u, street_edges, street_gravel_edges])
+urban = unary_union([asphalt, paving_all, pitch_u, play_u, street_edges, street_gravel_edges, entrance_coverage])
 # Restore the observed Torget ground description lost in the first large-world pass.
 # Existing asphalt, bridges, buildings, water and other authored OSM surfaces win.
 original_urban = urban
@@ -186,7 +193,7 @@ paving_all = paving_all.union(authored.paving).difference(authored.soil)
 paving = paving.union(authored.paving).difference(authored.soil)
 walkway = walkway.difference(authored.coverage)
 trail = trail.difference(authored.coverage)
-urban = unary_union([asphalt, paving_all, pitch_u, play_u, authored.soil, street_edges, street_gravel_edges])
+urban = unary_union([asphalt, paving_all, pitch_u, play_u, authored.soil, street_edges, street_gravel_edges, entrance_coverage])
 log(f'handgranskat torg: {authored.paving.area:.0f} m² sten + {authored.soil.area:.0f} m² planteringsöar (uppskattade konturer)')
 log(f'ytor: asfalt {asphalt.area:.0f} m², gatsten {paving.area:.0f} m², gångbana {walkway.area:.0f} m², stig {trail.area:.0f} m², å {channel.area:.0f} m²')
 

@@ -23,12 +23,12 @@ func expected_height(point: Vector3, route: Array) -> float:
 			closest=distance
 			height=on_path.y
 	return height
-func run(world: Node3D) -> Dictionary:
+func run(world: Node3D, metadata_key := "road_ground_checks", minimum_paths := 6, minimum_points := 9) -> Dictionary:
 	AudioServer.set_bus_mute(0,true)
 	var tree := world.get_tree()
 	var p = world.player
-	var metadata: Dictionary=world.metadata.get("road_ground_checks",{})
-	check("road_walk_metadata_packaged",metadata.get("paths",[]).size()>=6 and metadata.get("points",[]).size()>=9)
+	var metadata: Dictionary=world.metadata.get(metadata_key,{})
+	check(metadata_key+"_packaged",metadata.get("paths",[]).size()>=minimum_paths and metadata.get("points",[]).size()>=minimum_points)
 	if not checks[0].passed:return report()
 	world.begin_walk()
 	if world.game:world.game.running=false

@@ -72,6 +72,9 @@ $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res:/
 step "Kontroll: landning, stillastående, gång och gripkrok på riktiga tak"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --no-pointer-lock --no-movement-profile --roof-export-check > $LOG/roof-check.log 2> $LOG/roof-check.stderr.log
 $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_ROOF_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_ROOF_CHECK "))); assert r["passed"] and r["roofs"]>=6' $LOG/roof-check.log
+step "Kontroll: Götaforsliden18 från gatan till dörren och tillbaka"
+$G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot -- --explore --no-pointer-lock --no-movement-profile --entrance-export-check > $LOG/entrance-check.log 2> $LOG/entrance-check.stderr.log
+$PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_ENTRANCE_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_ENTRANCE_CHECK "))); assert r["passed"]' $LOG/entrance-check.log
 step "Kontroll: Roten M 29, gård och grind"
 $G --audio-driver Dummy --headless --fixed-fps 60 --path $P/godot --script res://scripts/verify_roten.gd -- --explore --no-pointer-lock --output="$ROOT/$LOG/roten-ground-check.json" > $LOG/roten-ground-check.log 2>&1
 step "Kontroll: hela Stalleliden upp och ned samt räcke"
@@ -128,6 +131,9 @@ if [[ " $* " != *" --no-export "* ]]; then
   step "Kontroll: riktiga tak och gripkrok i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --explore --no-pointer-lock --no-movement-profile --roof-export-check > $LOG/roof-export-check.log 2> $LOG/roof-export-check.stderr.log
   $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_ROOF_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_ROOF_CHECK "))); assert r["passed"] and r["release"] and r["roofs"]>=6' $LOG/roof-export-check.log
+  step "Kontroll: Götaforsentrén i exporterad Mac-app"
+  "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --explore --no-pointer-lock --no-movement-profile --entrance-export-check > $LOG/entrance-export-check.log 2> $LOG/entrance-export-check.stderr.log
+  $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_ENTRANCE_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_ENTRANCE_CHECK "))); assert r["passed"] and r["release"]' $LOG/entrance-export-check.log
   step "Kontroll: civila modeller, samtal och skydd i exporterad Mac-app"
   "$P/desktop/app/Försvara Kvarnbyn.app/Contents/MacOS/Försvara Kvarnbyn" --audio-driver Dummy --headless --fixed-fps 60 -- --no-pointer-lock --no-movement-profile --civilian-export-check > $LOG/civilian-export-check.log 2> $LOG/civilian-export-check.stderr.log
   $PY -c 'import json,sys; r=json.loads(next(x.split("KVARNBYN_CIVILIAN_CHECK ",1)[1] for x in open(sys.argv[1]) if x.startswith("KVARNBYN_CIVILIAN_CHECK "))); assert r["passed"] and r["release"] and len(r["checks"])>=29' $LOG/civilian-export-check.log

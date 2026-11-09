@@ -1,0 +1,30 @@
+[
+  {
+    "id": "g18-front",
+    "name": "Götaforsliden 18 – entrén",
+    "camera_xz": [
+      215.94,
+      -41.45
+    ],
+    "target_xz": [
+      216.26,
+      -39.08
+    ],
+    "target_above_camera_m": 0.4,
+    "fov_degrees": 95
+  },
+  {
+    "id": "g18-uphill",
+    "name": "Götaforsliden 18 – övre anslutningen",
+    "camera_xz": [
+      225.55,
+      -42.77
+    ],
+    "target_xz": [
+      218,
+      -40
+    ],
+    "target_above_camera_m": -0.3,
+    "fov_degrees": 85
+  }
+]

@@ -100,7 +100,7 @@ def main():
         checks['exported_roads_match_current_site_geometry']=np.array_equal(canonical(tris),canonical(result['visible']))
         checks['exported_visible_and_collision_roads_match']=np.array_equal(canonical(result['visible']),canonical(result['collision']))
         detail['exported_road_triangles']={k:len(v)for k,v in result.items()}
-        all_walks=exported_roads(args.glb,tuple(walk_keys)+('Bridge_deck','Stairs'))
+        all_walks=exported_roads(args.glb,tuple(walk_keys)+('Bridge_deck','Stairs','Gotafors_platform','Gotafors_step','Gotafors_approach'))
         extra_bad=intrusions(all_walks['visible'],houses)
         checks['exported_walkways_stairs_and_bridge_decks_outside_houses']=not extra_bad
         collision_bad=intrusions(all_walks['collision'],houses)

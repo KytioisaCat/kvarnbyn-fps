@@ -1,0 +1,43 @@
+{
+  "id": "g18-platform",
+  "building": "w92331986",
+  "date": "2026-11-09",
+  "references": [
+    {
+      "pano": "KcCRF9O_ugcT21i2VurKLQ",
+      "date": "maj 2026",
+      "lat": 57.6572723,
+      "lon": 12.0314256,
+      "headings": [
+        110,
+        166.69
+      ],
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=KcCRF9O_ugcT21i2VurKLQ",
+      "observed": "Upphöjd lång betongplattform vid gröna dörren, ljusa tvåliggarräcken, naturstensgrund nedanför, träspaljé på övre sidan."
+    },
+    {
+      "pano": "WwrqdMBab4dVvBOlvHA7-Q",
+      "date": "maj 2026",
+      "lat": 57.6572842,
+      "lon": 12.031582,
+      "heading": 245,
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&pano=WwrqdMBab4dVvBOlvHA7-Q",
+      "observed": "Samma plattform från övre gatan: spaljé runt hörnet och delvis skymd nivåanslutning. Ingen säker exakt stegräkning. G17:s uppströmsfasad har gröna dörrar och överljus, låga steg och smal stenlagd trottoar."
+    }
+  ],
+  "estimates": {
+    "from_s_m": 0,
+    "to_s_m": 5.5,
+    "depth_m": 1.05,
+    "entry_length_m": 2.4,
+    "rail_height_m": 0.9,
+    "rail_colour": "#dedbd0"
+  },
+  "confidence": "Feature/material observed; all dimensions, platform/road alignment and individual connecting tread heights are estimates fitted to the existing house sill and actual delivered street. Hidden stair count is not claimed observed.",
+  "remaining": [
+    "Exact lattice/gate construction and heat pump",
+    "G17 facade subdivisions/door heights must be read against the L-shaped OSM footprint",
+    "Parking bays and planting locations in later passes"
+  ],
+  "road": "w13698106"
+}

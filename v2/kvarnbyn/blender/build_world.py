@@ -17,7 +17,7 @@ from blender_vegetation import place_tree, load_library
 from blender_finish import apply_finish
 import houses, heroes, roten, stairkit, stalleliden_houses, north_bank_details
 import terrain_details
-import roof_collisions
+import roof_collisions, gotafors_details
 
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
@@ -358,6 +358,28 @@ for (xa, za), (xb, zb) in [((zx0, zz0), (zx1, zz0)), ((zx1, zz0), (zx1, zz1)), (
     L = math.hypot(xb - xa, zb - za)
     K.box('COL_Bounds', M['collision'], ((xa + xb) / 2, -(za + zb) / 2, 40), (L + 2, 1.0, 140), ((xb - xa) / L, -(zb - za) / L))
 
+def paved_eye(x, z):
+    """Torget's review camera is 1.7 m above the rendered/COL floor, not buried terrain."""
+    floor = ground(x, z)
+    owned_floor = None
+    for kind in SITE['meshes']:
+        if kind == 'water': continue
+        for tiles in SITE['meshes'].get(kind, {}).values():
+            for a, b, c in tiles:
+                if not min(a[0], b[0], c[0]) - .001 <= x <= max(a[0], b[0], c[0]) + .001 or not min(a[2], b[2], c[2]) - .001 <= z <= max(a[2], b[2], c[2]) + .001: continue
+                den = (b[2]-c[2])*(a[0]-c[0]) + (c[0]-b[0])*(a[2]-c[2])
+                if abs(den) < 1e-10: continue
+                u = ((b[2]-c[2])*(x-c[0]) + (c[0]-b[0])*(z-c[2])) / den
+                v = ((c[2]-a[2])*(x-c[0]) + (a[0]-c[0])*(z-c[2])) / den
+                if min(u, v, 1-u-v) >= -1e-6:
+                    y = u*a[1] + v*b[1] + (1-u-v)*c[1]
+                    floor = max(floor,y)
+                    if kind.startswith(('m25_', 'northbank_')): owned_floor = y
+    return [round(x, 2), round((owned_floor if owned_floor is not None else floor) + 1.7, 3), round(z, 2)]
+
+
+gotafors = gotafors_details.build(K,M,CITY,json.loads((HERE/'reference/gotafors/entrance.json').read_text()),lambda x,z:paved_eye(x,z)[1]-1.7)
+log('G18-platform: '+json.dumps({k:v for k,v in gotafors.items()if k!='ground_checks'}))
 roof_physics = roof_collisions.complete(K,M['collision'])
 log('gångbara tak: '+json.dumps({k:v for k,v in roof_physics.items() if k!='checks'}))
 objects = K.finish()
@@ -388,24 +410,6 @@ pts = CITY['meta']['v1_points']
 def eye(x, z, up=1.7): return [round(x, 2), round(ground(x, z) + up, 2), round(z, 2)]
 
 
-def paved_eye(x, z):
-    """Torget's review camera is 1.7 m above the rendered/COL floor, not buried terrain."""
-    floor = ground(x, z)
-    owned_floor = None
-    for kind in SITE['meshes']:
-        if kind == 'water': continue
-        for tiles in SITE['meshes'].get(kind, {}).values():
-            for a, b, c in tiles:
-                if not min(a[0], b[0], c[0]) - .001 <= x <= max(a[0], b[0], c[0]) + .001 or not min(a[2], b[2], c[2]) - .001 <= z <= max(a[2], b[2], c[2]) + .001: continue
-                den = (b[2]-c[2])*(a[0]-c[0]) + (c[0]-b[0])*(a[2]-c[2])
-                if abs(den) < 1e-10: continue
-                u = ((b[2]-c[2])*(x-c[0]) + (c[0]-b[0])*(z-c[2])) / den
-                v = ((c[2]-a[2])*(x-c[0]) + (a[0]-c[0])*(z-c[2])) / den
-                if min(u, v, 1-u-v) >= -1e-6:
-                    y = u*a[1] + v*b[1] + (1-u-v)*c[1]
-                    floor = max(floor,y)
-                    if kind.startswith(('m25_', 'northbank_')): owned_floor = y
-    return [round(x, 2), round((owned_floor if owned_floor is not None else floor) + 1.7, 3), round(z, 2)]
 
 
 views = [
@@ -443,6 +447,7 @@ for review_file in sorted((HERE/'reference').glob('*/reviews.json')):
         x,z=study['camera_xz'];tx,tz=study['target_xz']
         floor=paved_eye(x,z)
         views.append(dict(id='road-'+study['id'],name='Gaturunda – '+study['name'],position=floor,target=[tx,floor[1]+study.get('target_above_camera_m',-.2),tz]))
+views.append(dict(id='g18-platform',name='Götaforsliden 18 – entrén',position=paved_eye(214.5,-42.9),target=[217,24.2,-39.7]))
 probe = []
 for r in CITY['roads']:
     if r['tunnel'] or r['bridge'] or r['kind'] in ('path', 'track', 'steps'): continue
@@ -452,7 +457,7 @@ for r in CITY['roads']:
         L = math.hypot(xb - xa, zb - za); acc += L
         if acc > 45 and zx0 + 3 < xa < zx1 - 3 and zz0 + 3 < za < zz1 - 3:
             acc = 0; probe.append([round(xa, 2), round(ground(xa, za), 2), round(za, 2)])
-meta = dict(roof_physics=roof_physics,road_ground_checks=SITE.get('road_ground_checks',{}), title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.get('north_bank',{}).get('ground_checks',{}), m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
+meta = dict(gotafors_ground_checks=gotafors["ground_checks"],gotafors=gotafors,roof_physics=roof_physics,road_ground_checks=SITE.get('road_ground_checks',{}), title='Kvarnbyn', probe_points=probe, north_bank_ground_checks=SITE.get('north_bank',{}).get('ground_checks',{}), m25_ground_checks=SITE.get('m25', {}).get('ground_checks', {}), stalliden_ground_checks=SITE.get('stalliden', {}).get('ground_checks', {}), m29_ground_checks=SITE.get('roten_m29', {}).get('ground_checks', {}),
             mapped_wall_profiles=wall_profiles,
             spawn=dict(position=[round(pts['spawn'][0], 2), round(ground(*pts['spawn']), 2), round(pts['spawn'][1], 2)],
                                           target=views[0]['target'], snap_to_ground=True),

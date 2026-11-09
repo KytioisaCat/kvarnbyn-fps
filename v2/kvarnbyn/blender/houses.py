@@ -52,14 +52,14 @@ def _uv(at):
     return ((p1[0] - p0[0], p1[1] - p0[1]),)
 
 
-def door(K, name, M, at, w, h, leaf, trim):
+def door(K, name, M, at, w, h, leaf, trim, step=True):
     t = 0.09
     for s in (-w / 2 - t / 2, w / 2 + t / 2):
         K.box(name, trim, at(s, 0.06, h / 2), (t, 0.12, h + t), *_uv(at))
     K.box(name, trim, at(0, 0.06, h + t / 2), (w + 2 * t, 0.12, t), *_uv(at))
     K.box(name, leaf, at(0, 0.03, h / 2), (w, 0.06, h), *_uv(at))
     K.box(name, M['metal_sill'], at(w * 0.3, 0.09, h * 0.47), (0.12, 0.05, 0.03), *_uv(at))
-    K.box(name, M['stone'], at(0, 0.35, -0.08), (w + 0.6, 0.7, 0.16), *_uv(at))
+    if step: K.box(name, M['stone'], at(0, 0.35, -0.08), (w + 0.6, 0.7, 0.16), *_uv(at))
 
 
 def build_house(K, b, M, ground, tile):
@@ -116,7 +116,7 @@ def build_house(K, b, M, ground, tile):
                 at = lambda ss, d, h, s=s, fy=fy: at_edge(s + ss, d, fy + h)
                 if f == 0 and k == door_slot and arch != 'industri':
                     dw = 1.0 if arch in ('trahus', 'bod') else 1.4
-                    door(K, nm, M, lambda ss, d, h, s=s: at_edge(s + ss, d, base + sock + h), dw, 2.1, M['door'](b), trim)
+                    door(K, nm, M, lambda ss, d, h, s=s: at_edge(s + ss, d, base + sock + h), dw, 2.1, M['door'](b), trim, step=b.get('door_step',True))
                     continue
                 if arch == 'bod' and f == 0 and i == street and k == 0 and L > 5.5:
                     # garageport

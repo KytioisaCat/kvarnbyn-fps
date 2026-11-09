@@ -26,6 +26,7 @@ func run() -> void:
 	var out := ProjectSettings.globalize_path(image_dir.path_join(phase))
 	DirAccess.make_dir_recursive_absolute(out)
 	for study in cases:
+		world.player.camera.fov = float(study.get("fov_degrees",67.0))
 		var point := Vector3(float(study.camera_xz[0]), 0, float(study.camera_xz[1]))
 		point = world.ground_position(point)
 		world.player.place_at(point + Vector3.UP * 0.05, 0, 0, false)
