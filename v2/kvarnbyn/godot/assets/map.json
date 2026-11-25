@@ -107,7 +107,7 @@
     "Höjddata: Lantmäteriet"
   ],
   "source": {
-    "city_sha256": "7f90e291a338739bef1d92bce49d0928c3b43c232bc9e9410ab6f78579d49d38",
+    "city_sha256": "f75c1a7f811e5a1441b07ce764c23d03b09b5339f96dcd0eb133a36f557d817f",
     "site_sha256": "87ca2603cb8f8a8ec7ccadb534d47b6deac622d3490e72511c0702af92d301c4",
     "method": "Own cartography; rendered surface triangles and built footprints, land classes and LiDAR hillshade; no external map pixels"
   },

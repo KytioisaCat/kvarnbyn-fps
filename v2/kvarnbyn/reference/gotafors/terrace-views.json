@@ -1,0 +1,4 @@
+[
+  {"id":"lilla","camera_xz":[183.4,-22.1],"target_xz":[171.8,-26.2],"target_above_camera_m":-3.0,"fov_degrees":74},
+  {"id":"francke","camera_xz":[206.5,190.0],"target_xz":[206.2,182.7],"target_above_camera_m":-0.5,"fov_degrees":67}
+]

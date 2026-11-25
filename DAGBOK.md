@@ -33,6 +33,14 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-25 — Codex — etagemurar och takformer
+
+**Status:** klart delpass. Två stenstödda nivåer vid Lilla Götafors, en stenstödd slänt vid Franckegatan. Husutsnitt för 381 spelzonshus genomgångna i ortofoto; 16 synliga huvudtak ändrade. Lilla Götafors har tegel i fasad och sadeltak. Källor och osäkerheter i `v2/kvarnbyn/reference/gotafors/README.md`.
+**Prov:** 9 fysiska mursektioner kontrollerade ovanifrån och från sidan, inga intrång i byggda stråk. 25 takformer kontrollerade i exporterad geometri. 29 072 uppåtvända taktrianglar har kollision. Mac-release klarade 76 tak-, 31 gatu- och 13 entréprov. App och ZIP uppdaterade; parkeringsversionen bevarad i `v2/.tools/kvarnbyn-terrasser-20261125/previous/`. Två spelbilder och resultat i `evidence/terrasser/november/`.
+**Nästa:** särskilt Villa Korndal och de förskjutna deltak som listas i platsreferensen behöver egna sektioner. Fler nivåer i branta gator kräver egna bildankare.
+
+---
+
 ## 2026-11-25 — Codex — parkerade bilar kring Götaforsliden
 
 **Status:** klart. Tre bilar på två OSM-parkeringar efter avläsning av Lantmäteriets ortofoto 2024. Placering och längdaxel avlästa, karosser och kulörer uppskattade. En fjärde bil utelämnad där byggd asfalt saknas under två hjul.

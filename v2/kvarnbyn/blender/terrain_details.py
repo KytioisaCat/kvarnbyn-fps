@@ -64,3 +64,42 @@ def build_walls(kit, materials, ground, city):
                     kit.face('COL_' + name, materials['collision'], face)
             profiles.append(dict(id=wall['id'], segment=segment, sections=sections, width=.42))
     return profiles
+
+
+def build_terraces(kit, materials, ground, strips):
+    """Fit a stone face and its narrow upper landing to both sides of a grade."""
+    for strip in strips:
+        a, b = strip['ends_xz']
+        length = math.dist(a, b)
+        dx, dz = (b[0]-a[0])/length, (b[1]-a[1])/length
+        nx, nz = -dz*strip['uphill_side'], dx*strip['uphill_side']
+        count = math.ceil(length)
+        profiles = []
+        for station in range(count+1):
+            t = station/count
+            x, z = a[0]+t*(b[0]-a[0]), a[1]+t*(b[1]-a[1])
+            reach = strip['tie_width_m']
+            high = ground(x+nx*reach, z+nz*reach)
+            top = max(ground(x,z), high) + strip['lip_m']
+            section = [(0,ground(x,z)-.40),(0,top),(.34,top),(reach,high+.025),
+                       (reach,high-.4)]
+            if 'landing_width_m' in strip:
+                end = strip['landing_width_m']
+                tie_y = ground(x+nx*end, z+nz*end)
+                section[-1:] = [(end,tie_y+.025), (end,tie_y-.4)]
+            profiles.append([(x+nx*d,-z-nz*d,y) for d,y in section])
+        name = 'Terrace_'+strip['id']
+        def face(vertices, material, vertical=False):
+            tile = float(materials[material].get('tile_size_m', 1.0))
+            uv = [(((x-a[0])*dx+(-y-a[1])*dz)/tile,
+                   (h if vertical else (x-a[0])*nx+(-y-a[1])*nz)/tile) for x,y,h in vertices]
+            kit.face(name, materials[material], vertices, uv)
+            kit.face('COL_'+name, materials['collision'], vertices)
+        for left,right in zip(profiles,profiles[1:]):
+            last = len(left)-2
+            for j in range(len(left)-1):
+                material = 'stone' if j in (0,1,last) else strip['surface']
+                face([left[j],left[j+1],right[j+1],right[j]], material, j in (0,last))
+        for cap in (profiles[0][::-1], profiles[-1]):
+            kit.face(name, materials['stone'], cap)
+            kit.face('COL_'+name, materials['collision'], cap)

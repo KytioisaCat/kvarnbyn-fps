@@ -1,0 +1,5 @@
+[
+  {"id":"Lilla_Gotafors_gatusida","ends_xz":[[170.28,-18.78],[180.2,-23.15]],"uphill_side":1,"tie_width_m":1.05,"lip_m":0.15,"surface":"paving"},
+  {"id":"Lilla_Gotafors_nedre_plan","ends_xz":[[171.4,-27.5],[176.5,-30.0]],"uphill_side":1,"tie_width_m":1.55,"landing_width_m":3.9,"lip_m":0.08,"surface":"paving"},
+  {"id":"Franckegatan_slant","ends_xz":[[207.5,185.55],[204.0,176.6]],"uphill_side":1,"tie_width_m":1.3,"lip_m":0.12,"surface":"grass"}
+]

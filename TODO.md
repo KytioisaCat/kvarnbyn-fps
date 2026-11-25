@@ -145,6 +145,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 
 ## Klart
 
+- [x] 2026-11-25 — Tre bildbelagda stödmursstråk vid Lilla Götafors/Franckegatan och 16 rättade takformer efter genomgång av spelzonens 381 hus. Fler etage och sammansatta tak återstår, se platsreferensen vid Götaforsliden.
+
 - [x] 2026-11-25 — Tre ortofotoavlästa parkerade bilar kring Götaforsliden, på två gårds-/parkeringsytor. Bildprov och karosskollision verifierade i Godot. Fler platsbelagda småsaker återstår.
 
 - [x] 2026-11-09 — **Götaforsliden18:s entré:** upphöjd plattform, räcke och fysisk nivåanslutning; väg/mark bortskuren under den,13platsprov +31gatu-/76takprov gröna i Mac-release. Mått och dolda steg uppskattade. `reference/gotafors/`.

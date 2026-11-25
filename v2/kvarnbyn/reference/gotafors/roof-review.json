@@ -1,0 +1,46 @@
+{
+  "flat": [
+    "w92331939",
+    "w92332117",
+    "w1137838701",
+    "w629218407",
+    "w1137838700",
+    "w629218404",
+    "w629218424",
+    "w629218410",
+    "w629218425",
+    "w629218426",
+    "w629218419",
+    "w629218415",
+    "w629218409",
+    "w629218428",
+    "w629218429",
+    "w629218411",
+    "w616074219",
+    "w616074220",
+    "w616074221"
+  ],
+  "pitched": {
+    "w564428616": {
+      "shape": "gabled",
+      "rise_m": 2.1
+    },
+    "w92209888": {
+      "shape": "hipped",
+      "rise_m": 3.1
+    },
+    "w92209896": {
+      "shape": "hipped",
+      "rise_m": 3.1
+    },
+    "w92209907": {
+      "shape": "hipped",
+      "rise_m": 3.1
+    },
+    "w92332145": {
+      "shape": "gabled",
+      "rise_m": 2.2
+    }
+  },
+  "source": "Lantmäteriet, ortofoto 2024. Plant eller mycket flackt tak tolkas som plant. Avsatser, installationer och små fall ej inmätta."
+}

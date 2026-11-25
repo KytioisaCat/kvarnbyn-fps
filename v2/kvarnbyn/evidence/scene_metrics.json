@@ -1,8 +1,8 @@
 {
- "objects": 10423,
- "meshes": 5449,
- "materials": 192,
- "triangles_excl_trees": 2247975,
+ "objects": 10455,
+ "meshes": 5481,
+ "materials": 203,
+ "triangles_excl_trees": 2247177,
  "trees": 1561,
  "authored_trees": 10,
  "shrubs": 83,

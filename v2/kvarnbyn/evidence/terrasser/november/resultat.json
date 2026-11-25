@@ -1,0 +1,56 @@
+{
+  "release_checks": {
+    "roof": 76,
+    "road": 31,
+    "entrance": 13
+  },
+  "verified_roof_shapes": {
+    "w92209888": "hipped",
+    "w92209896": "hipped",
+    "w92209907": "hipped",
+    "w92331939": "flat",
+    "w92332117": "flat",
+    "w92332145": "gabled",
+    "w92332149": "gabled",
+    "w564428616": "gabled",
+    "w616074219": "flat",
+    "w616074220": "flat",
+    "w616074221": "flat",
+    "w629218404": "flat",
+    "w629218407": "flat",
+    "w629218409": "flat",
+    "w629218410": "flat",
+    "w629218411": "flat",
+    "w629218415": "flat",
+    "w629218419": "flat",
+    "w629218424": "flat",
+    "w629218425": "flat",
+    "w629218426": "flat",
+    "w629218428": "flat",
+    "w629218429": "flat",
+    "w1137838700": "flat",
+    "w1137838701": "flat"
+  },
+  "terraces": {
+    "Lilla_Gotafors_gatusida": {
+      "length_m": 10.84,
+      "triangle_count": 94,
+      "intersection_with_streets_m2": 0.0
+    },
+    "Lilla_Gotafors_nedre_plan": {
+      "length_m": 5.68,
+      "triangle_count": 68,
+      "intersection_with_streets_m2": 0.0
+    },
+    "Franckegatan_slant": {
+      "length_m": 9.61,
+      "triangle_count": 86,
+      "intersection_with_streets_m2": 0.0
+    }
+  },
+  "physics": [
+    "TERRACE Lilla_Gotafors_gatusida 3/3 relief [0.36, 0.34, 0.47]",
+    "TERRACE Lilla_Gotafors_nedre_plan 3/3 relief [2.26, 1.98, 2.2]",
+    "TERRACE Franckegatan_slant 3/3 relief [0.6, 0.51, 0.62]"
+  ]
+}

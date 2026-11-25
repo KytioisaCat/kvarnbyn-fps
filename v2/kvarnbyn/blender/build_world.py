@@ -109,7 +109,11 @@ def roof_mat(b):
     return cached(('roof', 'metal', c), lambda: solid_material('Roof_metal_%s' % c.lstrip('#'), color(c), .55, .2))
 
 
-def roof_flat(b): return cached(('flat',), lambda: solid_material('Roof_felt', color('#3a3c3e'), .92))
+def roof_flat(b):
+    if b['source'].get('roof_shape') == 'ortho_2024_flat_or_low_slope':
+        tint = quant(b['roof_color'], 16)
+        return cached(('flat', tint), lambda: solid_material('Roof_felt_' + tint[1:], color(tint), .92))
+    return cached(('flat',), lambda: solid_material('Roof_felt', color('#3a3c3e'), .92))
 
 
 DOORS = ['#2f4a3a', '#5a3a28', '#7a2a22', '#3b4a5a', '#24282a', '#6d6a5e']
@@ -169,6 +173,7 @@ for k in range(CZ - 1):
         K.face('FarTerrain' + tile_of(xa, za), M['forest'] if h01(i // 6, k // 6) < 0.45 else M['grass'], pts, [(p[0] / 8, p[1] / 8) for p in pts])
 log('terräng kuliss klar')
 
+terrain_details.build_terraces(K, M, ground, json.loads((HERE/'reference/gotafors/terraces.json').read_text()))
 wall_profiles = terrain_details.build_walls(K, M, ground, CITY)
 log(f'kartlagda låga stenmurar: {len(wall_profiles)} segment')
 

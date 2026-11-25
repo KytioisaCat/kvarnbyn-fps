@@ -214,6 +214,22 @@
         "heights": "visual_estimate_from_four_rows_and_street_side_foundation_not_survey",
         "roof": "existing_flat_assumption_retained_roof_surface_unverified"
       }
+    },
+    "w92332149": {
+      "name": "Lilla Götafors",
+      "override": {
+        "facade_material": "brick",
+        "roof_material": "roof_tiles",
+        "roof_color": "#9b654c",
+        "roof_shape": "gabled",
+        "roof_rise_m": 4.4
+      },
+      "source": {
+        "facade": "commons_lilla_gotafors_02_03_brick",
+        "roof_shape": "gable_visible_from_both_sides",
+        "roof_material": "red_tiles_observed",
+        "roof_rise": "estimated"
+      }
     }
   },
   "notes": [

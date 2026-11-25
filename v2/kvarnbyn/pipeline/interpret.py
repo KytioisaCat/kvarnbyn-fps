@@ -32,6 +32,7 @@ roten_m29 = json.loads((DATA.parent / 'reference/roten-m/house.json').read_text(
 stalliden_houses = json.loads((DATA.parent / 'reference/stalliden/houses.json').read_text())
 stalleliden_m25 = json.loads((DATA.parent / 'reference/stalleliden-hus/m25.json').read_text())
 
+roof_review = json.loads((DATA.parent/'reference/gotafors/roof-review.json').read_text())
 street_reviews = {'buildings': {}, 'roads': []}
 reviewed_road_ids = set()
 for review_file in sorted((DATA.parent/'reference').glob('*/reviews.json')):
@@ -221,6 +222,13 @@ for w in ways:
         if street_context:
             spec.update(street_context['override']); spec['name'] = street_context['name']
             spec['source'].update(street_context['source'])
+        if spec['id'] in roof_review['flat']:
+            spec.update(roof_shape='flat', roof_rise_m=0.0)
+            spec['source']['roof_shape'] = 'ortho_2024_flat_or_low_slope'
+        if spec['id'] in roof_review['pitched']:
+            reviewed = roof_review['pitched'][spec['id']]
+            spec.update(roof_shape=reviewed['shape'], roof_rise_m=reviewed['rise_m'], clip_gabled_roof=True)
+            spec['source'].update(roof_shape='ortho_2024_ridge', roof_rise='estimated')
         buildings.append(spec); counts[spec['archetype']] += 1
     elif backdrop.contains(c):
         L = poly.minimum_rotated_rectangle
