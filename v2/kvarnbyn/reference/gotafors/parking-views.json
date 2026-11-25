@@ -1,0 +1,4 @@
+[
+  {"id":"gard","camera_xz":[254,-36],"target_xz":[249.28,-41.87],"target_above_camera_m":-0.65,"fov_degrees":62},
+  {"id":"parkering","camera_xz":[207,3],"target_xz":[197,2],"target_above_camera_m":-0.65,"fov_degrees":78}
+]

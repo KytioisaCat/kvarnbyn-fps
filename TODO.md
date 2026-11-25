@@ -145,6 +145,8 @@ Prioriteringsförslag efter Joels fråga om återstående plan. Fas A/B och kvä
 
 ## Klart
 
+- [x] 2026-11-25 — Tre ortofotoavlästa parkerade bilar kring Götaforsliden, på två gårds-/parkeringsytor. Bildprov och karosskollision verifierade i Godot. Fler platsbelagda småsaker återstår.
+
 - [x] 2026-11-09 — **Götaforsliden18:s entré:** upphöjd plattform, räcke och fysisk nivåanslutning; väg/mark bortskuren under den,13platsprov +31gatu-/76takprov gröna i Mac-release. Mått och dolda steg uppskattade. `reference/gotafors/`.
 
 - [x] 2026-11-09 — **Gångbara tak + startkvarter:** verkliga lutande tak/kupor/skorstenar kolliderar;76takprov i installerad Mac-app,0saknade taktrianglar. Fyra trähus och två grusvergekantade gator granskade. G18-dörr/G17-balkonger rättade. `v2/kvarnbyn/RESULTAT-TAK.md`.

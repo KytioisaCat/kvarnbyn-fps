@@ -1,0 +1,8 @@
+{
+  "source": "Lantmäteriets ortofoto 2024, public/ortho.jpg, CC BY 4.0. OSM-parkeringsytor från data/city.json. Tre avlästa biltak. Typ, framände, kulör och alla mått är uppskattade. Bilden visar beläggningen vid ett tillfälle.",
+  "cars": [
+    {"id":"silver","parking":"w92332137","centre_xz":[249.28,-41.87],"axis_degrees":-31,"length_m":4.1,"height_m":1.43,"cabin_back":-0.30,"paint":"#d3d4d0"},
+    {"id":"graphite","parking":"w368138678","centre_xz":[195.10,-2.74],"axis_degrees":67,"length_m":4.45,"height_m":1.48,"cabin_back":-0.36,"paint":"#656b70"},
+    {"id":"blue","parking":"w368138678","centre_xz":[199.68,7.47],"axis_degrees":57,"length_m":4.15,"height_m":1.42,"cabin_back":-0.26,"paint":"#526779"}
+  ]
+}

@@ -33,6 +33,14 @@ tills tokens tar slut mitt i ett pass. Den här filen är hur ni lämnar över t
 
 ---
 
+## 2026-11-25 — Codex — parkerade bilar kring Götaforsliden
+
+**Status:** klart. Tre bilar på två OSM-parkeringar efter avläsning av Lantmäteriets ortofoto 2024. Placering och längdaxel avlästa, karosser och kulörer uppskattade. En fjärde bil utelämnad där byggd asfalt saknas under två hjul.
+**Prov:** tre fysiska bilprov mot exporterad PCK, två granskade spelbilder i `v2/kvarnbyn/evidence/parkering/november/`. Tolv geometrikontroller, takytor och 13 entréprov godkända. Inga karosser korsar hus eller befintliga navigeringskanter. App och ZIP uppdaterade, tidigare version i `v2/.tools/kvarnbyn-parkering-20261125/previous/`.
+**Nästa:** kontrollera parkeringskanterna mot fotot innan fler fordon placeras. Stödmurar, lekplats och fler fasader återstår.
+
+---
+
 ## 2026-11-09 — ChatGPT Codex — första entréprovet på Götaforsliden18
 
 **Status:** klart och installerat delpass; fler hus-/platsdetaljer kvar i backloggen. Karta `codex/karta/gotafors-entres`,83caaed+a5ebaf0 från egen arbetskopia.

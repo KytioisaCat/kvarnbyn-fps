@@ -17,7 +17,7 @@ from blender_vegetation import place_tree, load_library
 from blender_finish import apply_finish
 import houses, heroes, roten, stairkit, stalleliden_houses, north_bank_details
 import terrain_details
-import roof_collisions, gotafors_details
+import roof_collisions, gotafors_details, parked_cars
 
 T0 = time.time()
 def log(m): print(f'[{time.time() - T0:6.1f}s] {m}', flush=True)
@@ -379,6 +379,8 @@ def paved_eye(x, z):
 
 
 gotafors = gotafors_details.build(K,M,CITY,json.loads((HERE/'reference/gotafors/entrance.json').read_text()),lambda x,z:paved_eye(x,z)[1]-1.7)
+parking = json.loads((HERE/'reference/gotafors/parked-cars.json').read_text())
+parked_cars.build(K, M['collision'], parking['cars'], lambda x,z: paved_eye(x,z)[1]-1.7)
 log('G18-platform: '+json.dumps({k:v for k,v in gotafors.items()if k!='ground_checks'}))
 roof_physics = roof_collisions.complete(K,M['collision'])
 log('gångbara tak: '+json.dumps({k:v for k,v in roof_physics.items() if k!='checks'}))

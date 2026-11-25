@@ -24,3 +24,15 @@ G17:s L-form behöver fortsatt avläsning per delfasad. Uppströmsfasaden har gr
 portar/överljus och låga steg. Första provets globala vånings-/sockelnivåer räcker
 inte för att hävda exakta dörrhöjder längs hela backen. Parkeringar, planteringar
 och fler hus behandlas i följande delpass; de är inte färdigmodellerade här.
+
+## Parkerade bilar, 2026-11-25
+
+Tre biltak avlästes i Lantmäteriets ortofoto från 2024 (`public/ortho.jpg`,
+8192 × 5529 px, CC BY 4.0). Bildcentrum i pixlar från övre vänstra hörnet:
+silver (5004, 2403), grafit (4866, 2502), blågrå (4878, 2528).
+Längdaxlarna följer bilden. Kulör, karossform och vilken ände som är fram
+är tolkningar. Parkeringen visar ett urval ur det fotograferade ögonblicket.
+En andra ljus bil på gården utelämnades eftersom två hjul hamnade utanför
+den byggda asfalten. Varje bil vilar på ett plan anpassat till fyra hjulpunkter.
+`parked-cars.json` kopplar modellerna till OSM-ytorna och `parking-views.json`
+anger kamerorna för bildprov.
